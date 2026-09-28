@@ -1,6 +1,6 @@
 {
-  "name": "ملاك المعرفة الإسلامية",
-  "short_name": "ملاك المعرفة",
+  "name": "قمر الشام",
+  "short_name": "قمر الشام",
   "description": "منصة إسلامية شاملة — القرآن والسنة والسيرة والأذكار ومواقيت الصلاة",
   "start_url": "./index.html",
   "scope": "./",
@@ -10,18 +10,29 @@
   "theme_color": "#d4af37",
   "lang": "ar",
   "dir": "rtl",
+  "author": "Emad Halawh",
+  "developer": {
+    "name": "Emad Halawh",
+    "email": "emadhlaweh@gmail.com"
+  },
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "icon.svg",
       "sizes": "192x192",
-      "type": "image/png",
+      "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "icon-512.png",
+      "src": "icon.svg",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
     }
   ],
   "categories": ["education", "lifestyle", "books"],
