@@ -149,34 +149,28 @@
 <div class="modal-content" id="modal-content"></div>
 </div>
 
-<audio id="adhan-audio" preload="none"></audio>
+<audio id="adhan-audio" preload="auto"></audio>
 
 <script>
-// ===== الأصوات: روابط Archive.org مضمونة =====
+// ===== الأصوات: ملفات محلية في المستودع (لا تعتمد على سيرفر خارجي) =====
+const BASE_URL = 'https://qamarsyria.github.io/qamar-malak/';
+
 const ADHAN_SOURCES = {
     umayyad: {
-        name: '🕌 أذان الجامع الأموي (سوريا)',
-        url: 'https://archive.org/download/Athan_Mawsoa_mp3/020.mp3'
+        name: '🕌 أذان الجامع الأموي (دمشق)',
+        url: BASE_URL + 'adhan-umayyad.mp3'
     },
-    makkah: {
-        name: '🕋 أذان مكة المكرمة',
-        url: 'https://archive.org/download/Athan_Mawsoa_mp3/008.mp3'
-    },
-    madinah: {
-        name: '🕌 أذان المدينة المنورة',
-        url: 'https://archive.org/download/Athan_Mawsoa_mp3/013.mp3'
+    hijazi: {
+        name: '🎙️ أذان الشيخ محمد حجازي',
+        url: BASE_URL + 'adhan-hijazi.mp3'
     },
     aqsa: {
-        name: '🌙 أذان القدس',
-        url: 'https://archive.org/download/Athan_Mawsoa_mp3/015.mp3'
+        name: '🌙 أذان المسجد الأقصى',
+        url: BASE_URL + 'adhan-aqsa.mp3'
     },
-    egypt: {
-        name: '🇪🇬 أذان مصر',
-        url: 'https://archive.org/download/Athan_Mawsoa_mp3/022.mp3'
-    },
-    turkey: {
-        name: '🇹🇷 أذان تركيا',
-        url: 'https://archive.org/download/Athan_Mawsoa_mp3/006.mp3'
+    halouji: {
+        name: '🎙️ أذان الحاج إينر الحلوجي',
+        url: BASE_URL + 'adhan-halouji.mp3'
     },
     silent: {
         name: '🔇 صامت (بدون صوت)',
@@ -414,7 +408,7 @@ function openPrayerSettings(prayerKey, prayerName) {
             <div class="setting-row">
                 <div class="setting-label">صوت الأذان لهذه الصلاة</div>
                 <select class="setting-select" id="prayer-sound" style="width:100%;max-width:none;margin-top:8px">
-                    ${['umayyad', 'makkah', 'madinah', 'aqsa', 'egypt', 'turkey'].map(k => `<option value="${k}" ${k === current.sound ? 'selected' : ''}>${ADHAN_SOURCES[k].name}</option>`).join('')}
+                    ${['umayyad', 'hijazi', 'aqsa', 'halouji'].map(k => `<option value="${k}" ${k === current.sound ? 'selected' : ''}>${ADHAN_SOURCES[k].name}</option>`).join('')}
                 </select>
             </div>
             <button class="preview-btn" style="width:100%;margin-top:10px" onclick="previewPrayerSound()">▶ تجربة</button>
