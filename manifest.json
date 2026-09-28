@@ -1,0 +1,45 @@
+{
+  "name": "ملاك المعرفة الإسلامية",
+  "short_name": "ملاك المعرفة",
+  "description": "منصة إسلامية شاملة — القرآن والسنة والسيرة والأذكار ومواقيت الصلاة",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a3a2c",
+  "theme_color": "#d4af37",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "lifestyle", "books"],
+  "shortcuts": [
+    {
+      "name": "القرآن",
+      "url": "./quran.html",
+      "description": "اقرأ القرآن الكريم"
+    },
+    {
+      "name": "الأذكار",
+      "url": "./adhkar.html",
+      "description": "أذكار الصباح والمساء"
+    },
+    {
+      "name": "السنة",
+      "url": "./hadith.html",
+      "description": "أحاديث صحيحة"
+    }
+  ]
+}
