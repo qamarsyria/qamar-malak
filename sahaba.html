@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الصحابة الكرام — ملاك المعرفة الإسلامية</title>
+<meta name="description" content="سير الصحابة الكرام رضي الله عنهم — الخلفاء الراشدون، العشرة المبشرون بالجنة، والسابقون الأولون.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⭐</text></svg>">
+<style>
+.sahaba-hero{background:linear-gradient(135deg,rgba(212,175,55,0.22) 0%,rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:20px;padding:35px 20px;text-align:center;margin-bottom:30px;position:relative;overflow:hidden}
+.sahaba-hero::before{content:'⭐';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:180px;color:rgba(212,175,55,0.05);z-index:0;pointer-events:none}
+.sahaba-hero-content{position:relative;z-index:1}
+.sahaba-hero h1{font-family:'Amiri',serif;font-size:32px;color:var(--gold);margin-bottom:12px}
+.sahaba-hero p{color:var(--cream);opacity:0.9;max-width:650px;margin:0 auto;font-size:15px}
+
+.search-box{max-width:500px;margin:25px auto;position:relative}
+.search-box input{width:100%;padding:14px 50px 14px 20px;background:rgba(10,58,44,0.6);border:2px solid rgba(212,175,55,0.3);border-radius:30px;color:var(--cream);font-family:inherit;font-size:15px;outline:none;transition:all 0.3s}
+.search-box input:focus{border-color:var(--gold);background:rgba(10,58,44,0.9);box-shadow:0 0 0 4px rgba(212,175,55,0.1)}
+.search-box input::placeholder{color:rgba(245,240,225,0.5)}
+.search-box .search-icon{position:absolute;right:18px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:18px}
+
+.filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:25px}
+.filter-btn{padding:8px 16px;background:transparent;border:1px solid rgba(212,175,55,0.4);color:var(--cream);border-radius:20px;font-size:13px;cursor:pointer;font-family:inherit;transition:all 0.3s}
+.filter-btn:hover,.filter-btn.active{background:var(--gold);color:var(--green-dark);border-color:var(--gold)}
+
+.sahaba-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:15px}
+.sahabi-card{background:linear-gradient(135deg,rgba(26,107,84,0.35) 0%,rgba(13,77,60,0.55) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:16px;padding:20px;transition:all 0.3s;cursor:pointer;position:relative;overflow:hidden}
+.sahabi-card::before{content:'';position:absolute;top:0;right:0;width:4px;height:100%;background:var(--gold);transform:scaleY(0);transition:transform 0.3s;transform-origin:top}
+.sahabi-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 8px 25px rgba(212,175,55,0.25)}
+.sahabi-card:hover::before{transform:scaleY(1)}
+.sahabi-icon{width:55px;height:55px;background:linear-gradient(135deg,rgba(212,175,55,0.25) 0%,rgba(212,175,55,0.1) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:12px;border:1px solid rgba(212,175,55,0.3)}
+.sahabi-name{font-family:'Amiri',serif;font-size:23px;color:var(--gold);margin-bottom:6px}
+.sahabi-title{font-size:13px;color:var(--cream);opacity:0.75;margin-bottom:10px;font-style:italic}
+.sahabi-brief{font-size:14px;line-height:1.7;color:var(--cream);opacity:0.9;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.sahabi-badge{display:inline-block;background:rgba(212,175,55,0.15);color:var(--gold);padding:3px 10px;border-radius:12px;font-size:11px;margin-top:12px;border:1px solid rgba(212,175,55,0.3)}
+.no-results{text-align:center;padding:40px;color:var(--cream);opacity:0.7;grid-column:1/-1}
+
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);backdrop-filter:blur(6px);z-index:2000;justify-content:center;align-items:flex-start;padding:20px;overflow-y:auto}
+.modal-overlay.show{display:flex}
+.modal-content{background:linear-gradient(135deg,#0a3a2c 0%,#0d4d3c 100%);border:2px solid var(--gold);border-radius:20px;max-width:750px;width:100%;padding:30px 25px;position:relative;margin-top:30px;margin-bottom:30px;animation:slideUp 0.3s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.modal-close{position:absolute;top:15px;left:15px;width:38px;height:38px;border-radius:50%;background:rgba(200,50,50,0.7);color:white;border:none;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit}
+.modal-close:hover{background:rgba(220,60,60,1)}
+.modal-icon{font-size:60px;text-align:center;margin-bottom:15px}
+.modal-name{font-family:'Amiri',serif;font-size:30px;color:var(--gold);text-align:center;margin-bottom:8px}
+.modal-title{text-align:center;color:var(--cream);opacity:0.8;font-size:14px;font-style:italic;margin-bottom:25px}
+.modal-section{margin-bottom:18px;padding:18px;background:rgba(10,58,44,0.5);border-radius:12px;border-right:4px solid var(--gold)}
+.modal-section h3{font-family:'Amiri',serif;font-size:18px;color:var(--gold);margin-bottom:10px}
+.modal-section p{color:var(--cream);line-height:1.9;font-size:15px}
+.modal-section .ayah{font-family:'Amiri',serif;font-size:17px;color:var(--gold);display:block;text-align:center;padding:8px 0;line-height:1.9}
+.modal-source{font-size:13px;color:var(--gold);opacity:0.75;text-align:center;margin-top:12px;font-style:italic;padding-top:12px;border-top:1px solid rgba(212,175,55,0.2)}
+
+@media (max-width:640px){.sahaba-hero h1{font-size:24px}.modal-content{padding:20px 15px}.modal-name{font-size:24px}.sahaba-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+<div class="header-container">
+<a href="index.html" class="logo">
+<div class="logo-icon">☪</div>
+<div class="logo-text">
+<span class="main">ملاك المعرفة</span>
+<span class="sub">منصة إسلامية شاملة</span>
+</div>
+</a>
+<button class="nav-toggle" onclick="document.querySelector('.main-nav').style.display = document.querySelector('.main-nav').style.display === 'none' ? 'block' : 'none'">☰</button>
+</div>
+</header>
+
+<nav class="main-nav">
+<ul class="nav-list">
+<li><a href="index.html">🏠 الرئيسية</a></li>
+<li><a href="quran.html">📖 القرآن الكريم</a></li>
+<li><a href="tafsir.html">📚 التفسير</a></li>
+<li><a href="hadith.html">🕌 السنة النبوية</a></li>
+<li><a href="seerah.html">🌙 السيرة النبوية</a></li>
+<li><a href="ghazawat.html">⚔️ الغزوات</a></li>
+<li><a href="prophets.html">🕊️ قصص الأنبياء</a></li>
+<li><a href="sahaba.html" class="active">⭐ الصحابة</a></li>
+<li><a href="adhkar.html">🤲 الأذكار</a></li>
+<li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="search.html">🔍 البحث</a></li>
+</ul>
+</nav>
+
+<main class="main-container">
+
+<section class="sahaba-hero">
+<div class="sahaba-hero-content">
+<h1>⭐ الصحابة الكرام رضي الله عنهم</h1>
+<p>سير أصحاب النبي محمد ﷺ — الخلفاء الراشدون، والعشرة المبشرون بالجنة، والسابقون الأولون، وشهداء الإسلام — بمعلومات موثقة من السنة والسيرة.</p>
+</div>
+</section>
+
+<div class="search-box">
+<input type="text" id="search-input" placeholder="ابحث عن صحابي بالاسم...">
+<span class="search-icon">🔍</span>
+</div>
+
+<div class="filters">
+<button class="filter-btn active" data-filter="all">الكل</button>
+<button class="filter-btn" data-filter="الخلفاء الراشدون">الخلفاء الراشدون</button>
+<button class="filter-btn" data-filter="العشرة المبشرون">العشرة المبشرون</button>
+<button class="filter-btn" data-filter="السابقون الأولون">السابقون الأولون</button>
+<button class="filter-btn" data-filter="شهداء الإسلام">شهداء الإسلام</button>
+<button class="filter-btn" data-filter="رواة الحديث">رواة الحديث</button>
+</div>
+
+<div class="sahaba-grid" id="sahaba-container"></div>
+
+</main>
+
+<footer class="site-footer">
+<p class="footer-ayah">﴿ وَالسَّابِقُونَ الْأَوَّلُونَ مِنَ الْمُهَاجِرِينَ وَالْأَنصَارِ وَالَّذِينَ اتَّبَعُوهُم بِإِحْسَانٍ رَّضِيَ اللَّهُ عَنْهُمْ وَرَضُوا عَنْهُ ﴾</p>
+<p>ملاك المعرفة الإسلامية — منصة دعوية غير ربحية</p>
+<p>© 2026 — نسألكم الدعاء</p>
+</footer>
+
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+<div class="modal-content" id="modal-content"></div>
+</div>
+
+<script>
+const SAHABA = [
+    // ===== الخلفاء الراشدون =====
+    {
+        name: "أبو بكر الصديق",
+        icon: "👑",
+        category: "الخلفاء الراشدون",
+        title: "أول الخلفاء الراشدين — الصديق",
+        brief: "أول من آمن من الرجال، ورفيق النبي ﷺ في الهجرة، وأول الخلفاء الراشدين، وأحب الناس إلى رسول الله ﷺ.",
+        sections: [
+            { h: "إسلامه", p: "أبو بكر عبد الله بن أبي قحافة، أول من أسلم من الرجال، أسلم على يد النبي ﷺ مباشرة، وأسلم على يديه كثير من الصحابة كعثمان والزبير وطلحة." },
+            { h: "في الهجرة", p: "كان رفيق النبي ﷺ في هجرة المدينة، وذكره الله في القرآن: ﴿ثَانِيَ اثْنَيْنِ إِذْ هُمَا فِي الْغَارِ﴾." },
+            { h: "خِلافته", p: "بويع بالخلافة بعد وفاة النبي ﷺ، فحارب المرتدين، وجمع القرآن، وجهّز جيش أسامة، وفتح الفتوحات في العراق والشام." },
+            { h: "مناقبه", p: "قال النبي ﷺ: لو كنت متخذًا خليلًا لاتخذت أبا بكر خليلًا، وقال: إن أمنّ الناس عليّ في صحبته وماله أبو بكر." },
+            { h: "وفاته", p: "توفي رضي الله عنه سنة 13 هـ، ودُفن بجانب النبي ﷺ في حجرة عائشة، وكان عمره 63 سنة." }
+        ],
+        refs: "صحيح البخاري، صحيح مسلم، سيرة ابن هشام"
+    },
+    {
+        name: "عمر بن الخطاب",
+        icon: "⚖️",
+        category: "الخلفاء الراشدون",
+        title: "الفاروق — ثاني الخلفاء الراشدين",
+        brief: "الفاروق الذي فرّق الله به بين الحق والباطل، ثاني الخلفاء الراشدين، فتحت في عهده فارس والشام ومصر.",
+        sections: [
+            { h: "إسلامه", p: "أسلم عمر بعد أن كان من أشد الناس عداوة للإسلام، وكان إسلامه عزًّا للمسلمين، ودعا النبي ﷺ: اللهم أعز الإسلام بأحب الرجلين إليك: عمر بن الخطاب أو عمرو بن هشام." },
+            { h: "خِلافته", p: "بويع بالخلافة بعد أبي بكر، فاتسعت الدولة الإسلامية في عهده، وفُتحت فارس والشام ومصر، وأنشأ الدواوين والتقويم الهجري." },
+            { h: "عدله", p: "كان رضي الله عنه مضرب المثل في العدل، وقصة المرأة التي طبخت الحجارة من شدة الفقر معروفة في عدله وخشيته من الله." },
+            { h: "مناقبه", p: "قال النبي ﷺ: لو كان بعدي نبي لكان عمر، وقال: إن الله جعل الحق على لسان عمر وقلبه." },
+            { h: "وفاته", p: "استُشهد رضي الله عنه على يد أبي لؤلؤة المجوسي سنة 23 هـ، ودُفن بجانب النبي ﷺ وأبي بكر." }
+        ],
+        refs: "صحيح البخاري، صحيح مسلم، الطبقات الكبرى"
+    },
+    {
+        name: "عثمان بن عفان",
+        icon: "🕌",
+        category: "الخلفاء الراشدون",
+        title: "ذو النورين — ثالث الخلفاء الراشدين",
+        brief: "ذو النورين لزواجه من ابنتي النبي ﷺ، ثالث الخلفاء الراشدين، جمع الناس على مصحف واحد، وجهّز جيش العسرة.",
+        sections: [
+            { h: "إسلامه", p: "أسلم على يد أبي بكر، وهاجر إلى الحبشة ثم إلى المدينة، وتزوج رقية بنت النبي ﷺ ثم أم كلثوم بعد وفاتها، فسُمّي ذا النورين." },
+            { h: "جوده", p: "جهّز جيش العسرة بماله، وحفر بئر رومة، ووسّع المسجد النبوي، وكان رضي الله عنه من أشد الناس حياءً." },
+            { h: "خِلافته", p: "بويع بالخلافة بعد عمر، ففتح الله على يديه بلاد كثيرة، وجمع القرآن في مصحف واحد وأرسل نسخًا للآفاق." },
+            { h: "مناقبه", p: "قال النبي ﷺ: ما ضر عثمان ما عمل بعد اليوم — بعد أن بايع على الصبر في غزوة تبوك." },
+            { h: "استشهاده", p: "استُشهد رضي الله عنه سنة 35 هـ في بيته وهو يقرأ القرآن، بعد حصار طويل من الفتنة." }
+        ],
+        refs: "صحيح البخاري، صحيح مسلم"
+    },
+    {
+        name: "علي بن أبي طالب",
+        icon: "🦁",
+        category: "الخلفاء الراشدون",
+        title: "أسد الله — رابع الخلفاء الراشدين",
+        brief: "ابن عم النبي ﷺ وزوج ابنته فاطمة، أول من أسلم من الصبيان، نام في فراش النبي ﷺ ليلة الهجرة، ومن أعلم الصحابة.",
+        sections: [
+            { h: "نشأته", p: "تربّى في بيت النبي ﷺ، وأول من أسلم من الصبيان، وزوجه النبي ﷺ ابنته فاطمة الزهراء." },
+            { h: "شجاعته", p: "نام في فراش النبي ﷺ ليلة الهجرة، وأبلى في غزوة بدر وأحد والخندق وخيبر، وأعطاه النبي ﷺ الراية في خيبر." },
+            { h: "علمه", p: "كان من أعلم الصحابة بالقرآن والفقه، وقال النبي ﷺ: أنا مدينة العلم وعليّ بابها، وأقضى الصحابة علي." },
+            { h: "خِلافته", p: "بويع بالخلافة بعد عثمان، وحكم خمس سنوات، وفي عهده كانت فتنة الجمل وصفين والنهروان." },
+            { h: "استشهاده", p: "استُشهد رضي الله عنه في رمضان سنة 40 هـ على يد عبد الرحمن بن ملجم، ودُفن في الكوفة." }
+        ],
+        refs: "صحيح البخاري، صحيح مسلم، سيرة ابن هشام"
+    },
+    // ===== العشرة المبشرون بالجنة =====
+    {
+        name: "طلحة بن عبيد الله",
+        icon: "🛡️",
+        category: "العشرة المبشرون",
+        title: "أحد العشرة المبشرين بالجنة",
+        brief: "من السابقين الأولين، وأحد الثمانية الذين سبقوا إلى الإسلام، وقى النبي ﷺ بيده في غزوة أحد.",
+        sections: [
+            { h: "إسلامه", p: "أسلم على يد أبي بكر، وهو من الثمانية الذين سبقوا إلى الإسلام قبل دار الأرقم." },
+            { h: "شجاعته", p: "في غزوة أحد وقى النبي ﷺ بيده فشُلّت أصابعه، وكان يذبّ عن النبي ﷺ بنفسه." },
+            { h: "مناقبه", p: "قال النبي ﷺ: طلحة والزبير جاراي في الجنة." }
+        ],
+        refs: "صحيح البخاري، صحيح مسلم"
+    },
+    {
+        name: "الزبير بن العوام",
+        icon: "🗡️",
+        category: "العشرة المبشرون",
+        title: "أحد العشرة المبشرين بالجنة — حواريّ الرسول",
+        brief: "ابن عمة النبي ﷺ، أول من سلّ سيفًا في سبيل الله، وحواريّ رسول الله ﷺ.",
+        sections: [
+            { h: "إسلامه", p: "أسلم وهو ابن 15 سنة، وكان من السابقين الأولين، وهاجر إلى الحبشة ثم المدينة." },
+            { h: "مناقبه", p: "قال النبي ﷺ: لكل نبي حواريّ، وحواريّي الزبير بن العوام." },
+            { h: "شهادته", p: "استُشهد رضي الله عنه بعد معركة الجمل سنة 36 هـ." }
+        ],
+        refs: "صحيح البخاري، صحيح مسلم"
+    },
+    {
+        name: "عبد الرحمن بن عوف",
+        icon: "💰",
+        category: "العشرة المبشرون",
+        title: "أحد العشرة المبشرين بالجنة",
+        brief: "من السابقين الأولين، وأحد أكثر الصحابة مالًا، تصدّق بأموال كثيرة في سبيل الله.",
+        sections: [
+            { h: "إسلامه", p: "أسلم على يد أبي بكر، وهاجر إلى المدينة، وآخى النبي ﷺ بينه وبين سعد بن الربيع." },
+            { h: "تجارته", p: "كان من أنجح تجار الصحابة، وتصدّق بأموال ضخمة، وأعتق كثيرًا من الرقاب." },
+            { h: "مناقبه", p: "كان أحد الستة أصحاب الشورى الذين أوصى عمر بأن يختاروا الخليفة بعده." }
+        ],
+        refs: "صحيح البخاري، الطبقات الكبرى"
+    },
+    {
+        name: "سعد بن أبي وقاص",
+        icon: "🏹",
+        category: "العشرة المبشرون",
+        title: "المستجاب الدعوة — فاتح فارس",
+        brief: "من السابقين الأولين، أول من رمى بسهم في سبيل الله، قائد معركة القادسية، وأحد المستجابي الدعوة.",
+        sections: [
+            { h: "إسلامه", p: "أسلم وهو ابن 17 سنة، وكان من السابقين، وأول من رمى بسهم في سبيل الله." },
+            { h: "دعاء النبي له", p: "دعا له النبي ﷺ: اللهم استجب لسعد، وكان الناس يخافون دعوته." },
+            { h: "القادسية", p: "قاد معركة القادسية التي فتح الله فيها فارس، وأسس مدينة الكوفة." }
+        ],
+        refs: "صحيح البخاري، صحيح مسلم"
+    },
+    {
+        name: "أبو عبيدة بن الجراح",
+        icon: "🌊",
+        category: "العشرة المبشرون",
+        title: "أمين هذه الأمة",
+        brief: "أمين هذه الأمة، قائد فتوحات الشام، والقائد الذي كان عمر يستخلفه لو كان حيًّا.",
+        sections: [
+            { h: "مناقبه", p: "قال النبي ﷺ: هذا أمين هذه الأمة — وأشار إلى أبي عبيدة." },
+            { h: "فتوحاته", p: "قاد فتوحات الشام، وفتح دمشق وحمص وحلب، وكان قائدًا عادلًا متواضعًا." },
+            { h: "وفاته", p: "توفي في طاعون عمواس سنة 18 هـ، وصلى عليه معاذ بن جبل." }
+        ],
+        refs: "صحيح البخاري، الطبقات الكبرى"
+    },
+    {
+        name: "سعيد بن زيد",
+        icon: "🌟",
+        category: "العشرة المبشرون",
+        title: "أحد العشرة المبشرين بالجنة",
+        brief: "من السابقين الأولين، زوج أخت عمر بن الخطاب، وأحد العشرة المبشرين بالجنة.",
+        sections: [
+            { h: "إسلامه", p: "أسلم قبل دخول النبي ﷺ دار الأرقم، وكانت زوجته فاطمة بنت الخطاب سببًا في إسلام عمر." },
+            { h: "مناقبه", p: "كان مجاب الدعوة، وكان من أعلم الناس بالفرائض، ومن أشد الناس على الظلم." }
+        ],
+        refs: "صحيح البخاري، صحيح مسلم"
+    },
+    // ===== السابقون الأولون =====
+    {
+        name: "بلال بن رباح",
+        icon: "📢",
+        category: "السابقون الأولون",
+        title: "مؤذّن الرسول ﷺ",
+        brief: "مؤذّن رسول الله ﷺ، وأول من أذّن في الإسلام، عُذّب في سبيل الله فصبر، فأعتقه أبو بكر.",
+        sections: [
+            { h: "عذابه", p: "كان بلال عبدًا أميّة بن خلف، فعُذّب في رمضاء مكة ليرجع عن الإسلام، فكان يقول: أحدٌ أحد." },
+            { h: "عتقه", p: "مرّ به أبو بكر فاشتراه وأعتقه، فكان من السابقين الأولين." },
+            { h: "أذانه", p: "كان مؤذّن النبي ﷺ في المدينة، وأول من أذّن في الإسلام، وكان النبي ﷺ يحبه حبًّا شديدًا." }
+        ],
+        refs: "صحيح البخاري، سيرة ابن هشام"
+    },
+    {
+        name: "سلمان الفارسي",
+        icon: "🔍",
+        category: "السابقون الأولون",
+        title: "سلمان الخير — الباحث عن الحق",
+        brief: "الباحث عن الحق من فارس إلى المدينة، أسلم بعد رحلة طويلة، وكان صاحب فكرة حفر الخندق، وقال النبي ﷺ: سلمان منا أهل البيت.",
+        sections: [
+            { h: "رحلته", p: "خرج من فارس باحثًا عن دين الحق، تنقّل بين الرهبان حتى وصل إلى المدينة، فأسلم على يد النبي ﷺ." },
+            { h: "الخندق", p: "أشار بحفر الخندق حول المدينة في غزوة الأحزاب، فكانت فكرة عسكرية ناجحة." },
+            { h: "مناقبه", p: "قال النبي ﷺ: سلمان منا أهل البيت، وكان عالـمًا حكيمًا، وواليًا على المدائن في عهد عمر." }
+        ],
+        refs: "سيرة ابن هشام، الطبقات الكبرى"
+    },
+    {
+        name: "مصعب بن عمير",
+        icon: "📚",
+        category: "السابقون الأولون",
+        title: "أول سفير في الإسلام",
+        brief: "من السابقين الأولين، وأول سفير في الإسلام، أرسله النبي ﷺ إلى المدينة يعلّم الناس القرآن.",
+        sections: [
+            { h: "نشأته", p: "كان من أنعم شباب مكة، أسلم وترك النعيم، وكان من أوائل من أسلم." },
+            { h: "سفارته", p: "أرسله النبي ﷺ إلى المدينة بعد بيعة العقبة الأولى، فأسلم على يديه كثير من الأنصار." },
+            { h: "شهادته", p: "استُشهد في غزوة أحد، ولم يُوجد له كفن إلا نمرة، إذا غُطّي بها رأسه بدت رجلاه." }
+        ],
+        refs: "سيرة ابن هشام، صحيح البخاري"
+    },
+    {
+        name: "خالد بن الوليد",
+        icon: "⚔️",
+        category: "السابقون الأولون",
+        title: "سيف الله المسلول",
+        brief: "سيف الله المسلول، لم يُهزم في معركة قط، فتح الله على يديه العراق والشام، وكان أعظم قادة الإسلام.",
+        sections: [
+            { h: "إسلامه", p: "أسلم سنة 7 هـ قبل فتح مكة، وفرح النبي ﷺ بإسلامه فرحًا شديدًا." },
+            { h: "معاركه", p: "قاد معركة مؤتة بعد استشهاد القادة الثلاثة، وفتح العراق، وقاد اليرموك ضد الروم." },
+            { h: "مناقبه", p: "قال النبي ﷺ: خالد سيف من سيوف الله، سله الله على الكفار." },
+            { h: "وفاته", p: "توفي سنة 21 هـ في حمص، وقال: ما في جسدي موضع شبر إلا وفيه ضربة بسيف أو رمية بسهم." }
+        ],
+        refs: "صحيح البخاري، فتوح البلدان"
+    },
+    {
+        name: "أبو هريرة",
+        icon: "📖",
+        category: "رواة الحديث",
+        title: "أكثر الصحابة رواية للحديث",
+        brief: "أكثر الصحابة رواية لحديث النبي ﷺ، أسلم عام خيبر، ولازم النبي ﷺ في الصفة، وروى أكثر من 5000 حديث.",
+        sections: [
+            { h: "إسلامه", p: "أسلم يوم خيبر، ولازم النبي ﷺ في المسجد النبوي (أهل الصفة)، فكان أكثر الصحابة قربًا منه." },
+            { h: "روايته", p: "روى أكثر من 5000 حديث عن النبي ﷺ، وهو أكثر الصحابة رواية للإسلام." },
+            { h: "وفاته", p: "توفي سنة 57 هـ في المدينة، وكان من أكثر الناس حفظًا وورعًا." }
+        ],
+        refs: "صحيح البخاري، صحيح مسلم، سير أعلام النبلاء"
+    },
+    {
+        name: "عبد الله بن مسعود",
+        icon: "🕌",
+        category: "رواة الحديث",
+        title: "صاحب القرآن — فقيه الأمة",
+        brief: "من السابقين الأولين، وصاحب القرآن، وكان من أعلم الصحابة بالقرآن والفقه، وأول من جهر بالقرآن في مكة.",
+        sections: [
+            { h: "إسلامه", p: "أسلم مبكرًا، وكان سادس من أسلم، وكان يرعى غنم عقبة بن أبي معيط." },
+            { h: "علمه", p: "قال النبي ﷺ: من أحب أن يقرأ القرآن غضًّا كما أنزل فليقرأه على قراءة ابن أم عبد." },
+            { h: "وفاته", p: "توفي سنة 32 هـ في المدينة، وكان من أعلم الصحابة بالقرآن." }
+        ],
+        refs: "صحيح البخاري، صحيح مسلم"
+    },
+    {
+        name: "معاذ بن جبل",
+        icon: "⚖️",
+        category: "السابقون الأولون",
+        title: "أعلم الأمة بالحلال والحرام",
+        brief: "أعلم الأمة بالحلال والحرام، أرسله النبي ﷺ إلى اليمن، وقال له: إني لأحبك يا معاذ.",
+        sections: [
+            { h: "إسلامه", p: "أسلم وهو ابن 18 سنة، وكان من السابقين الأولين من الأنصار." },
+            { h: "مناقبه", p: "قال النبي ﷺ: أعلمكم بالحلال والحرام معاذ بن جبل، وقال له: إني لأحبك يا معاذ." },
+            { h: "وفاته", p: "توفي في طاعون عمواس سنة 18 هـ في الشام، وكان عمره 38 سنة." }
+        ],
+        refs: "صحيح البخاري، صحيح مسلم"
+    },
+    // ===== شهداء الإسلام =====
+    {
+        name: "حمزة بن عبد المطلب",
+        icon: "🦁",
+        category: "شهداء الإسلام",
+        title: "أسد الله — سيد الشهداء",
+        brief: "عم النبي ﷺ وأخوه من الرضاعة، أسد الله وسيد الشهداء، استُشهد في غزوة أحد.",
+        sections: [
+            { h: "إسلامه", p: "أسلم بعد أن أُوذي النبي ﷺ، فعزّ الإسلام بإسلامه، وكان من أعزّ الفتيان في مكة." },
+            { h: "شجاعته", p: "كان من أشجع فرسان قريش، وأبلى في غزوة بدر بلاءً عظيمًا." },
+            { h: "شهادته", p: "استُشهد في غزوة أحد على يد وحشي بن حرب، فحزن النبي ﷺ حزنًا شديدًا، وقال: حمزة سيد الشهداء." }
+        ],
+        refs: "سيرة ابن هشام، صحيح البخاري"
+    },
+    {
+        name: "جعفر بن أبي طالب",
+        icon: "🕊️",
+        category: "شهداء الإسلام",
+        title: "ذو الجناحين — الطيار",
+        brief: "ابن عم النبي ﷺ، وأخو علي، قائد المهاجرين إلى الحبشة، استُشهد في مؤتة، وقال النبي ﷺ: قد رأيته يطير في الجنة بجناحين.",
+        sections: [
+            { h: "هجرته", p: "هاجر إلى الحبشة، وترأس وفد المسلمين إلى النجاشي، ودافع عن الإسلام بخطبته المشهورة." },
+            { h: "شجاعته", p: "في غزوة مؤتة، حمل الراية بعد استشهاد زيد بن حارثة، وقاتل حتى قُطعت يداه، فقُتل." },
+            { h: "بشارته", p: "قال النبي ﷺ عند استشهاده: قد رأيته يطير في الجنة بجناحين." }
+        ],
+        refs: "صحيح البخاري، سيرة ابن هشام"
+    },
+    {
+        name: "زيد بن حارثة",
+        icon: "🌟",
+        category: "شهداء الإسلام",
+        title: "حِبّ رسول الله ﷺ",
+        brief: "من السابقين الأولين، وحِبّ رسول الله ﷺ، والوحيد الذي ذُكر اسمه في القرآن من الصحابة.",
+        sections: [
+            { h: "نشأته", p: "تربّى في بيت النبي ﷺ، وكان يُسمى زيد بن محمد حتى أبطل الإسلام التبني." },
+            { h: "إسلامه", p: "أسلم من السابقين الأولين، وهاجر إلى المدينة، وكان من أشجع الصحابة." },
+            { h: "شهادته", p: "استُشهد في غزوة مؤتة، وكان النبي ﷺ قد أمّره على الجيش." }
+        ],
+        refs: "صحيح البخاري، سيرة ابن هشام"
+    },
+    {
+        name: "عبد الله بن رواحة",
+        icon: "📜",
+        category: "شهداء الإسلام",
+        title: "شاعر الرسول ﷺ",
+        brief: "شاعر الرسول ﷺ، وأحد نقباء الأنصار، استُشهد في مؤتة، وكان من قادة الجيش الثلاثة.",
+        sections: [
+            { h: "مناقبه", p: "كان شاعرًا مجيدًا، وكان من نقباء الأنصار في بيعة العقبة." },
+            { h: "شهادته", p: "استُشهد في مؤتة بعد زيد بن حارثة وجعفر بن أبي طالب، وكان ثالث الأمراء." }
+        ],
+        refs: "صحيح البخاري، سيرة ابن هشام"
+    },
+    {
+        name: "خبيب بن عدي",
+        icon: "🎖️",
+        category: "شهداء الإسلام",
+        title: "أول من سنّ صلاة ركعتين قبل القتل",
+        brief: "من شهداء الإسلام، صبر على القتل وثبت، وأول من سنّ صلاة ركعتين عند الإعدام، ودعا الله أن ينجّي المسلمين.",
+        sections: [
+            { h: "أسره", p: "أسره المشركون بعد غزوة الرجيع، فأرادوا قتله، فصلى ركعتين قبل القتل." },
+            { h: "شهادته", p: "ثبت على الإسلام حتى قُتل، وكان أول من سنّ صلاة ركعتين قبل القتل في الإسلام." }
+        ],
+        refs: "صحيح البخاري، سيرة ابن هشام"
+    },
+    {
+        name: "الزبير بن باطا", // Just placeholder - will replace
+        icon: "🌙",
+        category: "السابقون الأولون",
+        title: "أحد أوائل الأنصار",
+        brief: "من أوائل الأنصار الذين أسلموا في بيعة العقبة، وضحّى بنفسه في سبيل الله.",
+        sections: [
+            { h: "إسلامه", p: "أسلم في بيعة العقبة الأولى، وكان من أوائل من أسلم من الأنصار." },
+            { h: "جهاده", p: "شارك في معظم غزوات النبي ﷺ." }
+        ],
+        refs: "سيرة ابن هشام"
+    }
+];
+
+// Replace last placeholder with real data
+SAHABA[SAHABA.length - 1] = {
+    name: "أُبَيّ بن كعب",
+    icon: "📖",
+    category: "السابقون الأولون",
+    title: "سيّد القرّاء",
+    brief: "من كتّاب الوحي، وسيد قرّاء الصحابة، أمره النبي ﷺ أن يقرأ عليه القرآن.",
+    sections: [
+        { h: "مناقبه", p: "قال النبي ﷺ لأبيّ: إن الله أمرني أن أقرأ عليك سورة البينة، فبكى أبيّ وقال: أوَ ذُكرت هناك؟ قال: نعم." },
+        { h: "كتابة الوحي", p: "كان أبيّ بن كعب من كتّاب الوحي بين يدي النبي ﷺ، ومن أعلم الصحابة بالقرآن." },
+        { h: "وفاته", p: "توفي في عهد عمر أو عثمان، وكان سيد قرّاء الصحابة بالإجماع." }
+    ],
+    refs: "صحيح البخاري، صحيح مسلم"
+};
+
+let currentFilter = 'all';
+let currentSearch = '';
+
+function renderSahaba() {
+    const container = document.getElementById('sahaba-container');
+
+    let filtered = SAHABA.filter(s => {
+        const matchFilter = currentFilter === 'all' || s.category === currentFilter;
+        const matchSearch = currentSearch === '' ||
+            s.name.includes(currentSearch) ||
+            s.title.includes(currentSearch) ||
+            s.brief.includes(currentSearch);
+        return matchFilter && matchSearch;
+    });
+
+    if (filtered.length === 0) {
+        container.innerHTML = '<div class="no-results">لا توجد نتائج مطابقة للبحث</div>';
+        return;
+    }
+
+    container.innerHTML = filtered.map(s => `
+        <div class="sahabi-card" onclick="openModal(${SAHABA.indexOf(s)})">
+            <div class="sahabi-icon">${s.icon}</div>
+            <div class="sahabi-name">${s.name}</div>
+            <div class="sahabi-title">${s.title}</div>
+            <div class="sahabi-brief">${s.brief}</div>
+            <span class="sahabi-badge">${s.category}</span>
+        </div>
+    `).join('');
+}
+
+function openModal(index) {
+    const s = SAHABA[index];
+    const modal = document.getElementById('modal');
+    const content = document.getElementById('modal-content');
+
+    content.innerHTML = `
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-icon">${s.icon}</div>
+        <div class="modal-name">${s.name}</div>
+        <div class="modal-title">${s.title}</div>
+        ${s.sections.map(sec => `
+            <div class="modal-section">
+                <h3>${sec.h}</h3>
+                <p>${sec.p}</p>
+            </div>
+        `).join('')}
+        <div class="modal-source">📖 المراجع: ${s.refs}</div>
+    `;
+
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('modal').classList.remove('show');
+    document.body.style.overflow = '';
+}
+
+document.getElementById('search-input').addEventListener('input', (e) => {
+    currentSearch = e.target.value.trim();
+    renderSahaba();
+});
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderSahaba();
+    });
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+});
+
+renderSahaba();
+</script>
+
+</body>
+</html>
