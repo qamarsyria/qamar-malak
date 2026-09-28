@@ -4,33 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>قمر الشام — منصة إسلامية شاملة</title>
-<meta name="description" content="قمر الشام: منصة إسلامية شاملة — القرآن الكريم بالتفسير والصوت، السنة النبوية، السيرة، الأذكار، مواقيت الصلاة، والقبلة.">
+<meta name="description" content="قمر الشام: منصة إسلامية شاملة — القرآن الكريم بالتفسير والصوت، السنة النبوية، السيرة، الأذكار، مواقيت الصلاة، المسبحة الرقمية، والروزنامة.">
 <meta name="author" content="Emad Halawh">
-<meta name="keywords" content="قمر الشام, قرآن, تفسير, سنة, سيرة, أذكار, مواقيت الصلاة, قبلة, إسلامي">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon.svg">
+<link rel="apple-touch-icon" href="icon-192.png">
 <meta name="theme-color" content="#0d4d3c">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="قمر الشام">
 <meta name="mobile-web-app-capable" content="yes">
 <style>
-/* ===== شريط التحية ===== */
 .top-bar{background:linear-gradient(135deg,rgba(212,175,55,0.15) 0%,rgba(212,175,55,0.03) 100%);border:1px solid rgba(212,175,55,0.3);border-radius:14px;padding:15px 20px;margin-bottom:25px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;text-align:center}
 .top-bar-greeting{font-family:'Amiri',serif;font-size:18px;color:var(--gold);font-weight:700}
 .top-bar-date{font-size:13px;color:var(--cream);opacity:0.85}
 .top-bar-date strong{color:var(--gold);font-weight:600}
-
-/* ===== زر تثبيت التطبيق ===== */
-.install-banner{display:block;background:linear-gradient(135deg,rgba(74,222,128,0.2) 0%,rgba(74,222,128,0.05) 100%);border:2px solid rgba(74,222,128,0.5);border-radius:14px;padding:15px 20px;margin-bottom:25px;text-align:center}
-.install-banner p{color:#4ade80;font-size:15px;margin-bottom:12px;font-weight:600}
-.install-btn{background:linear-gradient(135deg,#4ade80 0%,#22c55e 100%);color:#0a3a2c;border:none;padding:12px 30px;border-radius:28px;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;transition:all 0.3s}
-.install-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(74,222,128,0.4)}
-.install-hint{font-size:12px;color:#fbbf24;margin-top:10px;opacity:0.9;line-height:1.7}
-
-/* ===== البحث السريع ===== */
 .quick-search{max-width:600px;margin:0 auto 30px;position:relative}
 .quick-search input{width:100%;padding:18px 55px 18px 20px;background:rgba(10,58,44,0.7);border:2px solid rgba(212,175,55,0.35);border-radius:35px;color:var(--cream);font-family:inherit;font-size:16px;outline:none;transition:all 0.3s}
 .quick-search input:focus{border-color:var(--gold);background:rgba(10,58,44,1);box-shadow:0 0 0 5px rgba(212,175,55,0.12)}
@@ -38,17 +26,12 @@
 .quick-search .icon{position:absolute;right:22px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:20px;pointer-events:none}
 .quick-search .btn-go{position:absolute;left:6px;top:50%;transform:translateY(-50%);background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark);border:none;padding:12px 24px;border-radius:28px;font-family:inherit;font-weight:700;font-size:14px;cursor:pointer;transition:all 0.3s}
 .quick-search .btn-go:hover{transform:translateY(-50%) scale(1.05)}
-
-/* ===== الميزات السريعة ===== */
-.quick-features{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:35px}
-.feature-btn{background:linear-gradient(135deg,rgba(26,107,84,0.5) 0%,rgba(13,77,60,0.7) 100%);border:2px solid rgba(212,175,55,0.3);border-radius:16px;padding:20px 15px;text-align:center;text-decoration:none;color:var(--cream);transition:all 0.3s;display:block;position:relative;overflow:hidden}
+.quick-features{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:35px}
+.feature-btn{background:linear-gradient(135deg,rgba(26,107,84,0.5) 0%,rgba(13,77,60,0.7) 100%);border:2px solid rgba(212,175,55,0.3);border-radius:16px;padding:20px 12px;text-align:center;text-decoration:none;color:var(--cream);transition:all 0.3s;display:block;position:relative;overflow:hidden}
 .feature-btn:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 8px 25px rgba(212,175,55,0.3)}
-.feature-btn .icon{font-size:38px;display:block;margin-bottom:10px}
-.feature-btn .label{font-family:'Amiri',serif;font-size:16px;color:var(--gold);font-weight:700}
+.feature-btn .icon{font-size:36px;display:block;margin-bottom:10px}
+.feature-btn .label{font-family:'Amiri',serif;font-size:15px;color:var(--gold);font-weight:700}
 .feature-btn .sub{font-size:11px;color:var(--cream);opacity:0.7;margin-top:4px;display:block}
-.feature-btn .new-tag{position:absolute;top:8px;left:8px;background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%);color:white;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:700}
-
-/* ===== بطاقات اليوم ===== */
 .today-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px;margin-bottom:35px}
 .today-card{background:linear-gradient(135deg,rgba(212,175,55,0.15) 0%,rgba(13,77,60,0.5) 100%);border:1px solid rgba(212,175,55,0.3);border-radius:16px;padding:22px;position:relative;overflow:hidden}
 .today-card::before{content:'';position:absolute;top:0;right:0;width:4px;height:100%;background:var(--gold)}
@@ -58,74 +41,56 @@
 .today-ref{font-size:12px;color:var(--gold);opacity:0.85;text-align:center;font-style:italic;padding-top:10px;border-top:1px dashed rgba(212,175,55,0.25)}
 .today-action{display:block;text-align:center;margin-top:14px;color:var(--gold);text-decoration:none;font-size:13px;font-weight:600;padding:8px;border-radius:10px;background:rgba(212,175,55,0.1);transition:all 0.3s}
 .today-action:hover{background:var(--gold);color:var(--green-dark)}
-
-/* ===== الإحصائيات ===== */
-.stats-bar{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;padding:25px 15px;margin-bottom:40px;background:linear-gradient(135deg,rgba(26,107,84,0.3) 0%,rgba(13,77,60,0.5) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:16px}
-.stat-item{text-align:center;min-width:90px}
-.stat-number{font-family:'Amiri',serif;font-size:32px;color:var(--gold);font-weight:700;display:block;line-height:1}
-.stat-label{font-size:12px;color:var(--cream);opacity:0.85;margin-top:8px}
-
-/* ===== عناوين المجموعات ===== */
+.stats-bar{display:flex;justify-content:center;gap:25px;flex-wrap:wrap;padding:22px 15px;margin-bottom:40px;background:linear-gradient(135deg,rgba(26,107,84,0.3) 0%,rgba(13,77,60,0.5) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:16px}
+.stat-item{text-align:center;min-width:80px}
+.stat-number{font-family:'Amiri',serif;font-size:28px;color:var(--gold);font-weight:700;display:block;line-height:1}
+.stat-label{font-size:11px;color:var(--cream);opacity:0.85;margin-top:8px}
 .section-group-title{font-family:'Amiri',serif;font-size:24px;color:var(--gold);text-align:center;margin:45px 0 20px;padding-bottom:12px;border-bottom:1px solid rgba(212,175,55,0.3);position:relative}
 .section-group-title::after{content:'◆';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);color:var(--gold);font-size:14px;background:linear-gradient(135deg,var(--green-deep) 0%,var(--green-dark) 100%);padding:0 12px}
-
-/* ===== البطاقات ===== */
 .section-card .new-badge{position:absolute;top:12px;left:12px;background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%);color:white;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:700;box-shadow:0 4px 12px rgba(239,68,68,0.4)}
 .section-card{position:relative}
 .section-card .content-count{display:inline-block;background:rgba(212,175,55,0.15);color:var(--gold);padding:3px 10px;border-radius:12px;font-size:11px;margin-top:10px;border:1px solid rgba(212,175,55,0.3)}
 .section-card .section-icon{font-size:40px;margin-bottom:12px;display:block}
 .section-card h3{font-family:'Amiri',serif;font-size:21px;color:var(--gold);margin-bottom:8px}
 .section-card p{font-size:14px;opacity:0.85;line-height:1.7}
-
-/* ===== لماذا قمر الشام ===== */
 .why-us-card{background:linear-gradient(135deg,rgba(26,107,84,0.3) 0%,rgba(13,77,60,0.5) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:14px;padding:22px 18px;transition:all 0.3s}
 .why-us-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 8px 25px rgba(212,175,55,0.2)}
 .why-us-card .icon{font-size:38px;display:block;margin-bottom:12px}
 .why-us-card h3{font-family:'Amiri',serif;font-size:19px;color:var(--gold);margin-bottom:10px}
 .why-us-card p{font-size:14px;line-height:1.8;color:var(--cream);opacity:0.9}
-
-/* ===== توقيع المطور ===== */
+.thanks-section{margin-top:40px;padding:30px 20px;background:linear-gradient(135deg,rgba(26,107,84,0.25) 0%,rgba(13,77,60,0.4) 100%);border:1px solid rgba(212,175,55,0.3);border-radius:20px;text-align:center}
+.thanks-title{font-family:'Amiri',serif;font-size:24px;color:var(--gold);margin-bottom:15px}
+.thanks-intro{color:var(--cream);opacity:0.9;font-size:15px;line-height:2;margin-bottom:25px;max-width:700px;margin-left:auto;margin-right:auto}
+.thanks-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-top:20px}
+.thanks-card{background:rgba(10,58,44,0.6);border:1px solid rgba(212,175,55,0.25);border-radius:14px;padding:20px 15px;transition:all 0.3s}
+.thanks-card:hover{transform:translateY(-3px);border-color:var(--gold)}
+.thanks-icon{font-size:36px;display:block;margin-bottom:10px}
+.thanks-name{font-family:'Amiri',serif;font-size:17px;color:var(--gold);font-weight:700;margin-bottom:6px}
+.thanks-role{font-size:12px;color:var(--cream);opacity:0.8;line-height:1.6}
+.thanks-footer{margin-top:25px;padding-top:20px;border-top:1px dashed rgba(212,175,55,0.25);color:var(--cream);opacity:0.85;font-size:14px;line-height:1.9}
+.thanks-dua{font-family:'Amiri',serif;font-size:18px;color:var(--gold);line-height:2;margin-top:15px;padding:15px;background:rgba(10,58,44,0.5);border-radius:12px}
 .dev-signature{text-align:center;padding:30px 20px;margin-top:40px;background:linear-gradient(135deg,rgba(212,175,55,0.1) 0%,rgba(212,175,55,0.02) 100%);border:1px solid rgba(212,175,55,0.3);border-radius:20px}
 .dev-label{font-size:13px;color:var(--cream);opacity:0.75;margin-bottom:10px;letter-spacing:1px}
 .dev-name{font-family:monospace;direction:ltr;font-size:22px;color:var(--gold);font-weight:700;letter-spacing:2px}
 .dev-role{font-size:13px;color:var(--cream);opacity:0.85;margin-top:8px}
 .dev-contact{margin-top:14px;font-size:13px;color:var(--cream);opacity:0.85}
 .dev-contact a{color:var(--gold);text-decoration:none}
-.dev-contact a:hover{text-decoration:underline}
-
-/* ===== شكر المساهمين ===== */
-.thanks-section{margin-top:40px;padding:30px 20px;background:linear-gradient(135deg,rgba(26,107,84,0.25) 0%,rgba(13,77,60,0.4) 100%);border:1px solid rgba(212,175,55,0.3);border-radius:20px;text-align:center}
-.thanks-title{font-family:'Amiri',serif;font-size:24px;color:var(--gold);margin-bottom:15px}
-.thanks-intro{color:var(--cream);opacity:0.9;font-size:15px;line-height:2;margin-bottom:25px;max-width:700px;margin-left:auto;margin-right:auto}
-.thanks-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-top:20px}
-.thanks-card{background:rgba(10,58,44,0.6);border:1px solid rgba(212,175,55,0.25);border-radius:14px;padding:20px 15px;transition:all 0.3s}
-.thanks-card:hover{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 6px 20px rgba(212,175,55,0.2)}
-.thanks-icon{font-size:36px;display:block;margin-bottom:10px}
-.thanks-name{font-family:'Amiri',serif;font-size:17px;color:var(--gold);font-weight:700;margin-bottom:6px}
-.thanks-role{font-size:12px;color:var(--cream);opacity:0.8;line-height:1.6}
-.thanks-footer{margin-top:25px;padding-top:20px;border-top:1px dashed rgba(212,175,55,0.25);color:var(--cream);opacity:0.85;font-size:14px;line-height:1.9}
-.thanks-footer strong{color:var(--gold)}
-.thanks-dua{font-family:'Amiri',serif;font-size:18px;color:var(--gold);line-height:2;margin-top:15px;padding:15px;background:rgba(10,58,44,0.5);border-radius:12px}
-
-/* ===== Offline Badge ===== */
 .offline-badge{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%);color:white;padding:10px 20px;border-radius:25px;font-size:13px;font-weight:600;box-shadow:0 6px 20px rgba(239,68,68,0.4);z-index:9999;display:none}
-.offline-badge.show{display:block;animation:slideUp 0.3s ease}
-@keyframes slideUp{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
-
+.offline-badge.show{display:block}
 @media (max-width:640px){
-.stat-number{font-size:24px}
-.stat-item{min-width:75px}
-.stats-bar{gap:15px;padding:18px 10px}
+.stat-number{font-size:22px}
+.stat-item{min-width:65px}
+.stats-bar{gap:12px;padding:18px 10px}
 .section-group-title{font-size:20px}
 .top-bar{flex-direction:column;padding:12px 15px}
-.top-bar-greeting{font-size:16px}
+.top-bar-greeting{font-size:15px}
 .quick-search input{font-size:14px;padding:15px 45px 15px 15px}
 .quick-search .btn-go{padding:10px 16px;font-size:12px}
-.today-text{font-size:17px}
-.today-text.ayah{font-size:18px}
+.today-text{font-size:16px}
+.today-text.ayah{font-size:17px}
 .quick-features{grid-template-columns:repeat(2,1fr)}
-.feature-btn .icon{font-size:32px}
-.feature-btn .label{font-size:14px}
+.feature-btn .icon{font-size:30px}
+.feature-btn .label{font-size:13px}
 .dev-name{font-size:18px}
 .thanks-title{font-size:20px}
 }
@@ -149,83 +114,65 @@
 <nav class="main-nav">
 <ul class="nav-list">
 <li><a href="index.html" class="active">🏠 الرئيسية</a></li>
-<li><a href="quran.html">📖 القرآن الكريم</a></li>
-<li><a href="tafsir.html">📚 التفسير</a></li>
-<li><a href="hadith.html">🕌 السنة النبوية</a></li>
-<li><a href="seerah.html">🌙 السيرة النبوية</a></li>
-<li><a href="ghazawat.html">⚔️ الغزوات</a></li>
-<li><a href="prophets.html">🕊️ قصص الأنبياء</a></li>
-<li><a href="sahaba.html">⭐ الصحابة</a></li>
+<li><a href="quran.html">📖 القرآن</a></li>
+<li><a href="hadith.html">🕌 السنة</a></li>
+<li><a href="seerah.html">🌙 السيرة</a></li>
 <li><a href="adhkar.html">🤲 الأذكار</a></li>
-<li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="prayer.html">🕌 الصلاة</a></li>
+<li><a href="tasbih.html">📿 المسبحة</a></li>
+<li><a href="calendar.html">📅 الروزنامة</a></li>
 <li><a href="search.html">🔍 البحث</a></li>
 </ul>
 </nav>
 
 <main class="main-container">
 
-<!-- شريط التحية والتاريخ -->
 <section class="top-bar">
 <div class="top-bar-greeting" id="greeting">السلام عليكم ورحمة الله</div>
 <div class="top-bar-date" id="hijri-date">—</div>
 </section>
 
-<!-- إشعار التثبيت -->
-<section class="install-banner" id="install-banner">
-<p>📲 ثبّت التطبيق على جوالك للوصول السريع بدون متصفح</p>
-<button class="install-btn" onclick="installApp()">📥 تثبيت التطبيق</button>
-<div class="install-hint" id="install-hint"></div>
-</section>
-
-<!-- Hero -->
 <section class="hero">
 <div class="hero-content">
 <h1>﷽</h1>
 <h1>قمر الشام</h1>
-<p>منصة إسلامية شاملة تجمع القرآن الكريم بالتفسير والصوت، السنة النبوية الصحيحة، السيرة العطرة، قصص الأنبياء والصحابة، الفقه، الأذكار، ومواقيت الصلاة — بمصادر مُراجَعة.</p>
+<p>منصة إسلامية شاملة تجمع القرآن الكريم بالتفسير والصوت، السنة النبوية الصحيحة، السيرة العطرة، قصص الأنبياء والصحابة، الفقه، الأذكار، مواقيت الصلاة، المسبحة الرقمية، والروزنامة الهجرية.</p>
 <div class="hero-actions">
 <a href="quran.html" class="btn btn-primary">📖 ابدأ بالقرآن</a>
-<a href="adhkar.html" class="btn btn-outline">🤲 الأذكار</a>
+<a href="prayer.html" class="btn btn-outline">🕌 مواقيت الصلاة</a>
 </div>
 </div>
 </section>
 
-<!-- الميزات السريعة -->
 <section class="quick-features">
 <a href="prayer.html" class="feature-btn">
-<span class="new-tag">قريباً</span>
 <span class="icon">🕌</span>
 <span class="label">مواقيت الصلاة</span>
 <span class="sub">الأذان والإشعارات</span>
 </a>
-<a href="qibla.html" class="feature-btn">
-<span class="new-tag">قريباً</span>
-<span class="icon">🧭</span>
-<span class="label">القبلة</span>
-<span class="sub">بطريقة الشمس</span>
-</a>
 <a href="tasbih.html" class="feature-btn">
-<span class="new-tag">قريباً</span>
 <span class="icon">📿</span>
 <span class="label">المسبحة</span>
-<span class="sub">عدّاد رقمي</span>
+<span class="sub">عدّاد ذكي</span>
 </a>
 <a href="calendar.html" class="feature-btn">
-<span class="new-tag">قريباً</span>
 <span class="icon">📅</span>
 <span class="label">الروزنامة</span>
 <span class="sub">التقويم الهجري</span>
 </a>
+<a href="search.html" class="feature-btn">
+<span class="icon">🔍</span>
+<span class="label">البحث</span>
+<span class="sub">في كل المنصة</span>
+</a>
 </section>
 
-<!-- البحث السريع -->
 <div class="quick-search">
 <input type="text" id="quick-search-input" placeholder="ابحث في القرآن، الأحاديث، الأنبياء، الصحابة...">
 <span class="icon">🔍</span>
 <button class="btn-go" onclick="quickSearch()">ابحث</button>
 </div>
 
-<!-- آية اليوم + حديث اليوم -->
 <section class="today-grid">
 <div class="today-card">
 <span class="today-label">📖 آية اليوم</span>
@@ -241,23 +188,52 @@
 </div>
 </section>
 
-<!-- الإحصائيات -->
 <section class="stats-bar">
-<div class="stat-item"><span class="stat-number">114</span><span class="stat-label">سورة قرآنية</span></div>
-<div class="stat-item"><span class="stat-number">8</span><span class="stat-label">قرّاء صوتيين</span></div>
-<div class="stat-item"><span class="stat-number">36</span><span class="stat-label">حديث صحيح</span></div>
-<div class="stat-item"><span class="stat-number">25</span><span class="stat-label">نبي وقصة</span></div>
-<div class="stat-item"><span class="stat-number">21</span><span class="stat-label">صحابي جليل</span></div>
-<div class="stat-item"><span class="stat-number">15</span><span class="stat-label">غزوة وفتح</span></div>
+<div class="stat-item"><span class="stat-number">114</span><span class="stat-label">سورة</span></div>
+<div class="stat-item"><span class="stat-number">8</span><span class="stat-label">قرّاء</span></div>
+<div class="stat-item"><span class="stat-number">36</span><span class="stat-label">حديث</span></div>
+<div class="stat-item"><span class="stat-number">25</span><span class="stat-label">نبي</span></div>
+<div class="stat-item"><span class="stat-number">21</span><span class="stat-label">صحابي</span></div>
+<div class="stat-item"><span class="stat-number">15</span><span class="stat-label">غزوة</span></div>
 </section>
 
-<!-- القرآن والتفسير -->
+<h2 class="section-group-title">🕌 العبادات اليومية</h2>
+<section class="sections-grid">
+<a href="prayer.html" class="section-card">
+<span class="new-badge">جديد</span>
+<span class="section-icon">🕌</span>
+<h3>مواقيت الصلاة</h3>
+<p>مواقيت دقيقة حسب موقعك، مع الأذان بصوت 6 مؤذنين، وعدّاد تنازلي للصلاة القادمة.</p>
+<span class="content-count">6 أصوات أذان</span>
+</a>
+<a href="tasbih.html" class="section-card">
+<span class="new-badge">جديد</span>
+<span class="section-icon">📿</span>
+<h3>المسبحة الرقمية</h3>
+<p>عدّاد ذكي للتسبيح مع 10 أذكار جاهزة، وحفظ تلقائي، وإحصائيات يومية.</p>
+<span class="content-count">10 أذكار</span>
+</a>
+<a href="calendar.html" class="section-card">
+<span class="new-badge">جديد</span>
+<span class="section-icon">📅</span>
+<h3>الروزنامة الهجرية</h3>
+<p>تقويم هجري وميلادي، مع المناسبات الإسلامية والصيام المستحب مع تنبيه.</p>
+<span class="content-count">12 مناسبة</span>
+</a>
+<a href="adhkar.html" class="section-card">
+<span class="section-icon">🤲</span>
+<h3>الأذكار والأدعية</h3>
+<p>أذكار الصباح والمساء، النوم، الاستيقاظ، وأذكار بعد الصلاة — بعدّاد ذكي.</p>
+<span class="content-count">6 أقسام</span>
+</a>
+</section>
+
 <h2 class="section-group-title">📖 القرآن والتفسير</h2>
 <section class="sections-grid">
 <a href="quran.html" class="section-card">
 <span class="section-icon">📖</span>
 <h3>القرآن الكريم</h3>
-<p>114 سورة كاملة مع القراءة الصوتية لثمانية من كبار القراء، والتنقل السريع والبحث الفوري.</p>
+<p>114 سورة كاملة مع القراءة الصوتية لثمانية من كبار القراء، والتنقل السريع.</p>
 <span class="content-count">114 سورة</span>
 </a>
 <a href="tafsir.html" class="section-card">
@@ -267,7 +243,6 @@
 <span class="content-count">3 تفاسير</span>
 </a>
 <a href="hadith.html" class="section-card">
-<span class="new-badge">جديد</span>
 <span class="section-icon">🕌</span>
 <h3>السنة النبوية</h3>
 <p>أحاديث صحيحة من الصحيحين والسنن الأربعة، مصنّفة حسب الموضوع مع التخريج.</p>
@@ -275,13 +250,12 @@
 </a>
 </section>
 
-<!-- السيرة والقصص -->
 <h2 class="section-group-title">🌙 السيرة والقصص</h2>
 <section class="sections-grid">
 <a href="seerah.html" class="section-card">
 <span class="section-icon">🌙</span>
 <h3>السيرة النبوية</h3>
-<p>حياة النبي محمد ﷺ كاملة: من المولد إلى الوفاة، بخط زمني تفاعلي وأخلاقه وصفاته.</p>
+<p>حياة النبي محمد ﷺ كاملة: من المولد إلى الوفاة، بخط زمني تفاعلي.</p>
 <span class="content-count">24 محطة</span>
 </a>
 <a href="prophets.html" class="section-card">
@@ -291,14 +265,12 @@
 <span class="content-count">25 نبي</span>
 </a>
 <a href="quranic-stories.html" class="section-card">
-<span class="new-badge">جديد</span>
 <span class="section-icon">📜</span>
 <h3>القصص القرآنية</h3>
 <p>قصص ذكرها القرآن: أصحاب الكهف، أصحاب الفيل، قارون، ذو القرنين.</p>
 <span class="content-count">11 قصة</span>
 </a>
 <a href="ghazawat.html" class="section-card">
-<span class="new-badge">جديد</span>
 <span class="section-icon">⚔️</span>
 <h3>الغزوات والفتوحات</h3>
 <p>غزوات النبي ﷺ الكبرى، والفتوحات الإسلامية العظيمة، والمعارك الحاسمة.</p>
@@ -306,7 +278,6 @@
 </a>
 </section>
 
-<!-- الصحابة والتراجم -->
 <h2 class="section-group-title">⭐ الصحابة والتراجم</h2>
 <section class="sections-grid">
 <a href="sahaba.html" class="section-card">
@@ -316,7 +287,6 @@
 <span class="content-count">21 صحابي</span>
 </a>
 <a href="shuhada.html" class="section-card">
-<span class="new-badge">جديد</span>
 <span class="section-icon">🎖️</span>
 <h3>الشهداء</h3>
 <p>فضل الشهادة، وسير شهداء الإسلام من الصحابة والتابعين والقادة — 15 شهيدًا.</p>
@@ -324,66 +294,38 @@
 </a>
 </section>
 
-<!-- العبادات والذكر -->
-<h2 class="section-group-title">🤲 العبادات والذكر</h2>
+<h2 class="section-group-title">⚖️ الفقه والزهد</h2>
 <section class="sections-grid">
-<a href="adhkar.html" class="section-card">
-<span class="section-icon">🤲</span>
-<h3>الأذكار والأدعية</h3>
-<p>أذكار الصباح والمساء، النوم، الاستيقاظ، وأذكار بعد الصلاة — بعدّاد ذكي.</p>
-<span class="content-count">6 أقسام</span>
-</a>
 <a href="fiqh.html" class="section-card">
-<span class="new-badge">جديد</span>
 <span class="section-icon">⚖️</span>
 <h3>الفقه الإسلامي</h3>
 <p>أحكام الطهارة والصلاة والصيام والزكاة والحج والجنائز — وفق ما أجمع عليه أهل العلم.</p>
 <span class="content-count">6 أبواب</span>
 </a>
 <a href="zuhd.html" class="section-card">
-<span class="new-badge">جديد</span>
 <span class="section-icon">🕋</span>
 <h3>الزهد والرقائق</h3>
 <p>أبواب الزهد، التوبة، الخوف والرجاء، ومحاسبة النفس — بآيات وأحاديث صحيحة.</p>
 <span class="content-count">10 أبواب</span>
 </a>
 <a href="fadail.html" class="section-card">
-<span class="new-badge">جديد</span>
 <span class="section-icon">✨</span>
 <h3>فضائل الأعمال</h3>
 <p>فضائل الصلاة، الصيام، الحج، الزكاة، قراءة القرآن، قيام الليل، والصدقة.</p>
 <span class="content-count">10 أبواب</span>
 </a>
-</section>
-
-<!-- التحذير والوقاية -->
-<h2 class="section-group-title">🛡️ التحذير والوقاية</h2>
-<section class="sections-grid">
 <a href="sihr.html" class="section-card">
-<span class="new-badge">جديد</span>
 <span class="section-icon">🛡️</span>
 <h3>السحر والشعوذة</h3>
 <p>تحذير شرعي من السحر والشعوذة والكهانة، مع الأدلة الشرعية وطرق الوقاية.</p>
 <span class="content-count">8 أبواب</span>
 </a>
-<a href="search.html" class="section-card">
-<span class="section-icon">🔍</span>
-<h3>البحث الشامل</h3>
-<p>ابحث في كل محتوى المنصة: آيات، أحاديث، أذكار، سير — بنتائج فورية دقيقة.</p>
-<span class="content-count">بحث فوري</span>
-</a>
 </section>
 
-<!-- لماذا قمر الشام -->
 <h2 class="section-group-title">💎 لماذا قمر الشام؟</h2>
 <section class="sections-grid">
 <div class="why-us-card">
 <span class="icon">🛡️</span>
-<h3>نظام مراقبة دقيق</h3>
-<p>كل محتوى يمر عبر: تحقق قرآني + تحقق حديثي + مراجعة شرعية + تدقيق دوري.</p>
-</div>
-<div class="why-us-card">
-<span class="icon">📚</span>
 <h3>مصادر معتمدة</h3>
 <p>الاعتماد على: البخاري، مسلم، السنن الأربعة، وتفاسير ابن كثير والطبري والسعدي.</p>
 </div>
@@ -405,92 +347,79 @@
 <div class="why-us-card">
 <span class="icon">🎧</span>
 <h3>محتوى صوتي</h3>
-<p>القرآن الكريم بصوت 8 من كبار القراء، مع إمكانية التشغيل المستمر.</p>
+<p>القرآن الكريم بصوت 8 من كبار القراء، والأذان بصوت 6 مؤذنين معروفين.</p>
+</div>
+<div class="why-us-card">
+<span class="icon">🎁</span>
+<h3>مجاني للأبد</h3>
+<p>المنصة مجانية بالكامل، بدون اشتراكات أو إعلانات مزعجة — صدقة جارية.</p>
 </div>
 </section>
 
-<!-- دعاء -->
 <section style="text-align:center;padding:40px 20px;margin-top:40px;background:linear-gradient(135deg,rgba(212,175,55,0.15) 0%,rgba(212,175,55,0.03) 100%);border:1px solid rgba(212,175,55,0.3);border-radius:20px">
 <div style="font-family:'Amiri',serif;font-size:24px;color:var(--gold);line-height:2;margin-bottom:15px">﴿ رَبَّنَا تَقَبَّلْ مِنَّا ۖ إِنَّكَ أَنتَ السَّمِيعُ الْعَلِيمُ ﴾</div>
 <p style="color:var(--cream);opacity:0.85;font-size:15px">نسأل الله أن يجعل هذا العمل خالصًا لوجهه الكريم، وأن ينفع به أهل الشام والمسلمين.</p>
 </section>
 
-<!-- شكر المساهمين -->
 <section class="thanks-section">
 <h2 class="thanks-title">🤲 شكر وتقدير</h2>
 <p class="thanks-intro">
 هذا المشروع لم يكن ليُنجز لولا توفيق الله أولاً، ثم فضل كل من ساهم فيه بدعوة، أو رأي، أو جهد، أو معلومة.
-نسأل الله أن يكتب الأجر لكل من كان له يد في هذا العمل، وأن يجعله صدقة جارية.
+نسأل الله أن يكتب الأجر لكل من كان له يد في هذا العمل.
 </p>
 
 <div class="thanks-grid">
-
 <div class="thanks-card">
 <span class="thanks-icon">🤲</span>
 <div class="thanks-name">لله أولاً وآخراً</div>
-<div class="thanks-role">له الفضل والمنّة في إتمام هذا العمل، وبه التوفيق</div>
+<div class="thanks-role">له الفضل والمنّة في إتمام هذا العمل</div>
 </div>
-
 <div class="thanks-card">
 <span class="thanks-icon">👨‍💻</span>
 <div class="thanks-name">Emad Halawh</div>
-<div class="thanks-role">المطوّر الرئيسي — بناء المنصة وبرمجتها</div>
+<div class="thanks-role">المطوّر الرئيسي — بناء المنصة</div>
 </div>
-
-<div class="thanks-card">
-<span class="thanks-icon">🌙</span>
-<div class="thanks-name">فريق تطوير قمر الشام</div>
-<div class="thanks-role">لكل من ساهم برأي، أو ملاحظة، أو اختبار للتطبيق</div>
-</div>
-
 <div class="thanks-card">
 <span class="thanks-icon">📚</span>
 <div class="thanks-name">مصادر المحتوى</div>
-<div class="thanks-role">لمكتبة القرآن الكريم، والصحيحين، والسنن، وكتب التفسير المعتمدة</div>
+<div class="thanks-role">للقرآن والصحيحين والسنن وكتب التفسير</div>
 </div>
-
 <div class="thanks-card">
 <span class="thanks-icon">🎙️</span>
-<div class="thanks-name">القرّاء الكرام</div>
-<div class="thanks-role">لأصحاب الأصوات الذين تفضلوا بتسجيلاتهم المتاحة</div>
+<div class="thanks-name">القرّاء والمؤذنون</div>
+<div class="thanks-role">لأصحاب الأصوات المتاحة للتسجيل</div>
 </div>
-
 <div class="thanks-card">
 <span class="thanks-icon">📖</span>
 <div class="thanks-name">أهل العلم</div>
-<div class="thanks-role">لكل عالم وطالب علم كان له أثر في المحتوى المُراجَع</div>
+<div class="thanks-role">لكل عالم وطالب علم له أثر في المحتوى</div>
 </div>
-
-<div class="thanks-card">
-<span class="thanks-icon">🧪</span>
-<div class="thanks-name">الجهات التقنية</div>
-<div class="thanks-role">GitHub Pages، Alquran Cloud API، EveryAyah، وغيرها من الخدمات المجانية</div>
-</div>
-
 <div class="thanks-card">
 <span class="thanks-icon">🕌</span>
 <div class="thanks-name">أهل الشام والمسلمون</div>
-<div class="thanks-role">لكل من دعا، وشجّع، وانتظر هذا العمل</div>
+<div class="thanks-role">لكل من دعا وشجّع وانتظر هذا العمل</div>
 </div>
-
 <div class="thanks-card">
 <span class="thanks-icon">👥</span>
 <div class="thanks-name">المستخدمون الأوائل</div>
 <div class="thanks-role">لكل من جرّب التطبيق وأرسل ملاحظاته</div>
 </div>
-
+<div class="thanks-card">
+<span class="thanks-icon">🧪</span>
+<div class="thanks-name">الجهات التقنية</div>
+<div class="thanks-role">GitHub، Alquran Cloud API، EveryAyah، AlAdhan</div>
+</div>
 </div>
 
 <div class="thanks-footer">
 <strong>📝 رسالة للجميع:</strong><br>
-هذا العمل صدقة جارية. إن رأيت فيه خيراً فادعُ لصاحبه ولمن ساعد فيه. وإن رأيت فيه خطأً فصحّحه، ولا تحرمنا من دعوة صادقة بظهر الغيب.
+هذا العمل صدقة جارية. إن رأيت فيه خيراً فادعُ لصاحبه ولمن ساعد فيه. وإن رأيت فيه خطأً فصحّحه، ولا تحرمنا من دعوة صادقة.
 <div class="thanks-dua">
 ﴿ رَبَّنَا اغْفِرْ لَنَا وَلِإِخْوَانِنَا الَّذِينَ سَبَقُونَا بِالْإِيمَانِ وَلَا تَجْعَلْ فِي قُلُوبِنَا غِلًّا لِّلَّذِينَ آمَنُوا رَبَّنَا إِنَّكَ رَءُوفٌ رَّحِيمٌ ﴾
 </div>
 </div>
 </section>
 
-<!-- توقيع المطور -->
 <section class="dev-signature">
 <div class="dev-label">تطوير وبناء</div>
 <div class="dev-name">Emad Halawh</div>
@@ -506,11 +435,9 @@
 <p>© 2026 <strong>Emad Halawh</strong> — جميع الحقوق محفوظة. نسألكم الدعاء.</p>
 </footer>
 
-<!-- شارة عدم الاتصال -->
 <div class="offline-badge" id="offline-badge">📡 أنت غير متصل بالإنترنت</div>
 
 <script>
-// ===== التحية حسب الوقت + التاريخ الهجري =====
 function updateTopBar() {
     const now = new Date();
     const hour = now.getHours();
@@ -538,7 +465,6 @@ function updateTopBar() {
         : greg;
 }
 
-// ===== آية اليوم + حديث اليوم =====
 const DAILY_AYAHS = [
     { text: '﴿إِنَّ مَعَ الْعُسْرِ يُسْرًا﴾', ref: 'الشرح: 6' },
     { text: '﴿وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ﴾', ref: 'الطلاق: 3' },
@@ -586,7 +512,6 @@ function updateDailyContent() {
     document.getElementById('daily-hadith-ref').textContent = '— رواه ' + hadith.ref;
 }
 
-// ===== البحث السريع =====
 function quickSearch() {
     const q = document.getElementById('quick-search-input').value.trim();
     if (!q) return;
@@ -597,70 +522,17 @@ document.getElementById('quick-search-input').addEventListener('keypress', (e) =
     if (e.key === 'Enter') quickSearch();
 });
 
-// ===== Service Worker =====
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js')
-            .then(reg => console.log('✅ التطبيق يعمل بدون إنترنت'))
-            .catch(err => console.log('⚠️ Service Worker:', err));
+        navigator.serviceWorker.register('service-worker.js').catch(() => {});
     });
 }
 
-// ===== زر تثبيت التطبيق =====
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-});
-
-function installApp() {
-    const hint = document.getElementById('install-hint');
-
-    if (isInstalled()) {
-        hint.textContent = '✅ التطبيق مثبّت بالفعل على جوالك';
-        return;
-    }
-
-    if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choice) => {
-            if (choice.outcome === 'accepted') {
-                hint.textContent = '✅ تم تثبيت التطبيق — ابحث عنه في شاشة الجوال';
-            }
-            deferredPrompt = null;
-        });
-        return;
-    }
-
-    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        hint.innerHTML = '🍎 على آيفون: اضغط زر المشاركة ⬆️ أسفل المتصفح ثم <strong>"إضافة إلى الشاشة الرئيسية"</strong>';
-        return;
-    }
-
-    if (/Android/i.test(navigator.userAgent)) {
-        hint.innerHTML = '🤖 على أندرويد: اضغط قائمة ⋮ أعلى المتصفح ثم <strong>"إضافة إلى الشاشة الرئيسية"</strong>';
-        return;
-    }
-
-    hint.innerHTML = '💻 لفتح التطبيق كتطبيق، افتح الموقع من <strong>جوالك</strong>';
-}
-
-function isInstalled() {
-    return window.matchMedia('(display-mode: standalone)').matches ||
-           window.navigator.standalone === true;
-}
-
-if (isInstalled()) {
-    document.getElementById('install-hint').textContent = '✅ التطبيق مثبّت بالفعل';
-}
-
-// ===== حالة الاتصال =====
 const offlineBadge = document.getElementById('offline-badge');
 window.addEventListener('online', () => offlineBadge.classList.remove('show'));
 window.addEventListener('offline', () => offlineBadge.classList.add('show'));
 if (!navigator.onLine) offlineBadge.classList.add('show');
 
-// ===== التشغيل =====
 updateTopBar();
 updateDailyContent();
 setInterval(updateTopBar, 60000);
