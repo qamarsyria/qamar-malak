@@ -9,18 +9,73 @@
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕌</text></svg>">
 <style>
+/* ===== شريط التاريخ والتحية ===== */
+.top-bar{background:linear-gradient(135deg,rgba(212,175,55,0.15) 0%,rgba(212,175,55,0.03) 100%);border:1px solid rgba(212,175,55,0.3);border-radius:14px;padding:15px 20px;margin-bottom:25px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;text-align:center}
+.top-bar-greeting{font-family:'Amiri',serif;font-size:18px;color:var(--gold);font-weight:700}
+.top-bar-date{font-size:13px;color:var(--cream);opacity:0.85}
+.top-bar-date strong{color:var(--gold);font-weight:600}
+
+/* ===== شريط البحث السريع ===== */
+.quick-search{max-width:600px;margin:0 auto 30px;position:relative}
+.quick-search input{width:100%;padding:18px 55px 18px 20px;background:rgba(10,58,44,0.7);border:2px solid rgba(212,175,55,0.35);border-radius:35px;color:var(--cream);font-family:inherit;font-size:16px;outline:none;transition:all 0.3s}
+.quick-search input:focus{border-color:var(--gold);background:rgba(10,58,44,1);box-shadow:0 0 0 5px rgba(212,175,55,0.12)}
+.quick-search input::placeholder{color:rgba(245,240,225,0.55)}
+.quick-search .icon{position:absolute;right:22px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:20px;pointer-events:none}
+.quick-search .btn-go{position:absolute;left:6px;top:50%;transform:translateY(-50%);background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark);border:none;padding:12px 24px;border-radius:28px;font-family:inherit;font-weight:700;font-size:14px;cursor:pointer;transition:all 0.3s}
+.quick-search .btn-go:hover{transform:translateY(-50%) scale(1.05)}
+
+/* ===== بطاقات اليوم ===== */
+.today-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px;margin-bottom:35px}
+.today-card{background:linear-gradient(135deg,rgba(212,175,55,0.15) 0%,rgba(13,77,60,0.5) 100%);border:1px solid rgba(212,175,55,0.3);border-radius:16px;padding:22px;position:relative;overflow:hidden}
+.today-card::before{content:'';position:absolute;top:0;right:0;width:4px;height:100%;background:var(--gold)}
+.today-label{display:inline-block;background:rgba(212,175,55,0.2);color:var(--gold);padding:3px 12px;border-radius:12px;font-size:12px;margin-bottom:14px;border:1px solid rgba(212,175,55,0.3);font-weight:600}
+.today-text{font-family:'Amiri',serif;font-size:19px;line-height:2;color:var(--cream);text-align:center;margin-bottom:12px;padding:0 10px}
+.today-text.ayah{color:var(--gold);font-size:20px}
+.today-ref{font-size:12px;color:var(--gold);opacity:0.85;text-align:center;font-style:italic;padding-top:10px;border-top:1px dashed rgba(212,175,55,0.25)}
+.today-action{display:block;text-align:center;margin-top:14px;color:var(--gold);text-decoration:none;font-size:13px;font-weight:600;padding:8px;border-radius:10px;background:rgba(212,175,55,0.1);transition:all 0.3s}
+.today-action:hover{background:var(--gold);color:var(--green-dark)}
+
+/* ===== شريط الإحصائيات ===== */
 .stats-bar{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;padding:25px 15px;margin-bottom:40px;background:linear-gradient(135deg,rgba(26,107,84,0.3) 0%,rgba(13,77,60,0.5) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:16px}
-.stat-item{text-align:center;min-width:100px}
+.stat-item{text-align:center;min-width:90px}
 .stat-number{font-family:'Amiri',serif;font-size:32px;color:var(--gold);font-weight:700;display:block;line-height:1}
-.stat-label{font-size:13px;color:var(--cream);opacity:0.85;margin-top:8px}
+.stat-label{font-size:12px;color:var(--cream);opacity:0.85;margin-top:8px}
+
+/* ===== عناوين المجموعات ===== */
 .section-group-title{font-family:'Amiri',serif;font-size:24px;color:var(--gold);text-align:center;margin:45px 0 20px;padding-bottom:12px;border-bottom:1px solid rgba(212,175,55,0.3);position:relative}
 .section-group-title::after{content:'◆';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);color:var(--gold);font-size:14px;background:linear-gradient(135deg,var(--green-deep) 0%,var(--green-dark) 100%);padding:0 12px}
+
+/* ===== شارة "جديد" ===== */
+.section-card .new-badge{position:absolute;top:12px;left:12px;background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%);color:white;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:700;box-shadow:0 4px 12px rgba(239,68,68,0.4)}
+.section-card{position:relative}
+.section-card .content-count{display:inline-block;background:rgba(212,175,55,0.15);color:var(--gold);padding:3px 10px;border-radius:12px;font-size:11px;margin-top:10px;border:1px solid rgba(212,175,55,0.3)}
+
+/* ===== بطاقات "لماذا ملاك المعرفة" ===== */
 .why-us-card{background:linear-gradient(135deg,rgba(26,107,84,0.3) 0%,rgba(13,77,60,0.5) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:14px;padding:22px 18px;transition:all 0.3s}
 .why-us-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 8px 25px rgba(212,175,55,0.2)}
 .why-us-card .icon{font-size:38px;display:block;margin-bottom:12px}
 .why-us-card h3{font-family:'Amiri',serif;font-size:19px;color:var(--gold);margin-bottom:10px}
 .why-us-card p{font-size:14px;line-height:1.8;color:var(--cream);opacity:0.9}
-@media (max-width:640px){.stat-number{font-size:24px}.stat-item{min-width:80px}.stats-bar{gap:18px;padding:18px 10px}.section-group-title{font-size:20px}}
+
+/* ===== البطاقات الرئيسية ===== */
+.section-card .section-icon{font-size:40px;margin-bottom:12px;display:block}
+.section-card h3{font-family:'Amiri',serif;font-size:21px;color:var(--gold);margin-bottom:8px}
+.section-card p{font-size:14px;opacity:0.85;line-height:1.7}
+.section-card .btn-mini{display:inline-block;margin-top:12px;padding:6px 14px;background:rgba(212,175,55,0.15);color:var(--gold);border-radius:20px;font-size:12px;text-decoration:none;border:1px solid rgba(212,175,55,0.3);transition:all 0.3s}
+.section-card:hover .btn-mini{background:var(--gold);color:var(--green-dark)}
+
+@media (max-width:640px){
+.stat-number{font-size:24px}
+.stat-item{min-width:75px}
+.stats-bar{gap:15px;padding:18px 10px}
+.section-group-title{font-size:20px}
+.top-bar{flex-direction:column;padding:12px 15px}
+.top-bar-greeting{font-size:16px}
+.quick-search input{font-size:14px;padding:15px 45px 15px 15px}
+.quick-search .btn-go{padding:10px 16px;font-size:12px}
+.today-text{font-size:17px}
+.today-text.ayah{font-size:18px}
+}
 </style>
 </head>
 <body>
@@ -56,6 +111,13 @@
 
 <main class="main-container">
 
+<!-- شريط التحية والتاريخ -->
+<section class="top-bar">
+<div class="top-bar-greeting" id="greeting">السلام عليكم ورحمة الله</div>
+<div class="top-bar-date" id="hijri-date">—</div>
+</section>
+
+<!-- Hero -->
 <section class="hero">
 <div class="hero-content">
 <h1>﷽</h1>
@@ -68,32 +130,39 @@
 </div>
 </section>
 
+<!-- البحث السريع -->
+<div class="quick-search">
+<input type="text" id="quick-search-input" placeholder="ابحث في القرآن، الأحاديث، الأنبياء، الصحابة...">
+<span class="icon">🔍</span>
+<button class="btn-go" onclick="quickSearch()">ابحث</button>
+</div>
+
+<!-- آية اليوم + حديث اليوم -->
+<section class="today-grid">
+<div class="today-card">
+<span class="today-label">📖 آية اليوم</span>
+<div class="today-text ayah" id="daily-ayah">—</div>
+<div class="today-ref" id="daily-ayah-ref">—</div>
+<a href="quran.html" class="today-action">📖 اقرأ القرآن الكريم ←</a>
+</div>
+<div class="today-card">
+<span class="today-label">🕌 حديث اليوم</span>
+<div class="today-text" id="daily-hadith">—</div>
+<div class="today-ref" id="daily-hadith-ref">—</div>
+<a href="hadith.html" class="today-action">🕌 تصفح السنة النبوية ←</a>
+</div>
+</section>
+
 <!-- الإحصائيات -->
 <section class="stats-bar">
-<div class="stat-item">
-<span class="stat-number">114</span>
-<span class="stat-label">سورة قرآنية</span>
-</div>
-<div class="stat-item">
-<span class="stat-number">8</span>
-<span class="stat-label">قرّاء صوتيين</span>
-</div>
-<div class="stat-item">
-<span class="stat-number">25</span>
-<span class="stat-label">نبي وقصة</span>
-</div>
-<div class="stat-item">
-<span class="stat-number">21</span>
-<span class="stat-label">صحابي جليل</span>
-</div>
-<div class="stat-item">
-<span class="stat-number">15</span>
-<span class="stat-label">غزوة وفتح</span>
-</div>
-<div class="stat-item">
-<span class="stat-number">10</span>
-<span class="stat-label">باب في الزهد</span>
-</div>
+<div class="stat-item"><span class="stat-number">114</span><span class="stat-label">سورة قرآنية</span></div>
+<div class="stat-item"><span class="stat-number">8</span><span class="stat-label">قرّاء صوتيين</span></div>
+<div class="stat-item"><span class="stat-number">36</span><span class="stat-label">حديث صحيح</span></div>
+<div class="stat-item"><span class="stat-number">25</span><span class="stat-label">نبي وقصة</span></div>
+<div class="stat-item"><span class="stat-number">21</span><span class="stat-label">صحابي جليل</span></div>
+<div class="stat-item"><span class="stat-number">15</span><span class="stat-label">غزوة وفتح</span></div>
+<div class="stat-item"><span class="stat-number">11</span><span class="stat-label">قصة قرآنية</span></div>
+<div class="stat-item"><span class="stat-number">15</span><span class="stat-label">شهيد</span></div>
 </section>
 
 <!-- القرآن والتفسير -->
@@ -103,16 +172,20 @@
 <span class="section-icon">📖</span>
 <h3>القرآن الكريم</h3>
 <p>114 سورة كاملة مع القراءة الصوتية لثمانية من كبار القراء، والتنقل السريع والبحث الفوري.</p>
+<span class="content-count">114 سورة</span>
 </a>
 <a href="tafsir.html" class="section-card">
 <span class="section-icon">📚</span>
 <h3>التفسير</h3>
 <p>تفسير القرآن الكريم حسب أشهر التفاسير المعتمدة: ابن كثير، الطبري، السعدي، الجلالين.</p>
+<span class="content-count">3 تفاسير</span>
 </a>
 <a href="hadith.html" class="section-card">
+<span class="new-badge">جديد</span>
 <span class="section-icon">🕌</span>
 <h3>السنة النبوية</h3>
-<p>أحاديث صحيحة من الصحيحين والسنن الأربعة، مصنّفة ومُدقَّقة إلكترونياً وبشرياً.</p>
+<p>أحاديث صحيحة من الصحيحين والسنن الأربعة، مصنّفة حسب الموضوع مع التخريج.</p>
+<span class="content-count">36 حديث</span>
 </a>
 </section>
 
@@ -123,21 +196,27 @@
 <span class="section-icon">🌙</span>
 <h3>السيرة النبوية</h3>
 <p>حياة النبي محمد ﷺ كاملة: من المولد إلى الوفاة، بخط زمني تفاعلي وأخلاقه وصفاته وأزواجه وأولاده.</p>
+<span class="content-count">24 محطة زمنية</span>
 </a>
 <a href="prophets.html" class="section-card">
 <span class="section-icon">🕊️</span>
 <h3>قصص الأنبياء</h3>
 <p>قصص الأنبياء والرسل من آدم إلى محمد ﷺ — 25 نبيًّا بمعلومات موثقة من القرآن والسنة.</p>
+<span class="content-count">25 نبي</span>
 </a>
 <a href="quranic-stories.html" class="section-card">
+<span class="new-badge">جديد</span>
 <span class="section-icon">📜</span>
 <h3>القصص القرآنية</h3>
 <p>قصص ذكرها القرآن: أصحاب الكهف، أصحاب الفيل، قارون، ذو القرنين، وموسى والخضر.</p>
+<span class="content-count">11 قصة</span>
 </a>
 <a href="ghazawat.html" class="section-card">
+<span class="new-badge">جديد</span>
 <span class="section-icon">⚔️</span>
 <h3>الغزوات والفتوحات</h3>
 <p>غزوات النبي ﷺ الكبرى، والفتوحات الإسلامية العظيمة، والمعارك الحاسمة في تاريخ الإسلام.</p>
+<span class="content-count">15 معركة</span>
 </a>
 </section>
 
@@ -147,12 +226,15 @@
 <a href="sahaba.html" class="section-card">
 <span class="section-icon">⭐</span>
 <h3>الصحابة الكرام</h3>
-<p>الخلفاء الراشدون، والعشرة المبشّرون بالجنة، والسابقون الأولون، وشهداء الإسلام — بمعلومات موثقة.</p>
+<p>الخلفاء الراشدون، والعشرة المبشّرون بالجنة، والسابقون الأولون، ورواة الحديث — بمعلومات موثقة.</p>
+<span class="content-count">21 صحابي</span>
 </a>
 <a href="shuhada.html" class="section-card">
+<span class="new-badge">جديد</span>
 <span class="section-icon">🎖️</span>
 <h3>الشهداء</h3>
-<p>فضل الشهادة، وسير شهداء الإسلام من الصحابة والتابعين والقادة العظام.</p>
+<p>فضل الشهادة، وسير شهداء الإسلام من الصحابة والتابعين والقادة — 15 شهيدًا بمعلومات موثقة.</p>
+<span class="content-count">15 شهيد</span>
 </a>
 </section>
 
@@ -163,21 +245,28 @@
 <span class="section-icon">🤲</span>
 <h3>الأذكار والأدعية</h3>
 <p>أذكار الصباح والمساء، النوم، الاستيقاظ، وأذكار بعد الصلاة — بعدّاد ذكي ومصادر موثقة.</p>
+<span class="content-count">6 أقسام</span>
 </a>
 <a href="fiqh.html" class="section-card">
+<span class="new-badge">جديد</span>
 <span class="section-icon">⚖️</span>
 <h3>الفقه الإسلامي</h3>
 <p>أحكام الطهارة والصلاة والصيام والزكاة والحج والجنائز — وفق ما أجمع عليه أهل العلم.</p>
+<span class="content-count">6 أبواب</span>
 </a>
 <a href="zuhd.html" class="section-card">
+<span class="new-badge">جديد</span>
 <span class="section-icon">🕋</span>
 <h3>الزهد والرقائق</h3>
 <p>أبواب الزهد، التوبة، الخوف والرجاء، ومحاسبة النفس — بآيات وأحاديث صحيحة.</p>
+<span class="content-count">10 أبواب</span>
 </a>
 <a href="fadail.html" class="section-card">
+<span class="new-badge">جديد</span>
 <span class="section-icon">✨</span>
 <h3>فضائل الأعمال</h3>
 <p>فضائل الصلاة، الصيام، الحج، الزكاة، قراءة القرآن، قيام الليل، والصدقة.</p>
+<span class="content-count">10 أبواب</span>
 </a>
 </section>
 
@@ -185,14 +274,17 @@
 <h2 class="section-group-title">🛡️ التحذير والوقاية</h2>
 <section class="sections-grid">
 <a href="sihr.html" class="section-card">
+<span class="new-badge">جديد</span>
 <span class="section-icon">🛡️</span>
 <h3>السحر والشعوذة</h3>
-<p>تحذير شرعي من السحر والشعوذة والكهانة، مع الأدلة الشرعية وطرق الوقاية والرقية الشرعية.</p>
+<p>تحذير شرعي من السحر والشعوذة والكهانة، مع الأدلة الشرعية وطرق الوقاية والرقية.</p>
+<span class="content-count">8 أبواب</span>
 </a>
 <a href="search.html" class="section-card">
 <span class="section-icon">🔍</span>
 <h3>البحث الشامل</h3>
 <p>ابحث في كل محتوى المنصة: آيات، أحاديث، أذكار، سير — بنتائج فورية دقيقة.</p>
+<span class="content-count">بحث فوري</span>
 </a>
 </section>
 
@@ -201,13 +293,13 @@
 <section class="sections-grid">
 <div class="why-us-card">
 <span class="icon">🛡️</span>
-<h3>نظام مراقبة من 5 طبقات</h3>
-<p>كل محتوى يمر عبر: تحقق قرآني + تحقق حديثي + مراجعة شرعية AI + مراجعة بشرية + تدقيق دوري.</p>
+<h3>نظام مراقبة دقيق</h3>
+<p>كل محتوى يمر عبر: تحقق قرآني + تحقق حديثي + مراجعة شرعية + تدقيق دوري، مع ذكر المراجع في كل صفحة.</p>
 </div>
 <div class="why-us-card">
 <span class="icon">📚</span>
 <h3>مصادر معتمدة</h3>
-<p>الاعتماد فقط على: البخاري، مسلم، السنن الأربعة، وتفاسير ابن كثير والطبري والسعدي، مع ذكر المراجع في كل مقال.</p>
+<p>الاعتماد على: البخاري، مسلم، السنن الأربعة، وتفاسير ابن كثير والطبري والسعدي، مع ذكر المراجع.</p>
 </div>
 <div class="why-us-card">
 <span class="icon">🚫</span>
@@ -244,6 +336,104 @@
 <p>ملاك المعرفة الإسلامية — منصة دعوية غير ربحية</p>
 <p>© 2026 — جميع الحقوق محفوظة. نسألكم الدعاء.</p>
 </footer>
+
+<script>
+// ===== 1) التحية حسب الوقت + التاريخ الهجري والميلادي =====
+function updateTopBar() {
+    const now = new Date();
+    const hour = now.getHours();
+
+    let greeting = '';
+    if (hour >= 4 && hour < 12) greeting = '☀️ صباح الخير — لا تنسَ أذكار الصباح';
+    else if (hour >= 12 && hour < 17) greeting = '🌤️ طاب نهارك — حان وقت أذكار المساء';
+    else if (hour >= 17 && hour < 21) greeting = '🌆 مساء الخير — واظب على أذكار المساء';
+    else greeting = '🌙 ليلة طيبة — لا تنسَ أذكار النوم';
+
+    document.getElementById('greeting').textContent = greeting;
+
+    const greg = now.toLocaleDateString('ar-EG-u-nu-latn', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+    let hijri = '';
+    try {
+        hijri = now.toLocaleDateString('ar-SA-u-ca-islamic-nu-latn', {
+            day: 'numeric', month: 'long', year: 'numeric'
+        });
+        hijri = hijri.replace('AH', 'هـ').replace('after Hijrah', 'هـ');
+    } catch (e) {
+        hijri = '';
+    }
+
+    document.getElementById('hijri-date').innerHTML = hijri
+        ? `<strong>${hijri}</strong> — ${greg}`
+        : greg;
+}
+
+// ===== 2) آية اليوم + حديث اليوم =====
+const DAILY_AYAHS = [
+    { text: '﴿إِنَّ مَعَ الْعُسْرِ يُسْرًا﴾', ref: 'الشرح: 6' },
+    { text: '﴿وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ﴾', ref: 'الطلاق: 3' },
+    { text: '﴿فَاذْكُرُونِي أَذْكُرْكُمْ وَاشْكُرُوا لِي وَلَا تَكْفُرُونِ﴾', ref: 'البقرة: 152' },
+    { text: '﴿أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ﴾', ref: 'الرعد: 28' },
+    { text: '﴿وَاصْبِرْ فَإِنَّ اللَّهَ لَا يُضِيعُ أَجْرَ الْمُحْسِنِينَ﴾', ref: 'هود: 115' },
+    { text: '﴿إِنَّ اللَّهَ مَعَ الصَّابِرِينَ﴾', ref: 'البقرة: 153' },
+    { text: '﴿وَقُل رَّبِّ زِدْنِي عِلْمًا﴾', ref: 'طه: 114' },
+    { text: '﴿إِنَّ اللَّهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ﴾', ref: 'الأحزاب: 56' },
+    { text: '﴿وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ عَلَيْهِ تَوَكَّلْتُ﴾', ref: 'هود: 88' },
+    { text: '﴿وَاللَّهُ يُحِبُّ الصَّابِرِينَ﴾', ref: 'آل عمران: 146' },
+    { text: '﴿إِنَّ اللَّهَ يُحِبُّ الْمُتَوَكِّلِينَ﴾', ref: 'آل عمران: 159' },
+    { text: '﴿وَمَا الْحَيَاةُ الدُّنْيَا إِلَّا لَعِبٌ وَلَهْوٌ﴾', ref: 'الأنعام: 32' },
+    { text: '﴿فَإِنَّ مَعَ الْعُسْرِ يُسْرًا﴾', ref: 'الشرح: 5' },
+    { text: '﴿يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ﴾', ref: 'الحشر: 18' },
+    { text: '﴿إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا﴾', ref: 'النساء: 103' }
+];
+
+const DAILY_HADITHS = [
+    { text: 'قال ﷺ: «إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى».', ref: 'البخاري ومسلم' },
+    { text: 'قال ﷺ: «الدين النصيحة».', ref: 'مسلم' },
+    { text: 'قال ﷺ: «من كان يؤمن بالله واليوم الآخر فليقل خيرًا أو ليصمت».', ref: 'البخاري ومسلم' },
+    { text: 'قال ﷺ: «لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه».', ref: 'البخاري ومسلم' },
+    { text: 'قال ﷺ: «اتق الله حيثما كنت، وأتبع السيئة الحسنة تمحها، وخالق الناس بخلق حسن».', ref: 'الترمذي' },
+    { text: 'قال ﷺ: «المسلم من سلم المسلمون من لسانه ويده».', ref: 'البخاري' },
+    { text: 'قال ﷺ: «خيركم من تعلم القرآن وعلمه».', ref: 'البخاري' },
+    { text: 'قال ﷺ: «الطُّهور شطر الإيمان، والحمد لله تملأ الميزان».', ref: 'مسلم' },
+    { text: 'قال ﷺ: «من لا يَرحم لا يُرحم».', ref: 'البخاري ومسلم' },
+    { text: 'قال ﷺ: «من سلك طريقًا يطلب فيه علمًا، سلك الله به طريقًا من طرق الجنة».', ref: 'مسلم' },
+    { text: 'قال ﷺ: «ما نقصت صدقة من مال، وما زاد الله عبدًا بعفو إلا عِزًّا».', ref: 'مسلم' },
+    { text: 'قال ﷺ: «أكمل المؤمنين إيمانًا أحسنهم خُلقًا».', ref: 'الترمذي' },
+    { text: 'قال ﷺ: «من غشنا فليس منا».', ref: 'مسلم' },
+    { text: 'قال ﷺ: «الكيّس من دان نفسه وعمل لما بعد الموت».', ref: 'الترمذي' },
+    { text: 'قال ﷺ: «إذا مات الإنسان انقطع عمله إلا من ثلاثة: صدقة جارية، أو علم يُنتفع به، أو ولد صالح يدعو له».', ref: 'مسلم' }
+];
+
+function updateDailyContent() {
+    const now = new Date();
+    const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
+
+    const ayah = DAILY_AYAHS[dayOfYear % DAILY_AYAHS.length];
+    const hadith = DAILY_HADITHS[dayOfYear % DAILY_HADITHS.length];
+
+    document.getElementById('daily-ayah').textContent = ayah.text;
+    document.getElementById('daily-ayah-ref').textContent = '— سورة ' + ayah.ref;
+    document.getElementById('daily-hadith').textContent = hadith.text;
+    document.getElementById('daily-hadith-ref').textContent = '— رواه ' + hadith.ref;
+}
+
+// ===== 3) البحث السريع =====
+function quickSearch() {
+    const q = document.getElementById('quick-search-input').value.trim();
+    if (!q) return;
+    window.location.href = 'search.html?q=' + encodeURIComponent(q);
+}
+
+document.getElementById('quick-search-input').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') quickSearch();
+});
+
+// ===== تشغيل =====
+updateTopBar();
+updateDailyContent();
+setInterval(updateTopBar, 60000);
+</script>
 
 </body>
 </html>
