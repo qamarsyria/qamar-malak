@@ -13,14 +13,10 @@
 .prayer-hero h1{font-family:'Amiri',serif;font-size:30px;color:var(--gold);margin-bottom:10px}
 .prayer-hero .location{color:var(--cream);opacity:0.9;font-size:15px;margin-bottom:8px}
 .prayer-hero .hijri{color:var(--gold);font-size:14px;font-weight:600}
-
 .location-controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:25px}
 .location-btn{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark);border:none;padding:10px 20px;border-radius:25px;font-family:inherit;font-weight:700;font-size:13px;cursor:pointer;transition:all 0.3s}
 .location-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(212,175,55,0.4)}
-.location-btn.secondary{background:transparent;color:var(--gold);border:2px solid var(--gold)}
 .city-select{padding:10px 15px;background:rgba(10,58,44,0.7);border:2px solid rgba(212,175,55,0.35);border-radius:25px;color:var(--cream);font-family:inherit;font-size:13px;outline:none}
-
-/* العد التنازلي */
 .countdown-box{background:linear-gradient(135deg,rgba(26,107,84,0.6) 0%,rgba(13,77,60,0.8) 100%);border:2px solid var(--gold);border-radius:20px;padding:25px 20px;text-align:center;margin-bottom:25px;position:relative;overflow:hidden}
 .countdown-box::before{content:'🕌';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:150px;color:rgba(212,175,55,0.05);z-index:0}
 .countdown-content{position:relative;z-index:1}
@@ -28,13 +24,10 @@
 .countdown-next{font-family:'Amiri',serif;font-size:24px;color:var(--gold);margin-bottom:15px;font-weight:700}
 .countdown-timer{font-family:monospace;direction:ltr;font-size:38px;color:var(--gold);font-weight:700;letter-spacing:3px;text-shadow:0 0 20px rgba(212,175,55,0.5)}
 .countdown-time{color:var(--cream);opacity:0.8;font-size:14px;margin-top:10px}
-
-/* مواقيت الصلاة */
 .prayer-times{background:linear-gradient(135deg,rgba(26,107,84,0.3) 0%,rgba(13,77,60,0.5) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:20px;padding:5px;margin-bottom:25px;overflow:hidden}
 .prayer-row{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid rgba(212,175,55,0.15);transition:all 0.3s;cursor:pointer}
 .prayer-row:last-child{border-bottom:none}
 .prayer-row:hover{background:rgba(212,175,55,0.08)}
-.prayer-row.current{background:linear-gradient(90deg,rgba(212,175,55,0.2) 0%,rgba(212,175,55,0.05) 100%);border-right:4px solid var(--gold)}
 .prayer-row.next{background:rgba(74,222,128,0.1);border-right:4px solid #4ade80}
 .prayer-info{display:flex;align-items:center;gap:15px;flex:1}
 .prayer-icon{font-size:28px;flex-shrink:0}
@@ -42,58 +35,33 @@
 .prayer-name-en{font-size:11px;color:var(--cream);opacity:0.6}
 .prayer-time-info{text-align:left}
 .prayer-time{font-family:monospace;direction:ltr;font-size:22px;color:var(--cream);font-weight:700}
-.prayer-time.current-time{color:var(--gold)}
-.prayer-badge{display:inline-block;background:linear-gradient(135deg,#4ade80 0%,#22c55e 100%);color:white;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;margin-top:4px}
-.prayer-badge.current-badge{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark)}
-
-/* الأذان */
 .adhan-settings{background:linear-gradient(135deg,rgba(26,107,84,0.25) 0%,rgba(13,77,60,0.4) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:16px;padding:20px;margin-bottom:25px}
-.adhan-settings h3{font-family:'Amiri',serif;font-size:20px;color:var(--gold);margin-bottom:15px;display:flex;align-items:center;gap:10px}
-.setting-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px dashed rgba(212,175,55,0.15)}
+.adhan-settings h3{font-family:'Amiri',serif;font-size:20px;color:var(--gold);margin-bottom:15px}
+.setting-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px dashed rgba(212,175,55,0.15);gap:15px}
 .setting-row:last-child{border-bottom:none}
 .setting-label{color:var(--cream);font-size:14px}
 .setting-label small{display:block;font-size:11px;opacity:0.6;margin-top:2px}
 .setting-select{padding:8px 12px;background:rgba(10,58,44,0.8);border:1px solid rgba(212,175,55,0.3);border-radius:10px;color:var(--cream);font-family:inherit;font-size:13px;outline:none;min-width:160px}
 .setting-select:focus{border-color:var(--gold)}
-
 .preview-btn{background:rgba(212,175,55,0.15);color:var(--gold);border:1px solid rgba(212,175,55,0.4);padding:8px 15px;border-radius:20px;font-family:inherit;font-size:12px;cursor:pointer;transition:all 0.3s}
 .preview-btn:hover{background:var(--gold);color:var(--green-dark)}
-
-.toggle-switch{position:relative;width:50px;height:28px;background:rgba(10,58,44,0.8);border-radius:14px;cursor:pointer;transition:all 0.3s;border:1px solid rgba(212,175,55,0.3)}
+.toggle-switch{position:relative;width:50px;height:28px;background:rgba(10,58,44,0.8);border-radius:14px;cursor:pointer;transition:all 0.3s;border:1px solid rgba(212,175,55,0.3);flex-shrink:0}
 .toggle-switch::before{content:'';position:absolute;top:3px;right:3px;width:20px;height:20px;background:var(--cream);border-radius:50%;transition:all 0.3s;opacity:0.5}
 .toggle-switch.on{background:linear-gradient(135deg,#4ade80 0%,#22c55e 100%)}
 .toggle-switch.on::before{right:25px;opacity:1}
-
-/* القبلة */
-.qibla-box{background:linear-gradient(135deg,rgba(26,107,84,0.25) 0%,rgba(13,77,60,0.4) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:16px;padding:20px;margin-bottom:25px;text-align:center}
-.qibla-box h3{font-family:'Amiri',serif;font-size:20px;color:var(--gold);margin-bottom:15px}
-.qibla-compass{width:220px;height:220px;margin:0 auto 15px;position:relative;background:radial-gradient(circle,rgba(26,107,84,0.6) 0%,rgba(13,77,60,0.8) 100%);border:3px solid var(--gold);border-radius:50%;box-shadow:0 0 40px rgba(212,175,55,0.3),inset 0 0 30px rgba(0,0,0,0.5)}
-.qibla-arrow{position:absolute;top:50%;left:50%;transform-origin:center;transition:transform 1s ease}
-.qibla-arrow svg{width:80px;height:80px;margin:-40px 0 0 -40px}
-.compass-n{position:absolute;top:10px;left:50%;transform:translateX(-50%);color:var(--cream);font-size:14px;font-weight:700}
-.compass-s{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);color:var(--cream);font-size:14px;font-weight:700}
-.compass-e{position:absolute;top:50%;right:10px;transform:translateY(-50%);color:var(--cream);font-size:14px;font-weight:700}
-.compass-w{position:absolute;top:50%;left:10px;transform:translateY(-50%);color:var(--cream);font-size:14px;font-weight:700}
-.qibla-degree{font-family:monospace;direction:ltr;color:var(--gold);font-size:18px;font-weight:700;margin-bottom:10px}
-.qibla-status{color:var(--cream);font-size:13px;opacity:0.85;margin-bottom:12px}
-.qibla-btn{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark);border:none;padding:12px 25px;border-radius:25px;font-family:inherit;font-weight:700;font-size:14px;cursor:pointer;transition:all 0.3s}
-.qibla-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(212,175,55,0.4)}
-
 .loading-state{text-align:center;padding:40px;color:var(--gold)}
 .spinner{display:inline-block;width:40px;height:40px;border:3px solid rgba(212,175,55,0.3);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;margin-bottom:15px}
 @keyframes spin{to{transform:rotate(360deg)}}
-
 .error-box{background:rgba(239,68,68,0.15);border:2px solid rgba(239,68,68,0.5);border-radius:14px;padding:15px;text-align:center;color:#fca5a5;font-size:14px;margin-bottom:20px}
-
 .info-note{background:rgba(59,130,246,0.1);border-right:3px solid #3b82f6;border-radius:10px;padding:12px 15px;color:var(--cream);font-size:13px;line-height:1.7;margin-bottom:20px}
 .info-note strong{color:#60a5fa}
-
 @media (max-width:640px){
 .prayer-hero h1{font-size:24px}
 .countdown-timer{font-size:30px}
 .prayer-name-ar{font-size:19px}
 .prayer-time{font-size:19px}
-.qibla-compass{width:180px;height:180px}
+.setting-row{flex-direction:column;align-items:stretch}
+.setting-select{width:100%}
 }
 </style>
 </head>
@@ -120,7 +88,6 @@
 <li><a href="seerah.html">🌙 السيرة</a></li>
 <li><a href="adhkar.html">🤲 الأذكار</a></li>
 <li><a href="prayer.html" class="active">🕌 الصلاة</a></li>
-<li><a href="qibla.html">🧭 القبلة</a></li>
 <li><a href="tasbih.html">📿 المسبحة</a></li>
 <li><a href="calendar.html">📅 الروزنامة</a></li>
 <li><a href="search.html">🔍 البحث</a></li>
@@ -181,7 +148,6 @@
 <audio id="adhan-audio" preload="none"></audio>
 
 <script>
-// ====== بيانات الأذان ======
 const ADHAN_SOUNDS = {
     makkah: { name: '🕋 أذان الحرم المكي', url: 'https://www.islamcan.com/audio/adhan/azan1.mp3' },
     madinah: { name: '🕌 أذان المسجد النبوي', url: 'https://www.islamcan.com/audio/adhan/azan2.mp3' },
@@ -225,15 +191,11 @@ const PRAYERS = [
 ];
 
 let currentCoords = null;
-let currentCity = null;
 let prayerTimesData = null;
 let countdownInterval = null;
 
-// ====== تحميل البيانات ======
 async function loadPrayerTimes(lat, lng, cityName) {
     currentCoords = { lat, lng };
-    currentCity = cityName;
-
     document.getElementById('location-display').textContent = '📍 ' + cityName;
 
     const today = new Date();
@@ -244,11 +206,10 @@ async function loadPrayerTimes(lat, lng, cityName) {
         const res = await fetch(url);
         const data = await res.json();
 
-        if (data.code !== 200) throw new Error('فشل تحميل المواقيت');
+        if (data.code !== 200) throw new Error('فشل');
 
         prayerTimesData = data.data;
 
-        // تحديث التاريخ الهجري
         const hijri = data.data.date.hijri;
         const hijriStr = `${hijri.day} ${hijri.month.ar} ${hijri.year} هـ`;
         const gregStr = data.data.date.readable;
@@ -259,23 +220,16 @@ async function loadPrayerTimes(lat, lng, cityName) {
 
     } catch (e) {
         document.getElementById('main-content').innerHTML = `
-            <div class="error-box">
-                ⚠️ تعذر تحميل المواقيت. تأكد من اتصالك بالإنترنت ثم أعد المحاولة.
-            </div>
+            <div class="error-box">⚠️ تعذر تحميل المواقيت. تأكد من اتصالك بالإنترنت ثم أعد المحاولة.</div>
         `;
     }
 }
 
-// ====== رسم المحتوى ======
 function renderPrayerContent() {
-    const times = prayerTimesData.timings;
-
-    // حفظ الإعدادات المحفوظة
     const savedAdhan = localStorage.getItem('qamar_adhan_sound') || 'makkah';
     const savedNotif = localStorage.getItem('qamar_notif_enabled') === 'true';
 
     let html = `
-        <!-- العد التنازلي -->
         <div class="countdown-box">
             <div class="countdown-content">
                 <div class="countdown-label">الصلاة القادمة</div>
@@ -285,10 +239,8 @@ function renderPrayerContent() {
             </div>
         </div>
 
-        <!-- مواقيت الصلاة -->
         <div class="prayer-times" id="prayer-times-list"></div>
 
-        <!-- إعدادات الأذان -->
         <div class="adhan-settings">
             <h3>🔊 إعدادات الأذان</h3>
             <div class="setting-row">
@@ -318,29 +270,6 @@ function renderPrayerContent() {
             </div>
         </div>
 
-        <!-- القبلة -->
-        <div class="qibla-box">
-            <h3>🧭 اتجاه القبلة</h3>
-            <div class="qibla-degree" id="qibla-degree">—</div>
-            <div class="qibla-compass">
-                <span class="compass-n">N</span>
-                <span class="compass-s">S</span>
-                <span class="compass-w">W</span>
-                <span class="compass-e">E</span>
-                <div class="qibla-arrow" id="qibla-arrow">
-                    <svg viewBox="0 0 100 100">
-                        <circle cx="50" cy="50" r="45" fill="none" stroke="#d4af37" stroke-width="2"/>
-                        <polygon points="50,10 60,40 50,35 40,40" fill="#d4af37"/>
-                        <polygon points="50,90 40,60 50,65 60,60" fill="#666"/>
-                        <text x="50" y="22" text-anchor="middle" fill="#d4af37" font-size="12" font-weight="bold">🕋</text>
-                    </svg>
-                </div>
-            </div>
-            <div class="qibla-status" id="qibla-status">اضغط الزر لحساب اتجاه القبلة</div>
-            <button class="qibla-btn" onclick="calculateQibla()">🧭 احسب اتجاه القبلة</button>
-        </div>
-
-        <!-- ملاحظة -->
         <div class="info-note">
             <strong>ℹ️ ملاحظة:</strong> المواقيت محسوبة حسب طريقة رابطة العالم الإسلامي. للدقة في مدينتك، استخدم زر "تحديد موقعي".
         </div>
@@ -361,9 +290,7 @@ function renderPrayerList() {
         const [h, m] = time.split(':').map(Number);
         const prayerTime = new Date();
         prayerTime.setHours(h, m, 0, 0);
-
         const isPast = prayerTime < now;
-        const isCurrent = false; // سنحسبها بالعد التنازلي
 
         return `
             <div class="prayer-row" data-prayer="${p.key}">
@@ -383,14 +310,12 @@ function renderPrayerList() {
     }).join('');
 }
 
-// ====== العد التنازلي ======
 function startCountdown() {
     if (countdownInterval) clearInterval(countdownInterval);
 
     function update() {
         const times = prayerTimesData.timings;
         const now = new Date();
-
         let nextPrayer = null;
         let nextTime = null;
 
@@ -408,7 +333,6 @@ function startCountdown() {
             }
         }
 
-        // إذا انتهت صلوات اليوم، الفجر غداً
         if (!nextPrayer) {
             nextPrayer = PRAYERS[0];
             const [h, m] = times[nextPrayer.key].split(':').map(Number);
@@ -427,9 +351,8 @@ function startCountdown() {
             `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
         document.getElementById('next-prayer-time').textContent = `⏰ عند ${times[nextPrayer.key]}`;
 
-        // تمييز الصلاة القادمة
         document.querySelectorAll('.prayer-row').forEach(row => {
-            row.classList.remove('next', 'current');
+            row.classList.remove('next');
             if (row.dataset.prayer === nextPrayer.key) row.classList.add('next');
         });
     }
@@ -438,7 +361,6 @@ function startCountdown() {
     countdownInterval = setInterval(update, 1000);
 }
 
-// ====== تحديد الموقع ======
 function getLocation() {
     if (!navigator.geolocation) {
         alert('المتصفح لا يدعم تحديد الموقع');
@@ -449,10 +371,8 @@ function getLocation() {
 
     navigator.geolocation.getCurrentPosition(
         (pos) => {
-            const lat = pos.coords.latitude;
-            const lng = pos.coords.longitude;
-            loadPrayerTimes(lat, lng, 'موقعك الحالي');
-            localStorage.setItem('qamar_location', JSON.stringify({ lat, lng, name: 'موقعك الحالي' }));
+            loadPrayerTimes(pos.coords.latitude, pos.coords.longitude, 'موقعك الحالي');
+            localStorage.setItem('qamar_location', JSON.stringify({ lat: pos.coords.latitude, lng: pos.coords.longitude, name: 'موقعك الحالي' }));
         },
         (err) => {
             alert('تعذر تحديد الموقع. اختر مدينتك من القائمة.');
@@ -470,7 +390,6 @@ function loadCityTimes() {
     localStorage.setItem('qamar_location', JSON.stringify({ lat: city.lat, lng: city.lng, name: city.name }));
 }
 
-// ====== الأذان ======
 function saveAdhanSetting() {
     const val = document.getElementById('adhan-select').value;
     localStorage.setItem('qamar_adhan_sound', val);
@@ -480,7 +399,7 @@ function previewAdhan() {
     const val = document.getElementById('adhan-select').value;
     const audio = document.getElementById('adhan-audio');
     audio.src = ADHAN_SOUNDS[val].url;
-    audio.play().catch(e => alert('⚠️ تعذر تشغيل الصوت. تحقق من الاتصال.'));
+    audio.play().catch(e => alert('⚠️ تعذر تشغيل الصوت.'));
 }
 
 function toggleNotif() {
@@ -488,55 +407,10 @@ function toggleNotif() {
     toggle.classList.toggle('on');
     const enabled = toggle.classList.contains('on');
     localStorage.setItem('qamar_notif_enabled', enabled);
-
-    if (enabled && 'Notification' in window) {
-        Notification.requestPermission();
-    }
+    if (enabled && 'Notification' in window) Notification.requestPermission();
 }
 
-// ====== القبلة ======
-function calculateQibla() {
-    if (!currentCoords) {
-        alert('حدّد موقعك أولاً');
-        return;
-    }
-
-    // إحداثيات الكعبة
-    const kaabaLat = 21.4225;
-    const kaabaLng = 39.8262;
-
-    const lat1 = currentCoords.lat * Math.PI / 180;
-    const lat2 = kaabaLat * Math.PI / 180;
-    const dLng = (kaabaLng - currentCoords.lng) * Math.PI / 180;
-
-    const y = Math.sin(dLng) * Math.cos(lat2);
-    const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLng);
-    let bearing = Math.atan2(y, x) * 180 / Math.PI;
-    bearing = (bearing + 360) % 360;
-
-    document.getElementById('qibla-degree').textContent = `زاوية القبلة: ${bearing.toFixed(1)}°`;
-    document.getElementById('qibla-status').textContent = 'وجّه جوالك نحو الشمال، ثم اتبع السهم الذهبي';
-    document.getElementById('qibla-arrow').style.transform = `rotate(${bearing}deg)`;
-
-    // محاولة استخدام بوصلة الجهاز
-    if (window.DeviceOrientationEvent) {
-        window.addEventListener('deviceorientationabsolute', handleCompass, true);
-        window.addEventListener('deviceorientation', handleCompass, true);
-    }
-}
-
-function handleCompass(event) {
-    const compass = event.webkitCompassHeading || (360 - event.alpha);
-    if (compass === null || compass === undefined) return;
-    const qiblaDegrees = parseFloat(document.getElementById('qibla-degree').textContent.replace(/[^\d.]/g, '')) || 0;
-    const rotation = qiblaDegrees - compass;
-    document.getElementById('qibla-arrow').style.transform = `rotate(${rotation}deg)`;
-    document.getElementById('qibla-status').textContent = `اتجاه جوالك: ${compass.toFixed(0)}° — وجّه السهم نحو الأعلى`;
-}
-
-// ====== التهيئة ======
 window.addEventListener('load', () => {
-    // التحقق من حفظ موقع
     const saved = localStorage.getItem('qamar_location');
     if (saved) {
         try {
@@ -545,12 +419,9 @@ window.addEventListener('load', () => {
             return;
         } catch (e) {}
     }
-
-    // افتراضي: دمشق
     loadPrayerTimes(CITIES.damascus.lat, CITIES.damascus.lng, CITIES.damascus.name);
 });
 
-// ====== Service Worker ======
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service-worker.js').catch(() => {});
 }
