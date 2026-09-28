@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>القصص القرآنية — ملاك المعرفة الإسلامية</title>
+<meta name="description" content="قصص قرآنية موثقة: أصحاب الكهف، أصحاب الفيل، قارون، ذو القرنين، وموسى والخضر — بمصادرها من القرآن والسنة.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📜</text></svg>">
+<style>
+.stories-hero{background:linear-gradient(135deg,rgba(212,175,55,0.22) 0%,rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:20px;padding:35px 20px;text-align:center;margin-bottom:30px}
+.stories-hero h1{font-family:'Amiri',serif;font-size:32px;color:var(--gold);margin-bottom:12px}
+.stories-hero p{color:var(--cream);opacity:0.9;max-width:680px;margin:0 auto;font-size:15px}
+.search-box{max-width:500px;margin:25px auto;position:relative}
+.search-box input{width:100%;padding:14px 50px 14px 20px;background:rgba(10,58,44,0.6);border:2px solid rgba(212,175,55,0.3);border-radius:30px;color:var(--cream);font-family:inherit;font-size:15px;outline:none;transition:all 0.3s}
+.search-box input:focus{border-color:var(--gold);background:rgba(10,58,44,0.9);box-shadow:0 0 0 4px rgba(212,175,55,0.1)}
+.search-box input::placeholder{color:rgba(245,240,225,0.5)}
+.search-box .search-icon{position:absolute;right:18px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:18px}
+.filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:25px}
+.filter-btn{padding:8px 16px;background:transparent;border:1px solid rgba(212,175,55,0.4);color:var(--cream);border-radius:20px;font-size:13px;cursor:pointer;font-family:inherit;transition:all 0.3s}
+.filter-btn:hover,.filter-btn.active{background:var(--gold);color:var(--green-dark);border-color:var(--gold)}
+.stories-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:15px}
+.story-card{background:linear-gradient(135deg,rgba(26,107,84,0.35) 0%,rgba(13,77,60,0.55) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:16px;padding:20px;transition:all 0.3s;cursor:pointer;position:relative;overflow:hidden}
+.story-card::before{content:'';position:absolute;top:0;right:0;width:4px;height:100%;background:var(--gold);transform:scaleY(0);transition:transform 0.3s;transform-origin:top}
+.story-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 8px 25px rgba(212,175,55,0.25)}
+.story-card:hover::before{transform:scaleY(1)}
+.story-icon{width:55px;height:55px;background:linear-gradient(135deg,rgba(212,175,55,0.25) 0%,rgba(212,175,55,0.1) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:12px;border:1px solid rgba(212,175,55,0.3)}
+.story-name{font-family:'Amiri',serif;font-size:22px;color:var(--gold);margin-bottom:6px}
+.story-surah{font-size:12px;color:var(--cream);opacity:0.7;margin-bottom:10px;font-style:italic}
+.story-brief{font-size:14px;line-height:1.7;color:var(--cream);opacity:0.9;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.story-badge{display:inline-block;background:rgba(212,175,55,0.15);color:var(--gold);padding:3px 10px;border-radius:12px;font-size:11px;margin-top:12px;border:1px solid rgba(212,175,55,0.3)}
+.no-results{text-align:center;padding:40px;color:var(--cream);opacity:0.7;grid-column:1/-1}
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);backdrop-filter:blur(6px);z-index:2000;justify-content:center;align-items:flex-start;padding:20px;overflow-y:auto}
+.modal-overlay.show{display:flex}
+.modal-content{background:linear-gradient(135deg,#0a3a2c 0%,#0d4d3c 100%);border:2px solid var(--gold);border-radius:20px;max-width:780px;width:100%;padding:30px 25px;position:relative;margin-top:30px;margin-bottom:30px;animation:slideUp 0.3s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.modal-close{position:absolute;top:15px;left:15px;width:38px;height:38px;border-radius:50%;background:rgba(200,50,50,0.7);color:white;border:none;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit}
+.modal-close:hover{background:rgba(220,60,60,1)}
+.modal-icon{font-size:60px;text-align:center;margin-bottom:15px}
+.modal-name{font-family:'Amiri',serif;font-size:30px;color:var(--gold);text-align:center;margin-bottom:8px}
+.modal-surah{text-align:center;color:var(--cream);opacity:0.8;font-size:14px;margin-bottom:25px;font-style:italic}
+.modal-section{margin-bottom:18px;padding:18px;background:rgba(10,58,44,0.5);border-radius:12px;border-right:4px solid var(--gold)}
+.modal-section h3{font-family:'Amiri',serif;font-size:18px;color:var(--gold);margin-bottom:10px}
+.modal-section p{color:var(--cream);line-height:1.9;font-size:15px}
+.modal-section .ayah{font-family:'Amiri',serif;font-size:17px;color:var(--gold);display:block;text-align:center;padding:10px 0;line-height:1.9;border-bottom:1px dashed rgba(212,175,55,0.2);margin-bottom:10px}
+.modal-section .ayah:last-child{border-bottom:none;margin-bottom:0}
+.modal-source{font-size:13px;color:var(--gold);opacity:0.75;text-align:center;margin-top:12px;font-style:italic;padding-top:12px;border-top:1px solid rgba(212,175,55,0.2)}
+@media (max-width:640px){.stories-hero h1{font-size:24px}.modal-content{padding:20px 15px}.modal-name{font-size:24px}.stories-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+<div class="header-container">
+<a href="index.html" class="logo">
+<div class="logo-icon">☪</div>
+<div class="logo-text">
+<span class="main">ملاك المعرفة</span>
+<span class="sub">منصة إسلامية شاملة</span>
+</div>
+</a>
+<button class="nav-toggle" onclick="document.querySelector('.main-nav').style.display = document.querySelector('.main-nav').style.display === 'none' ? 'block' : 'none'">☰</button>
+</div>
+</header>
+
+<nav class="main-nav">
+<ul class="nav-list">
+<li><a href="index.html">🏠 الرئيسية</a></li>
+<li><a href="quran.html">📖 القرآن الكريم</a></li>
+<li><a href="tafsir.html">📚 التفسير</a></li>
+<li><a href="hadith.html">🕌 السنة النبوية</a></li>
+<li><a href="seerah.html">🌙 السيرة النبوية</a></li>
+<li><a href="ghazawat.html">⚔️ الغزوات</a></li>
+<li><a href="prophets.html">🕊️ قصص الأنبياء</a></li>
+<li><a href="sahaba.html">⭐ الصحابة</a></li>
+<li><a href="adhkar.html">🤲 الأذكار</a></li>
+<li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="search.html">🔍 البحث</a></li>
+</ul>
+</nav>
+
+<main class="main-container">
+
+<section class="stories-hero">
+<h1>📜 القصص القرآنية</h1>
+<p>قصص ذكرها القرآن الكريم — من أصحاب الكهف إلى قارون وذو القرنين وموسى والخضر — بتفاصيل موثقة من القرآن والتفسير.</p>
+</section>
+
+<div class="search-box">
+<input type="text" id="search-input" placeholder="ابحث عن قصة...">
+<span class="search-icon">🔍</span>
+</div>
+
+<div class="filters">
+<button class="filter-btn active" data-filter="all">الكل</button>
+<button class="filter-btn" data-filter="قصص العبرة">قصص العبرة</button>
+<button class="filter-btn" data-filter="قصص الأمم">قصص الأمم</button>
+<button class="filter-btn" data-filter="رحلات إيمانية">رحلات إيمانية</button>
+</div>
+
+<div class="stories-grid" id="stories-container"></div>
+
+</main>
+
+<footer class="site-footer">
+<p class="footer-ayah">﴿ لَقَدْ كَانَ فِي يُوسُفَ وَإِخْوَتِهِ آيَاتٌ لِّلسَّائِلِينَ ﴾</p>
+<p>ملاك المعرفة الإسلامية — منصة دعوية غير ربحية</p>
+<p>© 2026 — نسألكم الدعاء</p>
+</footer>
+
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+<div class="modal-content" id="modal-content"></div>
+</div>
+
+<script>
+const STORIES = [
+    {
+        name: "أصحاب الكهف",
+        icon: "🕯️",
+        surah: "سورة الكهف (9-26)",
+        category: "قصص العبرة",
+        brief: "فتية آمنوا بربهم فثبّتهم الله، هربوا بدينهم إلى كهف، فناموا 309 سنوات، ثم بعثهم الله آية للناس.",
+        sections: [
+            { h: "القصة", p: "كان في مدينة ملك ظالم يفتن الناس عن دينهم. فتيان آمنوا بالله، وتركوا قومهم هربًا بدينهم، فلجؤوا إلى كهف ودعوا الله: ﴿رَبَّنَا آتِنَا مِن لَّدُنكَ رَحْمَةً وَهَيِّئْ لَنَا مِنْ أَمْرِنَا رَشَدًا﴾." },
+            { h: "الرقاد", p: "أنامهم الله 309 سنوات (ثلاثمائة وتسع سنين). وحفظهم الله من الفتنة، ومنع رؤيتهم من أحد: ﴿وَتَحْسَبُهُمْ أَيْقَاظًا وَهُمْ رُقُودٌ﴾." },
+            { h: "البعث", p: "بعثهم الله ليَتَسَاءَلُوا بينهم كم لبثوا، فأرسلوا أحدهم بفضة ليشتري طعامًا، فكشف الله أمرهم، وكانوا آية للناس." },
+            { h: "العبرة", p: "الثبات على الإيمان عند الفتن، والفرار بالدين، والتوكل على الله، وأن الله يحفظ من لجأ إليه." },
+            { h: "آية", text: "﴿نَّحْنُ نَقُصُّ عَلَيْكَ نَبَأَهُم بِالْحَقِّ ۚ إِنَّهُمْ فِتْيَةٌ آمَنُوا بِرَبِّهِمْ وَزِدْنَاهُمْ هُدًى﴾", ayah: true }
+        ],
+        refs: "سورة الكهف: 9-26، تفسير ابن كثير، تفسير السعدي"
+    },
+    {
+        name: "أصحاب الفيل",
+        icon: "🐘",
+        surah: "سورة الفيل",
+        category: "قصص الأمم",
+        brief: "أراد أبرهة الحبشي هدم الكعبة بجيش من الفيلة، فأرسل الله عليهم طيرًا أبابيل، فأهلكهم.",
+        sections: [
+            { h: "القصة", p: "أبرهة الأشرم، والي اليمن من قِبل الحبشة، بنى كنيسة عظيمة في صنعاء وأراد صرف الناس عن الكعبة إليها. فجاء رجل من كنانة وأحدث في الكنيسة، فغضب أبرهة، وأقسم ليهدمنّ الكعبة." },
+            { h: "الجيش", p: "خرج بجيش كبير وفيه الفيلة، منهم فيل عظيم اسمه محمود، وكان يقتل من يعترضه، حتى وصل إلى مكة." },
+            { h: "العذاب", p: "رفع جيشه السلب والنهب، ثم أرادوا هدم الكعبة، فرفع الله عليهم طيورًا أبابيل، كل طير يحمل حجارة من سجيل، ترميهم بها فيهلكون." },
+            { h: "النتيجة", p: "قال الله: ﴿فَجَعَلَهُمْ كَعَصْفٍ مَّأْكُولٍ﴾، وهلك الجيش، ونجت الكعبة. وكانت هذه السنة هي عام مولد النبي ﷺ (عام الفيل)." },
+            { h: "آية", text: "﴿أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَابِ الْفِيلِ ۝ أَلَمْ يَجْعَلْ كَيْدَهُمْ فِي تَضْلِيلٍ﴾", ayah: true }
+        ],
+        refs: "سورة الفيل، سيرة ابن هشام، تفسير ابن كثير"
+    },
+    {
+        name: "قارون",
+        icon: "💰",
+        surah: "سورة القصص (76-82)",
+        category: "قصص العبرة",
+        brief: "من قوم موسى، بغى عليهم بكثرة ماله، قال له قومه: لا تفرح، فأبى، فخسف الله به وبداره الأرض.",
+        sections: [
+            { h: "القصة", p: "قارون كان من قوم موسى، آتاه الله من الكنوز ما إن مفاتحه لتنوء بالعصبة أولي القوة. فبغى على قومه وقال: ﴿إِنَّمَا أُوتِيتُهُ عَلَىٰ عِلْمٍ عِندِي﴾، فأنكر فضل الله." },
+            { h: "نصيحة قومه", p: "نصحه قومه: ﴿لَا تَفْرَحْ ۖ إِنَّ اللَّهَ لَا يُحِبُّ الْفَرِحِينَ﴾، ﴿وَابْتَغِ فِيمَا آتَاكَ اللَّهُ الدَّارَ الْآخِرَةَ ۖ وَلَا تَنسَ نَصِيبَكَ مِنَ الدُّنْيَا﴾." },
+            { h: "الهلاك", p: "خرج على قومه في زينته، وأبى إلا الكِبْر، فخسف الله به وبداره الأرض. فما كان له من فئة ينصرونه من دون الله، وما كان من المنتصرين." },
+            { h: "العبرة", p: "المال لا يغني عن الله، والفرح بالدنيا نسيان للآخرة، والعاقبة الخسران. والدنيا والمال فتنة للعباد." },
+            { h: "آية", text: "﴿فَخَسَفْنَا بِهِ وَبِدَارِهِ الْأَرْضَ ۖ فَمَا كَانَ لَهُ مِن فِئَةٍ يَنصُرُونَهُ مِن دُونِ اللَّهِ وَمَا كَانَ مِنَ الْمُنتَصِرِينَ﴾", ayah: true }
+        ],
+        refs: "سورة القصص: 76-82، تفسير ابن كثير"
+    },
+    {
+        name: "ذو القرنين",
+        icon: "👑",
+        surah: "سورة الكهف (83-98)",
+        category: "رحلات إيمانية",
+        brief: "ملك صالح مكّن الله له في الأرض، سافر شرقًا وغربًا، بنى السد بين الجبلين ضد يأجوج ومأجوج.",
+        sections: [
+            { h: "من هو؟", p: "ذو القرنين ملك صالح، مكّنه الله في الأرض، وآتاه من كل شيء سببًا. اختلف العلماء في تحديد هويته، والأهم عِبر القصة لا تحديد الهوية." },
+            { h: "رحلته", p: "سافر مشرقًا ومغربًا، يفتح البلاد ويُقيم العدل، ويدعو إلى التوحيد، ويكافئ المحسن ويؤاخذ المسيء." },
+            { h: "السد", p: "وصل إلى قوم لا يكادون يفقهون قولًا، فاشتكوا إليه من يأجوج ومأجوج المُفسدين، فبنى لهم سدًا من حديد ونحاس بين الجبلين." },
+            { h: "الوصف", p: "وصف القرآن السد: ﴿فَإِذَا جَاءَ وَعْدُ رَبِّي جَعَلَهُ دَكَّاءَ ۖ وَكَانَ وَعْدُ رَبِّي حَقًّا﴾." },
+            { h: "العبرة", p: "العدل والإصلاح في الأرض، والتواضع، ونسبة الفضل لله: ﴿هَٰذَا رَحْمَةٌ مِّن رَّبِّي﴾، وأن المُلك لله يؤتيه من يشاء." },
+            { h: "آية", text: "﴿إِنَّا مَكَّنَّا لَهُ فِي الْأَرْضِ وَآتَيْنَاهُ مِن كُلِّ شَيْءٍ سَبَبًا﴾", ayah: true }
+        ],
+        refs: "سورة الكهف: 83-98، تفسير ابن كثير"
+    },
+    {
+        name: "موسى والخضر",
+        icon: "🌊",
+        surah: "سورة الكهف (60-82)",
+        category: "رحلات إيمانية",
+        brief: "رحلة موسى لطلب العلم من عبد صالح (الخضر)، وقصة السفينة والغلام والجدار، وبيان الحكمة الإلهية.",
+        sections: [
+            { h: "بدء الرحلة", p: "أخبر الله موسى أن هناك من هو أعلم منه، فطلب موسى أن يصل إليه. فسار مع فتاه يوشع حتى بلغ مجمع البحرين، حيث نسيا الحوت، فعادا." },
+            { h: "الخضر", p: "وجد موسى عبدًا من عباد الله الصالحين: ﴿عَبْدًا مِّنْ عِبَادِنَا آتَيْنَاهُ رَحْمَةً مِّنْ عِندِنَا وَعَلَّمْنَاهُ مِن لَّدُنَّا عِلْمًا﴾، فطلب موسى أن يتبعه ليتعلم." },
+            { h: "الثلاث", p: "خَرَقَ الخضر السفينة، فأنكر موسى. ثم قتل الغلام، فأنكر موسى أشد. ثم أقام الجدار، فأنكر موسى مرة أخرى." },
+            { h: "الحكمة", p: "فسّر الخضر: خرق السفينة لأن ملكًا يأخذ كل سفينة صالحة غصبًا، وقتل الغلام لأنه كان كافرًا سيُتعب والديه المؤمنين، وأقام الجدار لأن تحت كنزًا لغلامين يتيمين من أبوين صالحين." },
+            { h: "العبرة", p: "طاعة المعلم، والصبر على ما لا نفهمه، والثقة بحكمة الله في قضائه وقدره، وأن علم الله فوق كل علم." },
+            { h: "آية", text: "﴿وَمَا فَعَلْتُهُ عَنْ أَمْرِي ۚ ذَٰلِكَ تَأْوِيلُ مَا لَمْ تَسْطِع عَّلَيْهِ صَبْرًا﴾", ayah: true }
+        ],
+        refs: "سورة الكهف: 60-82، صحيح البخاري، صحيح مسلم"
+    },
+    {
+        name: "أصحاب الجنة",
+        icon: "🌳",
+        surah: "سورة القلم (17-33)",
+        category: "قصص العبرة",
+        brief: "أصحاب بستان كانوا يمنعون حقوق الفقراء، فأقسموا ليصرمُنّ ثمره في الصباح، فأرسل الله عليها نارًا فأحرقتها.",
+        sections: [
+            { h: "القصة", p: "أصحاب بستان كان أبوهم يدفع حق المساكين عند صرام ثمره. فلما مات، قرّر الأبناء أن يمنعوا المساكين حقوقهم، وقالوا: لنصرمنّها مصبحين دون أن يقولوها مساكين." },
+            { h: "العقاب", p: "طاف عليها طائف من ربك وهم نائمون، فأصبحت كالصريم (كالليل الأسود المدلهم) قد احترقت بالكلية." },
+            { h: "الندم", p: "قالوا: ﴿إِنَّا لَضَالُّونَ﴾، ﴿بَلْ نَحْنُ مَحْرُومُونَ﴾، فندموا على نيتهم في منع الخير." },
+            { h: "العبرة", p: "حق الفقير يجب أداؤه، ولا يجوز منع زكاة الزروع وحق المساكين، وأن الجزاء من جنس العمل." },
+            { h: "آية", text: "﴿كَذَٰلِكَ الْعَذَابُ ۖ وَلَعَذَابُ الْآخِرَةِ أَكْبَرُ ۚ لَوْ كَانُوا يَعْلَمُونَ﴾", ayah: true }
+        ],
+        refs: "سورة القلم: 17-33، تفسير ابن كثير"
+    },
+    {
+        name: "أصحاب الأخدود",
+        icon: "🔥",
+        surah: "سورة البروج (4-8)",
+        category: "قصص الأمم",
+        brief: "ملك ظالم حفر أخدودًا ناريًا وأحرق فيه المؤمنين؛ لأنهم آمنوا بالله. وقصة الغلام والراهب والساحر.",
+        sections: [
+            { h: "القصة", p: "جاء في السنة الصحيحة قصة الغلام المؤمن في حديث الغلام والراهب والساحر، حين آمن الغلام بالله على يد الراهب، وأظهر الله على يديه آيات عظيمة، فآمن به الملك والناس." },
+            { h: "الملك الظالم", p: "أراد الملك قتل الغلام، فلم يستطع، فقال له الغلام: إنك لن تقتلني حتى تُطيع أمري، فقل: بسم الله رب الغلام، ثم ارمِ بسهمك. ففعل الملك فقتله، فآمن الناس بسبب ذلك." },
+            { h: "الأخدود", p: "خشي الملك على ملكه، فأمر بحفر الأخدود وإيقاد النار، وقال: من رجع عن دينه فاتركوه، ومن أبى فاقذفوه في النار. ففُعل بالمؤمنين فماتوا." },
+            { h: "العبرة", p: "الثبات على الإيمان حتى في أشد الفتن، وأن الله يُمكّن لدينه ولو بأبشع صور القتل، وأن نصرة الله للعباده المؤمنين حتمية." },
+            { h: "آية", text: "﴿قُتِلَ أَصْحَابُ الْأُخْدُودِ ۝ النَّارِ ذَاتِ الْوَقُودِ ۝ إِذْ هُمْ عَلَيْهَا قُعُودٌ ۝ وَهُمْ عَلَىٰ مَا يَفْعَلُونَ بِالْمُؤْمِنِينَ شُهُودٌ﴾", ayah: true }
+        ],
+        refs: "سورة البروج: 4-8، صحيح مسلم، مسند أحمد"
+    },
+    {
+        name: "قوم سبأ",
+        icon: "🌴",
+        surah: "سورة سبأ (15-21)",
+        category: "قصص الأمم",
+        brief: "قوم نعموا بنعمتين: جنتان عن يمين وشمال، فأعرضوا فسلّط الله عليهم سيل العرم، وبدّلهم بجنتين ذواتي أُكُلٍ خمط.",
+        sections: [
+            { h: "النعمة", p: "كانت لسبأ جنتان عظيمتان، وبُنيت بلادهم بأجمل العمارة، وكان سد مأرب يحفظ ماء السيول، فأعرضوا عن شكر الله." },
+            { h: "الفتنة", p: "قال الله: ﴿اعْمَلُوا آلَ دَاوُودَ شُكْرًا﴾، لكن قوم سبأ (غير آل داود) أعرضوا، و﴿فَأَعْرَضُوا فَأَرْسَلْنَا عَلَيْهِمْ سَيْلَ الْعَرِمِ﴾، فتهدّم السد، وذهب الماء." },
+            { h: "النتيجة", p: "﴿وَبَدَّلْنَاهُم بِجَنَّتَيْنِ ذَوَاتَيْ أُكُلٍ خَمْطٍ وَأَثْلٍ وَشَيْءٍ مِّن سِدْرٍ قَلِيلٍ﴾، فأصبحت أرضهم قاحلة، وتفرّقوا في البلاد." },
+            { h: "العبرة", p: "شكر النعم سببٌ لبقائها، وجحودها سببٌ لزوالها. ۞ ۞ ۞" },
+            { h: "آية", text: "﴿ذَٰلِكَ جَزَيْنَاهُم بِمَا كَفَرُوا ۖ وَهَلْ نُجَازِي إِلَّا الْكَفُورَ﴾", ayah: true }
+        ],
+        refs: "سورة سبأ: 15-21، تفسير ابن كثير"
+    },
+    {
+        name: "أصحاب السبت",
+        icon: "🐟",
+        surah: "سورة الأعراف (163-166)",
+        category: "قصص الأمم",
+        brief: "قوم من بني إسرائيل على ساحل البحر، أمروا بتعظيم السبت، فاحتالوا على الصيد فيه، فمسخهم الله قردة خاسئين.",
+        sections: [
+            { h: "القصة", p: "كانوا في قرية على ساحل البحر، يأتيهم الحيتان يوم السبت شرعًا (ظاهرة على سطح الماء)، فلا تأتيهم في غيره. فأمروا بتعظيم السبت، وترك الصيد فيه." },
+            { h: "الحيلة", p: "فاحتالوا على أمر الله: حفروا حفرًا، ومدّوا شباكًا، حتى إذا جاء السبت ووقعت فيها الحيتان، أخذوها يوم الأحد. فردّ عليهم بعضهم، وقالوا: لم تعظون قومًا الله مهلكهم؟" },
+            { h: "المسخ", p: "قال الله: ﴿فَلَمَّا عَتَوْا عَن مَّا نُهُوا عَنْهُ قُلْنَا لَهُمْ كُونُوا قِرَدَةً خَاسِئِينَ﴾، فمُسخوا قردة ذليلين." },
+            { h: "العبرة", p: "التحايل على أوامر الله نكبة، وأن لا نُسوّف في الأمر بالمعروف والنهي عن المنكر، وأن عقاب الله أليم." },
+            { h: "آية", text: "﴿وَإِذْ قَالَتْ أُمَّةٌ مِّنْهُمْ لِمَ تَعِظُونَ قَوْمًا اللَّهُ مُهْلِكُهُمْ أَوْ مُعَذِّبُهُمْ عَذَابًا شَدِيدًا﴾", ayah: true }
+        ],
+        refs: "سورة الأعراف: 163-166، سورة البقرة: 65، تفسير ابن كثير"
+    },
+    {
+        name: "موسى وفرعون",
+        icon: "🌊",
+        surah: "سورة القصص، طه، الشعراء",
+        category: "قصص الأمم",
+        brief: "موسى كليم الله أُرسل إلى فرعون الطاغية، أظهر له المعجزات، فتكبّر، فانفلق البحر وأُغرق فرعون وجنوده.",
+        sections: [
+            { h: "البداية", p: "وُلد موسى في زمن كان فرعون يقتل فيه أبناء بني إسرائيل، فألقته أمه في اليم، فتربّى في قصر فرعون. فلما كبر، قتل قبطيًّا، فهرب إلى مدين، وتزوج ابنة شعيب، ورعى الغنم عشر سنين." },
+            { h: "التكليم", p: "أثناء عودته، كلمه الله عند الوادي المقدس طوى، وأعطاه عصاه وآية يده البيضاء، وأرسله مع أخيه هارون إلى فرعون." },
+            { h: "المعارضة", p: "دخل على فرعون بالمعجزات، فقال فرعون: أنا ربكم الأعلى! وجمع السحرة، فألقى موسى عصاه فابتلعت عصيهم، فسجد السحرة لرب العالمين." },
+            { h: "الخروج", p: "أمر الله موسى بالخروج ببني إسرائيل، فأتبعهم فرعون بجنوده، فأمر الله موسى أن يضرب البحر بعصاه، فانفلق البحر، فنجا موسى وقومه، وأُغرق فرعون وجنوده." },
+            { h: "العبرة", p: "الكِبر والطغيان نهايتهما الهلاك، ونصرة الله للمؤمنين قادمة ولو تأخرت، وأن ما عند الله خير وأبقى." },
+            { h: "آية", text: "﴿فَأَخَذْنَاهُ وَجُنُودَهُ فَنَبَذْنَاهُمْ فِي الْيَمِّ ۖ فَانظُرْ كَيْفَ كَانَ عَاقِبَةُ الظَّالِمِينَ﴾", ayah: true }
+        ],
+        refs: "سورة القصص، سورة طه، سورة الشعراء"
+    },
+    {
+        name: "أصحاب الرقيم",
+        icon: "📜",
+        surah: "سورة الكهف (9)",
+        category: "قصص العبرة",
+        brief: "ذكرهم الله في سورة الكهف: ﴿أَمْ حَسِبْتَ أَنَّ أَصْحَابَ الْكَهْفِ وَالرَّقِيمِ كَانُوا مِنْ آيَاتِنَا عَجَبًا﴾، واختلف المفسرون في تفسيرها.",
+        sections: [
+            { h: "الخلاف", p: "اختلف المفسرون في معنى الرقيم: قيل هو كتاب نُقش فيه أسماء أصحاب الكهف، وقيل هو قرية أو جبل، وقيل غير ذلك." },
+            { h: "الراجح", p: "قال ابن كثير: الرقيم هو الكتاب الذي كُتبت فيه أسماؤهم وأنسابهم وقصتهم، وقيل هو اللوح الذي فيه أسماؤهم منقوشًا، والأمر فيه سعة." },
+            { h: "الفائدة", p: "الآية تُشير إلى أن قصتهم ليست أعجب آيات الله، بل في خلق السماوات والأرض ما هو أعجب. وأن الله قادر على كل شيء." },
+            { h: "آية", text: "﴿أَمْ حَسِبْتَ أَنَّ أَصْحَابَ الْكَهْفِ وَالرَّقِيمِ كَانُوا مِنْ آيَاتِنَا عَجَبًا﴾", ayah: true }
+        ],
+        refs: "سورة الكهف: 9، تفسير ابن كثير، تفسير الطبري"
+    }
+];
+
+let currentFilter = 'all';
+let currentSearch = '';
+
+function renderStories() {
+    const container = document.getElementById('stories-container');
+    let filtered = STORIES.filter(s => {
+        const matchFilter = currentFilter === 'all' || s.category === currentFilter;
+        const matchSearch = currentSearch === '' ||
+            s.name.includes(currentSearch) ||
+            s.brief.includes(currentSearch);
+        return matchFilter && matchSearch;
+    });
+
+    if (filtered.length === 0) {
+        container.innerHTML = '<div class="no-results">لا توجد نتائج مطابقة</div>';
+        return;
+    }
+
+    container.innerHTML = filtered.map(s => `
+        <div class="story-card" onclick="openModal(${STORIES.indexOf(s)})">
+            <div class="story-icon">${s.icon}</div>
+            <div class="story-name">${s.name}</div>
+            <div class="story-surah">📖 ${s.surah}</div>
+            <div class="story-brief">${s.brief}</div>
+            <span class="story-badge">${s.category}</span>
+        </div>
+    `).join('');
+}
+
+function openModal(index) {
+    const s = STORIES[index];
+    const modal = document.getElementById('modal');
+    const content = document.getElementById('modal-content');
+
+    content.innerHTML = `
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-icon">${s.icon}</div>
+        <div class="modal-name">${s.name}</div>
+        <div class="modal-surah">📖 ${s.surah}</div>
+        ${s.sections.map(sec => `
+            <div class="modal-section">
+                <h3>${sec.h}</h3>
+                ${sec.text ? `<div class="ayah">${sec.text}</div>` : ''}
+                ${sec.p ? `<p>${sec.p}</p>` : ''}
+            </div>
+        `).join('')}
+        <div class="modal-source">📖 المراجع: ${s.refs}</div>
+    `;
+
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('modal').classList.remove('show');
+    document.body.style.overflow = '';
+}
+
+document.getElementById('search-input').addEventListener('input', (e) => {
+    currentSearch = e.target.value.trim();
+    renderStories();
+});
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderStories();
+    });
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+});
+
+renderStories();
+</script>
+
+</body>
+</html>
