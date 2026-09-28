@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الغزوات والفتوحات — ملاك المعرفة الإسلامية</title>
+<meta name="description" content="غزوات النبي ﷺ والفتوحات الإسلامية الكبرى — بتفاصيل موثقة من السيرة والتاريخ الإسلامي.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
+<style>
+.gh-hero{background:linear-gradient(135deg,rgba(212,175,55,0.22) 0%,rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:20px;padding:35px 20px;text-align:center;margin-bottom:30px}
+.gh-hero h1{font-family:'Amiri',serif;font-size:32px;color:var(--gold);margin-bottom:12px}
+.gh-hero p{color:var(--cream);opacity:0.9;max-width:650px;margin:0 auto;font-size:15px}
+.search-box{max-width:500px;margin:25px auto;position:relative}
+.search-box input{width:100%;padding:14px 50px 14px 20px;background:rgba(10,58,44,0.6);border:2px solid rgba(212,175,55,0.3);border-radius:30px;color:var(--cream);font-family:inherit;font-size:15px;outline:none;transition:all 0.3s}
+.search-box input:focus{border-color:var(--gold);background:rgba(10,58,44,0.9);box-shadow:0 0 0 4px rgba(212,175,55,0.1)}
+.search-box input::placeholder{color:rgba(245,240,225,0.5)}
+.search-box .search-icon{position:absolute;right:18px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:18px}
+.filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:25px}
+.filter-btn{padding:8px 16px;background:transparent;border:1px solid rgba(212,175,55,0.4);color:var(--cream);border-radius:20px;font-size:13px;cursor:pointer;font-family:inherit;transition:all 0.3s}
+.filter-btn:hover,.filter-btn.active{background:var(--gold);color:var(--green-dark);border-color:var(--gold)}
+.gh-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:15px}
+.gh-card{background:linear-gradient(135deg,rgba(26,107,84,0.35) 0%,rgba(13,77,60,0.55) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:16px;padding:20px;transition:all 0.3s;cursor:pointer;position:relative;overflow:hidden}
+.gh-card::before{content:'';position:absolute;top:0;right:0;width:4px;height:100%;background:var(--gold);transform:scaleY(0);transition:transform 0.3s;transform-origin:top}
+.gh-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 8px 25px rgba(212,175,55,0.25)}
+.gh-card:hover::before{transform:scaleY(1)}
+.gh-icon{width:55px;height:55px;background:linear-gradient(135deg,rgba(212,175,55,0.25) 0%,rgba(212,175,55,0.1) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:12px;border:1px solid rgba(212,175,55,0.3)}
+.gh-name{font-family:'Amiri',serif;font-size:22px;color:var(--gold);margin-bottom:6px}
+.gh-year{font-size:12px;color:var(--cream);opacity:0.7;margin-bottom:10px}
+.gh-brief{font-size:14px;line-height:1.7;color:var(--cream);opacity:0.9;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.gh-badge{display:inline-block;background:rgba(212,175,55,0.15);color:var(--gold);padding:3px 10px;border-radius:12px;font-size:11px;margin-top:12px;border:1px solid rgba(212,175,55,0.3)}
+.no-results{text-align:center;padding:40px;color:var(--cream);opacity:0.7;grid-column:1/-1}
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);backdrop-filter:blur(6px);z-index:2000;justify-content:center;align-items:flex-start;padding:20px;overflow-y:auto}
+.modal-overlay.show{display:flex}
+.modal-content{background:linear-gradient(135deg,#0a3a2c 0%,#0d4d3c 100%);border:2px solid var(--gold);border-radius:20px;max-width:750px;width:100%;padding:30px 25px;position:relative;margin-top:30px;margin-bottom:30px;animation:slideUp 0.3s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.modal-close{position:absolute;top:15px;left:15px;width:38px;height:38px;border-radius:50%;background:rgba(200,50,50,0.7);color:white;border:none;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit}
+.modal-close:hover{background:rgba(220,60,60,1)}
+.modal-icon{font-size:60px;text-align:center;margin-bottom:15px}
+.modal-name{font-family:'Amiri',serif;font-size:30px;color:var(--gold);text-align:center;margin-bottom:8px}
+.modal-year{text-align:center;color:var(--cream);opacity:0.8;font-size:14px;margin-bottom:25px;font-style:italic}
+.modal-section{margin-bottom:18px;padding:18px;background:rgba(10,58,44,0.5);border-radius:12px;border-right:4px solid var(--gold)}
+.modal-section h3{font-family:'Amiri',serif;font-size:18px;color:var(--gold);margin-bottom:10px}
+.modal-section p{color:var(--cream);line-height:1.9;font-size:15px}
+.modal-source{font-size:13px;color:var(--gold);opacity:0.75;text-align:center;margin-top:12px;font-style:italic;padding-top:12px;border-top:1px solid rgba(212,175,55,0.2)}
+@media (max-width:640px){.gh-hero h1{font-size:24px}.modal-content{padding:20px 15px}.modal-name{font-size:24px}.gh-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+<div class="header-container">
+<a href="index.html" class="logo">
+<div class="logo-icon">☪</div>
+<div class="logo-text">
+<span class="main">ملاك المعرفة</span>
+<span class="sub">منصة إسلامية شاملة</span>
+</div>
+</a>
+<button class="nav-toggle" onclick="document.querySelector('.main-nav').style.display = document.querySelector('.main-nav').style.display === 'none' ? 'block' : 'none'">☰</button>
+</div>
+</header>
+
+<nav class="main-nav">
+<ul class="nav-list">
+<li><a href="index.html">🏠 الرئيسية</a></li>
+<li><a href="quran.html">📖 القرآن الكريم</a></li>
+<li><a href="tafsir.html">📚 التفسير</a></li>
+<li><a href="hadith.html">🕌 السنة النبوية</a></li>
+<li><a href="seerah.html">🌙 السيرة النبوية</a></li>
+<li><a href="ghazawat.html" class="active">⚔️ الغزوات</a></li>
+<li><a href="prophets.html">🕊️ قصص الأنبياء</a></li>
+<li><a href="sahaba.html">⭐ الصحابة</a></li>
+<li><a href="adhkar.html">🤲 الأذكار</a></li>
+<li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="search.html">🔍 البحث</a></li>
+</ul>
+</nav>
+
+<main class="main-container">
+
+<section class="gh-hero">
+<h1>⚔️ الغزوات والفتوحات</h1>
+<p>غزوات النبي ﷺ الكبرى، والفتوحات الإسلامية العظيمة التي نشرت الإسلام في المشرق والمغرب — بتفاصيل موثقة.</p>
+</section>
+
+<div class="search-box">
+<input type="text" id="search-input" placeholder="ابحث عن غزوة أو فتح...">
+<span class="search-icon">🔍</span>
+</div>
+
+<div class="filters">
+<button class="filter-btn active" data-filter="all">الكل</button>
+<button class="filter-btn" data-filter="غزوات النبي">غزوات النبي ﷺ</button>
+<button class="filter-btn" data-filter="الفتوحات">الفتوحات</button>
+<button class="filter-btn" data-filter="معارك حاسمة">معارك حاسمة</button>
+</div>
+
+<div class="gh-grid" id="gh-container"></div>
+
+</main>
+
+<footer class="site-footer">
+<p class="footer-ayah">﴿ إِنَّا لَنَنصُرُ رُسُلَنَا وَالَّذِينَ آمَنُوا فِي الْحَيَاةِ الدُّنْيَا وَيَوْمَ يَقُومُ الْأَشْهَادُ ﴾</p>
+<p>ملاك المعرفة الإسلامية — منصة دعوية غير ربحية</p>
+<p>© 2026 — نسألكم الدعاء</p>
+</footer>
+
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+<div class="modal-content" id="modal-content"></div>
+</div>
+
+<script>
+const BATTLES = [
+    {
+        name: "غزوة بدر الكبرى",
+        icon: "🌙",
+        year: "2 هـ — 624 م",
+        category: "غزوات النبي",
+        brief: "أول غزوة كبرى للمسلمين، وسُمّيت يوم الفرقان، انتصر فيها 313 مسلمًا على 1000 مشرك.",
+        sections: [
+            { h: "السبب", p: "خرج المسلمون لاعتراض قافلة قريش بقيادة أبي سفيان، فأرسلت قريش جيشًا لحمايتها، فالتقى الجيشان عند بدر." },
+            { h: "العدد", p: "كان عدد المسلمين 313 مقاتلًا، والمشركين نحو 1000 مقاتل، فكانت الغلبة للمسلمين." },
+            { h: "النتيجة", p: "انتصار عظيم للمسلمين، قُتل 70 من المشركين وأُسر 70، وسُمّي يوم الفرقان." },
+            { h: "آيات", p: "قال الله: ﴿وَلَقَدْ نَصَرَكُمُ اللَّهُ بِبَدْرٍ وَأَنتُمْ أَذِلَّةٌ﴾." }
+        ],
+        refs: "سورة آل عمران: 123، سيرة ابن هشام، صحيح البخاري"
+    },
+    {
+        name: "غزوة أحد",
+        icon: "🏔️",
+        year: "3 هـ — 625 م",
+        category: "غزوات النبي",
+        brief: "خرج المسلمون للقاء قريش في أحد، فانقلبت المعركة بعد مخالفة الرماة أمر النبي ﷺ.",
+        sections: [
+            { h: "السبب", p: "أرادت قريش الانتقام لهزيمتها في بدر، فخرجت بجيش نحو 3000 مقاتل إلى أحد." },
+            { h: "المعركة", p: "كان النصر للمسلمين في البداية، لكن الرماة تركوا مواقعهم طمعًا في الغنائم، فانقلبت المعركة." },
+            { h: "الشهداء", p: "استُشهد 70 من المسلمين، منهم حمزة بن عبد المطلب سيد الشهداء، ومصعب بن عمير." },
+            { h: "الدرس", p: "كانت الغزوة درسًا في أهمية الطاعة والانضباط، ونزلت فيها آيات كثيرة." }
+        ],
+        refs: "سورة آل عمران: 121-179، سيرة ابن هشام"
+    },
+    {
+        name: "غزوة الخندق (الأحزاب)",
+        icon: "🛡️",
+        year: "5 هـ — 627 م",
+        category: "غزوات النبي",
+        brief: "تحزّبت قريش والقبائل على المسلمين، فحفروا الخندق، فردّ الله الأحزاب بريح عاصفة.",
+        sections: [
+            { h: "السبب", p: "اجتمعت قريش وغطفان واليهود لحصار المدينة والقضاء على الإسلام." },
+            { h: "الخندق", p: "أشار سلمان الفارسي بحفر الخندق حول المدينة، فكانت خطة عسكرية ناجحة." },
+            { h: "النتيجة", p: "حاصر الأحزاب المدينة شهرًا، ثم أرسل الله عليهم ريحًا عاصفة وجنودًا لم يروها، فرجعوا خائبين." },
+            { h: "آية", p: "﴿وَرَدَّ اللَّهُ الَّذِينَ كَفَرُوا بِغَيْظِهِمْ لَمْ يَنَالُوا خَيْرًا﴾." }
+        ],
+        refs: "سورة الأحزاب: 9-27"
+    },
+    {
+        name: "صلح الحديبية",
+        icon: "🕊️",
+        year: "6 هـ — 628 م",
+        category: "معارك حاسمة",
+        brief: "صلح بين النبي ﷺ وقريش، وسماه الله فتحًا مبينًا، فكان مفتاحًا لفتح مكة.",
+        sections: [
+            { h: "السبب", p: "خرج النبي ﷺ معتمرًا مع 1400 من أصحابه، فصدّتهم قريش عن البيت." },
+            { h: "البنود", p: "هدنة عشر سنوات، ومن جاء مسلمًا من قريش يُرد إليهم، ومن جاء من المسلمين إلى قريش لا يُرد، ومن أراد الدخول في حلف قريش أو المسلمين فله ذلك." },
+            { h: "النتيجة", p: "قال الله: ﴿إِنَّا فَتَحْنَا لَكَ فَتْحًا مُّبِينًا﴾، ودخل الناس في الإسلام أفواجًا بعده." }
+        ],
+        refs: "سورة الفتح: 1-28"
+    },
+    {
+        name: "فتح خيبر",
+        icon: "🏰",
+        year: "7 هـ — 628 م",
+        category: "معارك حاسمة",
+        brief: "فتح المسلمون حصون خيبر، وأعطى النبي ﷺ الراية لعلي بن أبي طالب، ففتحها الله على يديه.",
+        sections: [
+            { h: "السبب", p: "كان اليهود في خيبر يخططون مع قريش ضد المسلمين، فقرر النبي ﷺ ضربهم." },
+            { h: "الفتح", p: "حاصر المسلمون خيبر، وأعطى النبي ﷺ الراية لعلي، ففتح الله عليه حصونها." },
+            { h: "النتيجة", p: "قُسمت خيبر على المسلمين، وأُبقيت الأرض لليهود بالمساقاة (نصف الثمر)." }
+        ],
+        refs: "صحيح البخاري، سيرة ابن هشام"
+    },
+    {
+        name: "فتح مكة الأعظم",
+        icon: "🕋",
+        year: "8 هـ — 630 م",
+        category: "معارك حاسمة",
+        brief: "دخل النبي ﷺ مكة منتصرًا مُتواضعًا، فحطّم الأصنام، وعفا عن أهلها: اذهبوا فأنتم الطلقاء.",
+        sections: [
+            { h: "السبب", p: "نقضت قريش صلح الحديبية بمساعدة حلفائها على خزاعة." },
+            { h: "الدخول", p: "خرج النبي ﷺ بجيش من 10,000 مقاتل، فدخل مكة منتصرًا، ورأسه منحنٍ تواضعًا لله." },
+            { h: "العفو", p: "قال ﷺ لأهل مكة: اذهبوا فأنتم الطلقاء، وعفا عنهم بعد أن آذوه وأخرجوه." },
+            { h: "تحطيم الأصنام", p: "حطّم النبي ﷺ الأصنام حول الكعبة وهو يتلو: ﴿جَاءَ الْحَقُّ وَزَهَقَ الْبَاطِلُ﴾." }
+        ],
+        refs: "سيرة ابن هشام، صحيح البخاري"
+    },
+    {
+        name: "غزوة مؤتة",
+        icon: "🎖️",
+        year: "8 هـ — 629 م",
+        category: "غزوات النبي",
+        brief: "أول لقاء مع الروم، استُشهد فيه القادة الثلاثة: زيد، جعفر، ابن رواحة، وتولى خالد القيادة.",
+        sections: [
+            { h: "السبب", p: "قتل الروم رسول النبي ﷺ الحارث بن عمير الأزدي، فأرسل النبي ﷺ جيشًا من 3000." },
+            { h: "القادة", p: "أمّر النبي ﷺ زيد بن حارثة، فإن قُتل فجعفر، فإن قُتل فعبد الله بن رواحة." },
+            { h: "الاستشهاد", p: "استُشهد الثلاثة، فتولى خالد بن الوليد القيادة، فانحاز بالجيش وأنقذه." }
+        ],
+        refs: "صحيح البخاري، سيرة ابن هشام"
+    },
+    {
+        name: "غزوة تبوك",
+        icon: "🔥",
+        year: "9 هـ — 630 م",
+        category: "غزوات النبي",
+        brief: "آخر غزوة قادها النبي ﷺ بنفسه، سُميت غزوة العسرة، ولم يلق فيها قتالًا.",
+        sections: [
+            { h: "السبب", p: "بلغ النبي ﷺ أن الروم يجهزون جيشًا لغزو المدينة، فخرج لملاقاتهم." },
+            { h: "العسرة", p: "كان الجو حارًّا والزاد قليلًا، فجهّز عثمان بن عفان جيش العسرة بماله." },
+            { h: "النتيجة", p: "وصل المسلمون تبوك دون قتال، فانتشر الإسلام في شمال الجزيرة، وتخلّف المنافقون وكُشف حالهم." }
+        ],
+        refs: "سورة التوبة، سيرة ابن هشام"
+    },
+    {
+        name: "معركة اليرموك",
+        icon: "⚡",
+        year: "15 هـ — 636 م",
+        category: "الفتوحات",
+        brief: "أعظم معركة في فتوحات الشام، قادها خالد بن الوليد، فانتصروا على الروم انتصارًا حاسمًا.",
+        sections: [
+            { h: "الطرفان", p: "المسلمون بقيادة خالد بن الوليد وأبي عبيدة، والروم بمئات الآلاف." },
+            { h: "المعركة", p: "انتصر المسلمون انتصارًا حاسمًا، فتحت لهم أبواب الشام، وسقطت هيبة الروم." },
+            { h: "النتيجة", p: "فتح الله على المسلمين الشام كلها (دمشق، حمص، حلب، بيت المقدس)." }
+        ],
+        refs: "فتوح البلدان، تاريخ الطبري"
+    },
+    {
+        name: "معركة القادسية",
+        icon: "⚔️",
+        year: "15 هـ — 636 م",
+        category: "الفتوحات",
+        brief: "قادها سعد بن أبي وقاص، فتح الله على المسلمين فارس، وأطاحوا بدولة الفرس.",
+        sections: [
+            { h: "السبب", p: "بعد فتوحات العراق، أرسل الفرس جيشًا عظيمًا، فخرج المسلمون لملاقاتهم." },
+            { h: "المعركة", p: "قادها سعد بن أبي وقاص بأمر من عمر، وانتهت بانتصار المسلمين انتصارًا ساحقًا." },
+            { h: "النتيجة", p: "سقطت دولة الفرس، ودخل المسلمون المدائن عاصمة كسرى." }
+        ],
+        refs: "فتوح البلدان، تاريخ الطبري"
+    },
+    {
+        name: "فتح بيت المقدس",
+        icon: "🕌",
+        year: "15 هـ — 636 م",
+        category: "الفتوحات",
+        brief: "فتح بيت المقدس على يد الخليفة عمر بن الخطاب، بعد انتصار اليرموك.",
+        sections: [
+            { h: "السبب", p: "بعد انتصار اليرموك، تقدّم المسلمون إلى بيت المقدس، فحاصرها أبو عبيدة." },
+            { h: "الفتح", p: "طلب أهل بيت المقدس الأمان، فجاء عمر بن الخطاب بنفسه وكتب لهم الأمانة العمرية." },
+            { h: "التسامح", p: "أمّن عمر أهلها على كنائسهم وأموالهم، وحرم عليهم بيع بيوتهم، فدخل كثير منهم الإسلام." }
+        ],
+        refs: "فتوح البلدان"
+    },
+    {
+        name: "فتح مصر",
+        icon: "🏛️",
+        year: "20 هـ — 641 م",
+        category: "الفتوحات",
+        brief: "فتحها عمرو بن العاص بأمر من عمر، وأسس مدينة الفسطاط، ونشر الإسلام في شمال أفريقيا.",
+        sections: [
+            { h: "السبب", p: "بعد فتوحات الشام، أراد المسلمون تأمين الحدود الغربية، فأرسل عمر عمرو بن العاص." },
+            { h: "الفتح", p: "فتح المسلمون مصر خلال سنتين، وأسس عمرو مدينة الفسطاط (القاهرة القديمة)." },
+            { h: "النتيجة", p: "انتشر الإسلام في مصر، وأصبحت مركزًا إسلاميًا كبيرًا." }
+        ],
+        refs: "فتوح البلدان، تاريخ الطبري"
+    },
+    {
+        name: "معركة نهاوند",
+        icon: "🏔️",
+        year: "21 هـ — 642 م",
+        category: "الفتوحات",
+        brief: "سُمّيت فتح الفتوح، وانتهت بها دولة الفرس نهائيًا، بقيادة النعمان بن مقرن.",
+        sections: [
+            { h: "السبب", p: "جمع الفرس جيشًا أخيرًا لاسترداد ملكهم، فخرج المسلمون بقيادة النعمان بن مقرن." },
+            { h: "المعركة", p: "انتهت بانتصار المسلمين، واستُشهد النعمان، وتولى حذيفة بن اليمان القيادة." },
+            { h: "النتيجة", p: "انتهت دولة الفرس تمامًا، ودخلت بلاد فارس في الإسلام." }
+        ],
+        refs: "تاريخ الطبري"
+    },
+    {
+        name: "فتح الأندلس",
+        icon: "🌅",
+        year: "92 هـ — 711 م",
+        category: "الفتوحات",
+        brief: "فتحها طارق بن زياد وموسى بن نصير، فانتشر الإسلام في الأندلس (إسبانيا والبرتغال) 8 قرون.",
+        sections: [
+            { h: "السبب", p: "طلب القوط (حكام الأندلس) من المسلمين مساعدتهم ضد الظلم، فدخل المسلمون الأندلس." },
+            { h: "القادة", p: "قاد طارق بن زياد الفتح، ثم لحق به موسى بن نصير والي أفريقيا." },
+            { h: "النتيجة", p: "فتح المسلمون الأندلس كلها، وأسسوا حضارة إسلامية عظيمة استمرت 800 سنة." }
+        ],
+        refs: "تاريخ الأندلس، نفح الطيب"
+    },
+    {
+        name: "فتح القسطنطينية",
+        icon: "🏰",
+        year: "857 هـ — 1453 م",
+        category: "الفتوحات",
+        brief: "فتحها السلطان محمد الفاتح، وتحقق بها بشارة النبي ﷺ: لتفتحنّ القسطنطينية.",
+        sections: [
+            { h: "البشارة", p: "قال النبي ﷺ: لتفتحنّ القسطنطينية، فلنعم الأمير أميرها، ولنعم الجيش ذلك الجيش." },
+            { h: "الفاتح", p: "السلطان محمد الفاتح، ثاني سلاطين آل عثمان، قاد الجيش وهو ابن 21 سنة." },
+            { h: "الفتح", p: "بعد حصار 53 يومًا، فتح المسلمون القسطنطينية، وحوّلوا كنيسة آيا صوفيا إلى مسجد." }
+        ],
+        refs: "صحيح مسلم، تاريخ الدولة العثمانية"
+    }
+];
+
+let currentFilter = 'all';
+let currentSearch = '';
+
+function renderBattles() {
+    const container = document.getElementById('gh-container');
+    let filtered = BATTLES.filter(b => {
+        const matchFilter = currentFilter === 'all' || b.category === currentFilter;
+        const matchSearch = currentSearch === '' ||
+            b.name.includes(currentSearch) ||
+            b.brief.includes(currentSearch);
+        return matchFilter && matchSearch;
+    });
+
+    if (filtered.length === 0) {
+        container.innerHTML = '<div class="no-results">لا توجد نتائج مطابقة</div>';
+        return;
+    }
+
+    container.innerHTML = filtered.map(b => `
+        <div class="gh-card" onclick="openModal(${BATTLES.indexOf(b)})">
+            <div class="gh-icon">${b.icon}</div>
+            <div class="gh-name">${b.name}</div>
+            <div class="gh-year">${b.year}</div>
+            <div class="gh-brief">${b.brief}</div>
+            <span class="gh-badge">${b.category}</span>
+        </div>
+    `).join('');
+}
+
+function openModal(index) {
+    const b = BATTLES[index];
+    const modal = document.getElementById('modal');
+    const content = document.getElementById('modal-content');
+
+    content.innerHTML = `
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-icon">${b.icon}</div>
+        <div class="modal-name">${b.name}</div>
+        <div class="modal-year">${b.year}</div>
+        ${b.sections.map(s => `
+            <div class="modal-section">
+                <h3>${s.h}</h3>
+                <p>${s.p}</p>
+            </div>
+        `).join('')}
+        <div class="modal-source">📖 المراجع: ${b.refs}</div>
+    `;
+
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('modal').classList.remove('show');
+    document.body.style.overflow = '';
+}
+
+document.getElementById('search-input').addEventListener('input', (e) => {
+    currentSearch = e.target.value.trim();
+    renderBattles();
+});
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderBattles();
+    });
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+});
+
+renderBattles();
+</script>
+
+</body>
+</html>
