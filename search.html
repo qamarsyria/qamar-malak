@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>البحث الشامل — ملاك المعرفة الإسلامية</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔍</text></svg>">
+<style>
+.search-hero{background:linear-gradient(135deg,rgba(212,175,55,0.22) 0%,rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:20px;padding:35px 20px;text-align:center;margin-bottom:30px}
+.search-hero h1{font-family:'Amiri',serif;font-size:30px;color:var(--gold);margin-bottom:12px}
+.search-hero p{color:var(--cream);opacity:0.9;max-width:600px;margin:0 auto;font-size:15px}
+.big-search{max-width:650px;margin:30px auto;position:relative}
+.big-search input{width:100%;padding:18px 60px 18px 20px;background:rgba(10,58,44,0.7);border:2px solid rgba(212,175,55,0.35);border-radius:35px;color:var(--cream);font-family:inherit;font-size:16px;outline:none;transition:all 0.3s}
+.big-search input:focus{border-color:var(--gold);background:rgba(10,58,44,0.95);box-shadow:0 0 0 5px rgba(212,175,55,0.15)}
+.big-search input::placeholder{color:rgba(245,240,225,0.55)}
+.big-search .search-icon{position:absolute;right:22px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:22px}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:12px;margin-bottom:25px;scrollbar-width:thin;justify-content:center}
+.tabs::-webkit-scrollbar{height:4px}
+.tabs::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+.tab-btn{flex-shrink:0;padding:10px 18px;background:rgba(26,107,84,0.4);border:1px solid rgba(212,175,55,0.3);border-radius:25px;color:var(--cream);font-family:inherit;font-size:14px;cursor:pointer;transition:all 0.3s;white-space:nowrap}
+.tab-btn:hover{background:rgba(212,175,55,0.2)}
+.tab-btn.active{background:var(--gold);color:var(--green-dark);border-color:var(--gold);font-weight:700}
+.section-title{text-align:center;color:var(--gold);font-family:'Amiri',serif;font-size:22px;margin:30px 0 15px}
+.empty-msg{text-align:center;padding:40px 20px;color:var(--cream);opacity:0.7;font-size:15px}
+.result-card{background:linear-gradient(135deg,rgba(26,107,84,0.35) 0%,rgba(13,77,60,0.55) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:14px;padding:18px;margin-bottom:12px;transition:all 0.3s;text-decoration:none;color:var(--cream);display:block}
+.result-card:hover{border-color:var(--gold);transform:translateX(-4px);box-shadow:0 5px 20px rgba(212,175,55,0.15)}
+.result-card .title{font-family:'Amiri',serif;font-size:20px;color:var(--gold);margin-bottom:8px;line-height:1.4}
+.result-card .snippet{font-size:14px;line-height:1.8;color:var(--cream);opacity:0.9}
+.result-card .badge{display:inline-block;background:rgba(212,175,55,0.15);color:var(--gold);padding:3px 10px;border-radius:12px;font-size:11px;margin-top:10px;border:1px solid rgba(212,175,55,0.3)}
+.ayah-result{background:linear-gradient(135deg,rgba(212,175,55,0.15) 0%,rgba(212,175,55,0.03) 100%);border-right:4px solid var(--gold);border-radius:12px;padding:20px;margin-bottom:12px}
+.ayah-result .ayah-text{font-family:'Amiri',serif;font-size:22px;line-height:2;color:var(--cream);text-align:justify;margin-bottom:10px}
+.ayah-result .ayah-ref{color:var(--gold);font-size:13px;font-style:italic}
+.loading{text-align:center;padding:30px;color:var(--gold)}
+.spinner{display:inline-block;width:35px;height:35px;border:3px solid rgba(212,175,55,0.2);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;margin-bottom:12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:640px){.search-hero h1{font-size:22px}.big-search input{padding:15px 50px 15px 15px;font-size:15px}.big-search .search-icon{right:16px;font-size:18px}.ayah-result .ayah-text{font-size:18px}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+<div class="header-container">
+<a href="index.html" class="logo">
+<div class="logo-icon">☪</div>
+<div class="logo-text"><span class="main">ملاك المعرفة</span><span class="sub">منصة إسلامية شاملة</span></div>
+</a>
+<button class="nav-toggle" onclick="document.querySelector('.main-nav').style.display = document.querySelector('.main-nav').style.display === 'none' ? 'block' : 'none'">☰</button>
+</div>
+</header>
+
+<nav class="main-nav">
+<ul class="nav-list">
+<li><a href="index.html">🏠 الرئيسية</a></li>
+<li><a href="quran.html">📖 القرآن الكريم</a></li>
+<li><a href="tafsir.html">📚 التفسير</a></li>
+<li><a href="hadith.html">🕌 السنة النبوية</a></li>
+<li><a href="seerah.html">🌙 السيرة النبوية</a></li>
+<li><a href="ghazawat.html">⚔️ الغزوات</a></li>
+<li><a href="prophets.html">🕊️ قصص الأنبياء</a></li>
+<li><a href="sahaba.html">⭐ الصحابة</a></li>
+<li><a href="adhkar.html">🤲 الأذكار</a></li>
+<li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="search.html" class="active">🔍 البحث</a></li>
+</ul>
+</nav>
+
+<main class="main-container">
+
+<section class="search-hero">
+<h1>🔍 البحث الشامل</h1>
+<p>ابحث في القرآن الكريم والسور والأذكار — نتائج فورية ودقيقة</p>
+</section>
+
+<div class="big-search">
+<input type="text" id="search-input" placeholder="اكتب كلمة للبحث... مثال: الصبر، الجنة، التقوى" autofocus>
+<span class="search-icon">🔍</span>
+</div>
+
+<div class="tabs">
+<button class="tab-btn active" data-tab="quran">📖 القرآن</button>
+<button class="tab-btn" data-tab="surah">📋 السور</button>
+<button class="tab-btn" data-tab="adhkar">🤲 الأذكار</button>
+<button class="tab-btn" data-tab="prophet">🕊️ الأنبياء</button>
+<button class="tab-btn" data-tab="sahabi">⭐ الصحابة</button>
+</div>
+
+<div id="results-container"></div>
+
+</main>
+
+<footer class="site-footer">
+<p class="footer-ayah">﴿ وَقُل رَّبِّ زِدْنِي عِلْمًا ﴾</p>
+<p>ملاك المعرفة الإسلامية — منصة دعوية غير ربحية</p>
+<p>© 2026 — نسألكم الدعاء</p>
+</footer>
+
+<script>
+let currentTab = 'quran';
+let currentQuery = '';
+let searchTimeout = null;
+
+// بيانات محلية للبحث السريع
+const LOCAL_DATA = {
+    surahs: [
+        "الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس",
+        "هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه",
+        "الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم",
+        "لقمان","السجدة","الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر",
+        "فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق",
+        "الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة",
+        "الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج",
+        "نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس",
+        "التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد",
+        "الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات",
+        "القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر",
+        "المسد","الإخلاص","الفلق","الناس"
+    ],
+    adhkar: [
+        {t:"سبحان الله وبحمده", s:"ذكر عظيم — من قاله 100 مرة حُطّت خطاياه"},
+        {t:"لا إله إلا الله وحده لا شريك له", s:"أفضل الذكر — له الملك وله الحمد"},
+        {t:"اللهم صل على محمد", s:"من صلى عليّ صلاة صلى الله عليه عشرًا"},
+        {t:"أستغفر الله", s:"الاستغفار يفتح أبواب الرزق"},
+        {t:"الحمد لله", s:"أفضل الدعاء"},
+        {t:"لا حول ولا قوة إلا بالله", s:"كنز من كنوز الجنة"},
+        {t:"حسبي الله ونعم الوكيل", s:"دعاء التوكل"},
+        {t:"بسم الله الذي لا يضر مع اسمه شيء", s:"حماية من كل ضرر"},
+        {t:"أعوذ بكلمات الله التامات", s:"حماية من الشرور"},
+        {t:"اللهم إني أسألك الجنة", s:"دعاء مأثور"}
+    ],
+    prophets: [
+        "آدم","إدريس","نوح","هود","صالح","إبراهيم","لوط","إسماعيل","إسحاق","يعقوب",
+        "يوسف","أيوب","شعيب","موسى","هارون","ذو الكفل","داود","سليمان","إلياس","اليسع",
+        "يونس","زكريا","يحيى","عيسى","محمد"
+    ],
+    sahaba: [
+        "أبو بكر الصديق","عمر بن الخطاب","عثمان بن عفان","علي بن أبي طالب",
+        "طلحة بن عبيد الله","الزبير بن العوام","عبد الرحمن بن عوف","سعد بن أبي وقاص",
+        "أبو عبيدة بن الجراح","سعيد بن زيد","بلال بن رباح","سلمان الفارسي",
+        "مصعب بن عمير","خالد بن الوليد","أبو هريرة","عبد الله بن مسعود",
+        "معاذ بن جبل","حمزة بن عبد المطلب","جعفر بن أبي طالب","زيد بن حارثة"
+    ]
+};
+
+function renderTabs() {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.tab === currentTab) btn.classList.add('active');
+    });
+}
+
+function renderContent() {
+    const container = document.getElementById('results-container');
+
+    if (currentQuery.length < 2) {
+        container.innerHTML = '<div class="empty-msg">اكتب كلمتين على الأقل للبحث 🔍</div>';
+        return;
+    }
+
+    if (currentTab === 'quran') {
+        searchQuran(container);
+    } else if (currentTab === 'surah') {
+        searchSurahs(container);
+    } else if (currentTab === 'adhkar') {
+        searchAdhkar(container);
+    } else if (currentTab === 'prophet') {
+        searchProphets(container);
+    } else if (currentTab === 'sahabi') {
+        searchSahaba(container);
+    }
+}
+
+async function searchQuran(container) {
+    container.innerHTML = '<div class="loading"><div class="spinner"></div><div>جارٍ البحث في القرآن...</div></div>';
+
+    try {
+        const res = await fetch(`https://api.alquran.cloud/v1/search/${encodeURIComponent(currentQuery)}/all/ar`);
+        const data = await res.json();
+
+        if (!data.data || !data.data.matches || data.data.matches.length === 0) {
+            container.innerHTML = '<div class="empty-msg">لا توجد نتائج في القرآن لهذا البحث</div>';
+            return;
+        }
+
+        const matches = data.data.matches.slice(0, 30);
+        container.innerHTML = `<div class="section-title">📖 ${data.data.count} نتيجة في القرآن</div>` +
+            matches.map(m => `
+                <div class="ayah-result">
+                    <div class="ayah-text">${escapeHtml(m.text)}</div>
+                    <div class="ayah-ref">سورة ${m.surah.name.replace('سُورَةُ ', '')} — الآية ${m.numberInSurah}</div>
+                </div>
+            `).join('') +
+            (data.data.count > 30 ? '<div class="empty-msg">عرض أول 30 نتيجة فقط</div>' : '');
+    } catch (e) {
+        container.innerHTML = '<div class="empty-msg">⚠️ تعذر الاتصال. تحقق من الإنترنت</div>';
+    }
+}
+
+function searchSurahs(container) {
+    const results = LOCAL_DATA.surahs
+        .map((name, i) => ({ name, n: i + 1 }))
+        .filter(s => s.name.includes(currentQuery) || s.n.toString() === currentQuery);
+
+    if (results.length === 0) {
+        container.innerHTML = '<div class="empty-msg">لا توجد سور مطابقة</div>';
+        return;
+    }
+
+    container.innerHTML = `<div class="section-title">📋 ${results.length} سورة</div>` +
+        results.map(s => `
+            <a href="surah.html?n=${s.n}" class="result-card">
+                <div class="title">سورة ${s.name}</div>
+                <span class="badge">السورة ${s.n}</span>
+            </a>
+        `).join('');
+}
+
+function searchAdhkar(container) {
+    const results = LOCAL_DATA.adhkar.filter(a =>
+        a.t.includes(currentQuery) || a.s.includes(currentQuery)
+    );
+
+    if (results.length === 0) {
+        container.innerHTML = '<div class="empty-msg">لا توجد أذكار مطابقة</div>';
+        return;
+    }
+
+    container.innerHTML = `<div class="section-title">🤲 ${results.length} ذكر</div>` +
+        results.map(a => `
+            <a href="adhkar.html" class="result-card">
+                <div class="title">${a.t}</div>
+                <div class="snippet">${a.s}</div>
+                <span class="badge">أذكار</span>
+            </a>
+        `).join('');
+}
+
+function searchProphets(container) {
+    const results = LOCAL_DATA.prophets.filter(p => p.includes(currentQuery));
+
+    if (results.length === 0) {
+        container.innerHTML = '<div class="empty-msg">لا يوجد نبي بهذا الاسم</div>';
+        return;
+    }
+
+    container.innerHTML = `<div class="section-title">🕊️ ${results.length} نبي</div>` +
+        results.map(p => `
+            <a href="prophets.html" class="result-card">
+                <div class="title">${p} عليه السلام</div>
+                <span class="badge">قصص الأنبياء</span>
+            </a>
+        `).join('');
+}
+
+function searchSahaba(container) {
+    const results = LOCAL_DATA.sahaba.filter(s => s.includes(currentQuery));
+
+    if (results.length === 0) {
+        container.innerHTML = '<div class="empty-msg">لا يوجد صحابي بهذا الاسم</div>';
+        return;
+    }
+
+    container.innerHTML = `<div class="section-title">⭐ ${results.length} صحابي</div>` +
+        results.map(s => `
+            <a href="sahaba.html" class="result-card">
+                <div class="title">${s} رضي الله عنه</div>
+                <span class="badge">الصحابة الكرام</span>
+            </a>
+        `).join('');
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+document.getElementById('search-input').addEventListener('input', (e) => {
+    currentQuery = e.target.value.trim();
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(renderContent, 400);
+});
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        currentTab = btn.dataset.tab;
+        renderTabs();
+        if (currentQuery) renderContent();
+    });
+});
+
+renderContent();
+</script>
+
+</body>
+</html>
