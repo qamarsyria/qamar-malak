@@ -40,6 +40,7 @@
 .setting-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px dashed rgba(212,175,55,0.15);gap:15px}
 .setting-row:last-child{border-bottom:none}
 .setting-label{color:var(--cream);font-size:14px;flex:1}
+.setting-label small{display:block;font-size:11px;opacity:0.6;margin-top:3px}
 .setting-select{padding:9px 12px;background:rgba(10,58,44,0.9);border:1px solid rgba(212,175,55,0.3);border-radius:10px;color:var(--cream);font-family:inherit;font-size:13px;outline:none;min-width:170px;max-width:220px}
 .toggle-switch{position:relative;width:50px;height:28px;background:rgba(10,58,44,0.8);border-radius:14px;cursor:pointer;border:1px solid rgba(212,175,55,0.3);flex-shrink:0}
 .toggle-switch::before{content:'';position:absolute;top:3px;right:3px;width:20px;height:20px;background:var(--cream);border-radius:50%;transition:all 0.3s;opacity:0.5}
@@ -62,6 +63,8 @@
 .error-box{background:rgba(239,68,68,0.15);border:2px solid rgba(239,68,68,0.5);border-radius:14px;padding:15px;text-align:center;color:#fca5a5;font-size:14px}
 .info-note{background:rgba(59,130,246,0.1);border-right:3px solid #3b82f6;border-radius:10px;padding:12px 15px;color:var(--cream);font-size:13px;line-height:1.7;margin-bottom:20px}
 .info-note strong{color:#60a5fa}
+#debug-log{background:#000;color:#4ade80;font-family:monospace;font-size:11px;padding:10px;border-radius:8px;margin-bottom:15px;max-height:120px;overflow-y:auto;display:none;direction:ltr;text-align:left}
+#debug-log.show{display:block}
 @media (max-width:640px){.prayer-hero h1{font-size:24px}.countdown-timer{font-size:30px}.prayer-name-ar{font-size:18px}.prayer-time{font-size:18px}.setting-row{flex-direction:column;align-items:stretch}.setting-select{width:100%;max-width:none}}
 </style>
 </head>
@@ -129,6 +132,12 @@
 </select>
 </div>
 
+<div class="info-note">
+<strong>🎧 اختبار الصوت:</strong> تأكد من أن صوت الوسائط في جوالك مفتوح (ليس صامت). اضغط أي زر في الصفحة قبل اختبار الصوت.
+</div>
+
+<div id="debug-log"></div>
+
 <div id="main-content">
 <div class="loading-state">
 <div class="spinner"></div>
@@ -148,13 +157,23 @@
 <div class="modal-content" id="modal-content"></div>
 </div>
 
-<audio id="adhan-audio" preload="auto" crossorigin="anonymous"></audio>
+<audio id="adhan-audio" preload="none"></audio>
 
 <script>
-// ===== الأصوات: روابط VERIFIED من islamcan.com =====
+// ====== عرض السجل للمساعدة ======
+function showDebug(msg) {
+    const log = document.getElementById('debug-log');
+    log.classList.add('show');
+    log.innerHTML = msg + '<br>' + log.innerHTML;
+    if (log.innerHTML.length > 2000) {
+        log.innerHTML = log.innerHTML.substring(0, 2000);
+    }
+}
+
+// ====== الأصوات (بدون crossorigin، بدون تعقيدات) ======
 const ADHAN_SOURCES = {
     umayyad: {
-        name: '🕌 أذان الجامع الأموي (دمشق)',
+        name: '🕌 أذان الجامع الأموي',
         url: 'https://www.islamcan.com/audio/adhan/azan1.mp3'
     },
     makkah: {
@@ -165,6 +184,10 @@ const ADHAN_SOURCES = {
         name: '🕌 أذان المسجد النبوي',
         url: 'https://www.islamcan.com/audio/adhan/azan3.mp3'
     },
+    egypt: {
+        name: '🇪🇬 أذان مصري',
+        url: 'https://www.islamcan.com/audio/adhan/azan4.mp3'
+    },
     turkey: {
         name: '🇹🇷 أذان تركي',
         url: 'https://www.islamcan.com/audio/adhan/azan5.mp3'
@@ -174,7 +197,7 @@ const ADHAN_SOURCES = {
         url: 'https://www.islamcan.com/audio/adhan/azan6.mp3'
     },
     silent: {
-        name: '🔇 صامت (بدون صوت)',
+        name: '🔇 صامت',
         url: null
     },
     vibrate: {
@@ -223,7 +246,7 @@ let countdownInterval = null;
 let currentEditingPrayer = null;
 let currentEditType = 'adhan';
 
-// ===== إعدادات كل صلاة =====
+// ====== إعدادات ======
 function getPrayerSettings() {
     const saved = localStorage.getItem('qamar_prayer_settings');
     if (saved) {
@@ -240,28 +263,29 @@ function savePrayerSettings(settings) {
     localStorage.setItem('qamar_prayer_settings', JSON.stringify(settings));
 }
 
-// ===== تشغيل الصوت =====
+// ====== تشغيل الصوت (بسيط بدون تعقيدات) ======
 function playSound(soundKey) {
     const sound = ADHAN_SOURCES[soundKey];
-    if (!sound || !sound.url) return Promise.resolve(false);
+    if (!sound || !sound.url) {
+        showDebug('⚠️ لا يوجد رابط صوت');
+        return;
+    }
 
     const audio = document.getElementById('adhan-audio');
     audio.pause();
     audio.src = sound.url;
     audio.currentTime = 0;
-    audio.load();
 
-    const playPromise = audio.play();
-    if (playPromise !== undefined) {
-        return playPromise.then(() => true).catch(err => {
-            console.log('خطأ في التشغيل:', err);
-            return false;
-        });
-    }
-    return Promise.resolve(false);
+    showDebug('🎧 محاولة تشغيل: ' + sound.url);
+
+    audio.play().then(() => {
+        showDebug('✅ الصوت يعمل');
+    }).catch(err => {
+        showDebug('❌ خطأ: ' + err.message);
+    });
 }
 
-// ===== تحميل المواقيت =====
+// ====== تحميل المواقيت ======
 async function loadPrayerTimes(lat, lng, cityName) {
     document.getElementById('location-display').textContent = '📍 ' + cityName;
 
@@ -284,12 +308,12 @@ async function loadPrayerTimes(lat, lng, cityName) {
         startCountdown();
     } catch (e) {
         document.getElementById('main-content').innerHTML = `
-            <div class="error-box">⚠️ تعذر تحميل المواقيت. تحقق من الاتصال بالإنترنت.</div>
+            <div class="error-box">⚠️ تعذر تحميل المواقيت. تحقق من الاتصال.</div>
         `;
     }
 }
 
-// ===== رسم المحتوى =====
+// ====== رسم المحتوى ======
 function renderPrayerContent() {
     const globalSound = localStorage.getItem('qamar_global_sound') || 'umayyad';
     const vibrateOn = localStorage.getItem('qamar_vibrate') !== 'false';
@@ -380,7 +404,7 @@ function renderPrayerList() {
     }).join('');
 }
 
-// ===== العد التنازلي =====
+// ====== العد التنازلي ======
 function startCountdown() {
     if (countdownInterval) clearInterval(countdownInterval);
 
@@ -432,16 +456,14 @@ function startCountdown() {
     countdownInterval = setInterval(update, 1000);
 }
 
-// ===== الإعدادات =====
+// ====== الإعدادات العامة ======
 function saveGlobalSound() {
     localStorage.setItem('qamar_global_sound', document.getElementById('global-sound').value);
 }
 
 function previewGlobal() {
     const val = document.getElementById('global-sound').value;
-    const audio = document.getElementById('adhan-audio');
-    audio.src = ADHAN_SOURCES[val].url;
-    audio.play().then(() => {}).catch(e => alert('⚠️ تعذر تشغيل الصوت.\nتأكد من عدم كتم الصوت في الجوال.'));
+    playSound(val);
 }
 
 function toggleVibrate() {
@@ -450,7 +472,7 @@ function toggleVibrate() {
     localStorage.setItem('qamar_vibrate', t.classList.contains('on'));
 }
 
-// ===== إعدادات كل صلاة =====
+// ====== إعدادات كل صلاة ======
 function openPrayerSettings(prayerKey, prayerName) {
     currentEditingPrayer = prayerKey;
     const settings = getPrayerSettings();
@@ -487,7 +509,7 @@ function openPrayerSettings(prayerKey, prayerName) {
             <div class="setting-row">
                 <div class="setting-label">صوت الأذان لهذه الصلاة</div>
                 <select class="setting-select" id="prayer-sound" style="width:100%;max-width:none;margin-top:8px">
-                    ${['umayyad', 'makkah', 'madinah', 'turkey', 'alafasy'].map(k => `
+                    ${['umayyad', 'makkah', 'madinah', 'egypt', 'turkey', 'alafasy'].map(k => `
                         <option value="${k}" ${k === current.sound ? 'selected' : ''}>${ADHAN_SOURCES[k].name}</option>
                     `).join('')}
                 </select>
@@ -511,9 +533,7 @@ function setPrayerType(type) {
 
 function previewPrayerSound() {
     const soundKey = document.getElementById('prayer-sound').value;
-    const audio = document.getElementById('adhan-audio');
-    audio.src = ADHAN_SOURCES[soundKey].url;
-    audio.play().catch(e => alert('⚠️ تعذر تشغيل الصوت.'));
+    playSound(soundKey);
 }
 
 function savePrayerSettingsNow() {
@@ -534,7 +554,7 @@ function closeModal() {
     currentEditingPrayer = null;
 }
 
-// ===== الموقع =====
+// ====== الموقع ======
 function getLocation() {
     if (!navigator.geolocation) {
         alert('المتصفح لا يدعم تحديد الموقع');
@@ -552,7 +572,6 @@ function getLocation() {
         },
         () => {
             alert('⚠️ تعذر تحديد الموقع. اختر مدينتك من القائمة.');
-            document.getElementById('location-display').textContent = '📍 اختر مدينتك';
         },
         { enableHighAccuracy: true, timeout: 15000 }
     );
