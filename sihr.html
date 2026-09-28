@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>السحر والشعوذة — ملاك المعرفة الإسلامية</title>
+<meta name="description" content="تحذير شرعي من السحر والشعوذة والكهانة، مع الأدلة الشرعية وطرق الوقاية والرقية الشرعية الصحيحة.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+<style>
+.sihr-hero{background:linear-gradient(135deg,rgba(212,175,55,0.25) 0%,rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.4);border-radius:20px;padding:35px 20px;text-align:center;margin-bottom:30px;position:relative;overflow:hidden}
+.sihr-hero::before{content:'🛡️';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:180px;color:rgba(212,175,55,0.05);z-index:0;pointer-events:none}
+.sihr-hero-content{position:relative;z-index:1}
+.sihr-hero h1{font-family:'Amiri',serif;font-size:32px;color:var(--gold);margin-bottom:12px}
+.sihr-hero p{color:var(--cream);opacity:0.9;max-width:680px;margin:0 auto;font-size:15px}
+
+.warning-box{background:linear-gradient(135deg,rgba(220,60,60,0.2) 0%,rgba(200,50,50,0.05) 100%);border:2px solid rgba(220,60,60,0.5);border-radius:16px;padding:20px;margin-bottom:30px;text-align:center}
+.warning-box .icon{font-size:42px;margin-bottom:10px;display:block}
+.warning-box h2{font-family:'Amiri',serif;font-size:22px;color:#ff8888;margin-bottom:10px}
+.warning-box p{color:var(--cream);font-size:15px;line-height:1.8}
+
+.accordion{max-width:800px;margin:0 auto}
+.acc-item{background:linear-gradient(135deg,rgba(26,107,84,0.3) 0%,rgba(13,77,60,0.5) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:14px;margin-bottom:12px;overflow:hidden;transition:all 0.3s}
+.acc-item:hover{border-color:rgba(212,175,55,0.5)}
+.acc-item.open{border-color:var(--gold);box-shadow:0 8px 25px rgba(212,175,55,0.2)}
+.acc-head{padding:18px 20px;cursor:pointer;display:flex;align-items:center;gap:15px;user-select:none}
+.acc-icon{font-size:32px;flex-shrink:0}
+.acc-title{flex:1;font-family:'Amiri',serif;font-size:21px;color:var(--gold);line-height:1.4}
+.acc-arrow{color:var(--gold);font-size:20px;transition:transform 0.3s;flex-shrink:0}
+.acc-item.open .acc-arrow{transform:rotate(180deg)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height 0.5s ease}
+.acc-item.open .acc-body{max-height:5000px}
+.acc-content{padding:0 20px 20px;border-top:1px dashed rgba(212,175,55,0.2);margin-top:5px;padding-top:18px}
+.acc-intro{color:var(--cream);font-size:15px;line-height:1.9;margin-bottom:18px;opacity:0.9;font-style:italic;border-right:3px solid var(--gold);padding-right:15px}
+.quote{background:rgba(10,58,44,0.6);border-radius:12px;padding:16px 18px;margin-bottom:14px;border-right:4px solid var(--gold)}
+.quote.warn{border-right-color:#ff6b6b;background:rgba(80,20,20,0.4)}
+.quote-text{font-family:'Amiri',serif;font-size:19px;color:var(--cream);line-height:2;margin-bottom:10px}
+.quote-text.ayah{color:var(--gold);text-align:center;padding:8px 0}
+.quote-ref{font-size:12px;color:var(--gold);opacity:0.8;font-style:italic;text-align:left;padding-top:8px;border-top:1px dashed rgba(212,175,55,0.2)}
+.quote-label{display:inline-block;background:rgba(212,175,55,0.15);color:var(--gold);padding:2px 8px;border-radius:10px;font-size:11px;margin-bottom:8px;border:1px solid rgba(212,175,55,0.3)}
+
+.ruqya-box{background:linear-gradient(135deg,rgba(34,197,94,0.15) 0%,rgba(34,197,94,0.03) 100%);border:2px solid rgba(74,222,128,0.4);border-radius:16px;padding:25px;margin:30px 0;text-align:center}
+.ruqya-box .icon{font-size:50px;display:block;margin-bottom:15px}
+.ruqya-box h2{font-family:'Amiri',serif;font-size:24px;color:#4ade80;margin-bottom:15px}
+.ruqya-box p{color:var(--cream);font-size:15px;line-height:1.9;margin-bottom:15px}
+.ruqya-ayahs{background:rgba(10,58,44,0.7);border-radius:12px;padding:20px;margin-top:15px;text-align:center}
+.ruqya-ayahs .ayah{font-family:'Amiri',serif;font-size:18px;color:var(--gold);line-height:2;margin-bottom:15px;padding-bottom:15px;border-bottom:1px dashed rgba(212,175,55,0.2)}
+.ruqya-ayahs .ayah:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.ruqya-ayahs .ref{font-size:12px;color:var(--cream);opacity:0.7;font-style:italic;display:block;margin-top:8px}
+
+@media (max-width:640px){.sihr-hero h1{font-size:24px}.acc-title{font-size:17px}.acc-icon{font-size:26px}.quote-text{font-size:17px}.ruqya-ayahs .ayah{font-size:16px}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+<div class="header-container">
+<a href="index.html" class="logo">
+<div class="logo-icon">☪</div>
+<div class="logo-text">
+<span class="main">ملاك المعرفة</span>
+<span class="sub">منصة إسلامية شاملة</span>
+</div>
+</a>
+<button class="nav-toggle" onclick="document.querySelector('.main-nav').style.display = document.querySelector('.main-nav').style.display === 'none' ? 'block' : 'none'">☰</button>
+</div>
+</header>
+
+<nav class="main-nav">
+<ul class="nav-list">
+<li><a href="index.html">🏠 الرئيسية</a></li>
+<li><a href="quran.html">📖 القرآن الكريم</a></li>
+<li><a href="tafsir.html">📚 التفسير</a></li>
+<li><a href="hadith.html">🕌 السنة النبوية</a></li>
+<li><a href="seerah.html">🌙 السيرة النبوية</a></li>
+<li><a href="ghazawat.html">⚔️ الغزوات</a></li>
+<li><a href="prophets.html">🕊️ قصص الأنبياء</a></li>
+<li><a href="sahaba.html">⭐ الصحابة</a></li>
+<li><a href="adhkar.html">🤲 الأذكار</a></li>
+<li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="search.html">🔍 البحث</a></li>
+</ul>
+</nav>
+
+<main class="main-container">
+
+<section class="sihr-hero">
+<div class="sihr-hero-content">
+<h1>🛡️ السحر والشعوذة والكهانة</h1>
+<p>تحذير شرعي من السحر والشعوذة والكهانة، مع الأدلة الشرعية من القرآن والسنة، وطرق الوقاية الصحيحة، والرقية الشرعية الثابتة.</p>
+</div>
+</section>
+
+<div class="warning-box">
+<span class="icon">⚠️</span>
+<h2>تحذير مهم</h2>
+<p>السحر من أكبر الكبائر، ومن السبع الموبقات. من أتى كاهنًا أو عرّافًا فصدّقه بما يقول فقد كفر بما أُنزل على محمد ﷺ. الوقاية بالتوحيد والرقية الشرعية والأذكار، لا بالذهاب إلى السحرة والمشعوذين.</p>
+</div>
+
+<div class="accordion" id="sihr-container"></div>
+
+<section class="ruqya-box">
+<span class="icon">🌿</span>
+<h2>الرقية الشرعية الثابتة</h2>
+<p>الرقية الشرعية الصحيحة تكون من القرآن الكريم والأدعية المأثورة، بلا طلاسم ولا كلمات غير مفهومة، ولا تُطلب من السحرة أو المشعوذين.</p>
+<div class="ruqya-ayahs">
+<div class="ayah">﴿وَنُنَزِّلُ مِنَ الْقُرْآنِ مَا هُوَ شِفَاءٌ وَرَحْمَةٌ لِّلْمُؤْمِنِينَ﴾<span class="ref">الإسراء: 82</span></div>
+<div class="ayah">سورة الفاتحة (أم الكتاب — أعظم رقية)</div>
+<div class="ayah">آية الكرسي — البقرة: 255</div>
+<div class="ayah">خواتيم سورة البقرة — البقرة: 285-286</div>
+<div class="ayah">سورة الإخلاص + الفلق + الناس (ثلاث مرات)</div>
+<div class="ayah">﴿أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ﴾</div>
+<div class="ayah">﴿بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ﴾</div>
+</div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+<p class="footer-ayah">﴿ وَقُل رَّبِّ أَعُوذُ بِكَ مِنْ هَمَزَاتِ الشَّيَاطِينِ وَأَعُوذُ بِكَ رَبِّ أَن يَحْضُرُونِ ﴾</p>
+<p>ملاك المعرفة الإسلامية — منصة دعوية غير ربحية</p>
+<p>© 2026 — نسألكم الدعاء</p>
+</footer>
+
+<script>
+const SIHR_DATA = [
+    {
+        icon: "🚫",
+        title: "حكم السحر في الإسلام",
+        intro: "السحر محرم بالإجماع، ومن أكبر الكبائر، ومن السبع الموبقات المهلكات.",
+        quotes: [
+            { type: "ayah", text: "﴿وَلَقَدْ عَلِمُوا لَمَنِ اشْتَرَاهُ مَا لَهُ فِي الْآخِرَةِ مِنْ خَلَاقٍ﴾", ref: "البقرة: 102", warn: true },
+            { type: "hadith", text: "قال ﷺ: «اجتنبوا السبع الموبقات». قالوا: يا رسول الله، وما هن؟ قال: «الشرك بالله، والسحر، وقتل النفس التي حرم الله إلا بالحق...»", ref: "رواه البخاري ومسلم", warn: true },
+            { type: "hadith", text: "قال ﷺ: «من عقد عقدة ثم نفث فيها فقد سحر، ومن سحر فقد أشرك، ومن تعلّق شيئًا وُكِل إليه».", ref: "رواه النسائي", warn: true },
+            { type: "ayah", text: "﴿وَمَا يُعَلِّمَانِ مِنْ أَحَدٍ حَتَّىٰ يَقُولَا إِنَّمَا نَحْنُ فِتْنَةٌ فَلَا تَكْفُرْ﴾", ref: "البقرة: 102" }
+        ]
+    },
+    {
+        icon: "⚠️",
+        title: "حكم إتيان السحرة والكهان",
+        intro: "إتيان السحرة والعرافين محرّم، ومن صدّقهم فقد كفر بما أُنزل على محمد ﷺ.",
+        quotes: [
+            { type: "hadith", text: "قال ﷺ: «من أتى عرّافًا فسأله عن شيءٍ، لم تُقبل له صلاة أربعين ليلة».", ref: "رواه مسلم", warn: true },
+            { type: "hadith", text: "قال ﷺ: «من أتى كاهنًا فصدّقه بما يقول، فقد كفر بما أُنزل على محمد ﷺ».", ref: "رواه أحمد وأبو داود", warn: true },
+            { type: "hadith", text: "قال ﷺ: «ليس منا من تطيّر أو تُطيّر له، أو تكهّن أو تُكهّن له، أو سحر أو سُحر له».", ref: "رواه البزار" }
+        ]
+    },
+    {
+        icon: "🔮",
+        title: "أنواع الكهانة والعرافة المحرمة",
+        intro: "كل من ادّعى علم الغيب بأي وسيلة، فهو كاهن أو عراف، والغيب لله وحده.",
+        quotes: [
+            { type: "ayah", text: "﴿قُل لَّا يَعْلَمُ مَن فِي السَّمَاوَاتِ وَالْأَرْضِ الْغَيْبَ إِلَّا اللَّهُ﴾", ref: "النمل: 65" },
+            { type: "ayah", text: "﴿وَعِندَهُ مَفَاتِحُ الْغَيْبِ لَا يَعْلَمُهَا إِلَّا هُوَ﴾", ref: "الأنعام: 59" },
+            { type: "hadith", text: "من صور الكهانة: قراءة الكف، والفنجان، والتنجيم، وضرب الودع، واستدعاء الأرواح، والتواصل مع الجن، وتحضير الأرواح، كل ذلك محرّم." },
+            { type: "hadith", text: "قال ﷺ: «من اقتبس علمًا من النجوم اقتبس شعبة من السحر، زاد ما زاد».", ref: "رواه أبو داود" }
+        ]
+    },
+    {
+        icon: "🌟",
+        title: "الطيرة والتشاؤم (خرافات محرمة)",
+        intro: "التطير والتشاؤم من الشرك الأصغر، وقد نهى الإسلام عنه.",
+        quotes: [
+            { type: "hadith", text: "قال ﷺ: «لا عدوى، ولا طيرة، ولا هامة، ولا صفر».", ref: "رواه البخاري ومسلم" },
+            { type: "hadith", text: "قال ﷺ: «الطيرة شرك، الطيرة شرك، الطيرة شرك» (ثلاثًا).", ref: "رواه أبو داود والترمذي" },
+            { type: "hadith", text: "قال ﷺ: «من ردّته الطيرة عن حاجته فقد أشرك». قالوا: وما كفارة ذلك؟ قال: «أن يقول: اللهم لا خير إلا خيرك، ولا طير إلا طيرك، ولا إله غيرك».", ref: "رواه أحمد" }
+        ]
+    },
+    {
+        icon: "🛡️",
+        title: "طرق الوقاية الشرعية",
+        intro: "الوقاية من السحر والعين تكون بالتوحيد والرقية والأذكار، لا بالذهاب للسحرة.",
+        quotes: [
+            { type: "hadith", text: "قراءة آية الكرسي قبل النوم، فقد قال ﷺ: «لن يزال عليك من الله حافظ، ولا يقربك شيطان حتى تصبح».", ref: "رواه البخاري" },
+            { type: "hadith", text: "قراءة سورة الإخلاص والفلق والناس ثلاث مرات صباحًا ومساءً وقبل النوم." },
+            { type: "hadith", text: "قول: «بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم» (ثلاثًا صباحًا ومساءً).", ref: "رواه الترمذي" },
+            { type: "ayah", text: "﴿وَقُل رَّبِّ أَعُوذُ بِكَ مِنْ هَمَزَاتِ الشَّيَاطِينِ﴾", ref: "المؤمنون: 97" },
+            { type: "hadith", text: "المداومة على أذكار الصباح والمساء، والتحصن بها، وترك المعاصي فإنها تُضعف الحفظ." }
+        ]
+    },
+    {
+        icon: "🕌",
+        title: "أشراط الساعة والفتن المرتبطة بالسحر",
+        intro: "من علامات آخر الزمان انتشار السحر والكهانة وتصديقهم، وظهور الدجال بالسحر.",
+        quotes: [
+            { type: "hadith", text: "قال ﷺ: «لا تقوم الساعة حتى يظهر الفحش والتفاحش، وقطيعة الرحم، وسوء المجاورة، وخيانة الأمانة، ويُصدَّق الكاذب، ويُكذَّب الصادق، ويُؤتمن الخائن، ويُخوَّن الأمين».", ref: "رواه أحمد" },
+            { type: "hadith", text: "من فتن الدجال: أنه يأمر السماء فتمطر، والأرض فتنبت، ومع هذا قال ﷺ: «من سمع بالدجال فلينأ عنه، فوالله إن الرجل ليأتيه وهو يحسب أنه مؤمن فيتبعه مما يبعث به من الشبهات».", ref: "رواه أحمد" },
+            { type: "hadith", text: "قال ﷺ: «سيكون في آخر أمتي أناس يحدثونكم بما لم تسمعوا أنتم ولا آباؤكم، فإياكم وإياهم».", ref: "رواه مسلم" }
+        ]
+    },
+    {
+        icon: "💎",
+        title: "التوبة من السحر",
+        intro: "من وقع في السحر أو الكهانة، فعليه التوبة الصادقة، والإقلاع، والعزم على عدم العودة.",
+        quotes: [
+            { type: "ayah", text: "﴿قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَىٰ أَنفُسِهِمْ لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ ۚ إِنَّ اللَّهَ يَغْفِرُ الذُّنُوبَ جَمِيعًا﴾", ref: "الزمر: 53" },
+            { type: "hadith", text: "قال ﷺ: «الإسلام يجبّ ما كان قبله، والتوبة تجبّ ما كان قبلها».", ref: "رواه مسلم" },
+            { type: "hadith", text: "شروط التوبة: الإقلاع، والندم، والعزم على عدم العودة، ورد المظالم إن كانت تخص أحدًا." }
+        ]
+    },
+    {
+        icon: "🤲",
+        title: "الرُّقية الشرعية الصحيحة",
+        intro: "الرقية الشرعية عبادة، تكون بالقرآن والأدعية المأثورة، بلا طلاسم ولا كلمات شركية.",
+        quotes: [
+            { type: "hadith", text: "كان النبي ﷺ يرقي نفسه بالمعوذات وينفث في كفيه ويمسح بهما وجهه وما وصل من جسده." },
+            { type: "hadith", text: "قال ﷺ: «لا بأس بالرقى ما لم تكن شركًا».", ref: "رواه مسلم" },
+            { type: "hadith", text: "كان ﷺ يعوذ الحسن والحسين: «أعيذكما بكلمات الله التامة، من كل شيطان وهامة، ومن كل عين لامة».", ref: "رواه البخاري" }
+        ]
+    }
+];
+
+function renderAccordion() {
+    const container = document.getElementById('sihr-container');
+    container.innerHTML = SIHR_DATA.map((item, i) => `
+        <div class="acc-item" id="acc-${i}">
+            <div class="acc-head" onclick="toggleAcc(${i})">
+                <span class="acc-icon">${item.icon}</span>
+                <span class="acc-title">${item.title}</span>
+                <span class="acc-arrow">▼</span>
+            </div>
+            <div class="acc-body">
+                <div class="acc-content">
+                    <div class="acc-intro">${item.intro}</div>
+                    ${item.quotes.map(q => `
+                        <div class="quote ${q.warn ? 'warn' : ''}">
+                            <span class="quote-label">${
+                                q.type === 'ayah' ? '📖 آية' :
+                                q.type === 'hadith' ? '🕌 حديث' : '⚠️ تحذير'
+                            }</span>
+                            <div class="quote-text ${q.type === 'ayah' ? 'ayah' : ''}">${q.text}</div>
+                            ${q.ref ? `<div class="quote-ref">— ${q.ref}</div>` : ''}
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function toggleAcc(index) {
+    const el = document.getElementById(`acc-${index}`);
+    el.classList.toggle('open');
+}
+
+renderAccordion();
+</script>
+
+</body>
+</html>
