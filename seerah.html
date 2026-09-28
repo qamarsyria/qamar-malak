@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>السيرة النبوية — ملاك المعرفة الإسلامية</title>
+<meta name="description" content="السيرة النبوية الشريفة للنبي محمد ﷺ — من المولد إلى الوفاة، بخط زمني تفاعلي وأخلاقه وصفاته.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌙</text></svg>">
+<style>
+.seerah-hero{background:linear-gradient(135deg,rgba(212,175,55,0.25) 0%,rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.4);border-radius:20px;padding:40px 20px;text-align:center;margin-bottom:30px;position:relative;overflow:hidden}
+.seerah-hero::before{content:'ﷺ';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Amiri',serif;font-size:180px;color:rgba(212,175,55,0.06);z-index:0;pointer-events:none}
+.seerah-hero-content{position:relative;z-index:1}
+.seerah-hero h1{font-family:'Amiri',serif;font-size:34px;color:var(--gold);margin-bottom:15px;line-height:1.5}
+.seerah-hero p{color:var(--cream);opacity:0.9;max-width:650px;margin:0 auto 20px;font-size:15px}
+
+/* التبويبات الرئيسية */
+.main-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:12px;margin-bottom:30px;scrollbar-width:thin}
+.main-tabs::-webkit-scrollbar{height:4px}
+.main-tabs::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+.main-tab{flex-shrink:0;padding:12px 20px;background:rgba(26,107,84,0.4);border:1px solid rgba(212,175,55,0.3);border-radius:25px;color:var(--cream);font-family:inherit;font-size:14px;cursor:pointer;transition:all 0.3s;white-space:nowrap;font-weight:600}
+.main-tab:hover{background:rgba(212,175,55,0.2)}
+.main-tab.active{background:var(--gold);color:var(--green-dark);border-color:var(--gold)}
+
+/* الخط الزمني */
+.timeline-section{display:none}
+.timeline-section.active{display:block;animation:fadeIn 0.4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.section-header{text-align:center;padding:20px;margin-bottom:25px;border-bottom:2px solid rgba(212,175,55,0.3)}
+.section-header h2{font-family:'Amiri',serif;font-size:28px;color:var(--gold);margin-bottom:8px}
+.section-header p{color:var(--cream);opacity:0.75;font-size:14px}
+
+.timeline{position:relative;padding-right:35px;margin-right:15px}
+.timeline::before{content:'';position:absolute;right:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--gold) 0%,rgba(212,175,55,0.2) 100%);border-radius:2px}
+.timeline-item{position:relative;margin-bottom:25px;cursor:pointer;transition:all 0.3s}
+.timeline-item::before{content:'';position:absolute;right:-42px;top:15px;width:16px;height:16px;background:var(--gold);border-radius:50%;border:3px solid var(--green-deep);box-shadow:0 0 0 3px rgba(212,175,55,0.3);z-index:2}
+.timeline-item:hover::before{transform:scale(1.3);box-shadow:0 0 0 6px rgba(212,175,55,0.4)}
+.timeline-year{display:inline-block;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark);padding:4px 12px;border-radius:15px;font-size:12px;font-weight:700;margin-bottom:8px}
+.timeline-card{background:linear-gradient(135deg,rgba(26,107,84,0.35) 0%,rgba(13,77,60,0.55) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:14px;padding:18px;transition:all 0.3s}
+.timeline-item:hover .timeline-card{transform:translateX(-5px);border-color:var(--gold);box-shadow:0 8px 25px rgba(212,175,55,0.2)}
+.timeline-title{font-family:'Amiri',serif;font-size:22px;color:var(--gold);margin-bottom:8px}
+.timeline-brief{font-size:14px;line-height:1.7;color:var(--cream);opacity:0.9}
+.timeline-readmore{margin-top:12px;color:var(--gold);font-size:13px;font-weight:600}
+
+/* بطاقات الأخلاق */
+.traits-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:15px}
+.trait-card{background:linear-gradient(135deg,rgba(26,107,84,0.35) 0%,rgba(13,77,60,0.55) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:14px;padding:22px 18px;text-align:center;transition:all 0.3s}
+.trait-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 8px 20px rgba(212,175,55,0.2)}
+.trait-icon{font-size:42px;margin-bottom:12px;display:block}
+.trait-title{font-family:'Amiri',serif;font-size:20px;color:var(--gold);margin-bottom:10px}
+.trait-text{font-size:14px;line-height:1.8;color:var(--cream);opacity:0.9}
+
+/* شجرة النسب */
+.lineage-box{background:linear-gradient(135deg,rgba(212,175,55,0.15) 0%,rgba(212,175,55,0.03) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:16px;padding:25px;text-align:center;margin-bottom:25px}
+.lineage-title{font-family:'Amiri',serif;font-size:22px;color:var(--gold);margin-bottom:20px}
+.lineage-chain{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;align-items:center}
+.lineage-name{background:rgba(10,58,44,0.7);color:var(--cream);padding:8px 14px;border-radius:20px;font-family:'Amiri',serif;font-size:17px;border:1px solid rgba(212,175,55,0.3);transition:all 0.3s}
+.lineage-name.highlight{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark);font-weight:700}
+.lineage-name:hover{transform:scale(1.05);border-color:var(--gold)}
+.lineage-arrow{color:var(--gold);font-size:16px;font-weight:700}
+
+/* أزواجه وأولاده */
+.family-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.family-card{background:linear-gradient(135deg,rgba(26,107,84,0.35) 0%,rgba(13,77,60,0.55) 100%);border:1px solid rgba(212,175,55,0.2);border-radius:12px;padding:16px;text-align:center;transition:all 0.3s}
+.family-card:hover{border-color:var(--gold);transform:translateY(-3px)}
+.family-name{font-family:'Amiri',serif;font-size:20px;color:var(--gold);margin-bottom:6px}
+.family-role{font-size:13px;color:var(--cream);opacity:0.75}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);backdrop-filter:blur(6px);z-index:2000;justify-content:center;align-items:flex-start;padding:20px;overflow-y:auto}
+.modal-overlay.show{display:flex}
+.modal-content{background:linear-gradient(135deg,#0a3a2c 0%,#0d4d3c 100%);border:2px solid var(--gold);border-radius:20px;max-width:750px;width:100%;padding:30px 25px;position:relative;margin-top:30px;margin-bottom:30px;animation:slideUp 0.3s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.modal-close{position:absolute;top:15px;left:15px;width:38px;height:38px;border-radius:50%;background:rgba(200,50,50,0.7);color:white;border:none;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit}
+.modal-close:hover{background:rgba(220,60,60,1)}
+.modal-year{display:inline-block;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark);padding:5px 15px;border-radius:15px;font-size:13px;font-weight:700;margin-bottom:12px}
+.modal-title{font-family:'Amiri',serif;font-size:28px;color:var(--gold);margin-bottom:15px;line-height:1.4}
+.modal-section{margin-bottom:18px;padding:15px;background:rgba(10,58,44,0.5);border-radius:12px;border-right:3px solid var(--gold)}
+.modal-section p{color:var(--cream);line-height:1.9;font-size:15px}
+.modal-section .ayah{font-family:'Amiri',serif;font-size:17px;color:var(--gold);display:block;text-align:center;padding:8px 0;line-height:1.9}
+.modal-source{font-size:13px;color:var(--gold);opacity:0.75;text-align:center;margin-top:12px;font-style:italic;padding-top:12px;border-top:1px solid rgba(212,175,55,0.2)}
+
+@media (max-width:640px){.seerah-hero h1{font-size:24px}.section-header h2{font-size:22px}.timeline{padding-right:25px;margin-right:8px}.timeline-item::before{right:-32px}.timeline-title{font-size:18px}.modal-content{padding:20px 15px}.modal-title{font-size:22px}.traits-grid,.family-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+<div class="header-container">
+<a href="index.html" class="logo">
+<div class="logo-icon">☪</div>
+<div class="logo-text">
+<span class="main">ملاك المعرفة</span>
+<span class="sub">منصة إسلامية شاملة</span>
+</div>
+</a>
+<button class="nav-toggle" onclick="document.querySelector('.main-nav').style.display = document.querySelector('.main-nav').style.display === 'none' ? 'block' : 'none'">☰</button>
+</div>
+</header>
+
+<nav class="main-nav">
+<ul class="nav-list">
+<li><a href="index.html">🏠 الرئيسية</a></li>
+<li><a href="quran.html">📖 القرآن الكريم</a></li>
+<li><a href="tafsir.html">📚 التفسير</a></li>
+<li><a href="hadith.html">🕌 السنة النبوية</a></li>
+<li><a href="seerah.html" class="active">🌙 السيرة النبوية</a></li>
+<li><a href="ghazawat.html">⚔️ الغزوات</a></li>
+<li><a href="prophets.html">🕊️ قصص الأنبياء</a></li>
+<li><a href="sahaba.html">⭐ الصحابة</a></li>
+<li><a href="adhkar.html">🤲 الأذكار</a></li>
+<li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="search.html">🔍 البحث</a></li>
+</ul>
+</nav>
+
+<main class="main-container">
+
+<section class="seerah-hero">
+<div class="seerah-hero-content">
+<h1>🌙 السيرة النبوية الشريفة</h1>
+<p>سيرة النبي محمد ﷺ — من المولد الشريف إلى الوفاة — بخط زمني تفاعلي يضم أهم المحطات، وأخلاقه وصفاته، وأزواجه وأولاده، ونسبه الشريف.</p>
+</div>
+</section>
+
+<div class="main-tabs">
+<button class="main-tab active" data-tab="timeline">📜 الخط الزمني</button>
+<button class="main-tab" data-tab="traits">💎 أخلاقه وصفاته</button>
+<button class="main-tab" data-tab="lineage">🌳 نسبه الشريف</button>
+<button class="main-tab" data-tab="family">👨‍👩‍👧 أزواجه وأولاده</button>
+</div>
+
+<!-- الخط الزمني -->
+<section class="timeline-section active" id="timeline-section">
+<div class="section-header">
+<h2>📜 محطات من حياته ﷺ</h2>
+<p>اضغط على أي محطة لقراءة التفاصيل</p>
+</div>
+<div class="timeline" id="timeline-container"></div>
+</section>
+
+<!-- الأخلاق والصفات -->
+<section class="timeline-section" id="traits-section">
+<div class="section-header">
+<h2>💎 أخلاقه وصفاته ﷺ</h2>
+<p>قال الله تعالى: ﴿وَإِنَّكَ لَعَلَىٰ خُلُقٍ عَظِيمٍ﴾</p>
+</div>
+<div class="traits-grid" id="traits-container"></div>
+</section>
+
+<!-- النسب الشريف -->
+<section class="timeline-section" id="lineage-section">
+<div class="section-header">
+<h2>🌳 نسبه الشريف ﷺ</h2>
+<p>أطهر نسب وأشرفه، من نسل إسماعيل بن إبراهيم عليهما السلام</p>
+</div>
+<div class="lineage-box">
+<div class="lineage-title">نسب النبي ﷺ من جهة أبيه</div>
+<div class="lineage-chain">
+<span class="lineage-name highlight">محمد ﷺ</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">عبد الله</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">عبد المطلب</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">هاشم</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">عبد مناف</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">قصي</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">كلاب</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">مرة</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">كعب</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">لؤي</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">غالب</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">فهر (قريش)</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">مالك</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">النضر</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">كنانة</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">خزيمة</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">مدركة</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">إلياس</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">مضر</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">نزار</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">معد</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">عدنان</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">إسماعيل عليه السلام</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">إبراهيم عليه السلام</span>
+</div>
+</div>
+<div class="lineage-box">
+<div class="lineage-title">من جهة أمه</div>
+<div class="lineage-chain">
+<span class="lineage-name highlight">محمد ﷺ</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">آمنة بنت وهب</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">وهب بن عبد مناف</span>
+<span class="lineage-arrow">←</span>
+<span class="lineage-name">بنو زهرة (من قريش)</span>
+</div>
+</div>
+</section>
+
+<!-- أزواجه وأولاده -->
+<section class="timeline-section" id="family-section">
+<div class="section-header">
+<h2>👨‍👩‍👧 أزواجه أمهات المؤمنين</h2>
+<p>رضي الله عنهن أجمعين</p>
+</div>
+<div class="family-grid" id="wives-container"></div>
+
+<div class="section-header" style="margin-top:40px">
+<h2>👶 أولاده ﷺ</h2>
+</div>
+<div class="family-grid" id="children-container"></div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+<p class="footer-ayah">﴿ لَقَدْ كَانَ لَكُمْ فِي رَسُولِ اللَّهِ أُسْوَةٌ حَسَنَةٌ ﴾</p>
+<p>ملاك المعرفة الإسلامية — منصة دعوية غير ربحية</p>
+<p>© 2026 — نسألكم الدعاء</p>
+</footer>
+
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+<div class="modal-content" id="modal-content"></div>
+</div>
+
+<script>
+// ====== الخط الزمني ======
+const TIMELINE = [
+    {
+        year: "عام الفيل — 570 م",
+        title: "مولده ﷺ",
+        brief: "وُلد النبي ﷺ في مكة المكرمة يوم الاثنين من شهر ربيع الأول، عام الفيل، بعد وفاة أبيه عبد الله.",
+        sections: [
+            { p: "وُلد النبي محمد ﷺ في مكة المكرمة في عام الفيل — وهو العام الذي حاول فيه أبرهة الحبشي هدم الكعبة — وكان ذلك في شهر ربيع الأول." },
+            { p: "توفي أبوه عبد الله قبل ولادته وهو في بطن أمه، فكفله جده عبد المطلب." },
+            { p: "أرضعته حليمة السعدية في بني سعد، فنشأ في البادية، ثم عاد إلى أمه آمنة بنت وهب." }
+        ],
+        refs: "سيرة ابن هشام، الطبقات الكبرى لابن سعد"
+    },
+    {
+        year: "6 سنوات — 576 م",
+        title: "وفاة أمه آمنة",
+        brief: "توفيت أمه آمنة بنت وهب في الأبواء بين مكة والمدينة، فكفله جده عبد المطلب.",
+        sections: [
+            { p: "خرجت آمنة بالنبي ﷺ إلى يثرب (المدينة المنورة) لزيارة أخواله من بني النجار، وفي طريق العودة توفيت في الأبواء." },
+            { p: "عاد النبي ﷺ يتيم الأبوين، فكفله جده عبد المطلب وكان يحبه حبًّا شديدًا." }
+        ],
+        refs: "سيرة ابن هشام"
+    },
+    {
+        year: "8 سنوات — 578 م",
+        title: "وفاة جده عبد المطلب",
+        brief: "توفي جده عبد المطلب، فكفله عمه أبو طالب، وأحسن رعايته وحمايته.",
+        sections: [
+            { p: "توفي عبد المطلب بن هاشم، سيد قريش، فكفله عمه أبو طالب بن عبد المطلب." },
+            { p: "أحسن أبو طالب رعاية النبي ﷺ، وكان يحبه أكثر من أبنائه، وحماه بعد البعثة رغم أنه لم يُسلم." }
+        ],
+        refs: "سيرة ابن هشام"
+    },
+    {
+        year: "12 سنة — 582 م",
+        title: "رحلة الشام مع أبي طالب",
+        brief: "خرج النبي ﷺ مع عمه أبي طالب في رحلة تجارية إلى الشام، والتقى بالراهب بحيرى.",
+        sections: [
+            { p: "خرج أبو طالب بتجارة إلى الشام ومعه النبي ﷺ، فلما وصلوا إلى بصرى، رآهم الراهب بحيرى فعرف في النبي ﷺ علامات النبوة." },
+            { p: "أوصى بحيرى أبا طالب أن يرجع به إلى مكة خوفًا عليه من اليهود والروم، فرجع به أبو طالب." }
+        ],
+        refs: "سيرة ابن هشام"
+    },
+    {
+        year: "20 سنة — 590 م",
+        title: "حرب الفجار",
+        brief: "شهد النبي ﷺ حرب الفجار بين قريش وكنانة من جهة، وقيس عيلان من جهة أخرى، وكان ينبل على عمومته.",
+        sections: [
+            { p: "كانت حرب الفجار بين قريش ومن معهم من كنانة، وبين قيس عيلان، وشهدها النبي ﷺ وهو شاب." },
+            { p: "كان دوره فيها أنه كان ينبل على عمومته — أي يجمع السهام ويردها إليهم، وهذا يدل على شجاعته ﷺ." }
+        ],
+        refs: "سيرة ابن هشام"
+    },
+    {
+        year: "25 سنة — 595 م",
+        title: "زواجه من خديجة رضي الله عنها",
+        brief: "تزوج النبي ﷺ من السيدة خديجة بنت خويلد رضي الله عنها، وكانت أول زوجاته وأول من آمن به.",
+        sections: [
+            { p: "خرج النبي ﷺ في تجارة لخديجة إلى الشام مع غلامها ميسرة، فربح ربحًا كثيرًا، وأخبر ميسرة خديجة بما رأى من أمانته وصدقه ﷺ." },
+            { p: "خطبته خديجة لنفسها، فتزوجها النبي ﷺ وهو في الخامسة والعشرين، وكان عمرها أربعين سنة." },
+            { p: "كانت خديجة رضي الله عنها أول من آمن بالنبي ﷺ، وثبّتته حين نزل الوحي، وكانت نعم الزوجة الصالحة." }
+        ],
+        refs: "صحيح البخاري، سيرة ابن هشام"
+    },
+    {
+        year: "35 سنة — 605 م",
+        title: "إعادة بناء الكعبة",
+        brief: "شارك النبي ﷺ قريشًا في إعادة بناء الكعبة، وحكّمته قريش في وضع الحجر الأسود.",
+        sections: [
+            { p: "أعادت قريش بناء الكعبة بعد أن تهدّمت من سيل عظيم، فلما وصلوا إلى وضع الحجر الأسود اختلفوا: من يضعه؟" },
+            { p: "أشار عليهم أبو أمية المخزومي بأن يحكّموا أول من يدخل المسجد، فكان النبي ﷺ أول من دخل، فقالوا: هذا الأمين، رضينا به." },
+            { p: "وضع النبي ﷺ الحجر الأسود بيده الشريفة، فكان ذلك من دلائل نبوته وأمانته ﷺ." }
+        ],
+        refs: "صحيح البخاري، سيرة ابن هشام"
+    },
+    {
+        year: "40 سنة — 610 م",
+        title: "بدء الوحي في غار حراء",
+        brief: "نزل جبريل عليه السلام على النبي ﷺ في غار حراء، ونزلت أول آية من القرآن: ﴿اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ﴾.",
+        sections: [
+            { p: "كان النبي ﷺ يتحنث في غار حراء الليالي ذوات العدد، فجاءه الملك جبريل فقال: اقرأ، قال: ما أنا بقارئ... " },
+            { p: "﴿اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ ۝ خَلَقَ الْإِنسَانَ مِنْ عَلَقٍ ۝ اقْرَأْ وَرَبُّكَ الْأَكْرَمُ﴾." },
+            { p: "عاد النبي ﷺ يرجف فؤاده إلى خديجة، فقال: زملوني دثروني، فأنزل الله: ﴿يَا أَيُّهَا الْمُدَّثِّرُ ۝ قُمْ فَأَنذِرْ﴾." },
+            { p: "كان عمره ﷺ أربعين سنة، وكانت خديجة أول من آمن به، ثم أبو بكر، ثم علي، ثم زيد بن حارثة." }
+        ],
+        refs: "صحيح البخاري، صحيح مسلم"
+    },
+    {
+        year: "610-613 م",
+        title: "الدعوة السرية",
+        brief: "دعا النبي ﷺ إلى الإسلام سرًّا لمدة ثلاث سنوات، فأسلم فيها كثير من الصحابة الأوائل.",
+        sections: [
+            { p: "دعا النبي ﷺ إلى الإسلام سرًّا ثلاث سنوات، وكان بيت الأرقم بن أبي الأرقم مقرًّا للدعوة." },
+            { p: "من أوائل من أسلم: خديجة، أبو بكر، علي بن أبي طالب، زيد بن حارثة، عثمان بن عفان، الزبير بن العوام، عبد الرحمن بن عوف، سعد بن أبي وقاص، طلحة بن عبيد الله." }
+        ],
+        refs: "سيرة ابن هشام"
+    },
+    {
+        year: "613 م",
+        title: "الدعوة الجهرية",
+        brief: "أمر الله النبي ﷺ بالجهر بالدعوة، فصعد الصفا وصدع بالتوحيد، فبدأ إيذاء قريش للمسلمين.",
+        sections: [
+            { p: "﴿فَاصْدَعْ بِمَا تُؤْمَرُ وَأَعْرِضْ عَنِ الْمُشْرِكِينَ﴾، فصعد النبي ﷺ الصفا ودعا قريشًا إلى التوحيد." },
+            { p: "بدأت قريش في إيذاء المسلمين، فصبروا على الأذى، وتحمّلوا البلاء في سبيل الله." }
+        ],
+        refs: "سورة الحجر: 94، سيرة ابن هشام"
+    },
+    {
+        year: "615 م",
+        title: "الهجرة إلى الحبشة الأولى",
+        brief: "هاجر جمع من المسلمين إلى الحبشة فرارًا بدينهم من إيذاء قريش، وكان ملكها النجاشي عادلًا.",
+        sections: [
+            { p: "أشار النبي ﷺ على المسلمين بالهجرة إلى الحبشة، وقال: إن بها ملكًا لا يُظلم عنده أحد." },
+            { p: "هاجر نحو 15 مسلمًا في الهجرة الأولى، ثم نحو 80 في الهجرة الثانية." },
+            { p: "وفدت قريش إلى النجاشي تطلب تسليم المسلمين، لكنه رفض بعد أن سمع كلام جعفر بن أبي طالب عن الإسلام." }
+        ],
+        refs: "سيرة ابن هشام، صحيح البخاري"
+    },
+    {
+        year: "619 م",
+        title: "عام الحزن",
+        brief: "توفيت خديجة رضي الله عنها، ثم عمه أبو طالب، فحزن النبي ﷺ حزنًا شديدًا، وسُمّي ذلك العام عام الحزن.",
+        sections: [
+            { p: "توفيت خديجة رضي الله عنها، وكانت أحب الناس إلى النبي ﷺ، ثم توفي عمه أبو طالب حاميه." },
+            { p: "زاد أذى قريش على النبي ﷺ بعد وفاة أبي طالب، حتى رُمي بالتراب على رأسه." },
+            { p: "في نفس العام تزوج النبي ﷺ من سودة بنت زمعة، ثم من عائشة بنت أبي بكر بعد ذلك." }
+        ],
+        refs: "سيرة ابن هشام، صحيح البخاري"
+    },
+    {
+        year: "620 م",
+        title: "الإسراء والمعراج",
+        brief: "أُسري بالنبي ﷺ من المسجد الحرام إلى المسجد الأقصى، ثم عُرج به إلى السماوات العلى.",
+        sections: [
+            { p: "﴿سُبْحَانَ الَّذِي أَسْرَىٰ بِعَبْدِهِ لَيْلًا مِّنَ الْمَسْجِدِ الْحَرَامِ إِلَى الْمَسْجِدِ الْأَقْصَى﴾." },
+            { p: "صلى النبي ﷺ بالأنبياء إمامًا في بيت المقدس، ثم عُرج به إلى السماء، فالتقى بالأنبياء، وفُرضت عليه الصلوات الخمس." },
+            { p: "كانت الصلاة خمسين صلاة، فخففها الله إلى خمس في العدد وخمسين في الميزان." }
+        ],
+        refs: "سورة الإسراء: 1، صحيح البخاري، صحيح مسلم"
+    },
+    {
+        year: "621 م",
+        title: "بيعة العقبة الأولى",
+        brief: "بايع النبي ﷺ اثنا عشر رجلًا من الأنصار على الإسلام، وأرسل معهم مصعب بن عمير يعلمهم القرآن.",
+        sections: [
+            { p: "جاء من المدينة اثنا عشر رجلًا من الأنصار، فبايعوا النبي ﷺ على الإسلام، وبعث معهم مصعب بن عمير ليعلّم أهل المدينة الإسلام." },
+            { p: "أسلم على يد مصعب كثير من أهل المدينة، فانتشر الإسلام فيها." }
+        ],
+        refs: "سيرة ابن هشام"
+    },
+    {
+        year: "622 م",
+        title: "بيعة العقبة الثانية والهجرة",
+        brief: "بايع النبي ﷺ ثلاثة وسبعين رجلًا وامرأتين من الأنصار، ثم هاجر إلى المدينة، وبدأ التقويم الهجري.",
+        sections: [
+            { p: "بايع النبي ﷺ في بيعة العقبة الثانية ثلاثة وسبعين رجلًا وامرأتين على النصرة والدفاع عنه." },
+            { p: "أذن الله للمسلمين بالهجرة إلى المدينة، فهاجر المسلمون أفواجًا." },
+            { p: "هاجر النبي ﷺ مع أبي بكر الصديق، واختفيا في غار ثور ثلاث ليالٍ، ثم وصلا إلى المدينة." },
+            { p: "استُقبل النبي ﷺ في المدينة استقبالًا حافلًا، وبنى المسجد النبوي، وكانت بداية التقويم الهجري." }
+        ],
+        refs: "سيرة ابن هشام، صحيح البخاري"
+    },
+    {
+        year: "1-2 هـ",
+        title: "بناء المسجد النبوي والمؤاخاة",
+        brief: "بنى النبي ﷺ المسجد النبوي، وآخى بين المهاجرين والأنصار، وكتب صحيفة المدينة.",
+        sections: [
+            { p: "بنى النبي ﷺ المسجد النبوي في المدينة، وكان مقرًّا للصلاة والتعليم والحكم." },
+            { p: "آخى النبي ﷺ بين المهاجرين والأنصار، فكانوا إخوة في الله، يتوارثون في البداية ثم نُسخ ذلك." },
+            { p: "كتب النبي ﷺ صحيفة المدينة، وهي دستور ينظم العلاقات بين المسلمين واليهود والقبائل." }
+        ],
+        refs: "سيرة ابن هشام"
+    },
+    {
+        year: "2 هـ",
+        title: "غزوة بدر الكبرى",
+        brief: "أول غزوة كبرى للمسلمين، انتصروا فيها نصرًا عظيمًا، وسُمّيت يوم الفرقان.",
+        sections: [
+            { p: "في رمضان السنة الثانية للهجرة، خرج المسلمون لاعتراض قافلة قريش، فكانت معركة بدر." },
+            { p: "كان عدد المسلمين 313 مقاتلًا، والمشركون نحو 1000 مقاتل، فانتصر المسلمون نصرًا عظيمًا." },
+            { p: "قال الله: ﴿وَلَقَدْ نَصَرَكُمُ اللَّهُ بِبَدْرٍ وَأَنتُمْ أَذِلَّةٌ﴾، وسُمّي يوم بدر يوم الفرقان." }
+        ],
+        refs: "سورة آل عمران: 123، سيرة ابن هشام"
+    },
+    {
+        year: "3 هـ",
+        title: "غزوة أحد",
+        brief: "خرج المسلمون للقاء قريش في أحد، فكانت الهزيمة بعد مخالفة الرماة أمر النبي ﷺ.",
+        sections: [
+            { p: "خرج المسلمون إلى أحد لقتال قريش، وكان النصر في البداية، لكن الرماة تركوا مواقعهم طمعًا في الغنائم." },
+            { p: "انقلبت المعركة، واستُشهد سبعون من المسلمين، منهم حمزة بن عبد المطلب سيد الشهداء." },
+            { p: "جرح النبي ﷺ في وجهه، وكُسرت رباعيته، لكنه ﷺ ثبت وصبر." }
+        ],
+        refs: "سورة آل عمران: 121-179"
+    },
+    {
+        year: "5 هـ",
+        title: "غزوة الخندق (الأحزاب)",
+        brief: "تحزّبت قريش والقبائل على المسلمين، فحفروا الخندق حول المدينة، فردّ الله الأحزاب بريح عاصفة.",
+        sections: [
+            { p: "اجتمعت قريش وغطفان واليهود لحصار المدينة، فأشار سلمان الفارسي بحفر الخندق." },
+            { p: "حاصر الأحزاب المدينة شهرًا، ثم ردّهم الله بريح عاصفة وجنود لم يروها." },
+            { p: "قال الله: ﴿وَرَدَّ اللَّهُ الَّذِينَ كَفَرُوا بِغَيْظِهِمْ لَمْ يَنَالُوا خَيْرًا ۚ وَكَفَى اللَّهُ الْمُؤْمِنِينَ الْقِتَالَ﴾." }
+        ],
+        refs: "سورة الأحزاب: 9-27"
+    },
+    {
+        year: "6 هـ",
+        title: "صلح الحديبية",
+        brief: "عقد النبي ﷺ صلحًا مع قريش في الحديبية، وكان فتحًا مبينًا.",
+        sections: [
+            { p: "خرج النبي ﷺ معتمرًا مع 1400 من أصحابه، فصدّتهم قريش عن البيت، فتم الصلح." },
+            { p: "من بنود الصلح: هدنة عشر سنوات، ومن جاء من قريش مسلمًا يُرد إليهم، ومن جاء من المسلمين إلى قريش لا يُرد." },
+            { p: "قال الله: ﴿إِنَّا فَتَحْنَا لَكَ فَتْحًا مُّبِينًا﴾، وسماه الصحابة فتحًا." }
+        ],
+        refs: "سورة الفتح: 1-28"
+    },
+    {
+        year: "7 هـ",
+        title: "فتح خيبر",
+        brief: "فتح المسلمون حصون خيبر، وأخرجوا اليهود منها، وأعطى النبي ﷺ الراية لعلي بن أبي طالب.",
+        sections: [
+            { p: "خرج النبي ﷺ إلى خيبر لقطع دابر اليهود الذين تحالفوا مع الأحزاب." },
+            { p: "أعطى النبي ﷺ الراية لعلي بن أبي طالب، ففتح الله حصون خيبر على يديه." },
+            { p: "قُسمت خيبر على المسلمين، وأُبقيت الأرض لليهود بالمساقاة (نصف الثمر)." }
+        ],
+        refs: "صحيح البخاري، سيرة ابن هشام"
+    },
+    {
+        year: "8 هـ",
+        title: "غزوة مؤتة وفتح مكة",
+        brief: "أرسل النبي ﷺ جيشًا إلى مؤتة، ثم فتح مكة في رمضان ودخلها منتصرًا مُتواضعًا.",
+        sections: [
+            { p: "أرسل النبي ﷺ جيشًا إلى مؤتة بقيادة زيد بن حارثة، ثم جعفر، ثم عبد الله بن رواحة، واستُشهد الثلاثة، وتولى خالد بن الوليد القيادة." },
+            { p: "في رمضان من السنة الثامنة، فتح النبي ﷺ مكة بعد نقض قريش للصلح، ودخلها متواضعًا لله." },
+            { p: "قال ﷺ لأهل مكة: اذهبوا فأنتم الطلقاء، فعفا عنهم بعد أن آذوه وأخرجوه." }
+        ],
+        refs: "سيرة ابن هشام، صحيح البخاري"
+    },
+    {
+        year: "9 هـ",
+        title: "غزوة تبوك وعام الوفود",
+        brief: "خرج النبي ﷺ إلى تبوك في آخر غزواته، ولم يلقَ عدوًّا، ثم تتابعت وفود القبائل تسلم.",
+        sections: [
+            { p: "خرج النبي ﷺ في غزوة تبوك — وهي آخر غزواته — لملاقاة الروم، ولم يلقَ حربًا." },
+            { p: "تخلّف المنافقون عن الغزوة، وكشف الله حالهم في سورة التوبة." },
+            { p: "في هذا العام تتابعت وفود القبائل على المدينة تعلن إسلامها، فسُمّي عام الوفود." }
+        ],
+        refs: "سورة التوبة، سيرة ابن هشام"
+    },
+    {
+        year: "10 هـ",
+        title: "حجة الوداع",
+        brief: "حج النبي ﷺ حجته الوحيدة، وودّع المسلمين، وأوصاهم بكتاب الله وسنة نبيه ﷺ.",
+        sections: [
+            { p: "حج النبي ﷺ حجة الوداع في السنة العاشرة، ومعه أكثر من مئة ألف من المسلمين." },
+            { p: "خطب في عرفة خطبته المشهورة، وأوصى بالنساء والأموال وحرمة الدماء والأعراض." },
+            { p: "نزل: ﴿الْيَوْمَ أَكْمَلْتُ لَكُمْ دِينَكُمْ وَأَتْمَمْتُ عَلَيْكُمْ نِعْمَتِي وَرَضِيتُ لَكُمُ الْإِسْلَامَ دِينًا﴾." }
+        ],
+        refs: "سيرة ابن هشام، صحيح مسلم"
+    },
+    {
+        year: "11 هـ",
+        title: "وفاته ﷺ",
+        brief: "توفي النبي ﷺ في ربيع الأول سنة 11 هـ في المدينة، ودُفن في حجرة عائشة، وقبره في المسجد النبوي.",
+        sections: [
+            { p: "توفي النبي ﷺ يوم الاثنين 12 ربيع الأول سنة 11 هـ، في حجرة أم المؤمنين عائشة رضي الله عنها." },
+            { p: "كان آخر ما أوصى به ﷺ: الصلاة الصلاة وما ملكت أيمانكم." },
+            { p: "دُفن ﷺ في حجرة عائشة، وقبره الشريف في المسجد النبوي الشريف بالمدينة المنورة." },
+            { p: "قال أبو بكر رضي الله عنه: من كان يعبد محمدًا فإن محمدًا قد مات، ومن كان يعبد الله فإن الله حيّ لا يموت." }
+        ],
+        refs: "صحيح البخاري، سيرة ابن هشام"
+    }
+];
+
+// ====== الأخلاق والصفات ======
+const TRAITS = [
+    { icon: "🤲", title: "رحيم القلب", text: "كان ﷺ أرحم الناس بالناس، بالأطفال والنساء والضعفاء، وبحتى الحيوانات. قال تعالى: ﴿بِالْمُؤْمِنِينَ رَءُوفٌ رَّحِيمٌ﴾." },
+    { icon: "💪", title: "شديد الحياء", text: "كان ﷺ أشد حياءً من العذراء في خدرها، لا يثبت بصره في وجه أحد، ولا يرد أحدًا بما يكره." },
+    { icon: "🎯", title: "صادق أمين", text: "لقّبته قريش قبل البعثة بـ الصادق الأمين، ولم يُعرف عنه كذب ولا خيانة قط." },
+    { icon: "🌟", title: "كريم الجود", text: "كان ﷺ أجود الناس، وكان أجود ما يكون في رمضان، لا يُسأل شيئًا فيقول لا." },
+    { icon: "🕊️", title: "لطيف المعشر", text: "كان ﷺ أحسن الناس خُلُقًا، يبدأ من لقيه بالسلام، ويجلس حيث ينتهي المجلس، ولا يرفع صوته." },
+    { icon: "⚖️", title: "عادل في حكمه", text: "كان ﷺ يعدل بين الناس في حكمه، حتى مع أعدائه، ولا يحابي أحدًا ولو كان من أقرب الناس." },
+    { icon: "💎", title: "صابرًا محتسبًا", text: "صبر ﷺ على أذى قريش، وفقد أحبته، وقتال أعدائه، ولم يشتكِ إلا إلى الله." },
+    { icon: "🤝", title: "وافيًا بالعهد", text: "كان ﷺ أوفى الناس بالعهد، لم ينقض عهدًا حتى مات، وكانت قريش تخافه في ذلك." },
+    { icon: "🎁", title: "متواضعًا", text: "كان ﷺ يخصف نعله، ويرقع ثوبه، ويخدم أهله، ويجلس مع الفقراء والمساكين." },
+    { icon: "🕌", title: "قوّامًا بالليل", text: "كان ﷺ يقوم الليل حتى تتفطر قدماه، ويقول: أفلا أكون عبدًا شكورًا." }
+];
+
+// ====== أزواجه رضي الله عنهن ======
+const WIVES = [
+    { name: "خديجة بنت خويلد", role: "أول الزوجات — أم المؤمنين" },
+    { name: "سودة بنت زمعة", role: "الثانية — تزوجها بعد خديجة" },
+    { name: "عائشة بنت أبي بكر", role: "الثالثة — الفقيهة المحدثة" },
+    { name: "حفصة بنت عمر", role: "الرابعة — أم المؤمنين" },
+    { name: "زينب بنت خزيمة", role: "الخامسة — أم المساكين" },
+    { name: "أم سلمة هند بنت أبي أمية", role: "السادسة — أم المؤمنين" },
+    { name: "زينب بنت جحش", role: "السابعة — أم المؤمنين" },
+    { name: "جويرية بنت الحارث", role: "الثامنة — أم المؤمنين" },
+    { name: "صفية بنت حيي", role: "التاسعة — أم المؤمنين" },
+    { name: "أم حبيبة رملة بنت أبي سفيان", role: "العاشرة — أم المؤمنين" },
+    { name: "ميمونة بنت الحارث", role: "الحادية عشرة — أم المؤمنين" }
+];
+
+// ====== أولاده ﷺ ======
+const CHILDREN = [
+    { name: "القاسم", role: "من خديجة — توفي صغيرًا" },
+    { name: "عبد الله (الطاهر)", role: "من خديجة — توفي صغيرًا" },
+    { name: "زينب", role: "من خديجة — تزوجت العاص بن الربيع" },
+    { name: "رقية", role: "من خديجة — تزوجت عثمان بن عفان" },
+    { name: "أم كلثوم", role: "من خديجة — تزوجت عثمان بن عفان" },
+    { name: "فاطمة الزهراء", role: "من خديجة — تزوجت علي بن أبي طالب" },
+    { name: "إبراهيم", role: "من مارية القبطية — توفي صغيرًا" }
+];
+
+// ====== عرض الخط الزمني ======
+function renderTimeline() {
+    const container = document.getElementById('timeline-container');
+    container.innerHTML = TIMELINE.map((item, i) => `
+        <div class="timeline-item" onclick="openTimelineModal(${i})">
+            <span class="timeline-year">${item.year}</span>
+            <div class="timeline-card">
+                <div class="timeline-title">${item.title}</div>
+                <div class="timeline-brief">${item.brief}</div>
+                <div class="timeline-readmore">📖 اقرأ التفاصيل ←</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function openTimelineModal(index) {
+    const item = TIMELINE[index];
+    const modal = document.getElementById('modal');
+    const content = document.getElementById('modal-content');
+
+    content.innerHTML = `
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <span class="modal-year">${item.year}</span>
+        <div class="modal-title">${item.title}</div>
+        ${item.sections.map(s => `
+            <div class="modal-section"><p>${s.p}</p></div>
+        `).join('')}
+        <div class="modal-source">📖 المراجع: ${item.refs}</div>
+    `;
+
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('modal').classList.remove('show');
+    document.body.style.overflow = '';
+}
+
+// ====== عرض الأخلاق ======
+function renderTraits() {
+    const container = document.getElementById('traits-container');
+    container.innerHTML = TRAITS.map(t => `
+        <div class="trait-card">
+            <span class="trait-icon">${t.icon}</span>
+            <div class="trait-title">${t.title}</div>
+            <div class="trait-text">${t.text}</div>
+        </div>
+    `).join('');
+}
+
+// ====== عرض الأزواج ======
+function renderWives() {
+    const container = document.getElementById('wives-container');
+    container.innerHTML = WIVES.map(w => `
+        <div class="family-card">
+            <div class="family-name">${w.name}</div>
+            <div class="family-role">${w.role}</div>
+        </div>
+    `).join('');
+}
+
+// ====== عرض الأولاد ======
+function renderChildren() {
+    const container = document.getElementById('children-container');
+    container.innerHTML = CHILDREN.map(c => `
+        <div class="family-card">
+            <div class="family-name">${c.name}</div>
+            <div class="family-role">${c.role}</div>
+        </div>
+    `).join('');
+}
+
+// ====== التبويبات ======
+document.querySelectorAll('.main-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.timeline-section').forEach(s => s.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab + '-section').classList.add('active');
+    });
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+});
+
+// ====== التشغيل ======
+renderTimeline();
+renderTraits();
+renderWives();
+renderChildren();
+</script>
+
+</body>
+</html>
