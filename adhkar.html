@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الأذكار والأدعية — ملاك المعرفة الإسلامية</title>
+<meta name="description" content="أذكار الصباح والمساء والنوم والاستيقاظ وأذكار بعد الصلاة، مع المصادر وعدد التكرار.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤲</text></svg>">
+<style>
+.adhkar-hero{background:linear-gradient(135deg,rgba(212,175,55,0.2) 0%,rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:20px;padding:35px 20px;text-align:center;margin-bottom:30px}
+.adhkar-hero h1{font-family:'Amiri',serif;font-size:32px;color:var(--gold);margin-bottom:12px}
+.adhkar-hero p{color:var(--cream);opacity:0.9;max-width:600px;margin:0 auto;font-size:15px}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:12px;margin-bottom:25px;scrollbar-width:thin}
+.tabs::-webkit-scrollbar{height:4px}
+.tabs::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+.tab-btn{flex-shrink:0;padding:10px 18px;background:rgba(26,107,84,0.4);border:1px solid rgba(212,175,55,0.3);border-radius:25px;color:var(--cream);font-family:inherit;font-size:14px;cursor:pointer;transition:all 0.3s;white-space:nowrap}
+.tab-btn:hover{background:rgba(212,175,55,0.2)}
+.tab-btn.active{background:var(--gold);color:var(--green-dark);border-color:var(--gold);font-weight:700}
+.section-header{text-align:center;padding:20px;margin-bottom:20px;border-bottom:2px solid rgba(212,175,55,0.3)}
+.section-header h2{font-family:'Amiri',serif;font-size:26px;color:var(--gold);margin-bottom:8px}
+.section-header p{color:var(--cream);opacity:0.75;font-size:14px}
+.dhikr-card{background:linear-gradient(135deg,rgba(26,107,84,0.3) 0%,rgba(13,77,60,0.5) 100%);border:1px solid rgba(212,175,55,0.2);border-radius:14px;padding:20px;margin-bottom:15px;position:relative;overflow:hidden}
+.dhikr-card::before{content:'';position:absolute;top:0;right:0;width:3px;height:100%;background:var(--gold)}
+.dhikr-text{font-family:'Amiri','Scheherazade New',serif;font-size:22px;line-height:2.1;color:var(--cream);text-align:justify;margin-bottom:15px}
+.dhikr-meta{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:12px;border-top:1px dashed rgba(212,175,55,0.2)}
+.dhikr-source{color:var(--gold);font-size:13px;font-style:italic;flex:1}
+.dhikr-counter{display:flex;align-items:center;gap:10px}
+.counter-btn{width:45px;height:45px;border-radius:50%;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark);border:none;font-size:20px;font-weight:700;cursor:pointer;font-family:'Amiri',serif;transition:all 0.3s}
+.counter-btn:hover{transform:scale(1.1);box-shadow:0 5px 15px rgba(212,175,55,0.4)}
+.counter-btn.done{background:linear-gradient(135deg,#4ade80 0%,#22c55e 100%);color:white}
+.counter-display{min-width:60px;text-align:center;color:var(--cream);font-size:15px;font-weight:600}
+.counter-display span{color:var(--gold);font-size:18px}
+.reset-btn{padding:6px 12px;background:rgba(200,50,50,0.3);border:1px solid rgba(200,50,50,0.5);color:#ff8888;border-radius:15px;font-size:12px;font-family:inherit;cursor:pointer}
+.reset-btn:hover{background:rgba(200,50,50,0.5);color:white}
+.empty-state{text-align:center;padding:40px;color:var(--cream);opacity:0.7}
+.done-msg{text-align:center;padding:8px;color:#4ade80;font-size:13px;font-weight:600;display:none;margin-top:10px}
+.done-msg.show{display:block}
+@media (max-width:640px){.dhikr-text{font-size:19px;line-height:2}.adhkar-hero h1{font-size:24px}.dhikr-meta{flex-direction:column;align-items:stretch}.dhikr-counter{justify-content:center}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+<div class="header-container">
+<a href="index.html" class="logo">
+<div class="logo-icon">☪</div>
+<div class="logo-text">
+<span class="main">ملاك المعرفة</span>
+<span class="sub">منصة إسلامية شاملة</span>
+</div>
+</a>
+<button class="nav-toggle" onclick="document.querySelector('.main-nav').style.display = document.querySelector('.main-nav').style.display === 'none' ? 'block' : 'none'">☰</button>
+</div>
+</header>
+
+<nav class="main-nav">
+<ul class="nav-list">
+<li><a href="index.html">🏠 الرئيسية</a></li>
+<li><a href="quran.html">📖 القرآن الكريم</a></li>
+<li><a href="tafsir.html">📚 التفسير</a></li>
+<li><a href="hadith.html">🕌 السنة النبوية</a></li>
+<li><a href="seerah.html">🌙 السيرة النبوية</a></li>
+<li><a href="ghazawat.html">⚔️ الغزوات</a></li>
+<li><a href="prophets.html">🕊️ قصص الأنبياء</a></li>
+<li><a href="sahaba.html">⭐ الصحابة</a></li>
+<li><a href="adhkar.html" class="active">🤲 الأذكار</a></li>
+<li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="search.html">🔍 البحث</a></li>
+</ul>
+</nav>
+
+<main class="main-container">
+
+<section class="adhkar-hero">
+<h1>🤲 الأذكار والأدعية</h1>
+<p>أذكار الصباح والمساء، النوم والاستيقاظ، وأذكار بعد الصلاة — بمصادرها الصحيحة وعدد تكرارها.</p>
+</section>
+
+<div class="tabs" id="tabs"></div>
+<div id="section-header-container"></div>
+<div id="adhkar-container"></div>
+
+</main>
+
+<footer class="site-footer">
+<p class="footer-ayah">﴿ فَاذْكُرُونِي أَذْكُرْكُمْ وَاشْكُرُوا لِي وَلَا تَكْفُرُونِ ﴾</p>
+<p>ملاك المعرفة الإسلامية — منصة دعوية غير ربحية</p>
+<p>© 2026 — نسألكم الدعاء</p>
+</footer>
+
+<script>
+const ADHKAR_DATA = {
+    "morning": {
+        title: "🌅 أذكار الصباح",
+        desc: "تُقال بعد صلاة الفجر حتى طلوع الشمس",
+        items: [
+            { text: "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ. اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ...", source: "البقرة: 255 — آية الكرسي", count: 1 },
+            { text: "قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ", source: "سورة الإخلاص", count: 3 },
+            { text: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِن شَرِّ مَا خَلَقَ...", source: "سورة الفلق", count: 3 },
+            { text: "قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ مَلِكِ النَّاسِ...", source: "سورة الناس", count: 3 },
+            { text: "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ.", source: "رواه مسلم", count: 1 },
+            { text: "اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ النُّشُورُ.", source: "رواه الترمذي", count: 1 },
+            { text: "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي؛ فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ.", source: "سيد الاستغفار — رواه البخاري", count: 1 },
+            { text: "رَضِيتُ بِاللَّهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ ﷺ نَبِيًّا.", source: "رواه أبو داود", count: 3 },
+            { text: "اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لَا إِلَهَ إِلَّا أَنْتَ.", source: "رواه أبو داود", count: 3 },
+            { text: "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ.", source: "رواه الترمذي", count: 3 },
+            { text: "حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ، عَلَيْهِ تَوَكَّلْتُ، وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ.", source: "رواه أبو داود", count: 7 },
+            { text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ.", source: "رواه مسلم", count: 100 },
+            { text: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ.", source: "رواه البخاري", count: 10 }
+        ]
+    },
+    "evening": {
+        title: "🌆 أذكار المساء",
+        desc: "تُقال بعد صلاة العصر حتى المغرب",
+        items: [
+            { text: "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ. اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ...", source: "آية الكرسي — البقرة: 255", count: 1 },
+            { text: "قُلْ هُوَ اللَّهُ أَحَدٌ... (سورة الإخلاص)", source: "سورة الإخلاص", count: 3 },
+            { text: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ... (سورة الفلق)", source: "سورة الفلق", count: 3 },
+            { text: "قُلْ أَعُوذُ بِرَبِّ النَّاسِ... (سورة الناس)", source: "سورة الناس", count: 3 },
+            { text: "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ.", source: "رواه مسلم", count: 1 },
+            { text: "اللَّهُمَّ بِكَ أَمْسَيْنَا، وَبِكَ أَصْبَحْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ الْمَصِيرُ.", source: "رواه الترمذي", count: 1 },
+            { text: "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ... (سيد الاستغفار)", source: "رواه البخاري", count: 1 },
+            { text: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ.", source: "رواه مسلم", count: 3 },
+            { text: "اللَّهُمَّ عَافِنِي فِي بَدَنِي...", source: "رواه أبو داود", count: 3 },
+            { text: "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ...", source: "رواه الترمذي", count: 3 },
+            { text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ.", source: "رواه مسلم", count: 100 }
+        ]
+    },
+    "sleep": {
+        title: "🌙 أذكار النوم",
+        desc: "تُقال عند الاستعداد للنوم",
+        items: [
+            { text: "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا.", source: "رواه البخاري", count: 1 },
+            { text: "اللَّهُمَّ بِاسْمِكَ أَحْيَا وَأَمُوتُ.", source: "رواه البخاري", count: 1 },
+            { text: "اللَّهُمَّ قِنِي عَذَابَكَ يَوْمَ تَبْعَثُ عِبَادَكَ.", source: "رواه أبو داود", count: 3 },
+            { text: "سُبْحَانَ اللَّهِ (33) وَالْحَمْدُ لِلَّهِ (33) وَاللَّهُ أَكْبَرُ (34) عند النوم.", source: "رواه البخاري ومسلم", count: 1 },
+            { text: "قراءة آية الكرسي قبل النوم.", source: "رواه البخاري", count: 1 },
+            { text: "قراءة سورة الإخلاص والفلق والناس ثم مسح الجسد بالكفين.", source: "رواه البخاري", count: 3 },
+            { text: "اللَّهُمَّ أَسْلَمْتُ نَفْسِي إِلَيْكَ، وَفَوَّضْتُ أَمْرِي إِلَيْكَ، وَوَجَّهْتُ وَجْهِي إِلَيْكَ...", source: "رواه البخاري ومسلم", count: 1 }
+        ]
+    },
+    "wakeup": {
+        title: "☀️ أذكار الاستيقاظ",
+        desc: "تُقال عند الاستيقاظ من النوم",
+        items: [
+            { text: "الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ.", source: "رواه البخاري", count: 1 },
+            { text: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ...", source: "رواه البخاري", count: 1 },
+            { text: "الْحَمْدُ لِلَّهِ الَّذِي رَدَّ عَلَيَّ رُوحِي وَعَافَانِي فِي جَسَدِي وَأَذِنَ لِي بِذِكْرِهِ.", source: "رواه الترمذي", count: 1 }
+        ]
+    },
+    "prayer": {
+        title: "🕌 أذكار بعد الصلاة",
+        desc: "تُقال بعد كل صلاة مفروضة",
+        items: [
+            { text: "أَسْتَغْفِرُ اللَّهَ (3 مرات).", source: "رواه مسلم", count: 3 },
+            { text: "اللَّهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ، تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ.", source: "رواه مسلم", count: 1 },
+            { text: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ...", source: "رواه مسلم", count: 1 },
+            { text: "سُبْحَانَ اللَّهِ.", source: "رواه مسلم", count: 33 },
+            { text: "الْحَمْدُ لِلَّهِ.", source: "رواه مسلم", count: 33 },
+            { text: "اللَّهُ أَكْبَرُ.", source: "رواه مسلم", count: 33 },
+            { text: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ — تكملة المائة.", source: "رواه مسلم", count: 1 },
+            { text: "آية الكرسي بعد كل صلاة.", source: "رواه النسائي", count: 1 }
+        ]
+    },
+    "misc": {
+        title: "📿 أذكار متنوعة",
+        desc: "أذكار المواقف اليومية",
+        items: [
+            { text: "قبل الطعام: بِسْمِ اللَّهِ.", source: "رواه أبو داود", count: 1 },
+            { text: "بعد الطعام: الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ.", source: "رواه أبو داود", count: 1 },
+            { text: "عند دخول الخلاء: اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبْثِ وَالْخَبَائِثِ.", source: "رواه البخاري", count: 1 },
+            { text: "عند الخروج من الخلاء: غُفْرَانَكَ.", source: "رواه أبو داود", count: 1 },
+            { text: "عند السفر: سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ، وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ.", source: "رواه مسلم", count: 1 },
+            { text: "عند دخول المسجد: اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ.", source: "رواه مسلم", count: 1 },
+            { text: "عند الخروج من المسجد: اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ.", source: "رواه مسلم", count: 1 },
+            { text: "عند دخول المنزل: بِسْمِ اللَّهِ وَلَجْنَا، وَبِسْمِ اللَّهِ خَرَجْنَا، وَعَلَى رَبِّنَا تَوَكَّلْنَا.", source: "رواه أبو داود", count: 1 }
+        ]
+    }
+};
+
+let currentTab = 'morning';
+let counters = {};
+
+function renderTabs() {
+    const tabs = document.getElementById('tabs');
+    tabs.innerHTML = Object.keys(ADHKAR_DATA).map(key => `
+        <button class="tab-btn ${key === currentTab ? 'active' : ''}" onclick="switchTab('${key}')">
+            ${ADHKAR_DATA[key].title}
+        </button>
+    `).join('');
+}
+
+function switchTab(key) {
+    currentTab = key;
+    counters = {};
+    renderTabs();
+    renderContent();
+}
+
+function renderContent() {
+    const data = ADHKAR_DATA[currentTab];
+
+    document.getElementById('section-header-container').innerHTML = `
+        <div class="section-header">
+            <h2>${data.title}</h2>
+            <p>${data.desc}</p>
+        </div>
+    `;
+
+    const container = document.getElementById('adhkar-container');
+    container.innerHTML = data.items.map((item, i) => {
+        const key = `${currentTab}-${i}`;
+        const done = counters[key] === item.count;
+        return `
+            <div class="dhikr-card">
+                <div class="dhikr-text">${item.text}</div>
+                <div class="dhikr-meta">
+                    <div class="dhikr-source">📖 ${item.source}</div>
+                    <div class="dhikr-counter">
+                        <button class="counter-btn ${done ? 'done' : ''}" onclick="increment('${key}', ${item.count})">
+                            ${done ? '✓' : '+'}
+                        </button>
+                        <div class="counter-display">
+                            <span id="count-${key}">${counters[key] || 0}</span> / ${item.count}
+                        </div>
+                        <button class="reset-btn" onclick="reset('${key}')">إعادة</button>
+                    </div>
+                </div>
+                <div class="done-msg ${done ? 'show' : ''}" id="done-${key}">
+                    ✓ أتممت هذا الذكر — تقبّل الله
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function increment(key, target) {
+    counters[key] = (counters[key] || 0) + 1;
+    const countEl = document.getElementById(`count-${key}`);
+    if (countEl) countEl.textContent = counters[key];
+
+    const btn = event.target.closest('.counter-btn');
+    const doneMsg = document.getElementById(`done-${key}`);
+
+    if (counters[key] >= target) {
+        counters[key] = target;
+        countEl.textContent = target;
+        btn.classList.add('done');
+        btn.innerHTML = '✓';
+        if (doneMsg) doneMsg.classList.add('show');
+    }
+}
+
+function reset(key) {
+    counters[key] = 0;
+    renderContent();
+}
+
+renderTabs();
+renderContent();
+</script>
+
+</body>
+</html>
