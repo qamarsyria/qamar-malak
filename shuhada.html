@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الشهداء — ملاك المعرفة الإسلامية</title>
+<meta name="description" content="فضل الشهادة في الإسلام، وسير شهداء الإسلام من الصحابة والتابعين والقادة — بمعلومات موثقة.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎖️</text></svg>">
+<style>
+.sh-hero{background:linear-gradient(135deg,rgba(212,175,55,0.22) 0%,rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:20px;padding:35px 20px;text-align:center;margin-bottom:30px;position:relative;overflow:hidden}
+.sh-hero::before{content:'🎖️';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:180px;color:rgba(212,175,55,0.05);z-index:0;pointer-events:none}
+.sh-hero-content{position:relative;z-index:1}
+.sh-hero h1{font-family:'Amiri',serif;font-size:32px;color:var(--gold);margin-bottom:12px}
+.sh-hero p{color:var(--cream);opacity:0.9;max-width:680px;margin:0 auto;font-size:15px}
+
+.fadl-box{background:linear-gradient(135deg,rgba(34,197,94,0.15) 0%,rgba(34,197,94,0.03) 100%);border:2px solid rgba(74,222,128,0.4);border-radius:16px;padding:25px;margin-bottom:35px}
+.fadl-box h2{font-family:'Amiri',serif;font-size:24px;color:#4ade80;text-align:center;margin-bottom:20px}
+.fadl-box .quote{background:rgba(10,58,44,0.6);border-radius:12px;padding:16px;margin-bottom:12px;border-right:4px solid #4ade80}
+.fadl-box .quote-text{font-family:'Amiri',serif;font-size:18px;color:var(--cream);line-height:2;margin-bottom:10px}
+.fadl-box .quote-text.ayah{color:#4ade80;text-align:center;padding:8px 0}
+.fadl-box .quote-ref{font-size:12px;color:#4ade80;opacity:0.8;font-style:italic;text-align:left;padding-top:8px;border-top:1px dashed rgba(74,222,128,0.2)}
+.fadl-box .quote-label{display:inline-block;background:rgba(74,222,128,0.15);color:#4ade80;padding:2px 8px;border-radius:10px;font-size:11px;margin-bottom:8px;border:1px solid rgba(74,222,128,0.3)}
+
+.section-group-title{font-family:'Amiri',serif;font-size:24px;color:var(--gold);text-align:center;margin:45px 0 20px;padding-bottom:12px;border-bottom:1px solid rgba(212,175,55,0.3);position:relative}
+.section-group-title::after{content:'◆';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);color:var(--gold);font-size:14px;background:linear-gradient(135deg,var(--green-deep) 0%,var(--green-dark) 100%);padding:0 12px}
+
+.sh-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:15px;margin-bottom:30px}
+.sh-card{background:linear-gradient(135deg,rgba(26,107,84,0.35) 0%,rgba(13,77,60,0.55) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:16px;padding:20px;transition:all 0.3s;cursor:pointer;position:relative;overflow:hidden}
+.sh-card::before{content:'';position:absolute;top:0;right:0;width:4px;height:100%;background:var(--gold);transform:scaleY(0);transition:transform 0.3s;transform-origin:top}
+.sh-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 8px 25px rgba(212,175,55,0.25)}
+.sh-card:hover::before{transform:scaleY(1)}
+.sh-icon{width:55px;height:55px;background:linear-gradient(135deg,rgba(212,175,55,0.25) 0%,rgba(212,175,55,0.1) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:12px;border:1px solid rgba(212,175,55,0.3)}
+.sh-name{font-family:'Amiri',serif;font-size:22px;color:var(--gold);margin-bottom:6px}
+.sh-role{font-size:12px;color:var(--cream);opacity:0.7;margin-bottom:10px;font-style:italic}
+.sh-brief{font-size:14px;line-height:1.7;color:var(--cream);opacity:0.9;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.sh-badge{display:inline-block;background:rgba(212,175,55,0.15);color:var(--gold);padding:3px 10px;border-radius:12px;font-size:11px;margin-top:12px;border:1px solid rgba(212,175,55,0.3)}
+
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);backdrop-filter:blur(6px);z-index:2000;justify-content:center;align-items:flex-start;padding:20px;overflow-y:auto}
+.modal-overlay.show{display:flex}
+.modal-content{background:linear-gradient(135deg,#0a3a2c 0%,#0d4d3c 100%);border:2px solid var(--gold);border-radius:20px;max-width:750px;width:100%;padding:30px 25px;position:relative;margin-top:30px;margin-bottom:30px;animation:slideUp 0.3s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.modal-close{position:absolute;top:15px;left:15px;width:38px;height:38px;border-radius:50%;background:rgba(200,50,50,0.7);color:white;border:none;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit}
+.modal-close:hover{background:rgba(220,60,60,1)}
+.modal-icon{font-size:60px;text-align:center;margin-bottom:15px}
+.modal-name{font-family:'Amiri',serif;font-size:30px;color:var(--gold);text-align:center;margin-bottom:8px}
+.modal-role{text-align:center;color:var(--cream);opacity:0.8;font-size:14px;margin-bottom:25px;font-style:italic}
+.modal-section{margin-bottom:18px;padding:18px;background:rgba(10,58,44,0.5);border-radius:12px;border-right:4px solid var(--gold)}
+.modal-section h3{font-family:'Amiri',serif;font-size:18px;color:var(--gold);margin-bottom:10px}
+.modal-section p{color:var(--cream);line-height:1.9;font-size:15px}
+.modal-source{font-size:13px;color:var(--gold);opacity:0.75;text-align:center;margin-top:12px;font-style:italic;padding-top:12px;border-top:1px solid rgba(212,175,55,0.2)}
+
+@media (max-width:640px){.sh-hero h1{font-size:24px}.modal-content{padding:20px 15px}.modal-name{font-size:24px}.sh-grid{grid-template-columns:1fr}.section-group-title{font-size:20px}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+<div class="header-container">
+<a href="index.html" class="logo">
+<div class="logo-icon">☪</div>
+<div class="logo-text">
+<span class="main">ملاك المعرفة</span>
+<span class="sub">منصة إسلامية شاملة</span>
+</div>
+</a>
+<button class="nav-toggle" onclick="document.querySelector('.main-nav').style.display = document.querySelector('.main-nav').style.display === 'none' ? 'block' : 'none'">☰</button>
+</div>
+</header>
+
+<nav class="main-nav">
+<ul class="nav-list">
+<li><a href="index.html">🏠 الرئيسية</a></li>
+<li><a href="quran.html">📖 القرآن الكريم</a></li>
+<li><a href="tafsir.html">📚 التفسير</a></li>
+<li><a href="hadith.html">🕌 السنة النبوية</a></li>
+<li><a href="seerah.html">🌙 السيرة النبوية</a></li>
+<li><a href="ghazawat.html">⚔️ الغزوات</a></li>
+<li><a href="prophets.html">🕊️ قصص الأنبياء</a></li>
+<li><a href="sahaba.html">⭐ الصحابة</a></li>
+<li><a href="adhkar.html">🤲 الأذكار</a></li>
+<li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="search.html">🔍 البحث</a></li>
+</ul>
+</nav>
+
+<main class="main-container">
+
+<section class="sh-hero">
+<div class="sh-hero-content">
+<h1>🎖️ شهداء الإسلام</h1>
+<p>فضل الشهادة في الإسلام، وسير شهداء الإسلام من الصحابة والتابعين والقادة العظام — بمعلومات موثقة من السيرة والتاريخ الإسلامي.</p>
+</div>
+</section>
+
+<section class="fadl-box">
+<h2>✨ فضل الشهادة في الإسلام</h2>
+<div class="quote">
+<span class="quote-label">📖 آية</span>
+<div class="quote-text ayah">﴿وَلَا تَحْسَبَنَّ الَّذِينَ قُتِلُوا فِي سَبِيلِ اللَّهِ أَمْوَاتًا ۚ بَلْ أَحْيَاءٌ عِندَ رَبِّهِمْ يُرْزَقُونَ﴾</div>
+<div class="quote-ref">آل عمران: 169</div>
+</div>
+<div class="quote">
+<span class="quote-label">🕌 حديث</span>
+<div class="quote-text">قال ﷺ: «للشهيد عند الله ست خصال: يُغفر له في أول دفعة من دمه، ويرى مقعده من الجنة، ويُجار من عذاب القبر، ويأمن من الفزع الأكبر، ويُحلّى حلية الإيمان، ويُزوَّج من الحور العين، ويُشفَّع في سبعين إنسانًا من أقاربه».</div>
+<div class="quote-ref">رواه الترمذي وابن ماجه</div>
+</div>
+<div class="quote">
+<span class="quote-label">🕌 حديث</span>
+<div class="quote-text">قال ﷺ: «ما أحد يدخل الجنة يحب أن يرجع إلى الدنيا، وله ما على الأرض من شيء، إلا الشهيد، يتمنى أن يرجع إلى الدنيا، فيُقتل عشر مرات، لما يرى من الكرامة».</div>
+<div class="quote-ref">رواه البخاري ومسلم</div>
+</div>
+<div class="quote">
+<span class="quote-label">🕌 حديث</span>
+<div class="quote-text">قال ﷺ: «المجاهد من جاهد نفسه، والمهاجر من هجر ما نهى الله عنه». وقال: «من سأل الله الشهادة بصدق، بلغه الله منازل الشهداء وإن مات على فراشه».</div>
+<div class="quote-ref">رواه مسلم</div>
+</div>
+</section>
+
+<!-- شهداء بدر -->
+<h2 class="section-group-title">🌙 شهداء بدر</h2>
+<div class="sh-grid" id="badr-container"></div>
+
+<!-- شهداء أحد -->
+<h2 class="section-group-title">🏔️ شهداء أحد</h2>
+<div class="sh-grid" id="uhud-container"></div>
+
+<!-- شهداء الفتوحات -->
+<h2 class="section-group-title">⚔️ شهداء الفتوحات</h2>
+<div class="sh-grid" id="fath-container"></div>
+
+</main>
+
+<footer class="site-footer">
+<p class="footer-ayah">﴿ مِّنَ الْمُؤْمِنِينَ رِجَالٌ صَدَقُوا مَا عَاهَدُوا اللَّهَ عَلَيْهِ ۖ فَمِنْهُم مَّن قَضَىٰ نَحْبَهُ وَمِنْهُم مَّن يَنتَظِرُ ﴾</p>
+<p>ملاك المعرفة الإسلامية — منصة دعوية غير ربحية</p>
+<p>© 2026 — نسألكم الدعاء</p>
+</footer>
+
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+<div class="modal-content" id="modal-content"></div>
+</div>
+
+<script>
+// ===== شهداء بدر =====
+const BADR = [
+    {
+        name: "عُمير بن الحُمام",
+        icon: "🌿",
+        role: "شهيد بدر — أول شهداء بدر",
+        brief: "أول شهيد في غزوة بدر، كان يأكل تمرات في يده حين سمع النبي ﷺ يحرض على الجهاد، فرمى التمرات وقال: لئن أنا حييت حتى آكل تمراتي هذه، إنها لحياة طويلة! فقاتل حتى استشهد.",
+        sections: [
+            { h: "القصة", p: "في غزوة بدر، وقف النبي ﷺ يحرض المسلمين على الجهاد، فسمع عمير بن الحمام، وكان يأكل تمرات في يده، فقال: لئن أنا حييت حتى آكل تمراتي هذه، إنها لحياة طويلة! فرمى التمرات، وقاتل حتى استُشهد." },
+            { h: "العبرة", p: "اليقين بالجنة، والاستعداد للشهادة، وأن المؤمن لا يتردد حين يدعوه ربه للجهاد في سبيله." }
+        ],
+        refs: "سيرة ابن هشام، صحيح البخاري"
+    },
+    {
+        name: "عُبيدة بن الحارث",
+        icon: "⚔️",
+        role: "أول من قُتل من المسلمين في بدر",
+        brief: "من السابقين الأولين من المهاجرين، وهو أول من استُشهد في المعركة من المسلمين في بدر الكبرى، وكان أحد الثمانية السابقين إلى الإسلام.",
+        sections: [
+            { h: "القصة", p: "بارز عُبيدة بن الحارث المشركين في بدر، وضرب عتبة بن ربيعة فقتل، لكنه جُرح جرحًا بالغًا، فمات من جراحه بعد عودته إلى المدينة." },
+            { h: "مناقبه", p: "كان من السابقين الأولين إلى الإسلام، هاجر إلى الحبشة ثم إلى المدينة، وكان من أبطال بدر." }
+        ],
+        refs: "سيرة ابن هشام، الطبقات الكبرى"
+    }
+];
+
+// ===== شهداء أحد =====
+const UHUD = [
+    {
+        name: "حمزة بن عبد المطلب",
+        icon: "🦁",
+        role: "أسد الله — سيد الشهداء",
+        brief: "عم النبي ﷺ وأخوه من الرضاعة، أسد الله وسيد الشهداء، استُشهد في غزوة أحد على يد وحشي بن حرب، وقال النبي ﷺ: حمزة سيد الشهداء.",
+        sections: [
+            { h: "إسلامه", p: "أسلم حمزة بعد أن أُوذي النبي ﷺ، فعزّ الإسلام بإسلامه، وكان من أعزّ الفتيان في مكة." },
+            { h: "جهاده", p: "أبلى في غزوة بدر بلاءً عظيمًا، وقتل في بدر عددًا من صناديد قريش، ومنهم عتبة وشيبة ابنا ربيعة." },
+            { h: "شهادته", p: "استُشهد في غزوة أحد، وكان قاتله وحشي بن حرب الذي أسلم بعد ذلك، وقال عنه ﷺ: «حمزة سيد الشهداء»." },
+            { h: "حزن النبي", p: "حزن النبي ﷺ على حمزة حزنًا شديدًا، ولم يبكِ على أحد من أصحابه كما بكى عليه. وقال: ما رأيت مثل ما لقيت اليوم." }
+        ],
+        refs: "سيرة ابن هشام، صحيح البخاري، صحيح مسلم"
+    },
+    {
+        name: "مصعب بن عمير",
+        icon: "📚",
+        role: "أول سفير في الإسلام",
+        brief: "من السابقين الأولين، أول سفير في الإسلام، أرسله النبي ﷺ إلى المدينة يعلّم الناس القرآن، واستُشهد في أحد حاملًا راية المسلمين.",
+        sections: [
+            { h: "نشأته", p: "كان من أنعم شباب مكة، كان يرتدي أحسن الثياب ويعطر نفسه بأطيب العطر. فلما أسلم، ترك كل ذلك في سبيل الله." },
+            { h: "سفارته", p: "أرسله النبي ﷺ بعد بيعة العقبة الأولى إلى المدينة، فأسلم على يديه معظم الأنصار (سعد بن معاذ وأُسيد بن حضير)." },
+            { h: "شهادته", p: "استُشهد في أحد حاملًا راية المسلمين، ومُثِّل به المشركون، ولم يجدوا له كفنًا يُغطّيه كاملًا إلا نمرة، إذا غُطّي رأسه بدت رجلاه." },
+            { h: "حزن النبي", p: "وقف النبي ﷺ على جسده وبكى، وتلا قول الله: ﴿مِّنَ الْمُؤْمِنِينَ رِجَالٌ صَدَقُوا مَا عَاهَدُوا اللَّهَ عَلَيْهِ﴾." }
+        ],
+        refs: "سيرة ابن هشام، صحيح البخاري"
+    },
+    {
+        name: "عبد الله بن جُبير",
+        icon: "🏹",
+        role: "قائد الرماة في أحد",
+        brief: "أمّره النبي ﷺ على الرماة في غزوة أحد، وقال له: لا تبرحوا مكانكم، فإن رأيتمونا نُقتل فلا تنصروا، وإن رأيتمونا نَغنم فلا تشركوا. فمخالفوا أمره كان سبب الهزيمة.",
+        sections: [
+            { h: "أمر النبي", p: "قال ﷺ: «إن رأيتمونا تُقتّلون فلا تبرحوا مكانكم، وإن رأيتمونا قد غنمنا فلا تشركونا»." },
+            { h: "المخالفة", p: "لما رأى الرماة انكسار المشركين، ظنوا أن المعركة انتهت، فتركوا مواقعهم طمعًا في الغنائم إلا ابن جبير ورفاقه القليل." },
+            { h: "شهادته", p: "التفّ خالد بن الوليد بالمشركين على المسلمين من الخلف، فاستُشهد عبد الله بن جبير ومن معه، وكانت الهزيمة." },
+            { h: "العبرة", p: "طاعة الأمراء، وأهمية الانضباط، وأن مخالفة الأمر سبب للفشل، كما قال الله: ﴿وَعَصَيْتُم مِّن بَعْدِ مَا أَرَاكُم مَّا تُحِبُّونَ﴾." }
+        ],
+        refs: "سورة آل عمران: 152-153، سيرة ابن هشام"
+    },
+    {
+        name: "أنس بن النضر",
+        icon: "🌟",
+        role: "من أبطال أحد",
+        brief: "غاب عن غزوة بدر فحزن حزنًا شديدًا، وقال: أول مشهد شهد رسول الله ﷺ غِبت عنه! فقاتل في أحد حتى استشهد، ووُجد في جسده أكثر من ثمانين ضربة.",
+        sections: [
+            { h: "القصة", p: "قال أنس بن النضر قبل أحد: والله لئن أشهدني الله مع رسول الله ﷺ مشهدًا ليرينّ الله ما أصنع. فلما كانت أحد، قاتل قتالًا شديدًا." },
+            { h: "شهادته", p: "استُشهد في أحد، فلم يعرفوه إلا بأخته بعلامة فيه، ووُجد في جسده أكثر من ثمانين ضربة ما بين طعنة وضربة ورمية." },
+            { h: "فضله", p: "قال ﷺ عنه وعن شهداء أحد: هم عند الله في منازل الشهداء." }
+        ],
+        refs: "سيرة ابن هشام، صحيح البخاري"
+    },
+    {
+        name: "حُنظلة الغسيل",
+        icon: "💎",
+        role: "شهيد غسّلته الملائكة",
+        brief: "كان حديث عهد بعرس (زواج) حين نادى منادي الجهاد في أحد، فترك زوجته وأسرع، واستُشهد وهو جنُب، فغسّلته الملائكة، ولذلك لُقّب بـ غسيل الملائكة.",
+        sections: [
+            { h: "القصة", p: "كان حنظلة حديث عهد بعرس، فلما سمع منادي الجهاد في أحد خرج مسرعًا دون أن يغتسل، فقاتل حتى استُشهد وهو جنب." },
+            { h: "غسيل الملائكة", p: "قال النبي ﷺ: «رأيت الملائكة تغسله». ومن يومها سُمّي: غسيل الملائكة." },
+            { h: "زوجه", p: "كانت جميلة بنت ثابت بن أبي العجلان، وقد صارت زوجه في تلك الليلة، وقد تزوجها بعد ذلك أبو بكر الصديق." }
+        ],
+        refs: "سيرة ابن هشام، صحيح البخاري"
+    }
+];
+
+// ===== شهداء الفتوحات =====
+const FATH = [
+    {
+        name: "جعفر بن أبي طالب",
+        icon: "🕊️",
+        role: "ذو الجناحين — الطيار",
+        brief: "ابن عم النبي ﷺ وأخو علي، قائد المهاجرين إلى الحبشة، استُشهد في مؤتة بعد أن قُطعت يداه، وقال النبي ﷺ: قد رأيته يطير في الجنة بجناحين.",
+        sections: [
+            { h: "هجرته", p: "هاجر إلى الحبشة، وترأس وفد المسلمين إلى النجاشي، ودافع عن الإسلام بخطبته المشهورة أمام الملك." },
+            { h: "شجاعته", p: "في غزوة مؤتة، حمل الراية بعد استشهاد زيد بن حارثة، وقاتل حتى قُطعت يمينه، فأخذ الراية بيساره، فقطعت، فاحتضن الراية بصدره حتى قُتل." },
+            { h: "بشارته", p: "قال النبي ﷺ عند استشهاده: «قد رأيته يطير في الجنة بجناحين»." }
+        ],
+        refs: "صحيح البخاري، سيرة ابن هشام"
+    },
+    {
+        name: "زيد بن حارثة",
+        icon: "⭐",
+        role: "حِبّ رسول الله — قائد مؤتة",
+        brief: "الوحيد من الصحابة الذي ذُكر اسمه صراحة في القرآن، كان حِبّ رسول الله ﷺ، استُشهد في مؤتة أول الأمراء الثلاثة.",
+        sections: [
+            { h: "نشأته", p: "تربّى في بيت النبي ﷺ، وكان يُسمى زيد بن محمد حتى أُبطل التبني بنزول: ﴿ادْعُوهُمْ لِآبَائِهِمْ هُوَ أَقْسَطُ عِندَ اللَّهِ﴾." },
+            { h: "إسلامه", p: "أسلم من السابقين الأولين، وهاجر إلى المدينة، وكان من أشجع الصحابة." },
+            { h: "شهادته", p: "أمّره النبي ﷺ على جيش مؤتة، فقاتل حتى استُشهد، ثم حمل الراية جعفر، ثم عبد الله بن رواحة، ثم تولى خالد بن الوليد القيادة." }
+        ],
+        refs: "صحيح البخاري، سيرة ابن هشام"
+    },
+    {
+        name: "عبد الله بن رواحة",
+        icon: "📜",
+        role: "شاعر الرسول ﷺ — ثالث قادة مؤتة",
+        brief: "شاعر الرسول ﷺ، وأحد نقباء الأنصار، استُشهد في مؤتة بعد زيد بن حارثة وجعفر بن أبي طالب، وكان ثالث الأمراء.",
+        sections: [
+            { h: "مناقبه", p: "كان شاعرًا مجيدًا، يدافع عن الإسلام بشعره، وكان من نقباء الأنصار في بيعة العقبة." },
+            { h: "شهادته", p: "لما استشهد زيد وجعفر في مؤتة، أخذ الراية عبد الله بن رواحة، وتقدّم وهو يقول أبياتًا، فقاتل حتى استُشهد، فتولى خالد بن الوليد القيادة." },
+            { h: "من أشعاره", p: "قال قبل شهادته: يا نفس إن لم تُقتَلي تموتي، هذا حياض الموت قد صليتِ." }
+        ],
+        refs: "سيرة ابن هشام، صحيح البخاري"
+    },
+    {
+        name: "خبيب بن عدي",
+        icon: "🎖️",
+        role: "أول من سنّ صلاة ركعتين قبل القتل",
+        brief: "من شهداء الإسلام، صبر على القتل وثبت، وأول من سنّ صلاة ركعتين عند الإعدام، ودعا الله أن ينجّي المسلمين.",
+        sections: [
+            { h: "أسره", p: "أسره المشركون بعد غزوة الرجيع، وباعوه لأهل مكة، فأرادوا قتله انتقامًا لأبنائهم في بدر." },
+            { h: "صبره", p: "طلب أن يصلي ركعتين قبل القتل، فصلى، فكان أول من سنّ صلاة ركعتين قبل الإعدام في الإسلام." },
+            { h: "دعاؤه", p: "دعا الله أن يُنجّي المسلمين من بعد ذلك، وكان يستجاب الدعوة، فنجّى الله أصحابه من مكة." },
+            { h: "قتله", p: "قُتل وهو يصلي ويدعو، ودُفن في مكة، وقد بقي اسمه رمزًا للثبات والصبر على الأذى في سبيل الله." }
+        ],
+        refs: "صحيح البخاري، سيرة ابن هشام"
+    },
+    {
+        name: "البراء بن مالك",
+        icon: "⚔️",
+        role: "من أبطال الفتوحات",
+        brief: "أخو أنس بن مالك خادم النبي ﷺ، وكان من أشجع الصحابة، وكان يُقسم على الله فيبرّه، استُشهد في فتوحات فارس.",
+        sections: [
+            { h: "شجاعته", p: "كان من أشجع الصحابة، ودعا الله أن يُميته شهيدًا، وكان يُقسم على الله فيبرّه، ويقول: اللهم إني أسألك شهادة." },
+            { h: "معاركه", p: "شارك في فتوحات العراق وفارس، وقاد معارك عظيمة، وكان عمر بن الخطاب يستشيره في المعارك الكبرى." },
+            { h: "شهادته", p: "استُشهد في معركة تُستر في فتوحات فارس، بعد أن أبلى بلاءً عظيمًا." }
+        ],
+        refs: "فتوح البلدان، الطبقات الكبرى"
+    },
+    {
+        name: "النعمان بن مقرن",
+        icon: "🏔️",
+        role: "قائد معركة نهاوند — فتح الفتوح",
+        brief: "قائد معركة نهاوند (فتح الفتوح)، استُشهد في المعركة، ودعا الله قبلها: اللهم ارزقني الشهادة، وأعزّ الإسلام والمسلمين.",
+        sections: [
+            { h: "قبل المعركة", p: "لما عُيّن قائدًا لنهاوند، قال: اللهم إنك كنت رزقتني الشهادة على عهد رسول الله ﷺ، فحُرمتها لاختلاف الناس عليّ، اللهم فارزقنيها اليوم." },
+            { h: "في المعركة", p: "قاتل قتالًا عظيمًا وهو يقود الجيش، فاستُشهد بعد أن أبلى بلاءً حاسمًا، وتولى حذيفة بن اليمان القيادة." },
+            { h: "النتيجة", p: "انتهت معركة نهاوند بانتصار المسلمين، وسُميت فتح الفتوح، وانتهت بها دولة الفرس نهائيًا." }
+        ],
+        refs: "تاريخ الطبري، فتوح البلدان"
+    }
+];
+
+function renderCards(containerId, list) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.innerHTML = list.map(item => `
+        <div class="sh-card" onclick='openModal(${JSON.stringify(item).replace(/'/g, "&#39;")})'>
+            <div class="sh-icon">${item.icon}</div>
+            <div class="sh-name">${item.name}</div>
+            <div class="sh-role">${item.role}</div>
+            <div class="sh-brief">${item.brief}</div>
+        </div>
+    `).join('');
+}
+
+function openModal(item) {
+    const modal = document.getElementById('modal');
+    const content = document.getElementById('modal-content');
+
+    content.innerHTML = `
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-icon">${item.icon}</div>
+        <div class="modal-name">${item.name}</div>
+        <div class="modal-role">${item.role}</div>
+        ${item.sections.map(s => `
+            <div class="modal-section">
+                <h3>${s.h}</h3>
+                <p>${s.p}</p>
+            </div>
+        `).join('')}
+        <div class="modal-source">📖 المراجع: ${item.refs}</div>
+    `;
+
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('modal').classList.remove('show');
+    document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+});
+
+renderCards('badr-container', BADR);
+renderCards('uhud-container', UHUD);
+renderCards('fath-container', FATH);
+</script>
+
+</body>
+</html>
