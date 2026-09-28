@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفقه الإسلامي — ملاك المعرفة الإسلامية</title>
+<meta name="description" content="أحكام الطهارة والصلاة والصيام والزكاة والحج — وفق ما أجمع عليه أهل العلم.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
+<style>
+.fiqh-hero{background:linear-gradient(135deg,rgba(212,175,55,0.22) 0%,rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:20px;padding:35px 20px;text-align:center;margin-bottom:30px}
+.fiqh-hero h1{font-family:'Amiri',serif;font-size:32px;color:var(--gold);margin-bottom:12px}
+.fiqh-hero p{color:var(--cream);opacity:0.9;max-width:680px;margin:0 auto;font-size:15px}
+.notice-box{background:linear-gradient(135deg,rgba(74,222,128,0.15) 0%,rgba(74,222,128,0.03) 100%);border:2px solid rgba(74,222,128,0.4);border-radius:14px;padding:18px;margin-bottom:25px;text-align:center}
+.notice-box p{color:var(--cream);font-size:14px;line-height:1.8;margin:0}
+.notice-box strong{color:#4ade80}
+.accordion{max-width:800px;margin:0 auto}
+.acc-item{background:linear-gradient(135deg,rgba(26,107,84,0.3) 0%,rgba(13,77,60,0.5) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:14px;margin-bottom:12px;overflow:hidden;transition:all 0.3s}
+.acc-item:hover{border-color:rgba(212,175,55,0.5)}
+.acc-item.open{border-color:var(--gold);box-shadow:0 8px 25px rgba(212,175,55,0.2)}
+.acc-head{padding:18px 20px;cursor:pointer;display:flex;align-items:center;gap:15px;user-select:none}
+.acc-icon{font-size:32px;flex-shrink:0}
+.acc-title{flex:1;font-family:'Amiri',serif;font-size:21px;color:var(--gold);line-height:1.4}
+.acc-arrow{color:var(--gold);font-size:20px;transition:transform 0.3s;flex-shrink:0}
+.acc-item.open .acc-arrow{transform:rotate(180deg)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height 0.6s ease}
+.acc-item.open .acc-body{max-height:8000px}
+.acc-content{padding:0 20px 20px;border-top:1px dashed rgba(212,175,55,0.2);margin-top:5px;padding-top:18px}
+.acc-intro{color:var(--cream);font-size:15px;line-height:1.9;margin-bottom:18px;opacity:0.9;font-style:italic;border-right:3px solid var(--gold);padding-right:15px}
+.topic{margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid rgba(212,175,55,0.15)}
+.topic:last-child{border-bottom:none;padding-bottom:0}
+.topic-title{font-family:'Amiri',serif;font-size:18px;color:var(--gold);margin-bottom:12px;padding-right:12px;border-right:3px solid var(--gold)}
+.topic-list{list-style:none;padding:0}
+.topic-list li{color:var(--cream);font-size:15px;line-height:1.9;padding:8px 0 8px 25px;position:relative;border-bottom:1px dashed rgba(212,175,55,0.1)}
+.topic-list li:last-child{border-bottom:none}
+.topic-list li::before{content:'◆';position:absolute;right:0;color:var(--gold);font-size:11px;top:12px}
+.quote{background:rgba(10,58,44,0.6);border-radius:12px;padding:14px 16px;margin:12px 0;border-right:4px solid var(--gold)}
+.quote-text{font-family:'Amiri',serif;font-size:17px;color:var(--cream);line-height:1.9;margin-bottom:8px}
+.quote-text.ayah{color:var(--gold);text-align:center}
+.quote-ref{font-size:12px;color:var(--gold);opacity:0.8;font-style:italic;text-align:left;padding-top:6px;border-top:1px dashed rgba(212,175,55,0.2)}
+@media (max-width:640px){.fiqh-hero h1{font-size:24px}.acc-title{font-size:17px}.acc-icon{font-size:26px}.topic-list li{font-size:14px}.quote-text{font-size:16px}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+<div class="header-container">
+<a href="index.html" class="logo">
+<div class="logo-icon">☪</div>
+<div class="logo-text">
+<span class="main">ملاك المعرفة</span>
+<span class="sub">منصة إسلامية شاملة</span>
+</div>
+</a>
+<button class="nav-toggle" onclick="document.querySelector('.main-nav').style.display = document.querySelector('.main-nav').style.display === 'none' ? 'block' : 'none'">☰</button>
+</div>
+</header>
+
+<nav class="main-nav">
+<ul class="nav-list">
+<li><a href="index.html">🏠 الرئيسية</a></li>
+<li><a href="quran.html">📖 القرآن الكريم</a></li>
+<li><a href="tafsir.html">📚 التفسير</a></li>
+<li><a href="hadith.html">🕌 السنة النبوية</a></li>
+<li><a href="seerah.html">🌙 السيرة النبوية</a></li>
+<li><a href="ghazawat.html">⚔️ الغزوات</a></li>
+<li><a href="prophets.html">🕊️ قصص الأنبياء</a></li>
+<li><a href="sahaba.html">⭐ الصحابة</a></li>
+<li><a href="adhkar.html">🤲 الأذكار</a></li>
+<li><a href="fiqh.html" class="active">⚖️ الفقه</a></li>
+<li><a href="search.html">🔍 البحث</a></li>
+</ul>
+</nav>
+
+<main class="main-container">
+
+<section class="fiqh-hero">
+<h1>⚖️ الفقه الإسلامي</h1>
+<p>أحكام الطهارة والصلاة والصيام والزكاة والحج والجنائز — وفق ما أجمع عليه أهل العلم، مع الأدلة من القرآن والسنة.</p>
+</section>
+
+<div class="notice-box">
+<p>📌 <strong>تنبيه:</strong> هذه المادة مختصرة للتعريف العام بأحكام العبادات الأساسية. المسائل الخلافية تركت جانبًا. للفتوى في حالات خاصة، يُرجى سؤال أهل العلم المختصين.</p>
+</div>
+
+<div class="accordion" id="fiqh-container"></div>
+
+</main>
+
+<footer class="site-footer">
+<p class="footer-ayah">﴿ وَمَا آتَاكُمُ الرَّسُولُ فَخُذُوهُ وَمَا نَهَاكُمْ عَنْهُ فَانتَهُوا ﴾</p>
+<p>ملاك المعرفة الإسلامية — منصة دعوية غير ربحية</p>
+<p>© 2026 — نسألكم الدعاء</p>
+</footer>
+
+<script>
+const FIQH_DATA = [
+    {
+        icon: "💧",
+        title: "أحكام الطهارة",
+        intro: "الطهارة شرط لصحة الصلاة والطواف ومس المصحف. أنواع المياه وأحكامها، والوضوء والغسل والتيمم.",
+        topics: [
+            {
+                title: "أنواع المياه",
+                items: [
+                    "الماء الطهور: الباقي على أصل خلقته، يُتطهَّر به ويصح الوضوء والغسل به.",
+                    "الماء النجس: تغيّر لونه أو طعمه أو ريحه بالنجاسة، لا يصلح للوضوء ولا الغسل.",
+                    "الماء المستعمل: الذي استُعمل في رفع حدث أو إزالة نجاسة، لا يُرفع به الحدث عند أكثر العلماء."
+                ]
+            },
+            {
+                title: "الوضوء — فروضه",
+                items: [
+                    "النية عند غسل الوجه.",
+                    "غسل الوجه كاملًا (من الجبهة إلى الذقن، ومن الأذن إلى الأذن).",
+                    "غسل اليدين مع المرفقين.",
+                    "مسح الرأس كله (عند أكثر العلماء).",
+                    "غسل الرجلين مع الكعبين.",
+                    "الترتيب بين هذه الأعضاء.",
+                    "الموالاة (عدم الفصل الطويل بين الأعضاء)."
+                ],
+                quote: { text: "﴿يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا قُمْتُمْ إِلَى الصَّلَاةِ فَاغْسِلُوا وُجُوهَكُمْ وَأَيْدِيَكُمْ إِلَى الْمَرَافِقِ وَامْسَحُوا بِرُءُوسِكُمْ وَأَرْجُلَكُمْ إِلَى الْكَعْبَيْنِ﴾", ref: "المائدة: 6", ayah: true }
+            },
+            {
+                title: "الغسل — موجباته",
+                items: [
+                    "خروج المني بشهوة يقظة أو نومًا (الاحتلام).",
+                    "الجماع وإن لم يُنزل.",
+                    "انقطاع دم الحيض والنفاس.",
+                    "الموت (غسل الميت فرض كفاية).",
+                    "إسلام الكافر عند بعض العلماء."
+                ]
+            },
+            {
+                title: "التيمم",
+                items: [
+                    "يُشرع عند عدم الماء، أو العجز عن استعماله، أو المرض.",
+                    "يُضرب بكفّي اليدين على التراب الطاهر ضربة واحدة، ثم يُمسح بهما الوجه والكفان.",
+                    "التيمم يرفع الحدث مؤقتًا حتى يوجد الماء أو يزول العذر."
+                ],
+                quote: { text: "﴿فَلَمْ تَجِدُوا مَاءً فَتَيَمَّمُوا صَعِيدًا طَيِّبًا فَامْسَحُوا بِوُجُوهِكُمْ وَأَيْدِيكُم مِّنْهُ﴾", ref: "المائدة: 6", ayah: true }
+            }
+        ]
+    },
+    {
+        icon: "🕌",
+        title: "أحكام الصلاة",
+        intro: "الصلاة عمود الدين، وأول ما يُحاسب عليه العبد يوم القيامة. خمس صلوات مفروضة في اليوم والليلة.",
+        topics: [
+            {
+                title: "شروط الصلاة",
+                items: [
+                    "الإسلام، العقل، التمييز، الطهارة من الحدث والنجس.",
+                    "ستر العورة (للرجل: من السرة إلى الركبة، وللمرأة: كل جسدها إلا الوجه والكفين).",
+                    "استقبال القبلة.",
+                    "دخول الوقت.",
+                    "النية."
+                ]
+            },
+            {
+                title: "أركان الصلاة",
+                items: [
+                    "تكبيرة الإحرام (الله أكبر).",
+                    "قراءة الفاتحة في كل ركعة.",
+                    "الركوع والاعتدال منه.",
+                    "السجود على الأعضاء السبعة والاعتدال منه.",
+                    "الجلوس بين السجدتين.",
+                    "التشهد الأخير والجلوس له.",
+                    "التسليمتان.",
+                    "الترتيب والطمأنينة في كل ركن."
+                ]
+            },
+            {
+                title: "واجبات الصلاة",
+                items: [
+                    "التكبيرات غير تكبيرة الإحرام.",
+                    "قول: سمع الله لمن حمده، ربنا ولك الحمد.",
+                    "قول: سبحان ربي العظيم في الركوع.",
+                    "قول: سبحان ربي الأعلى في السجود.",
+                    "قول: رب اغفر لي بين السجدتين.",
+                    "التشهد الأول والجلوس له."
+                ]
+            },
+            {
+                title: "الصلوات المفروضة",
+                items: [
+                    "الفجر: ركعتان.",
+                    "الظهر: أربع ركعات.",
+                    "العصر: أربع ركعات.",
+                    "المغرب: ثلاث ركعات.",
+                    "العشاء: أربع ركعات."
+                ],
+                quote: { text: "قال ﷺ: «خمس صلوات كتبهن الله على العباد، من جاء بهن لم يضيع منهن شيئًا استخفافًا بحقهن، كان له عند الله عهد أن يدخله الجنة».", ref: "رواه أبو داود" }
+            }
+        ]
+    },
+    {
+        icon: "🌙",
+        title: "أحكام الصيام",
+        intro: "صيام رمضان فرض على كل مسلم بالغ عاقل قادر. والصيام: الإمساك عن المفطرات من طلوع الفجر إلى غروب الشمس بنية.",
+        topics: [
+            {
+                title: "شروط وجوب الصيام",
+                items: [
+                    "الإسلام.",
+                    "البلوغ.",
+                    "العقل.",
+                    "القدرة (عدم المرض أو السفر).",
+                    "الإقامة (عدم السفر)."
+                ]
+            },
+            {
+                title: "مبطلات الصيام",
+                items: [
+                    "الأكل والشرب عمدًا.",
+                    "الجماع (ويوجب الكفارة).",
+                    "التقيؤ عمدًا.",
+                    "الحقن المغذية (عند جمهور المعاصرين).",
+                    "خروج دم الحيض والنفاس.",
+                    "الردة عن الإسلام.",
+                    "النية على الفطر قبل غروب الشمس."
+                ]
+            },
+            {
+                title: "الأعذار المبيحة للفطر",
+                items: [
+                    "المرض الذي يشق معه الصوم.",
+                    "السفر (مع القضاء).",
+                    "الحمل والرضاع (مع القضاء أو الفدية).",
+                    "الكبر والشيخوخة (مع الفدية).",
+                    "الحيض والنفاس (قضاء بدون فدية)."
+                ],
+                quote: { text: "﴿شَهْرُ رَمَضَانَ الَّذِي أُنزِلَ فِيهِ الْقُرْآنُ هُدًى لِّلنَّاسِ وَبَيِّنَاتٍ مِّنَ الْهُدَىٰ وَالْفُرْقَانِ﴾", ref: "البقرة: 185", ayah: true }
+            }
+        ]
+    },
+    {
+        icon: "💰",
+        title: "أحكام الزكاة",
+        intro: "الزكاة ركن من أركان الإسلام، وهي حق للفقراء في أموال الأغنياء، تطهيرًا للنفس والمال.",
+        topics: [
+            {
+                title: "شروط وجوب الزكاة",
+                items: [
+                    "الإسلام.",
+                    "الحرية.",
+                    "ملك النصاب.",
+                    "حولان الحول (سنة قمرية) على المال.",
+                    "الملك التام للمال."
+                ]
+            },
+            {
+                title: "أنواع الأموال التي تجب فيها الزكاة",
+                items: [
+                    "الذهب والفضة (2.5% إذا بلغ النصاب).",
+                    "النقود والأوراق المالية (2.5%).",
+                    "عروض التجارة (2.5% من قيمتها).",
+                    "الأنعام (الإبل، البقر، الغنم) بنسب محددة.",
+                    "الزروع والثمار (10% أو 5% حسب طريقة السقي)."
+                ],
+                quote: { text: "قال ﷺ: «بُني الإسلام على خمس: شهادة أن لا إله إلا الله وأن محمدًا رسول الله، وإقام الصلاة، وإيتاء الزكاة، وحج البيت، وصوم رمضان».", ref: "رواه البخاري ومسلم" }
+            },
+            {
+                title: "مصارف الزكاة الثمانية",
+                items: [
+                    "الفقراء.",
+                    "المساكين.",
+                    "العاملون عليها.",
+                    "المؤلفة قلوبهم.",
+                    "الرقاب (فك الأسرى والعبيد).",
+                    "الغارمون (المدينون).",
+                    "في سبيل الله.",
+                    "ابن السبيل (المسافر المنقطع)."
+                ],
+                quote: { text: "﴿إِنَّمَا الصَّدَقَاتُ لِلْفُقَرَاءِ وَالْمَسَاكِينِ وَالْعَامِلِينَ عَلَيْهَا وَالْمُؤَلَّفَةِ قُلُوبُهُمْ وَفِي الرِّقَابِ وَالْغَارِمِينَ وَفِي سَبِيلِ اللَّهِ وَابْنِ السَّبِيلِ﴾", ref: "التوبة: 60", ayah: true }
+            }
+        ]
+    },
+    {
+        icon: "🕋",
+        title: "أحكام الحج والعمرة",
+        intro: "الحج ركن من أركان الإسلام، واجب مرة في العمر على المستطيع، والعمرة واجبة عند بعض العلماء وسنة عند آخرين.",
+        topics: [
+            {
+                title: "شروط وجوب الحج",
+                items: [
+                    "الإسلام.",
+                    "البلوغ والعقل.",
+                    "الحرية.",
+                    "القدرة المالية.",
+                    "القدرة البدنية.",
+                    "أمن الطريق.",
+                    "وجود المحرم للمرأة."
+                ]
+            },
+            {
+                title: "أركان الحج",
+                items: [
+                    "الإحرام (نية الدخول في النسك).",
+                    "الوقوف بعرفة.",
+                    "طواف الإفاضة.",
+                    "السعي بين الصفا والمروة."
+                ]
+            },
+            {
+                title: "واجبات الحج",
+                items: [
+                    "الإحرام من الميقات.",
+                    "المبيت بمنى يوم التروية.",
+                    "الوقوف بمزدلفة.",
+                    "المبيت بمنى أيام التشريق.",
+                    "رمي الجمرات.",
+                    "الحلق أو التقصير.",
+                    "طواف الوداع."
+                ],
+                quote: { text: "﴿وَلِلَّهِ عَلَى النَّاسِ حِجُّ الْبَيْتِ مَنِ اسْتَطَاعَ إِلَيْهِ سَبِيلًا﴾", ref: "آل عمران: 97", ayah: true }
+            }
+        ]
+    },
+    {
+        icon: "🕊️",
+        title: "أحكام الجنائز",
+        intro: "من حق المسلم على أخيه المسلم: عيادته إذا مرض، وإجابة دعوته، وتشييع جنازته، وغسل الميت والصلاة عليه ودفنه.",
+        topics: [
+            {
+                title: "ما يُفعل بالميت",
+                items: [
+                    "تغميض عينيه، وتغطيته بثوب، وتعجيل تجهيزه.",
+                    "غسله (فرض كفاية).",
+                    "تكفينه في كفن أبيض (الأفضل ثلاث لفائف للرجل).",
+                    "الصلاة عليه (فرض كفاية).",
+                    "دفنه في قبره مستقبلًا القبلة على شقه الأيمن."
+                ]
+            },
+            {
+                title: "الصلاة على الميت",
+                items: [
+                    "أربع تكبيرات: الأولى بنية، الثانية بالصلاة الإبراهيمية، الثالثة بالدعاء للميت، الرابعة بالسلام.",
+                    "ليس فيها ركوع ولا سجود.",
+                    "يُكبّر الإمام، ثم يُسلّم تسليمتين."
+                ],
+                quote: { text: "قال ﷺ: «من شهد الجنازة حتى يُصلَّى عليها فله قيراط، ومن شهدها حتى تُدفن فله قيراطان». قيل: وما القيراطان؟ قال: «مثل الجبلين العظيمين».", ref: "رواه البخاري ومسلم" }
+            },
+            {
+                title: "تعزية أهل الميت",
+                items: [
+                    "التعزية سنة، ودعاء لأهل الميت بالصبر والسلوان.",
+                    "من صيغ التعزية: «أعظم الله أجرك، وأحسن عزاءك، وغفر لميتك».",
+                    "يجوز صنع الطعام لأهل الميت (سُنّة)، أما تجمعهم على الطعام والنياحة فمن عادات الجاهلية."
+                ]
+            }
+        ]
+    }
+];
+
+function renderAccordion() {
+    const container = document.getElementById('fiqh-container');
+    container.innerHTML = FIQH_DATA.map((item, i) => `
+        <div class="acc-item" id="acc-${i}">
+            <div class="acc-head" onclick="toggleAcc(${i})">
+                <span class="acc-icon">${item.icon}</span>
+                <span class="acc-title">${item.title}</span>
+                <span class="acc-arrow">▼</span>
+            </div>
+            <div class="acc-body">
+                <div class="acc-content">
+                    <div class="acc-intro">${item.intro}</div>
+                    ${item.topics.map(t => `
+                        <div class="topic">
+                            <div class="topic-title">${t.title}</div>
+                            <ul class="topic-list">
+                                ${t.items.map(it => `<li>${it}</li>`).join('')}
+                            </ul>
+                            ${t.quote ? `
+                                <div class="quote">
+                                    <div class="quote-text ${t.quote.ayah ? 'ayah' : ''}">${t.quote.text}</div>
+                                    <div class="quote-ref">— ${t.quote.ref}</div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function toggleAcc(index) {
+    const el = document.getElementById(`acc-${index}`);
+    el.classList.toggle('open');
+}
+
+renderAccordion();
+</script>
+
+</body>
+</html>
