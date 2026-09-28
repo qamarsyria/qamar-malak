@@ -26,7 +26,6 @@
             opacity: 0.8;
             font-size: 14px;
         }
-
         .surah-nav {
             display: flex;
             justify-content: space-between;
@@ -53,7 +52,6 @@
             background: var(--gold);
             color: var(--green-dark);
         }
-
         .controls {
             background: rgba(10,58,44,0.6);
             border: 1px solid rgba(212,175,55,0.25);
@@ -89,7 +87,6 @@
             outline: none;
         }
         .control-row select:focus { border-color: var(--gold); }
-
         .btn-play {
             flex: 1;
             min-width: 180px;
@@ -105,7 +102,6 @@
             transition: all 0.3s;
         }
         .btn-play:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(212,175,55,0.4); }
-
         .btn-stop {
             flex: 1;
             min-width: 180px;
@@ -122,7 +118,6 @@
             transition: all 0.3s;
         }
         .btn-stop:hover { background: rgba(220,60,60,1); }
-
         .playing-info {
             text-align: center;
             padding: 10px;
@@ -133,7 +128,6 @@
             border-top: 1px dashed rgba(212,175,55,0.3);
         }
         .playing-info.show { display: block; }
-
         .basmala {
             text-align: center;
             font-family: 'Amiri', serif;
@@ -144,7 +138,6 @@
             border-top: 1px solid rgba(212,175,55,0.3);
             border-bottom: 1px solid rgba(212,175,55,0.3);
         }
-
         .ayah {
             background: linear-gradient(135deg, rgba(26,107,84,0.25) 0%, rgba(13,77,60,0.4) 100%);
             border-right: 4px solid var(--gold);
@@ -162,7 +155,6 @@
             background: linear-gradient(135deg, rgba(200,50,50,0.2) 0%, rgba(150,30,30,0.3) 100%);
             box-shadow: 0 0 20px rgba(255,107,107,0.3);
         }
-
         .ayah-text {
             font-family: 'Amiri', 'Scheherazade New', serif;
             font-size: 26px;
@@ -172,7 +164,6 @@
             margin-bottom: 15px;
             padding-right: 15px;
         }
-
         .ayah-number-badge {
             display: inline-flex;
             align-items: center;
@@ -188,7 +179,6 @@
             margin-right: 12px;
             vertical-align: middle;
         }
-
         .ayah-actions {
             display: flex;
             gap: 10px;
@@ -211,7 +201,6 @@
             background: var(--gold);
             color: var(--green-dark);
         }
-
         .tafsir-box {
             background: rgba(10,58,44,0.9);
             border: 1px solid rgba(212,175,55,0.3);
@@ -230,7 +219,6 @@
             margin-bottom: 8px;
             font-size: 14px;
         }
-
         .loading {
             text-align: center;
             padding: 60px 20px;
@@ -247,14 +235,12 @@
             margin-bottom: 20px;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-
         .error-msg {
             text-align: center;
             padding: 40px 20px;
             color: #ff6b6b;
             font-size: 16px;
         }
-
         @media (max-width: 640px) {
             .ayah-text { font-size: 22px; line-height: 2; }
             .surah-header h1 { font-size: 26px; }
@@ -317,14 +303,19 @@
             <div class="control-row">
                 <label class="control-label">🎧 القارئ:</label>
                 <select id="reciter-select">
-                    <option value="ar.alafasy">مشاري العفاسي</option>
-                    <option value="ar.husary">محمود خليل الحصري</option>
-                    <option value="ar.minshawi">محمد صديق المنشاوي</option>
-                    <option value="ar.abdurrahmaansudais">عبد الرحمن السديس</option>
-                    <option value="ar.hudhaify">علي الحذيفي</option>
-                    <option value="ar.shaatree">أبو بكر الشاطري</option>
-                    <option value="ar.mahermuaiqly">ماهر المعيقلي</option>
-                    <option value="ar.ahmedajamy">أحمد بن علي العجمي</option>
+                    <option value="Alafasy_128kbps">مشاري العفاسي</option>
+                    <option value="Husary_128kbps">محمود خليل الحصري</option>
+                    <option value="Minshawy_Murattal_128kbps">محمد صديق المنشاوي</option>
+                    <option value="Abdul_Basit_Murattal_192kbps">عبد الباسط عبد الصمد</option>
+                    <option value="Abdurrahmaan_As-Sudais_192kbps">عبد الرحمن السديس</option>
+                    <option value="Hudhaify_128kbps">علي الحذيفي</option>
+                    <option value="Shatri_128kbps">أبو بكر الشاطري</option>
+                    <option value="Maher_AlMuaiqly_128kbps">ماهر المعيقلي</option>
+                    <option value="Ahmed_ibn_Ali_al-Ajamy_128kbps">أحمد بن علي العجمي</option>
+                    <option value="Muhammad_Ayyoub">محمد أيوب</option>
+                    <option value="Muhammad_Jibreel">محمد جبريل</option>
+                    <option value="Nasser_Alqatami_128kbps">ناصر القطامي</option>
+                    <option value="Yasser_Ad-Dussary_128kbps">ياسر الدوسري</option>
                 </select>
             </div>
             <div class="control-row">
@@ -355,12 +346,17 @@ const params = new URLSearchParams(window.location.search);
 const surahNumber = parseInt(params.get('n')) || 1;
 
 let currentSurah = null;
-let currentReciter = 'ar.alafasy';
+let currentReciter = 'Alafasy_128kbps';
 let tafsirCache = {};
-
-// حالة التشغيل الكامل
 let isPlayingFullSurah = false;
 let currentAyahIndex = 0;
+
+// ====== بناء رابط الصوت (everyayah.com) ======
+function buildAudioUrl(numInSurah) {
+    const s = String(surahNumber).padStart(3, '0');
+    const a = String(numInSurah).padStart(3, '0');
+    return `https://everyayah.com/data/${currentReciter}/${s}${a}.mp3`;
+}
 
 // ====== تحميل السورة ======
 async function loadSurah() {
@@ -424,12 +420,9 @@ function escapeHtml(text) {
 function playSingleAyah(numInSurah) {
     stopPlayback();
     const audio = document.getElementById('audio-player');
-    const ayah = currentSurah.ayahs[numInSurah - 1];
-    audio.src = `https://cdn.islamic.network/quran/audio/128/${currentReciter}/${ayah.number}.mp3`;
+    audio.src = buildAudioUrl(numInSurah);
 
-    // إزالة التمييز عن كل الآيات
     document.querySelectorAll('.ayah').forEach(el => el.classList.remove('playing'));
-    // تمييز الآية الحالية
     const el = document.getElementById(`ayah-${numInSurah}`);
     if (el) {
         el.classList.add('playing');
@@ -437,14 +430,14 @@ function playSingleAyah(numInSurah) {
     }
 
     audio.play().catch(() => {
-        alert('⚠️ تعذر تشغيل الصوت. تحقق من الاتصال أو جرّب قارئاً آخر.');
+        alert('⚠️ تعذر تشغيل الصوت. تحقق من الاتصال.');
     });
 
     document.getElementById('play-btn').style.display = 'inline-block';
     document.getElementById('stop-btn').style.display = 'inline-block';
 }
 
-// ====== تشغيل السورة كاملة (آية بآية) ======
+// ====== تشغيل السورة كاملة ======
 document.getElementById('play-btn').addEventListener('click', () => {
     isPlayingFullSurah = true;
     currentAyahIndex = 0;
@@ -463,7 +456,7 @@ function playNextAyah() {
 
     const ayah = currentSurah.ayahs[currentAyahIndex];
     const audio = document.getElementById('audio-player');
-    audio.src = `https://cdn.islamic.network/quran/audio/128/${currentReciter}/${ayah.number}.mp3`;
+    audio.src = buildAudioUrl(ayah.numberInSurah);
 
     document.querySelectorAll('.ayah').forEach(el => el.classList.remove('playing'));
     const el = document.getElementById(`ayah-${ayah.numberInSurah}`);
@@ -498,7 +491,7 @@ function stopPlayback() {
 
 document.getElementById('stop-btn').addEventListener('click', stopPlayback);
 
-// ====== الانتقال للآية التالية تلقائياً ======
+// ====== تشغيل الآية التالية تلقائياً ======
 document.getElementById('audio-player').addEventListener('ended', () => {
     if (isPlayingFullSurah) {
         playNextAyah();
@@ -508,10 +501,7 @@ document.getElementById('audio-player').addEventListener('ended', () => {
 // ====== تغيير القارئ ======
 document.getElementById('reciter-select').addEventListener('change', (e) => {
     currentReciter = e.target.value;
-    // إذا كان التشغيل جارياً، أوقفه
-    if (isPlayingFullSurah) {
-        stopPlayback();
-    }
+    if (isPlayingFullSurah) stopPlayback();
 });
 
 // ====== التفسير ======
@@ -544,15 +534,13 @@ function copyAyah(num) {
     const ayah = currentSurah.ayahs[num - 1];
     const text = `${ayah.text}\n\n[سورة ${currentSurah.name.replace('سُورَةُ ', '')} — الآية ${num}]`;
     if (navigator.clipboard) {
-        navigator.clipboard.writeText(text).then(() => {
-            alert('✓ تم نسخ الآية');
-        });
+        navigator.clipboard.writeText(text).then(() => alert('✓ تم نسخ الآية'));
     } else {
         alert(text);
     }
 }
 
-// ====== تحميل السورة عند بدء الصفحة ======
+// ====== بدء التحميل ======
 loadSurah();
 </script>
 
