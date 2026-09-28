@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>قصص الأنبياء — ملاك المعرفة الإسلامية</title>
+<meta name="description" content="قصص الأنبياء والرسل المذكورين في القرآن الكريم — 25 نبي بمعلومات موثقة من القرآن والسنة.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕊️</text></svg>">
+<style>
+.prophets-hero{background:linear-gradient(135deg,rgba(212,175,55,0.2) 0%,rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:20px;padding:35px 20px;text-align:center;margin-bottom:30px}
+.prophets-hero h1{font-family:'Amiri',serif;font-size:32px;color:var(--gold);margin-bottom:12px}
+.prophets-hero p{color:var(--cream);opacity:0.9;max-width:650px;margin:0 auto;font-size:15px}
+.search-box{max-width:500px;margin:25px auto;position:relative}
+.search-box input{width:100%;padding:14px 50px 14px 20px;background:rgba(10,58,44,0.6);border:2px solid rgba(212,175,55,0.3);border-radius:30px;color:var(--cream);font-family:inherit;font-size:15px;outline:none;transition:all 0.3s}
+.search-box input:focus{border-color:var(--gold);background:rgba(10,58,44,0.9);box-shadow:0 0 0 4px rgba(212,175,55,0.1)}
+.search-box input::placeholder{color:rgba(245,240,225,0.5)}
+.search-box .search-icon{position:absolute;right:18px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:18px}
+.filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:25px}
+.filter-btn{padding:8px 16px;background:transparent;border:1px solid rgba(212,175,55,0.4);color:var(--cream);border-radius:20px;font-size:13px;cursor:pointer;font-family:inherit;transition:all 0.3s}
+.filter-btn:hover,.filter-btn.active{background:var(--gold);color:var(--green-dark);border-color:var(--gold)}
+.prophets-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:15px}
+.prophet-card{background:linear-gradient(135deg,rgba(26,107,84,0.35) 0%,rgba(13,77,60,0.55) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:16px;padding:20px;transition:all 0.3s;cursor:pointer;position:relative;overflow:hidden;text-decoration:none;color:var(--cream);display:block}
+.prophet-card::before{content:'';position:absolute;top:0;right:0;width:4px;height:100%;background:var(--gold);transform:scaleY(0);transition:transform 0.3s;transform-origin:top}
+.prophet-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 8px 25px rgba(212,175,55,0.25)}
+.prophet-card:hover::before{transform:scaleY(1)}
+.prophet-icon{width:55px;height:55px;background:linear-gradient(135deg,rgba(212,175,55,0.25) 0%,rgba(212,175,55,0.1) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:12px;border:1px solid rgba(212,175,55,0.3)}
+.prophet-name{font-family:'Amiri',serif;font-size:24px;color:var(--gold);margin-bottom:6px}
+.prophet-title{font-size:13px;color:var(--cream);opacity:0.75;margin-bottom:10px;font-style:italic}
+.prophet-brief{font-size:14px;line-height:1.7;color:var(--cream);opacity:0.9;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.prophet-badge{display:inline-block;background:rgba(212,175,55,0.15);color:var(--gold);padding:3px 10px;border-radius:12px;font-size:11px;margin-top:12px;border:1px solid rgba(212,175,55,0.3)}
+.no-results{text-align:center;padding:40px;color:var(--cream);opacity:0.7;grid-column:1/-1}
+
+/* Modal للتفاصيل */
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);backdrop-filter:blur(5px);z-index:2000;justify-content:center;align-items:flex-start;padding:20px;overflow-y:auto}
+.modal-overlay.show{display:flex}
+.modal-content{background:linear-gradient(135deg,#0a3a2c 0%,#0d4d3c 100%);border:2px solid var(--gold);border-radius:20px;max-width:750px;width:100%;padding:30px 25px;position:relative;margin-top:30px;margin-bottom:30px;animation:slideUp 0.3s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.modal-close{position:absolute;top:15px;left:15px;width:38px;height:38px;border-radius:50%;background:rgba(200,50,50,0.7);color:white;border:none;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.modal-close:hover{background:rgba(220,60,60,1)}
+.modal-icon{font-size:60px;text-align:center;margin-bottom:15px}
+.modal-name{font-family:'Amiri',serif;font-size:32px;color:var(--gold);text-align:center;margin-bottom:8px}
+.modal-title{text-align:center;color:var(--cream);opacity:0.8;font-size:14px;font-style:italic;margin-bottom:25px}
+.modal-section{margin-bottom:20px;padding:18px;background:rgba(10,58,44,0.5);border-radius:12px;border-right:4px solid var(--gold)}
+.modal-section h3{font-family:'Amiri',serif;font-size:18px;color:var(--gold);margin-bottom:10px}
+.modal-section p{color:var(--cream);line-height:1.9;font-size:15px}
+.modal-section .ayah{font-family:'Amiri',serif;font-size:18px;color:var(--gold);padding:10px 0;display:block;line-height:1.9;text-align:center}
+.modal-source{font-size:13px;color:var(--gold);opacity:0.7;text-align:center;margin-top:8px;font-style:italic}
+
+@media (max-width:640px){.prophets-hero h1{font-size:24px}.modal-content{padding:20px 15px}.modal-name{font-size:26px}.prophets-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+<div class="header-container">
+<a href="index.html" class="logo">
+<div class="logo-icon">☪</div>
+<div class="logo-text">
+<span class="main">ملاك المعرفة</span>
+<span class="sub">منصة إسلامية شاملة</span>
+</div>
+</a>
+<button class="nav-toggle" onclick="document.querySelector('.main-nav').style.display = document.querySelector('.main-nav').style.display === 'none' ? 'block' : 'none'">☰</button>
+</div>
+</header>
+
+<nav class="main-nav">
+<ul class="nav-list">
+<li><a href="index.html">🏠 الرئيسية</a></li>
+<li><a href="quran.html">📖 القرآن الكريم</a></li>
+<li><a href="tafsir.html">📚 التفسير</a></li>
+<li><a href="hadith.html">🕌 السنة النبوية</a></li>
+<li><a href="seerah.html">🌙 السيرة النبوية</a></li>
+<li><a href="ghazawat.html">⚔️ الغزوات</a></li>
+<li><a href="prophets.html" class="active">🕊️ قصص الأنبياء</a></li>
+<li><a href="sahaba.html">⭐ الصحابة</a></li>
+<li><a href="adhkar.html">🤲 الأذكار</a></li>
+<li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="search.html">🔍 البحث</a></li>
+</ul>
+</nav>
+
+<main class="main-container">
+
+<section class="prophets-hero">
+<h1>🕊️ قصص الأنبياء والرسل</h1>
+<p>قصص الأنبياء المذكورين في القرآن الكريم — خمسة وعشرون نبيًّا ورسولًا، بمعلومات موثقة من القرآن والسنة الصحيحة.</p>
+</section>
+
+<div class="search-box">
+<input type="text" id="search-input" placeholder="ابحث عن نبي بالاسم...">
+<span class="search-icon">🔍</span>
+</div>
+
+<div class="filters">
+<button class="filter-btn active" data-filter="all">الكل</button>
+<button class="filter-btn" data-filter="أبو البشر">أبو البشر</button>
+<button class="filter-btn" data-filter="بعد الطوفان">بعد الطوفان</button>
+<button class="filter-btn" data-filter="بنو إسرائيل">بنو إسرائيل</button>
+<button class="filter-btn" data-filter="العرب">العرب</button>
+<button class="filter-btn" data-filter="خاتم النبيين">خاتم النبيين</button>
+</div>
+
+<div class="prophets-grid" id="prophets-container"></div>
+
+</main>
+
+<footer class="site-footer">
+<p class="footer-ayah">﴿ وَكُلًّا نَّقُصُّ عَلَيْكَ مِنْ أَنبَاءِ الرُّسُلِ مَا نُثَبِّتُ بِهِ فُؤَادَكَ ﴾</p>
+<p>ملاك المعرفة الإسلامية — منصة دعوية غير ربحية</p>
+<p>© 2026 — نسألكم الدعاء</p>
+</footer>
+
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+<div class="modal-content" id="modal-content"></div>
+</div>
+
+<script>
+const PROPHETS = [
+    {
+        name: "آدم عليه السلام",
+        icon: "🌱",
+        category: "أبو البشر",
+        title: "أبو البشر — أول الأنبياء",
+        brief: "أول إنسان خلقه الله بيده، وأسجد له الملائكة، وأسكنه الجنة ثم أهبطه إلى الأرض بعد المعصية، فتاب الله عليه واجتباه.",
+        sections: [
+            { h: "خلقه", p: "خلق الله آدم من طين، ونفخ فيه من روحه، وعلّمه الأسماء كلها، وأسجد له الملائكة إلا إبليس استكبر." },
+            { h: "في الجنة", p: "أسكنه الله الجنة هو وزوجه حواء، وأباح لهما كل شيء إلا شجرة واحدة، فوسوس لهما الشيطان فأكلا منها." },
+            { h: "التوبة والهبوط", p: "تاب الله عليه بكلمات علّمه إياها: ﴿رَبَّنَا ظَلَمْنَا أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ﴾، ثم أهبطه إلى الأرض ليعمرها ويسكنها." },
+            { h: "في القرآن", p: "ذُكر آدم عليه السلام في مواضع كثيرة من القرآن، منها سورة البقرة، الأعراف، الحجر، طه، وغيرها." }
+        ],
+        refs: "البقرة: 30-39، الأعراف: 11-25، طه: 115-123"
+    },
+    {
+        name: "إدريس عليه السلام",
+        icon: "📜",
+        category: "أبو البشر",
+        title: "النبي الصديق الصالح",
+        brief: "نبيٌّ من أنبياء الله، وصفه الله بالصدق والنبوة، ورفعه مكانًا عليًّا.",
+        sections: [
+            { h: "ذكره في القرآن", p: "قال الله تعالى: ﴿وَاذْكُرْ فِي الْكِتَابِ إِدْرِيسَ ۚ إِنَّهُ كَانَ صِدِّيقًا نَّبِيًّا ۝ وَرَفَعْنَاهُ مَكَانًا عَلِيًّا﴾." },
+            { h: "من أخباره", p: "كان إدريس عليه السلام أول من خط بالقلم، وأول من خاط الثياب ولبسها، وكان صابرًا محتسبًا، يدعو قومه إلى توحيد الله." }
+        ],
+        refs: "مريم: 56-57"
+    },
+    {
+        name: "نوح عليه السلام",
+        icon: "🚢",
+        category: "بعد الطوفان",
+        title: "شيخ المرسلين — صاحب السفينة",
+        brief: "دعا قومه ألف سنة إلا خمسين عامًا، فما آمن معه إلا قليل، فنجّاه الله ومن معه في السفينة وأغرق الكافرين بالطوفان.",
+        sections: [
+            { h: "دعوته", p: "دعا نوح قومه إلى توحيد الله ألف سنة إلا خمسين عامًا، ليلًا ونهارًا، سرًّا وجهارًا، فما زادهم إلا فرارًا." },
+            { h: "السفينة", p: "أمره الله ببناء السفينة، فأمره الله أن يحمل فيها من كل زوجين اثنين، ومن آمن معه، فنجّاهم الله وأغرق المكذبين." },
+            { h: "الطوفان", p: "أرسل الله الطوفان العظيم الذي أغرق الأرض، ونجّى نوحًا ومن معه من المؤمنين، قال تعالى: ﴿وَنُوحًا لَّقَدْ نَادَىٰ مِن قَبْلُ فَنِعْمَ الْمُجِيبُونَ﴾." },
+            { h: "قبره", p: "قيل إن نوحًا دفن في المسجد الحرام أو في بلاد الشام، والأمر لا يثبت بحديث صحيح." }
+        ],
+        refs: "هود: 25-48، نوح: 1-28، القمر: 9-17"
+    },
+    {
+        name: "هود عليه السلام",
+        icon: "🌪️",
+        category: "العرب",
+        title: "نبي قوم عاد",
+        brief: "أُرسل إلى قوم عاد الذين كانوا أصحاب قوة وبنيان، فأصروا على كفرهم فأهلكهم الله بريح صرصر عاتية.",
+        sections: [
+            { h: "قومه", p: "كان قوم عاد أصحاب قوة وبنيان ومكانة، سكنوا الأحقاف، وأصرّوا على عبادة الأصنام." },
+            { h: "دعوته", p: "دعاهم هود إلى توحيد الله وإخلاص العبادة له، وترك الاستكبار في الأرض، فكذبوه." },
+            { h: "هلاكهم", p: "أهلكهم الله بريح صرصر عاتية، سخرها عليهم سبع ليالٍ وثمانية أيام حسومًا، فنجّى الله هودًا ومن آمن معه." }
+        ],
+        refs: "الأعراف: 65-72، هود: 50-60، الحاقة: 6-8"
+    },
+    {
+        name: "صالح عليه السلام",
+        icon: "🐪",
+        category: "العرب",
+        title: "نبي قوم ثمود",
+        brief: "أُرسل إلى قوم ثمود، وجاءهم بمعجزة الناقة، فعقروها فأهلكهم الله بالصيحة.",
+        sections: [
+            { h: "قومه", p: "كان قوم ثمود ينحتون الجبال بيوتًا، وقد آتاهم الله القوة والرخاء." },
+            { h: "الناقة", p: "أعطاه الله معجزة الناقة، آية عظيمة لقومه، فحذّرهم أن يمسوها بسوء." },
+            { h: "هلاكهم", p: "عقروا الناقة بعد ثلاثة أيام من التحذير، فأخذتهم الصيحة وأهلكهم الله عن آخرهم، ونجّى صالحًا ومن آمن معه." }
+        ],
+        refs: "الأعراف: 73-79، هود: 61-68، الشمس: 11-15"
+    },
+    {
+        name: "إبراهيم عليه السلام",
+        icon: "🕋",
+        category: "بعد الطوفان",
+        title: "خليل الرحمن — أبو الأنبياء",
+        brief: "أبو الأنبياء، خليل الله، كسّر الأصنام، وأُلقي في النار فكانت بردًا وسلامًا، وبنى الكعبة مع ابنه إسماعيل.",
+        sections: [
+            { h: "توحيده", p: "بحث إبراهيم عن ربه، فرأى الشمس والقمر والنجوم، فأدرك أن الله هو الخالق الواحد الذي لا يُغرب ولا يأفل." },
+            { h: "تحطيم الأصنام", p: "حطّم أصنام قومه ليُثبت لهم أنها لا تنفع ولا تضر، فحاولوا إحراقه، فقال الله: ﴿يَا نَارُ كُونِي بَرْدًا وَسَلَامًا عَلَىٰ إِبْرَاهِيمَ﴾." },
+            { h: "بناء الكعبة", p: "بنى إبراهيم البيت الحرام مع ابنه إسماعيل، ودعا الله أن يتقبل منهما، ورفع القواعد من البيت." },
+            { h: "أبناؤه", p: "من نسله جاء إسماعيل وإسحاق ويعقوب ويوسف وموسى وعيسى ونبينا محمد ﷺ." }
+        ],
+        refs: "البقرة: 124-132، الأنبياء: 51-70، الصافات: 99-113"
+    },
+    {
+        name: "لوط عليه السلام",
+        icon: "🌋",
+        category: "بعد الطوفان",
+        title: "نبي قوم سدوم",
+        brief: "أُرسل إلى قومه الذين كانوا يأتون الفاحشة، فجاءته الملائكة، وأُهلك القوم بقلب مدينتهم وحجارة من سجيل.",
+        sections: [
+            { h: "قومه", p: "كان قوم لوط أول من أتى الفاحشة من الرجال دون النساء، وأصروا على ذلك، ولم يستجيبوا لدعوته." },
+            { h: "الملائكة", p: "جاءت الملائكة في صورة شباب، فحاول القوم الاعتداء عليهم، فضربهم الله بالعمى." },
+            { h: "الهلاك", p: "قلب الله مدينتهم عاليها سافلها، وأمطر عليهم حجارة من سجيل منضود، ونجّى لوطًا وأهله إلا امرأته." }
+        ],
+        refs: "الأعراف: 80-84، هود: 77-83، العنكبوت: 28-35"
+    },
+    {
+        name: "إسماعيل عليه السلام",
+        icon: "🏜️",
+        category: "العرب",
+        title: "الذبيح — جد العرب",
+        brief: "ابن إبراهيم، الذبيح، بنى الكعبة مع أبيه، وأسكنه الله في مكة، ومن نسله جاء العرب.",
+        sections: [
+            { h: "الذبيح", p: "أُمر إبراهيم بذبح ابنه إسماعيل، فاستسلم الابن لأمر الله، فداه الله بذبح عظيم." },
+            { h: "بناء الكعبة", p: "رفع إسماعيل القواعد من البيت مع أبيه إبراهيم، وقالا: ﴿رَبَّنَا تَقَبَّلْ مِنَّا ۖ إِنَّكَ أَنتَ السَّمِيعُ الْعَلِيمُ﴾." },
+            { h: "من نسله", p: "من نسل إسماعيل جاء عدنان ومنه النبي محمد ﷺ، وقد وصفه الله بأنه صادق الوعد." }
+        ],
+        refs: "البقرة: 125-129، الصافات: 99-113، مريم: 54-55"
+    },
+    {
+        name: "إسحاق عليه السلام",
+        icon: "🌸",
+        category: "بنو إسرائيل",
+        title: "البشارة الثانية لإبراهيم",
+        brief: "ابن إبراهيم من زوجته سارة، بشارة الله له، ومن نسله جاء يعقوب وأنبياء بني إسرائيل.",
+        sections: [
+            { h: "البشارة", p: "بشّر الله إبراهيم بإسحاق بعد إسماعيل، وكان إسحاق نبيًّا من الصالحين." },
+            { h: "من نسله", p: "من نسل إسحاق جاء يعقوب ومنه أسباط بني إسرائيل، ومنهم يوسف وموسى وهارون وداود وسليمان." }
+        ],
+        refs: "الصافات: 112-113، هود: 69-73"
+    },
+    {
+        name: "يعقوب عليه السلام",
+        icon: "🕌",
+        category: "بنو إسرائيل",
+        title: "إسرائيل — أبو الأسباط",
+        brief: "ابن إسحاق، وأبو الأسباط الاثني عشر، وقد ذاق فقد يوسف فصبر، ثم جمعهم الله في آخر حياته.",
+        sections: [
+            { h: "اختباره", p: "ابُتلي بفقد يوسف، فصبر صبرًا عظيمًا، وقال: ﴿إِنَّمَا أَشْكُو بَثِّي وَحُزْنِي إِلَى اللَّهِ﴾." },
+            { h: "من نسله", p: "من نسل يعقوب جاء الأسباط الاثنا عشر، والذين صاروا أمة بني إسرائيل." },
+            { h: "وفاته", p: "جمع الله شمل يعقوب بيوسف في مصر، وأوصى بنيه بالثبات على الإسلام، فشهدوا للإله الواحد." }
+        ],
+        refs: "يوسف: 6-100، البقرة: 132-133"
+    },
+    {
+        name: "يوسف عليه السلام",
+        icon: "👑",
+        category: "بنو إسرائيل",
+        title: "الصديق — صاحب الرؤيا",
+        brief: "ابن يعقوب، أحسن القصص في القرآن، رأى في المنام أحد عشر كوكبًا، وابتُلي ثم مكّنه الله في الأرض.",
+        sections: [
+            { h: "الرؤيا", p: "رأى يوسف في منامه أحد عشر كوكبًا والشمس والقمر له ساجدين، فقصّها على أبيه فحذّره من إخوته." },
+            { h: "الابتلاء", p: "حسده إخوته فألقوه في الجب، ثم بيع عبدًا في مصر، ثم سُجن ظلمًا بعد أن راودته امرأة العزيز." },
+            { h: "التمكين", p: "فسّر رؤيا الملك، فمكّنه الله على خزائن الأرض، وجمع شمله بأهله، وقال: ﴿قَدْ جَعَلَهَا رَبِّي حَقًّا﴾." }
+        ],
+        refs: "سورة يوسف كاملة"
+    },
+    {
+        name: "أيوب عليه السلام",
+        icon: "💎",
+        category: "بنو إسرائيل",
+        title: "رمز الصبر والاحتساب",
+        brief: "ابتلاه الله بالمرض وفقد المال والولد، فصبر صبرًا جميلًا، فكشف الله عنه ضره وردّ له أهله ومثلهم معهم.",
+        sections: [
+            { h: "الابتلاء", p: "ابتلاه الله بمرض طويل وفقد الأهل والمال، ولم ييأس من رحمة الله، ولم يشتكِ إلا إلى الله." },
+            { h: "دعاؤه", p: "﴿رَبِّ إِنِّي مَسَّنِيَ الضُّرُّ وَأَنتَ أَرْحَمُ الرَّاحِمِينَ﴾، فاستجاب الله له وكشف ما به من ضر." },
+            { h: "العوض", p: "ردّ الله له صحته وأهله ومثلهم معهم رحمةً منه وذكرى للعابدين." }
+        ],
+        refs: "الأنبياء: 83-84، ص: 41-44"
+    },
+    {
+        name: "شعيب عليه السلام",
+        icon: "⚖️",
+        category: "العرب",
+        title: "خطيب الأنبياء — نبي مدين",
+        brief: "أُرسل إلى أهل مدين الذين كانوا يطففون المكيال والميزان، فدعاهم للعدل والتوحيد، فكذبوه فأهلكهم الله.",
+        sections: [
+            { h: "قومه", p: "كان أهل مدين يبخسون المكيال والميزان، ويأخذون أموال الناس بالباطل." },
+            { h: "دعوته", p: "دعاهم شعيب للتوحيد والعدل في المعاملات، وحذّرهم من عذاب يوم الظلة، فكذبوه." },
+            { h: "الهلاك", p: "أخذهم عذاب يوم الظلة، إنه كان عذاب يوم عظيم، فنجّى الله شعيبًا والذين آمنوا معه." }
+        ],
+        refs: "الأعراف: 85-93، هود: 84-95، الشعراء: 176-191"
+    },
+    {
+        name: "موسى عليه السلام",
+        icon: "🐍",
+        category: "بنو إسرائيل",
+        title: "كليم الله — صاحب التوراة",
+        brief: "كلّمه الله، وأرسله إلى فرعون، فانفلق له البحر، وأنزل عليه التوراة، وهو أكثر نبي ذُكر في القرآن.",
+        sections: [
+            { h: "ولادته", p: "وُلد موسى في زمن فرعون الذي كان يقتل أبناء بني إسرائيل، فألقته أمه في اليم فتربّى في قصر فرعون." },
+            { h: "التكليم", p: "كلّمه الله عند الوادي المقدس طوى، وأعطاه معجزات العصا واليد البيضاء، وأرسله مع أخيه هارون إلى فرعون." },
+            { h: "البحر", p: "خرج بمؤمني بني إسرائيل، فأتبعهم فرعون بجنوده، فأمره الله أن يضرب البحر بعصاه، فانفلق، فنجّاهم وأغرق فرعون." },
+            { h: "التوراة", p: "أنزل الله على موسى التوراة عند جبل الطور، وأخذ الله عليه الميثاق، وقد ذُكر في القرآن 136 مرة." }
+        ],
+        refs: "الأعراف، طه، القصص، وغيرها"
+    },
+    {
+        name: "هارون عليه السلام",
+        icon: "🗣️",
+        category: "بنو إسرائيل",
+        title: "وزير موسى وأخوه",
+        brief: "أخو موسى، أُرسل معه إلى فرعون، وكان فصيح اللسان، وقد استخلفه موسى على قومه عند ذهابه للطّور.",
+        sections: [
+            { h: "مع موسى", p: "دعا موسى ربه أن يشد أزره بأخيه هارون، فاستجاب الله له، وأرسله معه إلى فرعون." },
+            { h: "في غياب موسى", p: "استخلفه موسى على بني إسرائيل عند ذهابه لميقات ربه، فحاول أن يمنعهم من عبادة العجل، فلم يستجيبوا له." }
+        ],
+        refs: "الأعراف: 103-122، طه: 29-98، القصص: 34-35"
+    },
+    {
+        name: "ذو الكفل عليه السلام",
+        icon: "🤝",
+        category: "بنو إسرائيل",
+        title: "من الصابرين الصالحين",
+        brief: "نبيٌّ من أنبياء الله، ذكره الله في القرآن مع الصابرين، ولا توجد تفاصيل موثقة كثيرة عن قصته.",
+        sections: [
+            { h: "ذكره", p: "قال الله تعالى: ﴿وَإِسْمَاعِيلَ وَإِدْرِيسَ وَذَا الْكِفْلِ ۖ كُلٌّ مِّنَ الصَّابِرِينَ﴾." },
+            { h: "معنى الكفل", p: "سُمّي بذي الكفل لأنه تكفّل بقومه وحمل مسؤوليتهم في الدعوة إلى الله." }
+        ],
+        refs: "الأنبياء: 85-86، ص: 48"
+    },
+    {
+        name: "داود عليه السلام",
+        icon: "⚔️",
+        category: "بنو إسرائيل",
+        title: "خليفة الله في الأرض — صاحب الزبور",
+        brief: "قتل جالوت، وآتاه الله الملك والحكمة، وسخّر له الجبال والطير، وأنزل عليه الزبور.",
+        sections: [
+            { h: "قتل جالوت", p: "قتل داود جالوت في معركة طالوت، فآتاه الله الملك والحكمة، وعلّمه مما يشاء." },
+            { h: "الملك والنبوة", p: "جمع الله له بين الملك والنبوة، وسخّر له الجبال يسبّحن معه والطير، وألان له الحديد." },
+            { h: "الزبور", p: "أنزل الله عليه الزبور، وقد كان من أعبد الناس، يصوم يومًا ويفطر يومًا، وينام نصف الليل ويقوم ثلثه." }
+        ],
+        refs: "البقرة: 246-251، سبأ: 10-11، ص: 17-26"
+    },
+    {
+        name: "سليمان عليه السلام",
+        icon: "🐜",
+        category: "بنو إسرائيل",
+        title: "الملك النبي — صاحب الجن والطير",
+        brief: "ابن داود، آتاه الله ملكًا لا ينبغي لأحد من بعده، وسخّر له الجن والريح والطير، وعلّمه منطق الطير.",
+        sections: [
+            { h: "ملكه", p: "سخّر الله له الجن يعملون له، والريح تجري بأمره، والطير، وعلّمه منطق الطير، وآتاه من كل شيء." },
+            { h: "مع ملكة سبأ", p: "دعا ملكة سبأ إلى الإسلام عبر الهدهد، ثم عبر رسالة، فجاءت مسلمة لله رب العالمين." },
+            { h: "دعاؤه", p: "قال: ﴿رَبِّ اغْفِرْ لِي وَهَبْ لِي مُلْكًا لَّا يَنبَغِي لِأَحَدٍ مِّن بَعْدِي﴾، وقد استجاب الله له." }
+        ],
+        refs: "النمل: 15-44، سبأ: 12-14، ص: 30-40"
+    },
+    {
+        name: "إلياس عليه السلام",
+        icon: "🌧️",
+        category: "بنو إسرائيل",
+        title: "الداعي إلى ترك الأصنام",
+        brief: "أُرسل إلى قومه الذين عبدوا صنمًا اسمه بعل، فدعاهم إلى توحيد الله، فكذّبوه.",
+        sections: [
+            { h: "قومه", p: "كان قوم إلياس يعبدون بعلًا، فدعاهم إلى توحيد الله وترك عبادة الأصنام." },
+            { h: "في القرآن", p: "قال الله: ﴿وَإِنَّ إِلْيَاسَ لَمِنَ الْمُرْسَلِينَ ۝ إِذْ قَالَ لِقَوْمِهِ أَلَا تَتَّقُونَ﴾." }
+        ],
+        refs: "الصافات: 123-132"
+    },
+    {
+        name: "اليسع عليه السلام",
+        icon: "🌟",
+        category: "بنو إسرائيل",
+        title: "من المصطفين الأخيار",
+        brief: "نبيٌّ من أنبياء بني إسرائيل، ذكره الله في القرآن مع إسماعيل وذي الكفل، ووصفهم بأنهم من الأخيار.",
+        sections: [
+            { h: "ذكره", p: "قال الله: ﴿وَاذْكُرْ إِسْمَاعِيلَ وَالْيَسَعَ وَذَا الْكِفْلِ ۖ وَكُلٌّ مِّنَ الْأَخْيَارِ﴾." },
+            { h: "قصته", p: "لا توجد تفاصيل كثيرة موثقة عن قصته، وقد كان خليفةً لنبي الله إلياس في دعوة بني إسرائيل." }
+        ],
+        refs: "الأنعام: 86، ص: 48"
+    },
+    {
+        name: "يونس عليه السلام",
+        icon: "🐋",
+        category: "بنو إسرائيل",
+        title: "ذو النون — صاحب الحوت",
+        brief: "أُرسل إلى أهل نينوى، فخرج مغاضبًا قبل إذن ربه، فالتقمه الحوت، فنجّاه الله بتسبيحه، ثم آمن قومه.",
+        sections: [
+            { h: "دعوته", p: "دعا قومه في نينوى فلم يستجيبوا، فخرج مغاضبًا دون إذن ربه." },
+            { h: "الحوت", p: "ركب سفينة، فاقترعوا فوقعت القرعة عليه، فأُلقي في البحر فالتقمه الحوت وهو مُليم." },
+            { h: "التسبيح", p: "نادى في الظلمات: ﴿لَّا إِلَٰهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ﴾، فاستجاب الله له ونجّاه من الغم." },
+            { h: "قومه", p: "أنبت الله عليه شجرة من يقطين، وأرسله إلى مائة ألف أو يزيدون فآمنوا، فمتّعهم الله إلى حين." }
+        ],
+        refs: "يونس: 98، الأنبياء: 87-88، الصافات: 139-148، القلم: 48-50"
+    },
+    {
+        name: "زكريا عليه السلام",
+        icon: "🌿",
+        category: "بنو إسرائيل",
+        title: "داعي الله في محرابه",
+        brief: "دعا ربه سرًّا أن يرزقه ذرية طيبة، فاستجاب الله له بيحيى، وجعله سيدًا وحصورًا ونبيًّا من الصالحين.",
+        sections: [
+            { h: "دعاؤه", p: "نادى ربه نداءً خفيًّا: ﴿رَبِّ إِنِّي وَهَنَ الْعَظْمُ مِنِّي وَاشْتَعَلَ الرَّأْسُ شَيْبًا﴾، فبشّره الله بيحيى." },
+            { h: "كفالته لمريم", p: "كفل مريم بنت عمران، وكان كلما دخل عليها المحراب وجد عندها رزقًا." },
+            { h: "الآية", p: "جعل الله له آية ألّا يكلم الناس ثلاث ليالٍ سويًّا، فخرج على قومه من المحراب فأوحى إليهم أن سبّحوا بكرة وعشيًّا." }
+        ],
+        refs: "آل عمران: 37-41، مريم: 2-11، الأنبياء: 89-90"
+    },
+    {
+        name: "يحيى عليه السلام",
+        icon: "📖",
+        category: "بنو إسرائيل",
+        title: "سيد وحصور — صاحب الإنجيل الأول",
+        brief: "بشارة الله لزكريا، آتاه الله الحكم صبيًّا، وكان تقيًّا وحنونًا من الصالحين، شهيدًا في سبيل الله.",
+        sections: [
+            { h: "بشارته", p: "﴿يَا يَحْيَىٰ خُذِ الْكِتَابَ بِقُوَّةٍ﴾، قال الله: ﴿إِنَّا نُبَشِّرُكَ بِغُلَامٍ اسْمُهُ يَحْيَىٰ لَمْ نَجْعَل لَّهُ مِن قَبْلُ سَمِيًّا﴾." },
+            { h: "صفاته", p: "﴿وَسَيِّدًا وَحَصُورًا وَنَبِيًّا مِّنَ الصَّالِحِينَ﴾، آتاه الله الحكم صبيًّا، وكان تقيًّا وبارًّا بوالديه." },
+            { h: "شهادته", p: "قُتل يحيى في سبيل الله، وكان من الشهداء والصالحين الأبرار." }
+        ],
+        refs: "آل عمران: 39، مريم: 12-15"
+    },
+    {
+        name: "عيسى عليه السلام",
+        icon: "✨",
+        category: "بنو إسرائيل",
+        title: "روح الله وكلمته — ابن مريم",
+        brief: "وُلد بمعجزة من غير أب، وأُيّد بروح القدس، وتكلّم في المهد، وأبرأ الأكمه والأبرص، ورفعه الله إليه.",
+        sections: [
+            { h: "ولادته", p: "بشّر جبريل مريم بكلمة من الله اسمه المسيح عيسى ابن مريم، فحملت به من غير أب، وولدته تحت نخلة." },
+            { h: "معجزاته", p: "تكلّم في المهد، وخلق من الطين كهيئة الطير فينفخ فيه فيكون طيرًا بإذن الله، وأبرأ الأكمه والأبرص، وأحيا الموتى بإذن الله." },
+            { h: "الإنجيل", p: "أنزل الله عليه الإنجيل، وأيّده بروح القدس، وأرسله إلى بني إسرائيل." },
+            { h: "رفعه", p: "﴿وَمَا قَتَلُوهُ وَمَا صَلَبُوهُ وَلَٰكِن شُبِّهَ لَهُمْ﴾، بل رفعه الله إليه، وسينزل في آخر الزمان." }
+        ],
+        refs: "آل عمران: 45-59، مريم: 16-36، النساء: 157-158، المائدة: 110"
+    },
+    {
+        name: "محمد ﷺ",
+        icon: "🌙",
+        category: "خاتم النبيين",
+        title: "خاتم النبيين — رسول الله",
+        brief: "خاتم الأنبياء والمرسلين، أُرسل للعالمين بشيرًا ونذيرًا، وأنزل عليه القرآن الكريم، وهو رحمة للعالمين.",
+        sections: [
+            { h: "مولده", p: "وُلد ﷺ في مكة عام الفيل، يتيم الأب، تربّى في بني سعد، ثم عند جده عبد المطلب ثم عمه أبو طالب." },
+            { h: "البعثة", p: "أوحى الله إليه في غار حراء وعمره أربعون سنة، بـ ﴿اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ﴾، فبدأت الدعوة إلى التوحيد." },
+            { h: "الهجرة", p: "هاجر إلى المدينة، فأسس الدولة الإسلامية، وكانت بداية التقويم الهجري." },
+            { h: "دعوته", p: "دعا إلى التوحيد ومكارم الأخلاق، وصبر على الأذى، وانتشر الإسلام في الجزيرة العربية، ثم في العالم." },
+            { h: "صفاته", p: "قال الله: ﴿وَإِنَّكَ لَعَلَىٰ خُلُقٍ عَظِيمٍ﴾، وقد كان ﷺ رحمة للعالمين، أرسله الله للناس كافة." },
+            { h: "وفاته", p: "توفي ﷺ في المدينة في ربيع الأول سنة 11 هـ، ودُفن في بيته، وقبره في المسجد النبوي الشريف." }
+        ],
+        refs: "السيرة النبوية، القرآن الكريم"
+    }
+];
+
+let currentFilter = 'all';
+let currentSearch = '';
+
+function renderProphets() {
+    const container = document.getElementById('prophets-container');
+
+    let filtered = PROPHETS.filter(p => {
+        const matchFilter = currentFilter === 'all' || p.category === currentFilter;
+        const matchSearch = currentSearch === '' ||
+            p.name.includes(currentSearch) ||
+            p.title.includes(currentSearch) ||
+            p.brief.includes(currentSearch);
+        return matchFilter && matchSearch;
+    });
+
+    if (filtered.length === 0) {
+        container.innerHTML = '<div class="no-results">لا توجد نتائج مطابقة للبحث</div>';
+        return;
+    }
+
+    container.innerHTML = filtered.map((p, i) => `
+        <div class="prophet-card" onclick="openModal(${PROPHETS.indexOf(p)})">
+            <div class="prophet-icon">${p.icon}</div>
+            <div class="prophet-name">${p.name}</div>
+            <div class="prophet-title">${p.title}</div>
+            <div class="prophet-brief">${p.brief}</div>
+            <span class="prophet-badge">${p.category}</span>
+        </div>
+    `).join('');
+}
+
+function openModal(index) {
+    const p = PROPHETS[index];
+    const modal = document.getElementById('modal');
+    const content = document.getElementById('modal-content');
+
+    content.innerHTML = `
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-icon">${p.icon}</div>
+        <div class="modal-name">${p.name}</div>
+        <div class="modal-title">${p.title}</div>
+        ${p.sections.map(s => `
+            <div class="modal-section">
+                <h3>${s.h}</h3>
+                <p>${s.p}</p>
+            </div>
+        `).join('')}
+        <div class="modal-source">📖 المراجع: ${p.refs}</div>
+    `;
+
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('modal').classList.remove('show');
+    document.body.style.overflow = '';
+}
+
+document.getElementById('search-input').addEventListener('input', (e) => {
+    currentSearch = e.target.value.trim();
+    renderProphets();
+});
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderProphets();
+    });
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+});
+
+renderProphets();
+</script>
+
+</body>
+</html>
