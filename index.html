@@ -24,12 +24,11 @@
 .top-bar-date strong{color:var(--gold);font-weight:600}
 
 /* ===== زر تثبيت التطبيق ===== */
-.install-banner{display:none;background:linear-gradient(135deg,rgba(74,222,128,0.2) 0%,rgba(74,222,128,0.05) 100%);border:2px solid rgba(74,222,128,0.5);border-radius:14px;padding:15px 20px;margin-bottom:25px;text-align:center}
-.install-banner.show{display:block;animation:slideDown 0.4s ease}
-@keyframes slideDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+.install-banner{display:block;background:linear-gradient(135deg,rgba(74,222,128,0.2) 0%,rgba(74,222,128,0.05) 100%);border:2px solid rgba(74,222,128,0.5);border-radius:14px;padding:15px 20px;margin-bottom:25px;text-align:center}
 .install-banner p{color:#4ade80;font-size:15px;margin-bottom:12px;font-weight:600}
 .install-btn{background:linear-gradient(135deg,#4ade80 0%,#22c55e 100%);color:#0a3a2c;border:none;padding:12px 30px;border-radius:28px;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;transition:all 0.3s}
 .install-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(74,222,128,0.4)}
+.install-hint{font-size:12px;color:#fbbf24;margin-top:10px;opacity:0.9;line-height:1.7}
 
 /* ===== البحث السريع ===== */
 .quick-search{max-width:600px;margin:0 auto 30px;position:relative}
@@ -85,19 +84,33 @@
 .why-us-card h3{font-family:'Amiri',serif;font-size:19px;color:var(--gold);margin-bottom:10px}
 .why-us-card p{font-size:14px;line-height:1.8;color:var(--cream);opacity:0.9}
 
+/* ===== توقيع المطور ===== */
+.dev-signature{text-align:center;padding:30px 20px;margin-top:40px;background:linear-gradient(135deg,rgba(212,175,55,0.1) 0%,rgba(212,175,55,0.02) 100%);border:1px solid rgba(212,175,55,0.3);border-radius:20px}
+.dev-label{font-size:13px;color:var(--cream);opacity:0.75;margin-bottom:10px;letter-spacing:1px}
+.dev-name{font-family:monospace;direction:ltr;font-size:22px;color:var(--gold);font-weight:700;letter-spacing:2px}
+.dev-role{font-size:13px;color:var(--cream);opacity:0.85;margin-top:8px}
+.dev-contact{margin-top:14px;font-size:13px;color:var(--cream);opacity:0.85}
+.dev-contact a{color:var(--gold);text-decoration:none}
+.dev-contact a:hover{text-decoration:underline}
+
+/* ===== شكر المساهمين ===== */
+.thanks-section{margin-top:40px;padding:30px 20px;background:linear-gradient(135deg,rgba(26,107,84,0.25) 0%,rgba(13,77,60,0.4) 100%);border:1px solid rgba(212,175,55,0.3);border-radius:20px;text-align:center}
+.thanks-title{font-family:'Amiri',serif;font-size:24px;color:var(--gold);margin-bottom:15px}
+.thanks-intro{color:var(--cream);opacity:0.9;font-size:15px;line-height:2;margin-bottom:25px;max-width:700px;margin-left:auto;margin-right:auto}
+.thanks-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-top:20px}
+.thanks-card{background:rgba(10,58,44,0.6);border:1px solid rgba(212,175,55,0.25);border-radius:14px;padding:20px 15px;transition:all 0.3s}
+.thanks-card:hover{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 6px 20px rgba(212,175,55,0.2)}
+.thanks-icon{font-size:36px;display:block;margin-bottom:10px}
+.thanks-name{font-family:'Amiri',serif;font-size:17px;color:var(--gold);font-weight:700;margin-bottom:6px}
+.thanks-role{font-size:12px;color:var(--cream);opacity:0.8;line-height:1.6}
+.thanks-footer{margin-top:25px;padding-top:20px;border-top:1px dashed rgba(212,175,55,0.25);color:var(--cream);opacity:0.85;font-size:14px;line-height:1.9}
+.thanks-footer strong{color:var(--gold)}
+.thanks-dua{font-family:'Amiri',serif;font-size:18px;color:var(--gold);line-height:2;margin-top:15px;padding:15px;background:rgba(10,58,44,0.5);border-radius:12px}
+
 /* ===== Offline Badge ===== */
 .offline-badge{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%);color:white;padding:10px 20px;border-radius:25px;font-size:13px;font-weight:600;box-shadow:0 6px 20px rgba(239,68,68,0.4);z-index:9999;display:none}
 .offline-badge.show{display:block;animation:slideUp 0.3s ease}
 @keyframes slideUp{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
-
-/* ===== توقيع المطور ===== */
-.dev-signature{text-align:center;padding:25px 15px;margin-top:30px;border-top:1px solid rgba(212,175,55,0.2)}
-.dev-signature .dev-label{font-size:12px;color:var(--cream);opacity:0.7;margin-bottom:8px}
-.dev-signature .dev-name{font-family:'Amiri',serif;font-size:18px;color:var(--gold);font-weight:700;letter-spacing:1px}
-.dev-signature .dev-name-en{font-size:13px;color:var(--gold);opacity:0.75;font-family:monospace;direction:ltr;margin-top:4px}
-.dev-contact{margin-top:10px;font-size:12px;color:var(--cream);opacity:0.7}
-.dev-contact a{color:var(--gold);text-decoration:none}
-.dev-contact a:hover{text-decoration:underline}
 
 @media (max-width:640px){
 .stat-number{font-size:24px}
@@ -113,6 +126,8 @@
 .quick-features{grid-template-columns:repeat(2,1fr)}
 .feature-btn .icon{font-size:32px}
 .feature-btn .label{font-size:14px}
+.dev-name{font-size:18px}
+.thanks-title{font-size:20px}
 }
 </style>
 </head>
@@ -159,6 +174,7 @@
 <section class="install-banner" id="install-banner">
 <p>📲 ثبّت التطبيق على جوالك للوصول السريع بدون متصفح</p>
 <button class="install-btn" onclick="installApp()">📥 تثبيت التطبيق</button>
+<div class="install-hint" id="install-hint"></div>
 </section>
 
 <!-- Hero -->
@@ -399,15 +415,90 @@
 <p style="color:var(--cream);opacity:0.85;font-size:15px">نسأل الله أن يجعل هذا العمل خالصًا لوجهه الكريم، وأن ينفع به أهل الشام والمسلمين.</p>
 </section>
 
-</main>
+<!-- شكر المساهمين -->
+<section class="thanks-section">
+<h2 class="thanks-title">🤲 شكر وتقدير</h2>
+<p class="thanks-intro">
+هذا المشروع لم يكن ليُنجز لولا توفيق الله أولاً، ثم فضل كل من ساهم فيه بدعوة، أو رأي، أو جهد، أو معلومة.
+نسأل الله أن يكتب الأجر لكل من كان له يد في هذا العمل، وأن يجعله صدقة جارية.
+</p>
+
+<div class="thanks-grid">
+
+<div class="thanks-card">
+<span class="thanks-icon">🤲</span>
+<div class="thanks-name">لله أولاً وآخراً</div>
+<div class="thanks-role">له الفضل والمنّة في إتمام هذا العمل، وبه التوفيق</div>
+</div>
+
+<div class="thanks-card">
+<span class="thanks-icon">👨‍💻</span>
+<div class="thanks-name">Emad Halawh</div>
+<div class="thanks-role">المطوّر الرئيسي — بناء المنصة وبرمجتها</div>
+</div>
+
+<div class="thanks-card">
+<span class="thanks-icon">🌙</span>
+<div class="thanks-name">فريق تطوير قمر الشام</div>
+<div class="thanks-role">لكل من ساهم برأي، أو ملاحظة، أو اختبار للتطبيق</div>
+</div>
+
+<div class="thanks-card">
+<span class="thanks-icon">📚</span>
+<div class="thanks-name">مصادر المحتوى</div>
+<div class="thanks-role">لمكتبة القرآن الكريم، والصحيحين، والسنن، وكتب التفسير المعتمدة</div>
+</div>
+
+<div class="thanks-card">
+<span class="thanks-icon">🎙️</span>
+<div class="thanks-name">القرّاء الكرام</div>
+<div class="thanks-role">لأصحاب الأصوات الذين تفضلوا بتسجيلاتهم المتاحة</div>
+</div>
+
+<div class="thanks-card">
+<span class="thanks-icon">📖</span>
+<div class="thanks-name">أهل العلم</div>
+<div class="thanks-role">لكل عالم وطالب علم كان له أثر في المحتوى المُراجَع</div>
+</div>
+
+<div class="thanks-card">
+<span class="thanks-icon">🧪</span>
+<div class="thanks-name">الجهات التقنية</div>
+<div class="thanks-role">GitHub Pages، Alquran Cloud API، EveryAyah، وغيرها من الخدمات المجانية</div>
+</div>
+
+<div class="thanks-card">
+<span class="thanks-icon">🕌</span>
+<div class="thanks-name">أهل الشام والمسلمون</div>
+<div class="thanks-role">لكل من دعا، وشجّع، وانتظر هذا العمل</div>
+</div>
+
+<div class="thanks-card">
+<span class="thanks-icon">👥</span>
+<div class="thanks-name">المستخدمون الأوائل</div>
+<div class="thanks-role">لكل من جرّب التطبيق وأرسل ملاحظاته</div>
+</div>
+
+</div>
+
+<div class="thanks-footer">
+<strong>📝 رسالة للجميع:</strong><br>
+هذا العمل صدقة جارية. إن رأيت فيه خيراً فادعُ لصاحبه ولمن ساعد فيه. وإن رأيت فيه خطأً فصحّحه، ولا تحرمنا من دعوة صادقة بظهر الغيب.
+<div class="thanks-dua">
+﴿ رَبَّنَا اغْفِرْ لَنَا وَلِإِخْوَانِنَا الَّذِينَ سَبَقُونَا بِالْإِيمَانِ وَلَا تَجْعَلْ فِي قُلُوبِنَا غِلًّا لِّلَّذِينَ آمَنُوا رَبَّنَا إِنَّكَ رَءُوفٌ رَّحِيمٌ ﴾
+</div>
+</div>
+</section>
 
 <!-- توقيع المطور -->
 <section class="dev-signature">
 <div class="dev-label">تطوير وبناء</div>
-<div class="dev-name">عماد حلاوة</div>
-<div class="dev-name-en">Emad Halawh</div>
+<div class="dev-name">Emad Halawh</div>
+<div class="dev-role">مطوّر سوري — منصة قمر الشام</div>
 <div class="dev-contact">📧 <a href="mailto:emadhlaweh@gmail.com">emadhlaweh@gmail.com</a></div>
 </section>
+
+</main>
 
 <footer class="site-footer">
 <p class="footer-ayah">﴿ وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ عَلَيْهِ تَوَكَّلْتُ وَإِلَيْهِ أُنِيبُ ﴾</p>
@@ -520,34 +611,47 @@ let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    document.getElementById('install-banner').classList.add('show');
 });
 
 function installApp() {
+    const hint = document.getElementById('install-hint');
+
+    if (isInstalled()) {
+        hint.textContent = '✅ التطبيق مثبّت بالفعل على جوالك';
+        return;
+    }
+
     if (deferredPrompt) {
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then((choice) => {
             if (choice.outcome === 'accepted') {
-                console.log('✅ تم تثبيت التطبيق');
-                document.getElementById('install-banner').classList.remove('show');
+                hint.textContent = '✅ تم تثبيت التطبيق — ابحث عنه في شاشة الجوال';
             }
             deferredPrompt = null;
         });
-    } else {
-        alert('📲 لإضافة التطبيق:\n\n' +
-              '🍎 iPhone (Safari):\n' +
-              'اضغط زر المشاركة ↑ ثم "إضافة إلى الشاشة الرئيسية"\n\n' +
-              '🤖 Android (Chrome):\n' +
-              'اضغط قائمة ⋮ ثم "إضافة إلى الشاشة الرئيسية"');
+        return;
     }
+
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        hint.innerHTML = '🍎 على آيفون: اضغط زر المشاركة ⬆️ أسفل المتصفح ثم <strong>"إضافة إلى الشاشة الرئيسية"</strong>';
+        return;
+    }
+
+    if (/Android/i.test(navigator.userAgent)) {
+        hint.innerHTML = '🤖 على أندرويد: اضغط قائمة ⋮ أعلى المتصفح ثم <strong>"إضافة إلى الشاشة الرئيسية"</strong>';
+        return;
+    }
+
+    hint.innerHTML = '💻 لفتح التطبيق كتطبيق، افتح الموقع من <strong>جوالك</strong>';
 }
 
 function isInstalled() {
     return window.matchMedia('(display-mode: standalone)').matches ||
            window.navigator.standalone === true;
 }
+
 if (isInstalled()) {
-    document.getElementById('install-banner').style.display = 'none';
+    document.getElementById('install-hint').textContent = '✅ التطبيق مثبّت بالفعل';
 }
 
 // ===== حالة الاتصال =====
