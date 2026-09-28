@@ -25,30 +25,54 @@
 .countdown-timer{font-family:monospace;direction:ltr;font-size:38px;color:var(--gold);font-weight:700;letter-spacing:3px;text-shadow:0 0 20px rgba(212,175,55,0.5)}
 .countdown-time{color:var(--cream);opacity:0.8;font-size:14px;margin-top:10px}
 .prayer-times{background:linear-gradient(135deg,rgba(26,107,84,0.3) 0%,rgba(13,77,60,0.5) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:20px;padding:5px;margin-bottom:25px;overflow:hidden}
-.prayer-row{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid rgba(212,175,55,0.15);transition:all 0.3s;cursor:pointer}
+.prayer-row{display:flex;justify-content:space-between;align-items:center;padding:15px 18px;border-bottom:1px solid rgba(212,175,55,0.15);transition:all 0.3s}
 .prayer-row:last-child{border-bottom:none}
 .prayer-row:hover{background:rgba(212,175,55,0.08)}
 .prayer-row.next{background:rgba(74,222,128,0.1);border-right:4px solid #4ade80}
 .prayer-info{display:flex;align-items:center;gap:15px;flex:1}
-.prayer-icon{font-size:28px;flex-shrink:0}
-.prayer-name-ar{font-family:'Amiri',serif;font-size:22px;color:var(--gold);font-weight:700;line-height:1.2}
-.prayer-name-en{font-size:11px;color:var(--cream);opacity:0.6}
-.prayer-time-info{text-align:left}
-.prayer-time{font-family:monospace;direction:ltr;font-size:22px;color:var(--cream);font-weight:700}
-.adhan-settings{background:linear-gradient(135deg,rgba(26,107,84,0.25) 0%,rgba(13,77,60,0.4) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:16px;padding:20px;margin-bottom:25px}
-.adhan-settings h3{font-family:'Amiri',serif;font-size:20px;color:var(--gold);margin-bottom:15px}
+.prayer-icon{font-size:26px;flex-shrink:0}
+.prayer-name-ar{font-family:'Amiri',serif;font-size:20px;color:var(--gold);font-weight:700;line-height:1.2}
+.prayer-name-en{font-size:10px;color:var(--cream);opacity:0.6}
+.prayer-time-info{text-align:left;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.prayer-time{font-family:monospace;direction:ltr;font-size:20px;color:var(--cream);font-weight:700}
+.prayer-setting-badge{font-size:10px;background:rgba(212,175,55,0.15);color:var(--gold);padding:2px 8px;border-radius:8px;border:1px solid rgba(212,175,55,0.3)}
+.prayer-settings-btn{background:rgba(212,175,55,0.15);color:var(--gold);border:1px solid rgba(212,175,55,0.4);width:34px;height:34px;border-radius:50%;font-size:16px;cursor:pointer;font-family:inherit;transition:all 0.3s;margin-right:10px;flex-shrink:0}
+.prayer-settings-btn:hover{background:var(--gold);color:var(--green-dark)}
+
+/* الأقسام */
+.settings-section{background:linear-gradient(135deg,rgba(26,107,84,0.25) 0%,rgba(13,77,60,0.4) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:16px;padding:20px;margin-bottom:20px}
+.settings-section h3{font-family:'Amiri',serif;font-size:20px;color:var(--gold);margin-bottom:15px;display:flex;align-items:center;gap:8px}
 .setting-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px dashed rgba(212,175,55,0.15);gap:15px}
 .setting-row:last-child{border-bottom:none}
-.setting-label{color:var(--cream);font-size:14px}
-.setting-label small{display:block;font-size:11px;opacity:0.6;margin-top:2px}
-.setting-select{padding:8px 12px;background:rgba(10,58,44,0.8);border:1px solid rgba(212,175,55,0.3);border-radius:10px;color:var(--cream);font-family:inherit;font-size:13px;outline:none;min-width:160px}
+.setting-label{color:var(--cream);font-size:14px;flex:1}
+.setting-label small{display:block;font-size:11px;opacity:0.6;margin-top:3px}
+.setting-select{padding:9px 12px;background:rgba(10,58,44,0.9);border:1px solid rgba(212,175,55,0.3);border-radius:10px;color:var(--cream);font-family:inherit;font-size:13px;outline:none;min-width:170px;max-width:220px}
 .setting-select:focus{border-color:var(--gold)}
-.preview-btn{background:rgba(212,175,55,0.15);color:var(--gold);border:1px solid rgba(212,175,55,0.4);padding:8px 15px;border-radius:20px;font-family:inherit;font-size:12px;cursor:pointer;transition:all 0.3s}
-.preview-btn:hover{background:var(--gold);color:var(--green-dark)}
 .toggle-switch{position:relative;width:50px;height:28px;background:rgba(10,58,44,0.8);border-radius:14px;cursor:pointer;transition:all 0.3s;border:1px solid rgba(212,175,55,0.3);flex-shrink:0}
 .toggle-switch::before{content:'';position:absolute;top:3px;right:3px;width:20px;height:20px;background:var(--cream);border-radius:50%;transition:all 0.3s;opacity:0.5}
 .toggle-switch.on{background:linear-gradient(135deg,#4ade80 0%,#22c55e 100%)}
 .toggle-switch.on::before{right:25px;opacity:1}
+.preview-btn{background:rgba(212,175,55,0.15);color:var(--gold);border:1px solid rgba(212,175,55,0.4);padding:8px 16px;border-radius:20px;font-family:inherit;font-size:12px;cursor:pointer;transition:all 0.3s}
+.preview-btn:hover{background:var(--gold);color:var(--green-dark)}
+
+/* نافذة إعدادات الصلاة */
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);backdrop-filter:blur(6px);z-index:2000;justify-content:center;align-items:center;padding:20px}
+.modal-overlay.show{display:flex}
+.modal-content{background:linear-gradient(135deg,#0a3a2c 0%,#0d4d3c 100%);border:2px solid var(--gold);border-radius:20px;max-width:500px;width:100%;padding:25px;position:relative;max-height:90vh;overflow-y:auto;animation:popIn 0.3s ease}
+@keyframes popIn{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}
+.modal-close{position:absolute;top:15px;left:15px;width:36px;height:36px;border-radius:50%;background:rgba(200,50,50,0.7);color:white;border:none;font-size:18px;cursor:pointer;font-family:inherit}
+.modal-close:hover{background:rgba(220,60,60,1)}
+.modal-title{font-family:'Amiri',serif;font-size:24px;color:var(--gold);text-align:center;margin-bottom:20px}
+.modal-prayer-name{text-align:center;font-size:15px;color:var(--cream);opacity:0.85;margin-bottom:20px}
+.setting-options{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:15px}
+.setting-option{padding:12px;background:rgba(10,58,44,0.6);border:2px solid rgba(212,175,55,0.25);border-radius:12px;text-align:center;cursor:pointer;transition:all 0.3s;font-family:inherit;color:var(--cream);font-size:13px}
+.setting-option:hover{background:rgba(212,175,55,0.15)}
+.setting-option.active{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark);border-color:var(--gold);font-weight:700}
+.setting-option .icon{font-size:24px;display:block;margin-bottom:6px}
+.custom-adhan-input{width:100%;padding:10px;background:rgba(10,58,44,0.7);border:1px solid rgba(212,175,55,0.3);border-radius:10px;color:var(--cream);font-family:inherit;font-size:12px;outline:none;margin-top:10px;direction:ltr}
+.save-btn{width:100%;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark);border:none;padding:12px;border-radius:12px;font-family:inherit;font-weight:700;font-size:14px;cursor:pointer;margin-top:15px;transition:all 0.3s}
+.save-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(212,175,55,0.4)}
+
 .loading-state{text-align:center;padding:40px;color:var(--gold)}
 .spinner{display:inline-block;width:40px;height:40px;border:3px solid rgba(212,175,55,0.3);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;margin-bottom:15px}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -58,10 +82,11 @@
 @media (max-width:640px){
 .prayer-hero h1{font-size:24px}
 .countdown-timer{font-size:30px}
-.prayer-name-ar{font-size:19px}
-.prayer-time{font-size:19px}
+.prayer-name-ar{font-size:18px}
+.prayer-time{font-size:18px}
 .setting-row{flex-direction:column;align-items:stretch}
-.setting-select{width:100%}
+.setting-select{width:100%;max-width:none}
+.setting-options{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
@@ -145,16 +170,99 @@
 <p>© 2026 <strong>Emad Halawh</strong> — جميع الحقوق محفوظة.</p>
 </footer>
 
+<!-- نافذة إعدادات الصلاة -->
+<div class="modal-overlay" id="prayer-modal" onclick="if(event.target===this)closeModal()">
+<div class="modal-content" id="modal-content"></div>
+</div>
+
 <audio id="adhan-audio" preload="none"></audio>
 
 <script>
-const ADHAN_SOUNDS = {
-    makkah: { name: '🕋 أذان الحرم المكي', url: 'https://www.islamcan.com/audio/adhan/azan1.mp3' },
-    madinah: { name: '🕌 أذان المسجد النبوي', url: 'https://www.islamcan.com/audio/adhan/azan2.mp3' },
-    aqsa: { name: '🌙 أذان المسجد الأقصى', url: 'https://www.islamcan.com/audio/adhan/azan3.mp3' },
-    egypt: { name: '🇪🇬 أذان مصري', url: 'https://www.islamcan.com/audio/adhan/azan4.mp3' },
-    turkey: { name: '🇹🇷 أذان تركي', url: 'https://www.islamcan.com/audio/adhan/azan5.mp3' },
-    alafasy: { name: '🎙️ أذان مشاري العفاسي', url: 'https://www.islamcan.com/audio/adhan/azan6.mp3' }
+// ====== الأصوات: مع مصادر احتياطية ======
+const ADHAN_SOURCES = {
+    umayyad: {
+        name: '🕌 أذان الجامع الأموي بدمشق',
+        urls: [
+            'https://ia801504.us.archive.org/31/items/Adhan_Umayyad/Adhan_Umayyad.mp3',
+            'https://www.islamcan.com/audio/adhan/azan1.mp3',
+            'https://www.islamcan.com/audio/adhan/azan7.mp3'
+        ]
+    },
+    makkah: {
+        name: '🕋 أذان الحرم المكي',
+        urls: [
+            'https://ia800504.us.archive.org/14/items/Adhan-Makkah/Adhan-Makkah.mp3',
+            'https://www.islamcan.com/audio/adhan/azan2.mp3',
+            'https://www.islamcan.com/audio/adhan/azan8.mp3'
+        ]
+    },
+    madinah: {
+        name: '🕌 أذان المسجد النبوي',
+        urls: [
+            'https://ia800504.us.archive.org/14/items/Adhan-Madinah/Adhan-Madinah.mp3',
+            'https://www.islamcan.com/audio/adhan/azan3.mp3',
+            'https://www.islamcan.com/audio/adhan/azan9.mp3'
+        ]
+    },
+    aqsa: {
+        name: '🌙 أذان المسجد الأقصى',
+        urls: [
+            'https://ia800504.us.archive.org/14/items/Adhan-Aqsa/Adhan-Aqsa.mp3',
+            'https://www.islamcan.com/audio/adhan/azan4.mp3',
+            'https://www.islamcan.com/audio/adhan/azan10.mp3'
+        ]
+    },
+    egypt: {
+        name: '🇪🇬 أذان مصري (الطبلاوي)',
+        urls: [
+            'https://ia801504.us.archive.org/31/items/Adhan-Egypt/Adhan-Egypt.mp3',
+            'https://www.islamcan.com/audio/adhan/azan5.mp3',
+            'https://www.islamcan.com/audio/adhan/azan11.mp3'
+        ]
+    },
+    turkey: {
+        name: '🇹🇷 أذان تركي',
+        urls: [
+            'https://www.islamcan.com/audio/adhan/azan5.mp3',
+            'https://ia801504.us.archive.org/31/items/Adhan-Turkey/Adhan-Turkey.mp3'
+        ]
+    },
+    alafasy: {
+        name: '🎙️ أذان مشاري العفاسي',
+        urls: [
+            'https://www.islamcan.com/audio/adhan/azan6.mp3',
+            'https://ia801504.us.archive.org/31/items/Adhan-Alafasy/Adhan-Alafasy.mp3'
+        ]
+    },
+    husary: {
+        name: '📖 أذان محمود خليل الحصري',
+        urls: [
+            'https://ia801504.us.archive.org/31/items/Adhan-Husary/Adhan-Husary.mp3',
+            'https://www.islamcan.com/audio/adhan/azan12.mp3'
+        ]
+    },
+    takbir: {
+        name: '🕌 تكبيرات (للصلاة)',
+        urls: [
+            'https://ia801504.us.archive.org/31/items/Takbirat/Takbirat.mp3',
+            'https://www.islamcan.com/audio/adhan/azan13.mp3'
+        ]
+    },
+    takbir_eid: {
+        name: '🎉 تكبيرات العيد',
+        urls: [
+            'https://ia801504.us.archive.org/31/items/Takbirat-Eid/Takbirat-Eid.mp3',
+            'https://www.islamcan.com/audio/adhan/azan14.mp3'
+        ]
+    },
+    silent: {
+        name: '🔇 صامت (بدون صوت)',
+        urls: []
+    },
+    vibrate_only: {
+        name: '📳 اهتزاز فقط',
+        urls: []
+    }
 };
 
 const CITIES = {
@@ -190,12 +298,59 @@ const PRAYERS = [
     { key: 'Isha', name: 'العشاء', icon: '🌙', en: 'Isha' }
 ];
 
-let currentCoords = null;
+const PRAYER_KEYS = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+
 let prayerTimesData = null;
 let countdownInterval = null;
+let currentEditingPrayer = null;
 
+// ====== إعدادات كل صلاة ======
+function getPrayerSettings() {
+    const saved = localStorage.getItem('qamar_prayer_settings');
+    if (saved) {
+        try { return JSON.parse(saved); } catch (e) {}
+    }
+    // القيم الافتراضية
+    const defaults = {};
+    PRAYER_KEYS.forEach(k => {
+        defaults[k] = { type: 'adhan', sound: 'makkah' };
+    });
+    return defaults;
+}
+
+function savePrayerSettings(settings) {
+    localStorage.setItem('qamar_prayer_settings', JSON.stringify(settings));
+}
+
+// ====== تشغيل صوت مع fallback ======
+async function playSoundWithFallback(soundKey) {
+    const sound = ADHAN_SOURCES[soundKey];
+    if (!sound || !sound.urls || sound.urls.length === 0) return false;
+
+    const audio = document.getElementById('adhan-audio');
+
+    for (const url of sound.urls) {
+        try {
+            audio.src = url;
+            audio.load();
+            await new Promise((resolve, reject) => {
+                const onCanPlay = () => { audio.removeEventListener('error', onError); resolve(); };
+                const onError = () => { audio.removeEventListener('canplay', onCanPlay); reject(); };
+                audio.addEventListener('canplay', onCanPlay, { once: true });
+                audio.addEventListener('error', onError, { once: true });
+                setTimeout(() => reject(), 3000);
+            });
+            await audio.play();
+            return true;
+        } catch (e) {
+            console.log('فشل المصدر:', url);
+        }
+    }
+    return false;
+}
+
+// ====== تحميل المواقيت ======
 async function loadPrayerTimes(lat, lng, cityName) {
-    currentCoords = { lat, lng };
     document.getElementById('location-display').textContent = '📍 ' + cityName;
 
     const today = new Date();
@@ -211,23 +366,22 @@ async function loadPrayerTimes(lat, lng, cityName) {
         prayerTimesData = data.data;
 
         const hijri = data.data.date.hijri;
-        const hijriStr = `${hijri.day} ${hijri.month.ar} ${hijri.year} هـ`;
-        const gregStr = data.data.date.readable;
-        document.getElementById('hijri-display').textContent = `${hijriStr} — ${gregStr}`;
+        document.getElementById('hijri-display').textContent = `${hijri.day} ${hijri.month.ar} ${hijri.year} هـ — ${data.data.date.readable}`;
 
         renderPrayerContent();
         startCountdown();
-
     } catch (e) {
         document.getElementById('main-content').innerHTML = `
-            <div class="error-box">⚠️ تعذر تحميل المواقيت. تأكد من اتصالك بالإنترنت ثم أعد المحاولة.</div>
+            <div class="error-box">⚠️ تعذر تحميل المواقيت. تحقق من الاتصال.</div>
         `;
     }
 }
 
+// ====== رسم المحتوى ======
 function renderPrayerContent() {
-    const savedAdhan = localStorage.getItem('qamar_adhan_sound') || 'makkah';
-    const savedNotif = localStorage.getItem('qamar_notif_enabled') === 'true';
+    const globalSound = localStorage.getItem('qamar_adhan_sound') || 'umayyad';
+    const globalVibrate = localStorage.getItem('qamar_vibrate') !== 'false';
+    const preNotif = localStorage.getItem('qamar_pre_notif') === 'true';
 
     let html = `
         <div class="countdown-box">
@@ -241,37 +395,41 @@ function renderPrayerContent() {
 
         <div class="prayer-times" id="prayer-times-list"></div>
 
-        <div class="adhan-settings">
-            <h3>🔊 إعدادات الأذان</h3>
+        <div class="settings-section">
+            <h3>⚙️ الإعدادات العامة</h3>
             <div class="setting-row">
                 <div class="setting-label">
-                    صوت الأذان
-                    <small>اختر المؤذن المفضل لديك</small>
+                    صوت الأذان الافتراضي
+                    <small>يُطبق على كل الصلوات (قابل للتخصيص لكل صلاة)</small>
                 </div>
-                <select class="setting-select" id="adhan-select" onchange="saveAdhanSetting()">
-                    ${Object.keys(ADHAN_SOUNDS).map(key => `
-                        <option value="${key}" ${key === savedAdhan ? 'selected' : ''}>
-                            ${ADHAN_SOUNDS[key].name}
-                        </option>
+                <select class="setting-select" id="global-sound" onchange="saveGlobalSound()">
+                    ${Object.keys(ADHAN_SOURCES).map(k => `
+                        <option value="${k}" ${k === globalSound ? 'selected' : ''}>${ADHAN_SOURCES[k].name}</option>
                     `).join('')}
                 </select>
             </div>
             <div class="setting-row">
-                <div class="setting-label">
-                    <button class="preview-btn" onclick="previewAdhan()">▶ تجربة الصوت</button>
-                </div>
+                <div class="setting-label">تجربة الصوت</div>
+                <button class="preview-btn" onclick="previewGlobal()">▶ تجربة</button>
             </div>
             <div class="setting-row">
                 <div class="setting-label">
-                    تنبيه قبل الأذان
-                    <small>إشعار صوتي قبل الأذان</small>
+                    الاهتزاز عند التنبيه
+                    <small>اهتزاز الجوال عند وقت الأذان</small>
                 </div>
-                <div class="toggle-switch ${savedNotif ? 'on' : ''}" id="notif-toggle" onclick="toggleNotif()"></div>
+                <div class="toggle-switch ${globalVibrate ? 'on' : ''}" id="vibrate-toggle" onclick="toggleVibrate()"></div>
+            </div>
+            <div class="setting-row">
+                <div class="setting-label">
+                    تنبيه قبل الأذان (5 دقائق)
+                    <small>تنبيه صوتي مبكر</small>
+                </div>
+                <div class="toggle-switch ${preNotif ? 'on' : ''}" id="pre-toggle" onclick="togglePreNotif()"></div>
             </div>
         </div>
 
         <div class="info-note">
-            <strong>ℹ️ ملاحظة:</strong> المواقيت محسوبة حسب طريقة رابطة العالم الإسلامي. للدقة في مدينتك، استخدم زر "تحديد موقعي".
+            <strong>ℹ️ ملاحظة:</strong> اضغط زر <strong>⚙️</strong> بجانب كل صلاة لضبط التنبيه الخاص بها (أذان / تكبير / صامت / اهتزاز).
         </div>
     `;
 
@@ -283,6 +441,7 @@ function renderPrayerList() {
     const times = prayerTimesData.timings;
     const container = document.getElementById('prayer-times-list');
     const now = new Date();
+    const settings = getPrayerSettings();
 
     container.innerHTML = PRAYERS.map(p => {
         const time = times[p.key];
@@ -291,6 +450,16 @@ function renderPrayerList() {
         const prayerTime = new Date();
         prayerTime.setHours(h, m, 0, 0);
         const isPast = prayerTime < now;
+
+        const prayerSetting = settings[p.key];
+        let badge = '';
+        if (prayerSetting && !p.notPrayer) {
+            const sound = ADHAN_SOURCES[prayerSetting.sound];
+            if (prayerSetting.type === 'adhan') badge = '🔊 أذان';
+            else if (prayerSetting.type === 'takbir') badge = '🕌 تكبير';
+            else if (prayerSetting.type === 'silent') badge = '🔇 صامت';
+            else if (prayerSetting.type === 'vibrate') badge = '📳 اهتزاز';
+        }
 
         return `
             <div class="prayer-row" data-prayer="${p.key}">
@@ -303,13 +472,15 @@ function renderPrayerList() {
                 </div>
                 <div class="prayer-time-info">
                     <div class="prayer-time">${time}</div>
-                    ${isPast ? '<span style="font-size:11px;color:#4ade80">✓ مضت</span>' : ''}
+                    ${isPast ? '<span style="font-size:10px;color:#4ade80">✓ مضت</span>' : badge ? `<span class="prayer-setting-badge">${badge}</span>` : ''}
                 </div>
+                ${!p.notPrayer ? `<button class="prayer-settings-btn" onclick="openPrayerSettings('${p.key}', '${p.name}')">⚙️</button>` : '<div style="width:34px"></div>'}
             </div>
         `;
     }).join('');
 }
 
+// ====== العد التنازلي ======
 function startCountdown() {
     if (countdownInterval) clearInterval(countdownInterval);
 
@@ -361,54 +532,146 @@ function startCountdown() {
     countdownInterval = setInterval(update, 1000);
 }
 
-function getLocation() {
-    if (!navigator.geolocation) {
-        alert('المتصفح لا يدعم تحديد الموقع');
-        return;
+// ====== الإعدادات العامة ======
+function saveGlobalSound() {
+    localStorage.setItem('qamar_adhan_sound', document.getElementById('global-sound').value);
+}
+
+function previewGlobal() {
+    const val = document.getElementById('global-sound').value;
+    playSoundWithFallback(val).then(ok => {
+        if (!ok) alert('⚠️ تعذر تشغيل الصوت. جرّب صوتاً آخر.');
+    });
+}
+
+function toggleVibrate() {
+    const t = document.getElementById('vibrate-toggle');
+    t.classList.toggle('on');
+    localStorage.setItem('qamar_vibrate', t.classList.contains('on'));
+}
+
+function togglePreNotif() {
+    const t = document.getElementById('pre-toggle');
+    t.classList.toggle('on');
+    const enabled = t.classList.contains('on');
+    localStorage.setItem('qamar_pre_notif', enabled);
+    if (enabled && 'Notification' in window) Notification.requestPermission();
+}
+
+// ====== إعدادات الصلاة الواحدة ======
+function openPrayerSettings(prayerKey, prayerName) {
+    currentEditingPrayer = prayerKey;
+    const settings = getPrayerSettings();
+    const current = settings[prayerKey] || { type: 'adhan', sound: 'makkah' };
+
+    const modal = document.getElementById('prayer-modal');
+    const content = document.getElementById('modal-content');
+
+    content.innerHTML = `
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-title">⚙️ إعدادات ${prayerName}</div>
+        <div class="modal-prayer-name">اختر نوع التنبيه والصوت</div>
+
+        <div class="setting-options">
+            <div class="setting-option ${current.type === 'adhan' ? 'active' : ''}" onclick="setPrayerType('adhan')" data-type="adhan">
+                <span class="icon">🔊</span>
+                أذان كامل
+            </div>
+            <div class="setting-option ${current.type === 'takbir' ? 'active' : ''}" onclick="setPrayerType('takbir')" data-type="takbir">
+                <span class="icon">🕌</span>
+                تكبيرات
+            </div>
+            <div class="setting-option ${current.type === 'vibrate' ? 'active' : ''}" onclick="setPrayerType('vibrate')" data-type="vibrate">
+                <span class="icon">📳</span>
+                اهتزاز فقط
+            </div>
+            <div class="setting-option ${current.type === 'silent' ? 'active' : ''}" onclick="setPrayerType('silent')" data-type="silent">
+                <span class="icon">🔇</span>
+                صامت
+            </div>
+        </div>
+
+        <div id="sound-selector-container" style="display:${current.type === 'adhan' ? 'block' : 'none'}">
+            <div class="setting-row">
+                <div class="setting-label">صوت الأذان لهذه الصلاة</div>
+                <select class="setting-select" id="prayer-sound" style="width:100%;max-width:none;margin-top:8px">
+                    ${Object.keys(ADHAN_SOURCES).filter(k => k !== 'silent' && k !== 'vibrate_only').map(k => `
+                        <option value="${k}" ${k === current.sound ? 'selected' : ''}>${ADHAN_SOURCES[k].name}</option>
+                    `).join('')}
+                </select>
+            </div>
+            <button class="preview-btn" style="width:100%;margin-top:10px" onclick="previewPrayerSound()">▶ تجربة صوت هذه الصلاة</button>
+        </div>
+
+        <button class="save-btn" onclick="savePrayerSettingsNow()">💾 حفظ</button>
+    `;
+
+    modal.classList.add('show');
+}
+
+function setPrayerType(type) {
+    document.querySelectorAll('.setting-option').forEach(el => {
+        el.classList.toggle('active', el.dataset.type === type);
+    });
+    document.getElementById('sound-selector-container').style.display = type === 'adhan' ? 'block' : 'none';
+}
+
+function previewPrayerSound() {
+    const soundKey = document.getElementById('prayer-sound').value;
+    playSoundWithFallback(soundKey).then(ok => {
+        if (!ok) alert('⚠️ تعذر تشغيل الصوت.');
+    });
+}
+
+function savePrayerSettingsNow() {
+    const activeType = document.querySelector('.setting-option.active').dataset.type;
+    let sound = 'makkah';
+    if (activeType === 'adhan') {
+        sound = document.getElementById('prayer-sound').value;
+    } else if (activeType === 'takbir') {
+        sound = 'takbir';
     }
 
-    document.getElementById('location-display').textContent = '📍 جارٍ تحديد موقعك...';
+    const settings = getPrayerSettings();
+    settings[currentEditingPrayer] = { type: activeType, sound };
+    savePrayerSettings(settings);
+    closeModal();
+    renderPrayerList();
+}
 
+function closeModal() {
+    document.getElementById('prayer-modal').classList.remove('show');
+    currentEditingPrayer = null;
+}
+
+// ====== الموقع ======
+function getLocation() {
+    if (!navigator.geolocation) { alert('المتصفح لا يدعم الموقع'); return; }
+    document.getElementById('location-display').textContent = '📍 جارٍ تحديد موقعك...';
     navigator.geolocation.getCurrentPosition(
         (pos) => {
             loadPrayerTimes(pos.coords.latitude, pos.coords.longitude, 'موقعك الحالي');
             localStorage.setItem('qamar_location', JSON.stringify({ lat: pos.coords.latitude, lng: pos.coords.longitude, name: 'موقعك الحالي' }));
         },
-        (err) => {
-            alert('تعذر تحديد الموقع. اختر مدينتك من القائمة.');
-            document.getElementById('location-display').textContent = '📍 اختر مدينتك من القائمة';
+        () => {
+            alert('تعذر تحديد الموقع. اختر مدينتك.');
+            document.getElementById('location-display').textContent = '📍 اختر مدينتك';
         },
         { enableHighAccuracy: true, timeout: 10000 }
     );
 }
 
 function loadCityTimes() {
-    const cityKey = document.getElementById('city-select').value;
-    if (!cityKey || !CITIES[cityKey]) return;
-    const city = CITIES[cityKey];
-    loadPrayerTimes(city.lat, city.lng, city.name);
-    localStorage.setItem('qamar_location', JSON.stringify({ lat: city.lat, lng: city.lng, name: city.name }));
+    const k = document.getElementById('city-select').value;
+    if (!k || !CITIES[k]) return;
+    const c = CITIES[k];
+    loadPrayerTimes(c.lat, c.lng, c.name);
+    localStorage.setItem('qamar_location', JSON.stringify({ lat: c.lat, lng: c.lng, name: c.name }));
 }
 
-function saveAdhanSetting() {
-    const val = document.getElementById('adhan-select').value;
-    localStorage.setItem('qamar_adhan_sound', val);
-}
-
-function previewAdhan() {
-    const val = document.getElementById('adhan-select').value;
-    const audio = document.getElementById('adhan-audio');
-    audio.src = ADHAN_SOUNDS[val].url;
-    audio.play().catch(e => alert('⚠️ تعذر تشغيل الصوت.'));
-}
-
-function toggleNotif() {
-    const toggle = document.getElementById('notif-toggle');
-    toggle.classList.toggle('on');
-    const enabled = toggle.classList.contains('on');
-    localStorage.setItem('qamar_notif_enabled', enabled);
-    if (enabled && 'Notification' in window) Notification.requestPermission();
-}
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+});
 
 window.addEventListener('load', () => {
     const saved = localStorage.getItem('qamar_location');
