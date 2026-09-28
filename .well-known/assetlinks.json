@@ -1,8 +1,0 @@
-[{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "io.github.qamarsyria.qamarmalak",
-    "sha256_cert_fingerprints": ["C6:45:02:1D:61:84:ED:3A:8B:4F:CD:5A:DA:D7:56:65:B6:F3:96:A0:76:65:4C:A8:68:A2:A5:27:A3:B1:2D:00"]
-  }
-}]
