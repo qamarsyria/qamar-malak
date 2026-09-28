@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>التفسير — ملاك المعرفة الإسلامية</title>
+<meta name="description" content="تفسير القرآن الكريم حسب أشهر التفاسير المعتمدة: ابن كثير، الطبري، السعدي، الجلالين، والتفسير الميسر.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+<style>
+.tafsir-hero{background:linear-gradient(135deg,rgba(212,175,55,0.22) 0%,rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:20px;padding:35px 20px;text-align:center;margin-bottom:30px}
+.tafsir-hero h1{font-family:'Amiri',serif;font-size:32px;color:var(--gold);margin-bottom:12px}
+.tafsir-hero p{color:var(--cream);opacity:0.9;max-width:680px;margin:0 auto;font-size:15px}
+
+.search-box{max-width:500px;margin:25px auto;position:relative}
+.search-box input{width:100%;padding:14px 50px 14px 20px;background:rgba(10,58,44,0.6);border:2px solid rgba(212,175,55,0.3);border-radius:30px;color:var(--cream);font-family:inherit;font-size:15px;outline:none;transition:all 0.3s}
+.search-box input:focus{border-color:var(--gold);background:rgba(10,58,44,0.9);box-shadow:0 0 0 4px rgba(212,175,55,0.1)}
+.search-box input::placeholder{color:rgba(245,240,225,0.5)}
+.search-box .search-icon{position:absolute;right:18px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:18px}
+
+.surah-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:25px}
+.surah-card{background:linear-gradient(135deg,rgba(26,107,84,0.35) 0%,rgba(13,77,60,0.55) 100%);border:1px solid rgba(212,175,55,0.2);border-radius:14px;padding:15px;text-decoration:none;color:var(--cream);display:flex;align-items:center;gap:12px;transition:all 0.3s;cursor:pointer}
+.surah-card:hover{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 8px 20px rgba(212,175,55,0.2)}
+.surah-number{flex-shrink:0;width:42px;height:42px;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;font-family:'Amiri',serif;transform:rotate(45deg)}
+.surah-number span{transform:rotate(-45deg)}
+.surah-info{flex:1;min-width:0}
+.surah-name{font-family:'Amiri',serif;font-size:20px;color:var(--gold);margin-bottom:3px}
+.surah-meta{font-size:12px;color:var(--cream);opacity:0.7}
+.loading{text-align:center;padding:40px;color:var(--gold)}
+.spinner{display:inline-block;width:40px;height:40px;border:3px solid rgba(212,175,55,0.3);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;margin-bottom:15px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* صفحة التفسير */
+.viewer-container{display:none}
+.viewer-container.active{display:block;animation:fadeIn 0.4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.tafsir-header{background:linear-gradient(135deg,rgba(212,175,55,0.15) 0%,rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:16px;padding:20px;margin-bottom:20px;text-align:center}
+.tafsir-header h2{font-family:'Amiri',serif;font-size:28px;color:var(--gold);margin-bottom:8px}
+.tafsir-header .meta{color:var(--cream);opacity:0.8;font-size:14px}
+
+.tafsir-nav{display:flex;justify-content:space-between;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.nav-btn{flex:1;min-width:120px;padding:10px 15px;background:rgba(26,107,84,0.5);border:1px solid rgba(212,175,55,0.3);border-radius:10px;color:var(--gold);text-decoration:none;text-align:center;font-family:inherit;font-size:14px;cursor:pointer;transition:all 0.3s}
+.nav-btn:hover{background:var(--gold);color:var(--green-dark)}
+
+.tafsir-selector{background:rgba(10,58,44,0.6);border:1px solid rgba(212,175,55,0.25);border-radius:12px;padding:15px;margin-bottom:20px}
+.tafsir-selector label{display:block;color:var(--gold);font-size:14px;margin-bottom:8px;font-weight:600}
+.tafsir-selector select{width:100%;padding:12px 14px;background:rgba(13,77,60,0.9);border:1px solid rgba(212,175,55,0.3);border-radius:10px;color:var(--cream);font-family:inherit;font-size:14px;cursor:pointer;outline:none}
+.tafsir-selector select:focus{border-color:var(--gold)}
+
+.ayah-tafsir-card{background:linear-gradient(135deg,rgba(26,107,84,0.25) 0%,rgba(13,77,60,0.45) 100%);border:1px solid rgba(212,175,55,0.2);border-radius:14px;padding:20px;margin-bottom:18px}
+.ayah-text{font-family:'Amiri','Scheherazade New',serif;font-size:24px;line-height:2.2;color:var(--cream);text-align:justify;margin-bottom:15px;padding-bottom:15px;border-bottom:1px dashed rgba(212,175,55,0.25);position:relative;padding-right:15px}
+.ayah-number-badge{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark);border-radius:50%;font-family:'Amiri',serif;font-weight:700;font-size:13px;margin-right:10px;vertical-align:middle}
+.tafsir-content{color:var(--cream);line-height:2;font-size:16px}
+.tafsir-content strong{color:var(--gold);display:block;margin-bottom:10px;font-family:'Amiri',serif;font-size:17px}
+.tafsir-loading{color:var(--gold);opacity:0.7;font-style:italic;padding:10px 0}
+.tafsir-error{color:#ff8888;font-size:14px;padding:10px 0;font-style:italic}
+
+.empty-state{text-align:center;padding:40px;color:var(--cream);opacity:0.7}
+.no-results{text-align:center;padding:40px;color:var(--cream);opacity:0.7;grid-column:1/-1}
+
+@media (max-width:640px){.tafsir-hero h1{font-size:24px}.ayah-text{font-size:20px;line-height:2}.surah-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+<div class="header-container">
+<a href="index.html" class="logo">
+<div class="logo-icon">☪</div>
+<div class="logo-text">
+<span class="main">ملاك المعرفة</span>
+<span class="sub">منصة إسلامية شاملة</span>
+</div>
+</a>
+<button class="nav-toggle" onclick="document.querySelector('.main-nav').style.display = document.querySelector('.main-nav').style.display === 'none' ? 'block' : 'none'">☰</button>
+</div>
+</header>
+
+<nav class="main-nav">
+<ul class="nav-list">
+<li><a href="index.html">🏠 الرئيسية</a></li>
+<li><a href="quran.html">📖 القرآن الكريم</a></li>
+<li><a href="tafsir.html" class="active">📚 التفسير</a></li>
+<li><a href="hadith.html">🕌 السنة النبوية</a></li>
+<li><a href="seerah.html">🌙 السيرة النبوية</a></li>
+<li><a href="ghazawat.html">⚔️ الغزوات</a></li>
+<li><a href="prophets.html">🕊️ قصص الأنبياء</a></li>
+<li><a href="sahaba.html">⭐ الصحابة</a></li>
+<li><a href="adhkar.html">🤲 الأذكار</a></li>
+<li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="search.html">🔍 البحث</a></li>
+</ul>
+</nav>
+
+<main class="main-container">
+
+<!-- القائمة الرئيسية -->
+<div id="list-view">
+<section class="tafsir-hero">
+<h1>📚 تفسير القرآن الكريم</h1>
+<p>اختر سورة لقراءة تفسيرها حسب أشهر التفاسير المعتمدة: التفسير الميسر، تفسير الجلالين، وتفسير ابن كثير.</p>
+</section>
+
+<div class="search-box">
+<input type="text" id="search-input" placeholder="ابحث عن سورة...">
+<span class="search-icon">🔍</span>
+</div>
+
+<div id="surahs-container">
+<div class="loading"><div class="spinner"></div><div>جارٍ تحميل السور...</div></div>
+</div>
+</div>
+
+<!-- عرض التفسير -->
+<div id="viewer-view" class="viewer-container">
+<div class="tafsir-nav">
+<button class="nav-btn" onclick="backToList()">📋 قائمة السور</button>
+<a href="#" id="prev-btn" class="nav-btn">◀ السورة السابقة</a>
+<a href="#" id="next-btn" class="nav-btn">السورة التالية ▶</a>
+</div>
+
+<div class="tafsir-header">
+<h2 id="tafsir-surah-name">—</h2>
+<div class="meta" id="tafsir-surah-meta">—</div>
+</div>
+
+<div class="tafsir-selector">
+<label>📖 اختر التفسير:</label>
+<select id="tafsir-select">
+<option value="ar.muyassar">التفسير الميسّر (مجمع الملك فهد)</option>
+<option value="ar.jalalayn">تفسير الجلالين (المحلي والسيوطي)</option>
+<option value="ar.miqbas">تنوير المقباس (ابن عباس)</option>
+</select>
+</div>
+
+<div id="ayahs-tafsir-container"></div>
+</div>
+
+</main>
+
+<footer class="site-footer">
+<p class="footer-ayah">﴿ كِتَابٌ أَنزَلْنَاهُ إِلَيْكَ مُبَارَكٌ لِّيَدَّبَّرُوا آيَاتِهِ وَلِيَتَذَكَّرَ أُولُو الْأَلْبَابِ ﴾</p>
+<p>ملاك المعرفة الإسلامية — منصة دعوية غير ربحية</p>
+<p>© 2026 — نسألكم الدعاء</p>
+</footer>
+
+<script>
+let allSurahs = [];
+let currentSurah = null;
+let currentTafsir = 'ar.muyassar';
+let currentSearch = '';
+
+// ====== تحميل قائمة السور ======
+async function loadSurahs() {
+    try {
+        const res = await fetch('https://api.alquran.cloud/v1/surah');
+        const data = await res.json();
+        allSurahs = data.data;
+        renderSurahs();
+    } catch (e) {
+        document.getElementById('surahs-container').innerHTML =
+            '<div class="no-results">⚠️ تعذر تحميل السور. تحقق من الاتصال.</div>';
+    }
+}
+
+function renderSurahs() {
+    const container = document.getElementById('surahs-container');
+    let filtered = allSurahs.filter(s =>
+        currentSearch === '' ||
+        s.name.includes(currentSearch) ||
+        s.englishName.toLowerCase().includes(currentSearch.toLowerCase()) ||
+        s.number.toString() === currentSearch
+    );
+
+    if (filtered.length === 0) {
+        container.innerHTML = '<div class="no-results">لا توجد نتائج</div>';
+        return;
+    }
+
+    container.innerHTML = '<div class="surah-grid">' + filtered.map(s => `
+        <div class="surah-card" onclick="openSurah(${s.number})">
+            <div class="surah-number"><span>${s.number}</span></div>
+            <div class="surah-info">
+                <div class="surah-name">${s.name.replace('سُورَةُ ', '')}</div>
+                <div class="surah-meta">${s.revelationType} · ${s.numberOfAyahs} آية</div>
+            </div>
+        </div>
+    `).join('') + '</div>';
+}
+
+document.getElementById('search-input').addEventListener('input', (e) => {
+    currentSearch = e.target.value.trim();
+    renderSurahs();
+});
+
+// ====== فتح سورة ======
+async function openSurah(num) {
+    document.getElementById('list-view').style.display = 'none';
+    document.getElementById('viewer-view').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    document.getElementById('tafsir-surah-name').textContent = 'جارٍ التحميل...';
+    document.getElementById('tafsir-surah-meta').textContent = '';
+    document.getElementById('ayahs-tafsir-container').innerHTML =
+        '<div class="loading"><div class="spinner"></div><div>جارٍ تحميل السورة...</div></div>';
+
+    try {
+        const res = await fetch(`https://api.alquran.cloud/v1/surah/${num}`);
+        const data = await res.json();
+        currentSurah = data.data;
+
+        document.getElementById('tafsir-surah-name').textContent =
+            `سورة ${currentSurah.name.replace('سُورَةُ ', '')}`;
+        document.getElementById('tafsir-surah-meta').textContent =
+            `${currentSurah.revelationType} · ${currentSurah.numberOfAyahs} آية · ترتيبها ${currentSurah.number}`;
+
+        document.getElementById('prev-btn').href =
+            num > 1 ? `javascript:openSurah(${num - 1})` : '#';
+        document.getElementById('next-btn').href =
+            num < 114 ? `javascript:openSurah(${num + 1})` : '#';
+
+        renderAyahsWithTafsir();
+    } catch (e) {
+        document.getElementById('ayahs-tafsir-container').innerHTML =
+            '<div class="no-results">⚠️ تعذر تحميل السورة.</div>';
+    }
+}
+
+async function renderAyahsWithTafsir() {
+    const container = document.getElementById('ayahs-tafsir-container');
+
+    // عرض الآيات أولاً بدون تفسير
+    container.innerHTML = currentSurah.ayahs.map(ayah => `
+        <div class="ayah-tafsir-card">
+            <div class="ayah-text">
+                ${escapeHtml(ayah.text)}
+                <span class="ayah-number-badge">${ayah.numberInSurah}</span>
+            </div>
+            <div class="tafsir-content" id="tafsir-ayah-${ayah.numberInSurah}">
+                <div class="tafsir-loading">⏳ جارٍ تحميل التفسير...</div>
+            </div>
+        </div>
+    `).join('');
+
+    // تحميل التفسير لكل آية بالتوازي (محدود)
+    const promises = currentSurah.ayahs.map(ayah =>
+        loadTafsir(ayah.number, ayah.numberInSurah)
+    );
+    await Promise.all(promises);
+}
+
+async function loadTafsir(globalNum, ayahNum) {
+    const el = document.getElementById(`tafsir-ayah-${ayahNum}`);
+    if (!el) return;
+
+    try {
+        const res = await fetch(`https://api.alquran.cloud/v1/ayah/${globalNum}/${currentTafsir}`);
+        const data = await res.json();
+        const text = data.data.text;
+        const tafsirName = data.data.edition.name || 'التفسير';
+
+        el.innerHTML = `
+            <strong>📚 ${tafsirName}:</strong>
+            ${escapeHtml(text)}
+        `;
+    } catch (e) {
+        el.innerHTML = '<div class="tafsir-error">⚠️ تعذر تحميل التفسير لهذه الآية.</div>';
+    }
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function backToList() {
+    document.getElementById('viewer-view').classList.remove('active');
+    document.getElementById('list-view').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ====== تغيير نوع التفسير ======
+document.getElementById('tafsir-select').addEventListener('change', (e) => {
+    currentTafsir = e.target.value;
+    if (currentSurah) {
+        // أعد تحميل التفسير فقط
+        currentSurah.ayahs.forEach(ayah => {
+            const el = document.getElementById(`tafsir-ayah-${ayah.numberInSurah}`);
+            if (el) {
+                el.innerHTML = '<div class="tafsir-loading">⏳ جارٍ التحميل...</div>';
+            }
+            loadTafsir(ayah.number, ayah.numberInSurah);
+        });
+    }
+});
+
+loadSurahs();
+</script>
+
+</body>
+</html>
