@@ -25,7 +25,6 @@
             color: var(--cream);
             opacity: 0.8;
             font-size: 14px;
-            margin-bottom: 15px;
         }
 
         .surah-nav {
@@ -76,10 +75,9 @@
             font-weight: 600;
             min-width: 80px;
         }
-        .control-row select,
-        .control-row button {
+        .control-row select {
             flex: 1;
-            min-width: 150px;
+            min-width: 180px;
             padding: 10px 14px;
             background: rgba(13,77,60,0.9);
             border: 1px solid rgba(212,175,55,0.3);
@@ -93,17 +91,48 @@
         .control-row select:focus { border-color: var(--gold); }
 
         .btn-play {
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%) !important;
-            color: var(--green-dark) !important;
+            flex: 1;
+            min-width: 180px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--green-dark);
             font-weight: 700;
-            border: none !important;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
         }
         .btn-play:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(212,175,55,0.4); }
+
         .btn-stop {
-            background: rgba(200,50,50,0.7) !important;
-            color: white !important;
+            flex: 1;
+            min-width: 180px;
+            padding: 12px 20px;
+            background: rgba(200,50,50,0.8);
+            color: white;
             font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 15px;
+            cursor: pointer;
+            display: none;
+            transition: all 0.3s;
         }
+        .btn-stop:hover { background: rgba(220,60,60,1); }
+
+        .playing-info {
+            text-align: center;
+            padding: 10px;
+            color: var(--gold);
+            font-size: 14px;
+            display: none;
+            margin-top: 12px;
+            border-top: 1px dashed rgba(212,175,55,0.3);
+        }
+        .playing-info.show { display: block; }
 
         .basmala {
             text-align: center;
@@ -116,22 +145,22 @@
             border-bottom: 1px solid rgba(212,175,55,0.3);
         }
 
-        .ayah-container {
-            margin-bottom: 30px;
-        }
-
         .ayah {
             background: linear-gradient(135deg, rgba(26,107,84,0.25) 0%, rgba(13,77,60,0.4) 100%);
             border-right: 4px solid var(--gold);
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 15px;
-            position: relative;
             transition: all 0.3s;
         }
         .ayah:hover {
             background: linear-gradient(135deg, rgba(26,107,84,0.4) 0%, rgba(13,77,60,0.6) 100%);
             box-shadow: 0 4px 15px rgba(212,175,55,0.15);
+        }
+        .ayah.playing {
+            border-right-color: #ff6b6b;
+            background: linear-gradient(135deg, rgba(200,50,50,0.2) 0%, rgba(150,30,30,0.3) 100%);
+            box-shadow: 0 0 20px rgba(255,107,107,0.3);
         }
 
         .ayah-text {
@@ -156,7 +185,7 @@
             font-family: 'Amiri', serif;
             font-weight: 700;
             font-size: 14px;
-            margin-left: 10px;
+            margin-right: 12px;
             vertical-align: middle;
         }
 
@@ -288,18 +317,21 @@
             <div class="control-row">
                 <label class="control-label">🎧 القارئ:</label>
                 <select id="reciter-select">
+                    <option value="ar.alafasy">مشاري العفاسي</option>
                     <option value="ar.husary">محمود خليل الحصري</option>
                     <option value="ar.minshawi">محمد صديق المنشاوي</option>
                     <option value="ar.abdulbasitmurattal">عبد الباسط عبد الصمد</option>
-                    <option value="ar.alafasy">مشاري العفاسي</option>
                     <option value="ar.hudhaify">علي الحذيفي</option>
                     <option value="ar.shaatree">أبو بكر الشاطري</option>
+                    <option value="ar.mahermuaiqly">ماهر المعيقلي</option>
+                    <option value="ar.ahmedajamy">أحمد بن علي العجمي</option>
                 </select>
             </div>
             <div class="control-row">
                 <button id="play-btn" class="btn-play">▶ تشغيل السورة كاملة</button>
-                <button id="stop-btn" class="btn-stop" style="display:none;">⏹ إيقاف</button>
+                <button id="stop-btn" class="btn-stop">⏹ إيقاف</button>
             </div>
+            <div id="playing-info" class="playing-info"></div>
         </div>
 
         <div id="basmala" class="basmala" style="display:none;">﷽</div>
@@ -318,29 +350,29 @@
 <audio id="audio-player" preload="none"></audio>
 
 <script>
+// ====== الإعدادات الأساسية ======
 const params = new URLSearchParams(window.location.search);
 const surahNumber = parseInt(params.get('n')) || 1;
 
 let currentSurah = null;
-let currentReciter = 'ar.husary';
+let currentReciter = 'ar.alafasy';
 let tafsirCache = {};
 
+// حالة التشغيل الكامل
+let isPlayingFullSurah = false;
+let currentAyahIndex = 0;
+
+// ====== تحميل السورة ======
 async function loadSurah() {
     try {
-        const [arabicRes, metaRes] = await Promise.all([
-            fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}`),
-            fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}/ar.alafasy`)
-        ]);
-
-        const arabicData = await arabicRes.json();
-        const metaData = await metaRes.json();
-
-        currentSurah = arabicData.data;
+        const res = await fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}`);
+        const data = await res.json();
+        currentSurah = data.data;
 
         document.getElementById('surah-name').textContent = `سورة ${currentSurah.name.replace('سُورَةُ ', '')}`;
         document.getElementById('surah-meta').textContent =
             `${currentSurah.revelationType} · ${currentSurah.numberOfAyahs} آية · ترتيبها ${currentSurah.number}`;
-        document.title = `سورة ${currentSurah.name} — ملاك المعرفة الإسلامية`;
+        document.title = `سورة ${currentSurah.name.replace('سُورَةُ ', '')} — ملاك المعرفة الإسلامية`;
 
         if (surahNumber !== 1 && surahNumber !== 9) {
             document.getElementById('basmala').style.display = 'block';
@@ -361,6 +393,7 @@ async function loadSurah() {
     }
 }
 
+// ====== عرض الآيات ======
 function renderAyahs(ayahs) {
     const container = document.getElementById('ayahs-container');
     container.innerHTML = ayahs.map(ayah => `
@@ -370,12 +403,12 @@ function renderAyahs(ayahs) {
                 <span class="ayah-number-badge">${ayah.numberInSurah}</span>
             </div>
             <div class="ayah-actions">
-                <button class="ayah-action-btn" onclick="playAyah(${ayah.numberInSurah})">🎧 استمع</button>
-                <button class="ayah-action-btn" onclick="showTafsir(${ayah.numberInSurah})">📚 التفسير</button>
+                <button class="ayah-action-btn" onclick="playSingleAyah(${ayah.numberInSurah})">🎧 استمع</button>
+                <button class="ayah-action-btn" onclick="toggleTafsir(${ayah.numberInSurah})">📚 التفسير</button>
                 <button class="ayah-action-btn" onclick="copyAyah(${ayah.numberInSurah})">📋 نسخ</button>
             </div>
             <div class="tafsir-box" id="tafsir-${ayah.numberInSurah}">
-                <div class="loading-tafsir">جارٍ تحميل التفسير...</div>
+                <div style="opacity:0.6">جارٍ تحميل التفسير...</div>
             </div>
         </div>
     `).join('');
@@ -387,72 +420,139 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-function playAyah(num) {
+// ====== تشغيل آية واحدة ======
+function playSingleAyah(numInSurah) {
+    stopPlayback();
     const audio = document.getElementById('audio-player');
-    const audioUrl = `https://cdn.islamic.network/quran/audio/128/${currentReciter}/${globalAyahNumber(num)}.mp3`;
-    audio.src = audioUrl;
-    audio.play();
+    const ayah = currentSurah.ayahs[numInSurah - 1];
+    audio.src = `https://cdn.islamic.network/quran/audio/128/${currentReciter}/${ayah.number}.mp3`;
+
+    // إزالة التمييز عن كل الآيات
+    document.querySelectorAll('.ayah').forEach(el => el.classList.remove('playing'));
+    // تمييز الآية الحالية
+    const el = document.getElementById(`ayah-${numInSurah}`);
+    if (el) {
+        el.classList.add('playing');
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    audio.play().catch(() => {
+        alert('⚠️ تعذر تشغيل الصوت. تحقق من الاتصال أو جرّب قارئاً آخر.');
+    });
+
+    document.getElementById('play-btn').style.display = 'inline-block';
     document.getElementById('stop-btn').style.display = 'inline-block';
 }
 
-let globalAyahNumbers = [];
-function globalAyahNumber(numInSurah) {
-    return currentSurah.ayahs[numInSurah - 1].number;
-}
-
+// ====== تشغيل السورة كاملة (آية بآية) ======
 document.getElementById('play-btn').addEventListener('click', () => {
-    const audio = document.getElementById('audio-player');
-    const firstAyahGlobal = currentSurah.ayahs[0].number;
-    audio.src = `https://cdn.islamic.network/quran/audio-surah/128/${currentReciter}/${surahNumber}.mp3`;
-    audio.play();
+    isPlayingFullSurah = true;
+    currentAyahIndex = 0;
     document.getElementById('play-btn').style.display = 'none';
     document.getElementById('stop-btn').style.display = 'inline-block';
+    document.getElementById('playing-info').classList.add('show');
+    playNextAyah();
 });
 
-document.getElementById('stop-btn').addEventListener('click', () => {
+function playNextAyah() {
+    if (!isPlayingFullSurah) return;
+    if (currentAyahIndex >= currentSurah.ayahs.length) {
+        stopPlayback();
+        return;
+    }
+
+    const ayah = currentSurah.ayahs[currentAyahIndex];
+    const audio = document.getElementById('audio-player');
+    audio.src = `https://cdn.islamic.network/quran/audio/128/${currentReciter}/${ayah.number}.mp3`;
+
+    document.querySelectorAll('.ayah').forEach(el => el.classList.remove('playing'));
+    const el = document.getElementById(`ayah-${ayah.numberInSurah}`);
+    if (el) {
+        el.classList.add('playing');
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    document.getElementById('playing-info').textContent =
+        `🎧 يجري الآن تشغيل: ${ayah.numberInSurah} من ${currentSurah.numberOfAyahs}`;
+
+    audio.play().catch(() => {
+        alert('⚠️ تعذر تشغيل الصوت. تحقق من الاتصال.');
+        stopPlayback();
+    });
+
+    currentAyahIndex++;
+}
+
+// ====== إيقاف التشغيل ======
+function stopPlayback() {
+    isPlayingFullSurah = false;
     const audio = document.getElementById('audio-player');
     audio.pause();
     audio.currentTime = 0;
+    audio.src = '';
+    document.querySelectorAll('.ayah').forEach(el => el.classList.remove('playing'));
     document.getElementById('play-btn').style.display = 'inline-block';
     document.getElementById('stop-btn').style.display = 'none';
+    document.getElementById('playing-info').classList.remove('show');
+}
+
+document.getElementById('stop-btn').addEventListener('click', stopPlayback);
+
+// ====== الانتقال للآية التالية تلقائياً ======
+document.getElementById('audio-player').addEventListener('ended', () => {
+    if (isPlayingFullSurah) {
+        playNextAyah();
+    }
 });
 
+// ====== تغيير القارئ ======
 document.getElementById('reciter-select').addEventListener('change', (e) => {
     currentReciter = e.target.value;
+    // إذا كان التشغيل جارياً، أوقفه
+    if (isPlayingFullSurah) {
+        stopPlayback();
+    }
 });
 
-async function showTafsir(num) {
-    const tafsirBox = document.getElementById(`tafsir-${num}`);
-    tafsirBox.classList.toggle('show');
+// ====== التفسير ======
+async function toggleTafsir(num) {
+    const box = document.getElementById(`tafsir-${num}`);
+    box.classList.toggle('show');
 
-    if (!tafsirBox.classList.contains('show')) return;
-
+    if (!box.classList.contains('show')) return;
     if (tafsirCache[num]) {
-        tafsirBox.innerHTML = tafsirCache[num];
+        box.innerHTML = tafsirCache[num];
         return;
     }
 
     const globalNum = currentSurah.ayahs[num - 1].number;
+    box.innerHTML = '<div style="opacity:0.6">جارٍ تحميل التفسير...</div>';
+
     try {
         const res = await fetch(`https://api.alquran.cloud/v1/ayah/${globalNum}/ar.muyassar`);
         const data = await res.json();
-        const tafsir = data.data.text;
-        const html = `<strong>📚 التفسير الميسّر:</strong>${escapeHtml(tafsir)}`;
+        const html = `<strong>📚 التفسير الميسّر:</strong>${escapeHtml(data.data.text)}`;
         tafsirCache[num] = html;
-        tafsirBox.innerHTML = html;
-    } catch (error) {
-        tafsirBox.innerHTML = '<strong>⚠️ تعذر تحميل التفسير</strong>';
+        box.innerHTML = html;
+    } catch (err) {
+        box.innerHTML = '<strong>⚠️ تعذر تحميل التفسير</strong>';
     }
 }
 
+// ====== نسخ الآية ======
 function copyAyah(num) {
     const ayah = currentSurah.ayahs[num - 1];
-    const text = `${ayah.text}\n\n[سورة ${currentSurah.name} - الآية ${num}]`;
-    navigator.clipboard.writeText(text).then(() => {
-        alert('✓ تم نسخ الآية');
-    });
+    const text = `${ayah.text}\n\n[سورة ${currentSurah.name.replace('سُورَةُ ', '')} — الآية ${num}]`;
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert('✓ تم نسخ الآية');
+        });
+    } else {
+        alert(text);
+    }
 }
 
+// ====== تحميل السورة عند بدء الصفحة ======
 loadSurah();
 </script>
 
