@@ -179,80 +179,41 @@
 
 <script>
 // ====== الأصوات: مع مصادر احتياطية ======
-const ADHAN_SOURCES = {
+
+    husary: {
+        name: '📖 const ADHAN_SOURCES = {
     umayyad: {
         name: '🕌 أذان الجامع الأموي بدمشق',
         urls: [
             'https://ia801504.us.archive.org/31/items/Adhan_Umayyad/Adhan_Umayyad.mp3',
-            'https://www.islamcan.com/audio/adhan/azan1.mp3',
-            'https://www.islamcan.com/audio/adhan/azan7.mp3'
+            'https://archive.org/download/Adhan_Umayyad/Adhan_Umayyad.mp3'
         ]
     },
     makkah: {
         name: '🕋 أذان الحرم المكي',
         urls: [
             'https://ia800504.us.archive.org/14/items/Adhan-Makkah/Adhan-Makkah.mp3',
-            'https://www.islamcan.com/audio/adhan/azan2.mp3',
-            'https://www.islamcan.com/audio/adhan/azan8.mp3'
+            'https://archive.org/download/Adhan-Makkah/Adhan-Makkah.mp3'
         ]
     },
     madinah: {
         name: '🕌 أذان المسجد النبوي',
         urls: [
             'https://ia800504.us.archive.org/14/items/Adhan-Madinah/Adhan-Madinah.mp3',
-            'https://www.islamcan.com/audio/adhan/azan3.mp3',
-            'https://www.islamcan.com/audio/adhan/azan9.mp3'
-        ]
-    },
-    aqsa: {
-        name: '🌙 أذان المسجد الأقصى',
-        urls: [
-            'https://ia800504.us.archive.org/14/items/Adhan-Aqsa/Adhan-Aqsa.mp3',
-            'https://www.islamcan.com/audio/adhan/azan4.mp3',
-            'https://www.islamcan.com/audio/adhan/azan10.mp3'
-        ]
-    },
-    egypt: {
-        name: '🇪🇬 أذان مصري (الطبلاوي)',
-        urls: [
-            'https://ia801504.us.archive.org/31/items/Adhan-Egypt/Adhan-Egypt.mp3',
-            'https://www.islamcan.com/audio/adhan/azan5.mp3',
-            'https://www.islamcan.com/audio/adhan/azan11.mp3'
-        ]
-    },
-    turkey: {
-        name: '🇹🇷 أذان تركي',
-        urls: [
-            'https://www.islamcan.com/audio/adhan/azan5.mp3',
-            'https://ia801504.us.archive.org/31/items/Adhan-Turkey/Adhan-Turkey.mp3'
-        ]
-    },
-    alafasy: {
-        name: '🎙️ أذان مشاري العفاسي',
-        urls: [
-            'https://www.islamcan.com/audio/adhan/azan6.mp3',
-            'https://ia801504.us.archive.org/31/items/Adhan-Alafasy/Adhan-Alafasy.mp3'
-        ]
-    },
-    husary: {
-        name: '📖 أذان محمود خليل الحصري',
-        urls: [
-            'https://ia801504.us.archive.org/31/items/Adhan-Husary/Adhan-Husary.mp3',
-            'https://www.islamcan.com/audio/adhan/azan12.mp3'
+            'https://archive.org/download/Adhan-Madinah/Adhan-Madinah.mp3'
         ]
     },
     takbir: {
-        name: '🕌 تكبيرات (للصلاة)',
+        name: '🕌 تكبيرات',
         urls: [
-            'https://ia801504.us.archive.org/31/items/Takbirat/Takbirat.mp3',
-            'https://www.islamcan.com/audio/adhan/azan13.mp3'
+            'https://archive.org/download/takbeer/takbeer.mp3',
+            'https://ia801504.us.archive.org/31/items/Takbirat/Takbirat.mp3'
         ]
     },
     takbir_eid: {
         name: '🎉 تكبيرات العيد',
         urls: [
-            'https://ia801504.us.archive.org/31/items/Takbirat-Eid/Takbirat-Eid.mp3',
-            'https://www.islamcan.com/audio/adhan/azan14.mp3'
+            'https://archive.org/download/Takbirat-Eid/Takbirat-Eid.mp3'
         ]
     },
     silent: {
@@ -264,7 +225,6 @@ const ADHAN_SOURCES = {
         urls: []
     }
 };
-
 const CITIES = {
     damascus: { lat: 33.5138, lng: 36.2765, name: 'دمشق، سوريا' },
     aleppo: { lat: 36.2021, lng: 37.1343, name: 'حلب، سوريا' },
