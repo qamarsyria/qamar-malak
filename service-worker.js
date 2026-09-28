@@ -1,4 +1,4 @@
-const CACHE_NAME = 'qamar-malak-v1';
+const CACHE_NAME = 'qamar-malak-v2';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -19,24 +19,24 @@ const STATIC_ASSETS = [
   './zuhd.html',
   './fadail.html',
   './sihr.html',
+  './prayer.html',
+  './tasbih.html',
+  './calendar.html',
   './search.html',
-  './manifest.json'
+  './manifest.json',
+  './icon.svg'
 ];
 
-// تثبيت Service Worker - تخزين كل الملفات
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return Promise.all(
-        STATIC_ASSETS.map(url => 
-          cache.add(url).catch(err => console.log('Cache miss:', url))
-        )
+        STATIC_ASSETS.map(url => cache.add(url).catch(err => console.log('Miss:', url)))
       );
     }).then(() => self.skipWaiting())
   );
 });
 
-// تنشيط Service Worker - حذف الكاش القديم
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
@@ -47,11 +47,9 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// معالجة الطلبات
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
-  // صفحات الموقع الثابتة: Cache First (تعمل بدون نت)
   if (url.origin === location.origin) {
     event.respondWith(
       caches.match(event.request).then((cached) => {
@@ -66,7 +64,6 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // المحتوى الخارجي (API): Network First مع كاش احتياطي
   event.respondWith(
     fetch(event.request).then((resp) => {
       const copy = resp.clone();
