@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>السنة النبوية — ملاك المعرفة الإسلامية</title>
+<title>السنة النبوية — ملاك المعرفة</title>
 <meta name="description" content="أحاديث نبوية صحيحة من الصحيحين والسنن الأربعة، مصنّفة حسب الموضوع — بمعلومات موثقة عن الرواة والتخريج.">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕌</text></svg>">
@@ -11,17 +11,14 @@
 .hadith-hero{background:linear-gradient(135deg,rgba(212,175,55,0.22) 0%,rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:20px;padding:35px 20px;text-align:center;margin-bottom:30px}
 .hadith-hero h1{font-family:'Amiri',serif;font-size:32px;color:var(--gold);margin-bottom:12px}
 .hadith-hero p{color:var(--cream);opacity:0.9;max-width:680px;margin:0 auto;font-size:15px}
-
 .search-box{max-width:500px;margin:25px auto;position:relative}
 .search-box input{width:100%;padding:14px 50px 14px 20px;background:rgba(10,58,44,0.6);border:2px solid rgba(212,175,55,0.3);border-radius:30px;color:var(--cream);font-family:inherit;font-size:15px;outline:none;transition:all 0.3s}
 .search-box input:focus{border-color:var(--gold);background:rgba(10,58,44,0.9);box-shadow:0 0 0 4px rgba(212,175,55,0.1)}
 .search-box input::placeholder{color:rgba(245,240,225,0.5)}
 .search-box .search-icon{position:absolute;right:18px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:18px}
-
 .filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:25px}
 .filter-btn{padding:8px 16px;background:transparent;border:1px solid rgba(212,175,55,0.4);color:var(--cream);border-radius:20px;font-size:13px;cursor:pointer;font-family:inherit;transition:all 0.3s}
 .filter-btn:hover,.filter-btn.active{background:var(--gold);color:var(--green-dark);border-color:var(--gold)}
-
 .hadith-list{max-width:850px;margin:0 auto}
 .hadith-card{background:linear-gradient(135deg,rgba(26,107,84,0.3) 0%,rgba(13,77,60,0.5) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:14px;padding:22px;margin-bottom:15px;border-right:4px solid var(--gold);transition:all 0.3s;position:relative}
 .hadith-card:hover{transform:translateX(-4px);box-shadow:0 6px 20px rgba(212,175,55,0.2);border-right-color:var(--gold-light)}
@@ -33,13 +30,10 @@
 .hadith-rawi strong{color:var(--gold)}
 .hadith-source{display:flex;gap:8px;flex-wrap:wrap}
 .hadith-source span{background:rgba(10,58,44,0.8);color:var(--gold);padding:4px 10px;border-radius:10px;font-size:11px;border:1px solid rgba(212,175,55,0.3)}
-
 .empty-state{text-align:center;padding:50px 20px;color:var(--cream);opacity:0.7}
 .empty-state .icon{font-size:60px;margin-bottom:15px;display:block;opacity:0.5}
-
 .stats-line{text-align:center;color:var(--cream);opacity:0.8;font-size:14px;margin-bottom:20px;padding:10px}
 .stats-line strong{color:var(--gold);font-size:16px}
-
 @media (max-width:640px){.hadith-hero h1{font-size:24px}.hadith-text{font-size:18px;line-height:2}.hadith-meta{flex-direction:column;align-items:stretch}.hadith-source{justify-content:center}}
 </style>
 </head>
@@ -61,16 +55,21 @@
 <nav class="main-nav">
 <ul class="nav-list">
 <li><a href="index.html">🏠 الرئيسية</a></li>
-<li><a href="quran.html">📖 القرآن الكريم</a></li>
+<li><a href="quran.html">📖 القرآن</a></li>
 <li><a href="tafsir.html">📚 التفسير</a></li>
-<li><a href="hadith.html" class="active">🕌 السنة النبوية</a></li>
-<li><a href="seerah.html">🌙 السيرة النبوية</a></li>
+<li><a href="hadith.html" class="active">🕌 السنة</a></li>
+<li><a href="seerah.html">🌙 السيرة</a></li>
 <li><a href="ghazawat.html">⚔️ الغزوات</a></li>
-<li><a href="prophets.html">🕊️ قصص الأنبياء</a></li>
+<li><a href="prophets.html">🕊️ الأنبياء</a></li>
 <li><a href="sahaba.html">⭐ الصحابة</a></li>
 <li><a href="adhkar.html">🤲 الأذكار</a></li>
+<li><a href="prayer.html">🕌 الصلاة</a></li>
+<li><a href="tasbih.html">📿 المسبحة</a></li>
+<li><a href="calendar.html">📅 التقويم</a></li>
 <li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="library.html">📚 المكتبة</a></li>
 <li><a href="search.html">🔍 البحث</a></li>
+<li><a href="masael.html">📖 المسائل الشرعية</a></li>
 </ul>
 </nav>
 
@@ -102,11 +101,14 @@
 
 <footer class="site-footer">
 <p class="footer-ayah">﴿ وَمَا آتَاكُمُ الرَّسُولُ فَخُذُوهُ وَمَا نَهَاكُمْ عَنْهُ فَانتَهُوا ﴾</p>
-<p>ملاك المعرفة الإسلامية — منصة دعوية غير ربحية</p>
-<p>© 2026 — نسألكم الدعاء</p>
+<p>ملاك المعرفة — منصة دعوية غير ربحية</p>
+<p>© 2026 <strong>Emad Halawh</strong> — جميع الحقوق محفوظة. نسألكم الدعاء.</p>
 </footer>
 
 <script>
+(function () {
+'use strict';
+
 const HADITHS = [
     // ===== الإيمان =====
     { cat: "الإيمان", text: "قال ﷺ: «بُني الإسلام على خمس: شهادة أن لا إله إلا الله وأن محمدًا رسول الله، وإقام الصلاة، وإيتاء الزكاة، وحج البيت، وصوم رمضان».", rawi: "عبد الله بن عمر", sources: ["البخاري 8", "مسلم 16"] },
@@ -114,7 +116,7 @@ const HADITHS = [
     { cat: "الإيمان", text: "قال ﷺ: «لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه».", rawi: "أنس بن مالك", sources: ["البخاري 13", "مسلم 45"] },
     { cat: "الإيمان", text: "قال ﷺ: «المسلم من سلم المسلمون من لسانه ويده، والمهاجر من هجر ما نهى الله عنه».", rawi: "عبد الله بن عمرو", sources: ["البخاري 10"] },
     { cat: "الإيمان", text: "قال ﷺ: «من قال لا إله إلا الله مخلصًا من قلبه دخل الجنة».", rawi: "معاذ بن جبل", sources: ["البخاري 128"] },
-    
+
     // ===== الأخلاق =====
     { cat: "الأخلاق", text: "قال ﷺ: «أكمل المؤمنين إيمانًا أحسنهم خُلقًا، وخياركم خياركم لنسائهم خُلقًا».", rawi: "أبو هريرة", sources: ["الترمذي 1162"] },
     { cat: "الأخلاق", text: "قال ﷺ: «إن الصدق يهدي إلى البر، وإن البر يهدي إلى الجنة، وإن الرجل ليصدق حتى يُكتب عند الله صديقًا. وإن الكذب يهدي إلى الفجور، وإن الفجور يهدي إلى النار، وإن الرجل ليكذب حتى يُكتب عند الله كذابًا».", rawi: "عبد الله بن مسعود", sources: ["البخاري 6094", "مسلم 2607"] },
@@ -123,7 +125,7 @@ const HADITHS = [
     { cat: "الأخلاق", text: "قال ﷺ: «اتق الله حيثما كنت، وأتبع السيئة الحسنة تمحها، وخالق الناس بخلق حسن».", rawi: "أبو ذر الغفاري", sources: ["الترمذي 1987"] },
     { cat: "الأخلاق", text: "قال ﷺ: «من كان يؤمن بالله واليوم الآخر فليقل خيرًا أو ليصمت».", rawi: "أبو هريرة", sources: ["البخاري 6018", "مسلم 47"] },
     { cat: "الأخلاق", text: "قال ﷺ: «ما شيء أثقل في ميزان المؤمن يوم القيامة من خُلق حسن، وإن الله ليبغض الفاحش البذيء».", rawi: "أبو الدرداء", sources: ["الترمذي 2002"] },
-    
+
     // ===== العبادات =====
     { cat: "العبادات", text: "قال ﷺ: «أول ما يحاسب به العبد يوم القيامة الصلاة، فإن صلحت صلح سائر عمله، وإن فسدت فسد سائر عمله».", rawi: "أنس بن مالك", sources: ["الطبراني"] },
     { cat: "العبادات", text: "قال ﷺ: «الصلوات الخمس، والجمعة إلى الجمعة، ورمضان إلى رمضان، مُكفِّرات ما بينهن إذا اجتُنبت الكبائر».", rawi: "أبو هريرة", sources: ["مسلم 233"] },
@@ -131,14 +133,14 @@ const HADITHS = [
     { cat: "العبادات", text: "قال ﷺ: «من حج فلم يرفث ولم يفسق، رجع كيوم ولدته أمه».", rawi: "أبو هريرة", sources: ["البخاري 1521"] },
     { cat: "العبادات", text: "قال ﷺ: «ما نقصت صدقة من مال، وما زاد الله عبدًا بعفو إلا عِزًّا».", rawi: "أبو هريرة", sources: ["مسلم 2588"] },
     { cat: "العبادات", text: "قال ﷺ: «ركعتا الفجر خير من الدنيا وما فيها».", rawi: "عائشة رضي الله عنها", sources: ["مسلم 725"] },
-    
+
     // ===== المعاملات =====
     { cat: "المعاملات", text: "قال ﷺ: «من غشنا فليس منا».", rawi: "أبو هريرة", sources: ["مسلم 101"] },
     { cat: "المعاملات", text: "قال ﷺ: «المسلمون على شروطهم، إلا شرطًا حرّم حلالًا أو أحلّ حرامًا».", rawi: "عمرو بن عوف", sources: ["الترمذي 1352"] },
     { cat: "المعاملات", text: "قال ﷺ: «من أخذ أموال الناس يريد أداءها أدّى الله عنه، ومن أخذ يريد إتلافها أتلفه الله».", rawi: "أبو هريرة", sources: ["البخاري 2387"] },
     { cat: "المعاملات", text: "قال ﷺ: «من اقتطع حق امرئ مسلم بيمينه، فقد أوجب الله له النار، وحرّم عليه الجنة».", rawi: "أبو أمامة", sources: ["مسلم 137"] },
     { cat: "المعاملات", text: "قال ﷺ: «من كان له فضل ظهر فليعده على من لا ظهر له، ومن كان له فضل زاد فليعده على من لا زاد له».", rawi: "أبو سعيد الخدري", sources: ["مسلم 1728"] },
-    
+
     // ===== الرقائق =====
     { cat: "الرقائق", text: "قال ﷺ: «كن في الدنيا كأنك غريب أو عابر سبيل».", rawi: "عبد الله بن عمر", sources: ["البخاري 6416"] },
     { cat: "الرقائق", text: "قال ﷺ: «لو كانت الدنيا تعدل عند الله جناح بعوضة، ما سقى كافرًا منها شربة ماء».", rawi: "أبو هريرة", sources: ["الترمذي 2320"] },
@@ -146,7 +148,7 @@ const HADITHS = [
     { cat: "الرقائق", text: "قال ﷺ: «الطُّهور شطر الإيمان، والحمد لله تملأ الميزان، وسبحان الله والحمد لله تملآن ما بين السماء والأرض».", rawi: "أبو مالك الأشعري", sources: ["مسلم 223"] },
     { cat: "الرقائق", text: "قال ﷺ: «من لا يَرحم لا يُرحم».", rawi: "جرير بن عبد الله", sources: ["البخاري 5997", "مسلم 2318"] },
     { cat: "الرقائق", text: "قال ﷺ: «اتقوا النار ولو بشق تمرة».", rawi: "عدي بن حاتم", sources: ["البخاري 1417", "مسلم 1016"] },
-    
+
     // ===== العلم =====
     { cat: "العلم", text: "قال ﷺ: «من سلك طريقًا يطلب فيه علمًا، سلك الله به طريقًا من طرق الجنة».", rawi: "أبو هريرة", sources: ["مسلم 2699"] },
     { cat: "العلم", text: "قال ﷺ: «من يرد الله به خيرًا يفقهه في الدين».", rawi: "معاوية بن أبي سفيان", sources: ["البخاري 71", "مسلم 1037"] },
@@ -158,15 +160,25 @@ const HADITHS = [
 let currentFilter = 'all';
 let currentSearch = '';
 
+function $(id) { return document.getElementById(id); }
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = String(text);
+    return div.innerHTML;
+}
+
 function highlight(text, query) {
-    if (!query) return text;
-    const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-    return text.replace(regex, '<span class="highlight">$1</span>');
+    if (!query) return escapeHtml(text);
+    const escaped = escapeHtml(text);
+    const safeQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`(${safeQuery})`, 'gi');
+    return escaped.replace(regex, '<span class="highlight">$1</span>');
 }
 
 function renderHadiths() {
-    const container = document.getElementById('hadith-container');
-    let filtered = HADITHS.filter(h => {
+    const container = $('hadith-container');
+    const filtered = HADITHS.filter(h => {
         const matchFilter = currentFilter === 'all' || h.cat === currentFilter;
         const matchSearch = currentSearch === '' ||
             h.text.includes(currentSearch) ||
@@ -184,12 +196,12 @@ function renderHadiths() {
         <div class="stats-line">عدد الأحاديث المعروضة: <strong>${filtered.length}</strong></div>
         ${filtered.map(h => `
             <div class="hadith-card">
-                <span class="hadith-cat">${h.cat}</span>
+                <span class="hadith-cat">${escapeHtml(h.cat)}</span>
                 <div class="hadith-text">${highlight(h.text, currentSearch)}</div>
                 <div class="hadith-meta">
-                    <div class="hadith-rawi">👤 الراوي: <strong>${h.rawi}</strong></div>
+                    <div class="hadith-rawi">👤 الراوي: <strong>${escapeHtml(h.rawi)}</strong></div>
                     <div class="hadith-source">
-                        ${h.sources.map(s => `<span>📚 ${s}</span>`).join('')}
+                        ${h.sources.map(s => `<span>📚 ${escapeHtml(s)}</span>`).join('')}
                     </div>
                 </div>
             </div>
@@ -197,7 +209,7 @@ function renderHadiths() {
     `;
 }
 
-document.getElementById('search-input').addEventListener('input', (e) => {
+$('search-input').addEventListener('input', (e) => {
     currentSearch = e.target.value.trim();
     renderHadiths();
 });
@@ -212,6 +224,8 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 });
 
 renderHadiths();
+
+})();
 </script>
 
 </body>
