@@ -8,7 +8,7 @@
 body{font-family:sans-serif;padding:20px;background:#0a3a2c;color:#f5f0e1}
 h1{color:#d4af37}
 input{width:100%;padding:12px;font-size:14px;border-radius:10px;border:2px solid #d4af37;background:#000;color:#0f0;direction:ltr;font-family:monospace;box-sizing:border-box}
-button{background:#d4af37;color:#0a3a2c;border:none;padding:14px 24px;border-radius:25px;font-size:16px;font-weight:700;cursor:pointer;margin:15px 5px;width:100%}
+button{background:#d4af37;color:#0a3a2c;border:none;padding:14px 24px;border-radius:25px;font-size:16px;font-weight:700;cursor:pointer;margin:15px 0;width:100%}
 button:disabled{opacity:0.5}
 pre{background:#000;color:#0f0;padding:15px;border-radius:10px;overflow-x:auto;white-space:pre-wrap;word-break:break-all;font-size:12px;direction:ltr;text-align:left;max-height:600px}
 .status{padding:12px;border-radius:8px;margin:10px 0;font-weight:700;text-align:center}
@@ -22,13 +22,13 @@ pre{background:#000;color:#0f0;padding:15px;border-radius:10px;overflow-x:auto;w
 <h1>🔑 اختبار مفتاح Gemini</h1>
 
 <div class="warn">
-⚠️ هذا اختبار مؤقت. المفتاح لا يُخزَّن — يبقى في الذاكرة فقط. لن يُحفظ في أي مكان.
+⚠️ اختبار مؤقت. المفتاح لا يُخزَّن.
 </div>
 
-<p style="font-size:14px;opacity:0.9">الصق مفتاح Gemini هنا (يبدأ بـ <code style="direction:ltr;display:inline-block">AQ.</code>):</p>
+<p style="font-size:14px;opacity:0.9">الصق مفتاح Gemini (يبدأ بـ <code style="direction:ltr;display:inline-block">AQ.</code>):</p>
 <input type="text" id="key" placeholder="AQ.Ab8..." autocomplete="off" spellcheck="false">
 
-<button id="test">🔍 اختبر المفتاح</button>
+<button id="test">🔍 اعرض النماذج المتاحة واختبر</button>
 
 <div id="status"></div>
 <pre id="out">النتيجة ستظهر هنا...</pre>
@@ -45,56 +45,63 @@ btn.addEventListener('click', async () => {
         statusEl.textContent = '❌ اكتب المفتاح أولًا';
         return;
     }
-    if (!key.startsWith('AQ.') && !key.startsWith('AIza')) {
-        statusEl.className = 'status err';
-        statusEl.textContent = '❌ المفتاح لا يبدأ بـ AQ. أو AIza';
-        return;
-    }
 
     btn.disabled = true;
     statusEl.className = 'status loading';
-    statusEl.textContent = '⏳ جارٍ الاختبار...';
-    outEl.textContent = 'جاري الاتصال بـ Google...';
+    statusEl.textContent = '⏳ جارٍ الاتصال بـ Google...';
+    outEl.textContent = '';
 
-    const models = [
-        'gemini-2.0-flash',
-        'gemini-1.5-flash'
-    ];
+    // 1) اعرض قائمة النماذج
+    try {
+        const listUrl = 'https://generativelanguage.googleapis.com/v1beta/models?key=' + encodeURIComponent(key);
+        const listRes = await fetch(listUrl);
+        const listText = await listRes.text();
 
-    for (const model of models) {
-        try {
-            const url = 'https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent?key=' + encodeURIComponent(key);
-            const res = await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    contents: [{ role: 'user', parts: [{ text: 'قل: اختبار ناجح' }] }]
-                })
-            });
-            const text = await res.text();
+        if (listRes.ok) {
+            const data = JSON.parse(listText);
+            const models = (data.models || [])
+                .filter(m => m.supportedGenerationMethods && m.supportedGenerationMethods.includes('generateContent'))
+                .map(m => m.name.replace('models/', ''));
 
-            if (res.ok) {
-                statusEl.className = 'status ok';
-                statusEl.textContent = '✅ نجح! المفتاح صحيح (النموذج: ' + model + ')';
-                outEl.textContent = 'HTTP ' + res.status + '\n\n' + text;
-                btn.disabled = false;
-                return;
-            } else {
-                outEl.textContent = 'محاولة مع ' + model + ':\nHTTP ' + res.status + '\n\n' + text.substring(0, 600) + '\n\n---\n';
-                if (text.includes('API_KEY_INVALID') || text.includes('API key not valid')) {
-                    statusEl.className = 'status err';
-                    statusEl.textContent = '❌ المفتاح غير صالح';
-                    btn.disabled = false;
-                    return;
+            statusEl.className = 'status ok';
+            statusEl.textContent = '✅ المفتاح يعمل! عدد النماذج: ' + models.length;
+            outEl.textContent = 'النماذج المتاحة لمفتاحك:\n\n' + models.map(m => '• ' + m).join('\n');
+
+            // اختبار سريع بأول نموذج
+            if (models.length > 0) {
+                const testModel = models.find(m => m.includes('flash')) || models[0];
+                outEl.textContent += '\n\n---\nجارٍ اختبار النموذج: ' + testModel + ' ...\n';
+
+                try {
+                    const testUrl = 'https://generativelanguage.googleapis.com/v1beta/models/' + testModel + ':generateContent?key=' + encodeURIComponent(key);
+                    const testRes = await fetch(testUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ role: 'user', parts: [{ text: 'قل فقط: نجح' }] }]
+                        })
+                    });
+                    const testText = await testRes.text();
+                    if (testRes.ok) {
+                        outEl.textContent += '✅ نجح!\n\n' + testText.substring(0, 500);
+                    } else {
+                        outEl.textContent += '❌ فشل: HTTP ' + testRes.status + '\n' + testText.substring(0, 400);
+                    }
+                } catch (e) {
+                    outEl.textContent += '❌ خطأ: ' + e.message;
                 }
             }
-        } catch (err) {
-            outEl.textContent += '\n[' + model + '] خطأ: ' + err.message + '\n';
+        } else {
+            statusEl.className = 'status err';
+            statusEl.textContent = '❌ فشل طلب قائمة النماذج - HTTP ' + listRes.status;
+            outEl.textContent = listText.substring(0, 1000);
         }
+    } catch (err) {
+        statusEl.className = 'status err';
+        statusEl.textContent = '❌ خطأ في الاتصال';
+        outEl.textContent = 'Error: ' + err.message;
     }
 
-    statusEl.className = 'status err';
-    statusEl.textContent = '❌ فشلت جميع المحاولات - راجع النص أعلاه';
     btn.disabled = false;
 });
 
