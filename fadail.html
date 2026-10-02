@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>فضائل الأعمال — ملاك المعرفة الإسلامية</title>
+<title>فضائل الأعمال — ملاك المعرفة</title>
 <meta name="description" content="فضائل الصلاة والصيام والحج والزكاة وقراءة القرآن وقيام الليل والصدقة — بآيات وأحاديث صحيحة.">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
@@ -50,16 +50,21 @@
 <nav class="main-nav">
 <ul class="nav-list">
 <li><a href="index.html">🏠 الرئيسية</a></li>
-<li><a href="quran.html">📖 القرآن الكريم</a></li>
+<li><a href="quran.html">📖 القرآن</a></li>
 <li><a href="tafsir.html">📚 التفسير</a></li>
-<li><a href="hadith.html">🕌 السنة النبوية</a></li>
-<li><a href="seerah.html">🌙 السيرة النبوية</a></li>
+<li><a href="hadith.html">🕌 السنة</a></li>
+<li><a href="seerah.html">🌙 السيرة</a></li>
 <li><a href="ghazawat.html">⚔️ الغزوات</a></li>
-<li><a href="prophets.html">🕊️ قصص الأنبياء</a></li>
+<li><a href="prophets.html">🕊️ الأنبياء</a></li>
 <li><a href="sahaba.html">⭐ الصحابة</a></li>
 <li><a href="adhkar.html">🤲 الأذكار</a></li>
+<li><a href="prayer.html">🕌 الصلاة</a></li>
+<li><a href="tasbih.html">📿 المسبحة</a></li>
+<li><a href="calendar.html">📅 التقويم</a></li>
 <li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="library.html">📚 المكتبة</a></li>
 <li><a href="search.html">🔍 البحث</a></li>
+<li><a href="masael.html">📖 المسائل الشرعية</a></li>
 </ul>
 </nav>
 
@@ -76,11 +81,14 @@
 
 <footer class="site-footer">
 <p class="footer-ayah">﴿ إِنَّهُمْ كَانُوا يُسَارِعُونَ فِي الْخَيْرَاتِ وَيَدْعُونَنَا رَغَبًا وَرَهَبًا ۖ وَكَانُوا لَنَا خَاشِعِينَ ﴾</p>
-<p>ملاك المعرفة الإسلامية — منصة دعوية غير ربحية</p>
-<p>© 2026 — نسألكم الدعاء</p>
+<p>ملاك المعرفة — منصة دعوية غير ربحية</p>
+<p>© 2026 <strong>Emad Halawh</strong> — جميع الحقوق محفوظة. نسألكم الدعاء.</p>
 </footer>
 
 <script>
+(function () {
+'use strict';
+
 const FADAIL_DATA = [
     {
         icon: "🕌",
@@ -200,39 +208,52 @@ const FADAIL_DATA = [
     }
 ];
 
+function $(id) { return document.getElementById(id); }
+
+function escapeHtml(t) {
+    const d = document.createElement('div');
+    d.textContent = String(t);
+    return d.innerHTML;
+}
+
 function renderAccordion() {
-    const container = document.getElementById('fadail-container');
+    const container = $('fadail-container');
     container.innerHTML = FADAIL_DATA.map((item, i) => `
         <div class="acc-item" id="acc-${i}">
-            <div class="acc-head" onclick="toggleAcc(${i})">
+            <div class="acc-head" data-acc="${i}">
                 <span class="acc-icon">${item.icon}</span>
-                <span class="acc-title">${item.title}</span>
+                <span class="acc-title">${escapeHtml(item.title)}</span>
                 <span class="acc-arrow">▼</span>
             </div>
             <div class="acc-body">
                 <div class="acc-content">
-                    <div class="acc-intro">${item.intro}</div>
+                    <div class="acc-intro">${escapeHtml(item.intro)}</div>
                     ${item.quotes.map(q => `
                         <div class="quote">
                             <span class="quote-label">${
                                 q.type === 'ayah' ? '📖 آية' : '🕌 حديث'
                             }</span>
-                            <div class="quote-text ${q.type === 'ayah' ? 'ayah' : ''}">${q.text}</div>
-                            ${q.ref ? `<div class="quote-ref">— ${q.ref}</div>` : ''}
+                            <div class="quote-text ${q.type === 'ayah' ? 'ayah' : ''}">${escapeHtml(q.text)}</div>
+                            ${q.ref ? `<div class="quote-ref">— ${escapeHtml(q.ref)}</div>` : ''}
                         </div>
                     `).join('')}
                 </div>
             </div>
         </div>
     `).join('');
-}
 
-function toggleAcc(index) {
-    const el = document.getElementById(`acc-${index}`);
-    el.classList.toggle('open');
+    container.querySelectorAll('.acc-head').forEach(head => {
+        head.addEventListener('click', () => {
+            const idx = head.dataset.acc;
+            const el = $('acc-' + idx);
+            if (el) el.classList.toggle('open');
+        });
+    });
 }
 
 renderAccordion();
+
+})();
 </script>
 
 </body>
