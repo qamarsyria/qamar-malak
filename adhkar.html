@@ -29,10 +29,10 @@
 .counter-btn{width:45px;height:45px;border-radius:50%;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark);border:none;font-size:20px;font-weight:700;cursor:pointer;font-family:'Amiri',serif;transition:all 0.3s}
 .counter-btn:hover:not(:disabled){transform:scale(1.1);box-shadow:0 5px 15px rgba(212,175,55,0.4)}
 .counter-btn.done{background:linear-gradient(135deg,#4ade80 0%,#22c55e 100%);color:white;cursor:default}
-.counter-btn:disabled{opacity:0.85;cursor:not-allowed}
+.counter-btn:disabled{opacity:0.9;cursor:not-allowed}
 .counter-display{min-width:60px;text-align:center;color:var(--cream);font-size:15px;font-weight:600}
 .counter-display span{color:var(--gold);font-size:18px}
-.reset-btn{padding:6px 12px;background:rgba(200,50,50,0.3);border:1px solid rgba(200,50,50,0.5);color:#ff8888;border-radius:15px;font-size:12px;font-family:inherit;cursor:pointer}
+.reset-btn{padding:6px 12px;background:rgba(200,50,50,0.3);border:1px solid rgba(200,50,50,0.5);color:#ff8888;border-radius:15px;font-size:12px;font-family:inherit;cursor:pointer;transition:all 0.3s}
 .reset-btn:hover{background:rgba(200,50,50,0.5);color:white}
 .done-msg{text-align:center;padding:8px;color:#4ade80;font-size:13px;font-weight:600;display:none;margin-top:10px}
 .done-msg.show{display:block}
@@ -74,8 +74,9 @@
 <li><a href="tasbih.html">📿 المسبحة</a></li>
 <li><a href="calendar.html">📅 التقويم</a></li>
 <li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="library.html">📚 المكتبة</a></li>
 <li><a href="search.html">🔍 البحث</a></li>
-<li><a href="bot.html">📖 المسائل الشرعية</a></li>
+<li><a href="masael.html">📖 المسائل الشرعية</a></li>
 </ul>
 </nav>
 
@@ -198,6 +199,14 @@ let currentTab = 'morning';
 const counters = {};
 let tabsEl, headerEl, containerEl;
 
+function $(id) { return document.getElementById(id); }
+
+function escapeHtml(t) {
+    const d = document.createElement('div');
+    d.textContent = String(t);
+    return d.innerHTML;
+}
+
 function renderTabs() {
     tabsEl.innerHTML = Object.keys(ADHKAR_DATA).map(key => `
         <button class="tab-btn ${key === currentTab ? 'active' : ''}" data-tab="${key}">
@@ -213,7 +222,7 @@ function renderTabs() {
 function switchTab(key) {
     if (!ADHKAR_DATA[key]) return;
     currentTab = key;
-    Object.keys(counters).forEach(k => { if (k.startsWith(currentTab + '-')) delete counters[k]; });
+    // لا نصفّر عدادات الأقسام الأخرى، فقط نعرض القسم الجديد
     renderTabs();
     renderContent();
 }
@@ -223,8 +232,8 @@ function renderContent() {
 
     headerEl.innerHTML = `
         <div class="section-header">
-            <h2>${data.title}</h2>
-            <p>${data.desc}</p>
+            <h2>${escapeHtml(data.title)}</h2>
+            <p>${escapeHtml(data.desc)}</p>
         </div>
     `;
 
@@ -234,9 +243,9 @@ function renderContent() {
         const done = current >= item.count;
         return `
             <div class="dhikr-card">
-                <div class="dhikr-text">${item.text}</div>
+                <div class="dhikr-text">${escapeHtml(item.text)}</div>
                 <div class="dhikr-meta">
-                    <div class="dhikr-source">📖 ${item.source}</div>
+                    <div class="dhikr-source">📖 ${escapeHtml(item.source)}</div>
                     <div class="dhikr-counter">
                         <button class="counter-btn ${done ? 'done' : ''}"
                                 data-key="${key}"
@@ -266,14 +275,14 @@ function handleIncrement(btn) {
     if (current >= target) return;
 
     counters[key] = current + 1;
-    const countEl = document.getElementById(`count-${key}`);
+    const countEl = $('count-' + key);
     if (countEl) countEl.textContent = counters[key];
 
     if (counters[key] >= target) {
         btn.classList.add('done');
         btn.innerHTML = '✓';
         btn.disabled = true;
-        const doneMsg = document.getElementById(`done-${key}`);
+        const doneMsg = $('done-' + key);
         if (doneMsg) doneMsg.classList.add('show');
     }
 }
@@ -297,9 +306,9 @@ function onContainerClick(ev) {
 }
 
 function init() {
-    tabsEl = document.getElementById('tabs');
-    headerEl = document.getElementById('section-header-container');
-    containerEl = document.getElementById('adhkar-container');
+    tabsEl = $('tabs');
+    headerEl = $('section-header-container');
+    containerEl = $('adhkar-container');
 
     renderTabs();
     renderContent();
