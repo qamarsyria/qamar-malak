@@ -3,18 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مكتبة ابن القيم — ملاك المعرفة</title>
-<meta name="description" content="مكتبة الإمام ابن القيم: 23 كتابًا في تزكية النفوس وأعمال القلوب، بقراءة داخل الموقع.">
+<title>مكتبة الإمام ابن القيم — ملاك المعرفة</title>
+<meta name="description" content="مكتبة الإمام ابن القيم: 30 كتابًا في تزكية النفوس والعقيدة والسلوك، بقراءة داخل الموقع.">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
 <style>
 .iq-hero{background:linear-gradient(135deg,rgba(212,175,55,0.22) 0%,rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:20px;padding:35px 20px;text-align:center;margin-bottom:30px}
 .iq-hero h1{font-family:'Amiri',serif;font-size:32px;color:var(--gold);margin-bottom:12px}
-.iq-hero p{color:var(--cream);opacity:0.9;max-width:680px;margin:0 auto;font-size:15px}
-.iq-hero .author{font-family:'Amiri',serif;font-size:20px;color:var(--gold);margin-top:15px;font-weight:700}
+.iq-hero p{color:var(--cream);opacity:0.9;max-width:720px;margin:0 auto;font-size:15px;line-height:1.9}
+.iq-hero .author{font-family:'Amiri',serif;font-size:20px;color:var(--gold);margin-top:18px;font-weight:700;padding-top:18px;border-top:1px dashed rgba(212,175,55,0.3)}
+.stats-mini{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin-top:15px}
+.stats-mini .stat{text-align:center}
+.stats-mini .num{font-family:'Amiri',serif;font-size:26px;color:var(--gold);font-weight:700;display:block;line-height:1}
+.stats-mini .lbl{font-size:11px;color:var(--cream);opacity:0.75;margin-top:5px}
 .section-title{font-family:'Amiri',serif;font-size:22px;color:var(--gold);margin:35px 0 15px;padding-bottom:10px;border-bottom:1px solid rgba(212,175,55,0.3);display:flex;align-items:center;gap:10px}
 .section-title::before{content:'';width:4px;height:24px;background:var(--gold);border-radius:2px}
-.books-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-bottom:20px}
+.section-title .count{margin-right:auto;font-size:13px;opacity:0.7;font-family:'Tajawal',sans-serif}
+.books-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-bottom:20px}
 .book-card{background:linear-gradient(135deg,rgba(26,107,84,0.35) 0%,rgba(13,77,60,0.55) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:14px;padding:16px 18px;transition:all 0.3s;cursor:pointer;position:relative;overflow:hidden;display:flex;align-items:center;gap:12px}
 .book-card::before{content:'';position:absolute;top:0;right:0;width:4px;height:100%;background:var(--gold);transform:scaleY(0);transition:transform 0.3s;transform-origin:top}
 .book-card:hover{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 6px 20px rgba(212,175,55,0.2)}
@@ -23,9 +28,6 @@
 .book-info{flex:1;min-width:0}
 .book-name{font-family:'Amiri',serif;font-size:18px;color:var(--gold);margin-bottom:4px;line-height:1.3}
 .book-hint{font-size:11px;color:var(--cream);opacity:0.7}
-.book-card.missing{opacity:0.7}
-.book-card.missing .book-icon{filter:grayscale(1)}
-.book-card.missing .book-hint{color:#ff8888}
 .modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.92);backdrop-filter:blur(6px);z-index:3000;padding:15px;align-items:center;justify-content:center}
 .modal-overlay.show{display:flex}
 .modal-content{background:linear-gradient(135deg,#0a3a2c 0%,#0d4d3c 100%);border:2px solid var(--gold);border-radius:16px;width:100%;max-width:1100px;height:90vh;display:flex;flex-direction:column;overflow:hidden}
@@ -48,10 +50,12 @@
 .modal-fallback a{display:inline-block;padding:12px 24px;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark);text-decoration:none;border-radius:25px;font-weight:700;font-size:14px}
 @media (max-width:640px){
 .iq-hero h1{font-size:24px}
+.iq-hero p{font-size:13px}
 .books-grid{grid-template-columns:1fr}
 .modal-content{height:95vh;max-width:none}
 .modal-title{font-size:16px}
 .modal-btn{font-size:11px;padding:6px 10px}
+.stats-mini{gap:20px}
 }
 </style>
 </head>
@@ -85,7 +89,6 @@
 <li><a href="tasbih.html">📿 المسبحة</a></li>
 <li><a href="calendar.html">📅 التقويم</a></li>
 <li><a href="fiqh.html">⚖️ الفقه</a></li>
-<li><a href="zuhd.html">🕋 الزهد والرقائق</a></li>
 <li><a href="ibn-qayyim.html" class="active">📚 مكتبة ابن القيم</a></li>
 <li><a href="search.html">🔍 البحث</a></li>
 <li><a href="bot.html">📖 المسائل الشرعية</a></li>
@@ -96,8 +99,13 @@
 
 <section class="iq-hero">
 <h1>📚 مكتبة الإمام ابن القيم</h1>
-<p>تزكية النفوس وأعمال القلوب — مجموعة من أنفس كتب الإمام ابن القيم رحمه الله، مرتبة حسب الموضوع، تُقرأ داخل الموقع مباشرة.</p>
-<div class="author">🖋️ الإمام شمس الدين محمد بن أبي بكر ابن القيم الجوزية (691 - 751 هـ)</div>
+<p>خزانة من أنفس كتب الإمام ابن القيم رحمه الله — في تزكية النفوس، وأعمال القلوب، والعقيدة، والقضاء والقدر، والرد على الفرق. تُقرأ داخل الموقع مباشرة.</p>
+<div class="author">🖋️ الإمام شمس الدين محمد بن أبي بكر ابن قيم الجوزية (691 - 751 هـ)</div>
+<div class="stats-mini">
+<div class="stat"><span class="num" id="stat-books">30</span><span class="lbl">كتاب</span></div>
+<div class="stat"><span class="num" id="stat-sections">9</span><span class="lbl">أقسام</span></div>
+<div class="stat"><span class="num">مجاني</span><span class="lbl">للأبد</span></div>
+</div>
 </section>
 
 <div id="library-container"></div>
@@ -139,8 +147,8 @@
 
 <script>
 /* ============================================================
-   مكتبة ابن القيم — كتب مجمّعة حسب الموضوع
-   الروابط إلى archive.org (قراءة داخل iframe)
+   مكتبة الإمام ابن القيم — 30 كتابًا
+   كل كتاب: archiveId (للعرض داخل iframe) + shamela (احتياطي)
    ============================================================ */
 
 const LIBRARY = [
@@ -205,6 +213,40 @@ const LIBRARY = [
     ]
 },
 {
+    section: '🕊️ العقيدة والرد على الفرق',
+    books: [
+        { name: 'الصواعق المرسلة على الجهمية والمعطلة',
+          archiveId: 'alsawaaiq-almursala', shamela: 'http://shamela.ws/index.php/book/10920' },
+        { name: 'الكافية الشافية في الانتصار للفرقة الناجية',
+          archiveId: 'alkafiya-alshafiya', shamela: 'http://shamela.ws/index.php/book/9717' },
+        { name: 'اجتماع الجيوش الإسلامية على غزو المعطلة والجهمية',
+          archiveId: 'ijtima-aljuyush', shamela: 'http://shamela.ws/index.php/book/9066' },
+        { name: 'عقيدة ابن القيم',
+          archiveId: 'aqidat-ibnqayyim', shamela: null }
+    ]
+},
+{
+    section: '⚖️ القضاء والقدر',
+    books: [
+        { name: 'شفاء العليل في مسائل القضاء والقدر والحكمة والتعليل',
+          archiveId: 'shifa-alalil', shamela: 'http://shamela.ws/index.php/book/9094' }
+    ]
+},
+{
+    section: '📖 الردود على أهل الكتاب',
+    books: [
+        { name: 'هداية الحيارى في أجوبة اليهود والنصارى',
+          archiveId: 'hidayat-alhayara', shamela: 'http://shamela.ws/index.php/book/9068' }
+    ]
+},
+{
+    section: '🎓 العلم والإرادة',
+    books: [
+        { name: 'مفتاح دار السعادة ومنشورات ولاية العلم والإرادة',
+          archiveId: 'miftah-dar-alsada', shamela: 'http://shamela.ws/index.php/book/9078' }
+    ]
+},
+{
     section: '📖 متفرقات ومؤلفات قصيرة',
     books: [
         { name: 'الفوائد',
@@ -226,7 +268,10 @@ function escapeHtml(t) {
 function buildLibrary() {
     const container = document.getElementById('library-container');
     container.innerHTML = LIBRARY.map(group => `
-        <h2 class="section-title">${group.section}</h2>
+        <h2 class="section-title">
+            ${group.section}
+            <span class="count">${group.books.length} ${group.books.length === 1 ? 'كتاب' : 'كتب'}</span>
+        </h2>
         <div class="books-grid">
             ${group.books.map(b => `
                 <div class="book-card" data-id="${escapeHtml(b.archiveId)}"
@@ -247,6 +292,13 @@ function buildLibrary() {
             openReader(card.dataset.id, card.dataset.name, card.dataset.shamela);
         });
     });
+
+    // تحديث الإحصائيات
+    const totalBooks = LIBRARY.reduce((sum, g) => sum + g.books.length, 0);
+    const statBooks = document.getElementById('stat-books');
+    const statSections = document.getElementById('stat-sections');
+    if (statBooks) statBooks.textContent = totalBooks;
+    if (statSections) statSections.textContent = LIBRARY.length;
 }
 
 function openReader(archiveId, bookName, shamelaUrl) {
@@ -269,7 +321,6 @@ function openReader(archiveId, bookName, shamelaUrl) {
     pdfBtn.href = archivePdf;
     fallbackOpen.href = archiveDetails;
 
-    // إعادة تعيين الحالة
     loading.style.display = 'flex';
     fallback.classList.remove('show');
     iframe.src = 'about:blank';
@@ -277,15 +328,12 @@ function openReader(archiveId, bookName, shamelaUrl) {
     modal.classList.add('show');
     document.body.style.overflow = 'hidden';
 
-    // محاولة تحميل iframe
     let iframeLoaded = false;
     iframe.onload = () => {
         iframeLoaded = true;
         loading.style.display = 'none';
     };
-    iframe.onerror = () => {
-        showFallback();
-    };
+    iframe.onerror = () => showFallback();
 
     setTimeout(() => {
         if (!iframeLoaded) showFallback();
