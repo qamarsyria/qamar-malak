@@ -69,8 +69,9 @@
 <li><a href="tasbih.html">📿 المسبحة</a></li>
 <li><a href="calendar.html">📅 التقويم</a></li>
 <li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="ibn-qayyim.html">📚 المكتبة</a></li>
 <li><a href="search.html" class="active">🔍 البحث</a></li>
-<li><a href="bot.html">🤖 البوت</a></li>
+<li><a href="bot.html">📖 المسائل الشرعية</a></li>
 </ul>
 </nav>
 
@@ -97,9 +98,9 @@
 <div id="results-container"></div>
 
 <section class="bot-cta">
-<h3>🤖 عندك سؤال ديني؟</h3>
-<p>جرّب البوت الإسلامي الموثّق — 204 سؤال وجواب من القرآن والسنة الصحيحة.</p>
-<a href="bot.html">اسأل البوت ←</a>
+<h3>📖 عندك مسألة شرعية؟</h3>
+<p>تصفح ${FAQ_LABEL} مسألة موثّقة من القرآن والسنة الصحيحة.</p>
+<a href="bot.html">المسائل الشرعية ←</a>
 </section>
 
 </main>
@@ -164,7 +165,7 @@ const LOCAL_DATA = {
 
 function escapeHtml(text) {
     const div = document.createElement('div');
-    div.textContent = text;
+    div.textContent = String(text);
     return div.innerHTML;
 }
 
@@ -284,7 +285,6 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     });
 });
 
-// دعم البحث القادم من index.html عبر ?q=
 const urlQuery = new URLSearchParams(window.location.search).get('q');
 if (urlQuery) {
     document.getElementById('search-input').value = urlQuery;
