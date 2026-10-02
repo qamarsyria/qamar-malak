@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>التفسير — ملاك المعرفة الإسلامية</title>
-<meta name="description" content="تفسير القرآن الكريم: التفسير الميسّر المعتمد من مجمع الملك فهد، وتفسير ابن عباس (تنوير المقباس).">
+<title>التفسير — ملاك المعرفة</title>
+<meta name="description" content="تفسير القرآن الكريم: التفسير الميسّر (مجمع الملك فهد)، وتنوير المقباس (ابن عباس).">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
 <style>
@@ -69,16 +69,21 @@
 <nav class="main-nav">
 <ul class="nav-list">
 <li><a href="index.html">🏠 الرئيسية</a></li>
-<li><a href="quran.html">📖 القرآن الكريم</a></li>
+<li><a href="quran.html">📖 القرآن</a></li>
 <li><a href="tafsir.html" class="active">📚 التفسير</a></li>
-<li><a href="hadith.html">🕌 السنة النبوية</a></li>
-<li><a href="seerah.html">🌙 السيرة النبوية</a></li>
+<li><a href="hadith.html">🕌 السنة</a></li>
+<li><a href="seerah.html">🌙 السيرة</a></li>
 <li><a href="ghazawat.html">⚔️ الغزوات</a></li>
-<li><a href="prophets.html">🕊️ قصص الأنبياء</a></li>
+<li><a href="prophets.html">🕊️ الأنبياء</a></li>
 <li><a href="sahaba.html">⭐ الصحابة</a></li>
 <li><a href="adhkar.html">🤲 الأذكار</a></li>
+<li><a href="prayer.html">🕌 الصلاة</a></li>
+<li><a href="tasbih.html">📿 المسبحة</a></li>
+<li><a href="calendar.html">📅 التقويم</a></li>
 <li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="library.html">📚 المكتبة</a></li>
 <li><a href="search.html">🔍 البحث</a></li>
+<li><a href="masael.html">📖 المسائل الشرعية</a></li>
 </ul>
 </nav>
 
@@ -102,9 +107,9 @@
 
 <div id="viewer-view" class="viewer-container">
 <div class="tafsir-nav">
-<button class="nav-btn" onclick="backToList()">📋 قائمة السور</button>
-<a href="#" id="prev-btn" class="nav-btn">◀ السورة السابقة</a>
-<a href="#" id="next-btn" class="nav-btn">السورة التالية ▶</a>
+<button class="nav-btn" id="back-btn">📋 قائمة السور</button>
+<button class="nav-btn" id="prev-btn">◀ السورة السابقة</button>
+<button class="nav-btn" id="next-btn">السورة التالية ▶</button>
 </div>
 
 <div class="tafsir-header">
@@ -127,31 +132,26 @@
 
 <footer class="site-footer">
 <p class="footer-ayah">﴿ كِتَابٌ أَنزَلْنَاهُ إِلَيْكَ مُبَارَكٌ لِّيَدَّبَّرُوا آيَاتِهِ وَلِيَتَذَكَّرَ أُولُو الْأَلْبَابِ ﴾</p>
-<p>ملاك المعرفة الإسلامية — منصة دعوية غير ربحية</p>
-<p>© 2026 — نسألكم الدعاء</p>
+<p>ملاك المعرفة — منصة دعوية غير ربحية</p>
+<p>© 2026 <strong>Emad Halawh</strong> — جميع الحقوق محفوظة. نسألكم الدعاء.</p>
 </footer>
 
 <script>
-/* ============================================================
-   تفسير القرآن — التفسير الميسّر + تنوير المقباس
-   ============================================================ */
 (function () {
 'use strict';
 
 const API = 'https://api.alquran.cloud/v1';
-
-const state = {
-    allSurahs: [],
-    currentSurah: null,
-    currentTafsir: 'ar.muyassar',
-    currentSearch: ''
-};
+let allSurahs = [];
+let currentSurah = null;
+let currentSurahNum = 0;
+let currentTafsir = 'ar.muyassar';
+let currentSearch = '';
 
 function $(id) { return document.getElementById(id); }
 
 function escapeHtml(t) {
     const d = document.createElement('div');
-    d.textContent = t;
+    d.textContent = String(t);
     return d.innerHTML;
 }
 
@@ -160,29 +160,26 @@ async function loadSurahs() {
         const res = await fetch(`${API}/surah`);
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
-        state.allSurahs = data.data || [];
+        allSurahs = data.data || [];
         renderSurahs();
     } catch (e) {
-        $('surahs-container').innerHTML =
-            '<div class="no-results">⚠️ تعذر تحميل السور. تحقق من الاتصال.</div>';
+        $('surahs-container').innerHTML = '<div class="no-results">⚠️ تعذر تحميل السور. تحقق من الاتصال.</div>';
     }
 }
 
 function renderSurahs() {
     const container = $('surahs-container');
-    const q = state.currentSearch.trim();
-    const filtered = state.allSurahs.filter(s =>
+    const q = currentSearch.trim();
+    const filtered = allSurahs.filter(s =>
         q === '' ||
         s.name.includes(q) ||
         s.englishName.toLowerCase().includes(q.toLowerCase()) ||
         s.number.toString() === q
     );
-
     if (filtered.length === 0) {
         container.innerHTML = '<div class="no-results">لا توجد نتائج</div>';
         return;
     }
-
     container.innerHTML = '<div class="surah-grid">' + filtered.map(s => `
         <div class="surah-card" data-surah="${s.number}">
             <div class="surah-number"><span>${s.number}</span></div>
@@ -192,48 +189,39 @@ function renderSurahs() {
             </div>
         </div>
     `).join('') + '</div>';
-
     container.querySelectorAll('.surah-card').forEach(card => {
         card.addEventListener('click', () => openSurah(parseInt(card.dataset.surah, 10)));
     });
 }
 
 async function openSurah(num) {
+    currentSurahNum = num;
     $('list-view').style.display = 'none';
     $('viewer-view').classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     $('tafsir-surah-name').textContent = 'جارٍ التحميل...';
     $('tafsir-surah-meta').textContent = '';
-    $('ayahs-tafsir-container').innerHTML =
-        '<div class="loading"><div class="spinner"></div><div>جارٍ تحميل السورة...</div></div>';
+    $('ayahs-tafsir-container').innerHTML = '<div class="loading"><div class="spinner"></div><div>جارٍ تحميل السورة...</div></div>';
 
     try {
         const res = await fetch(`${API}/surah/${num}`);
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
-        state.currentSurah = data.data;
+        currentSurah = data.data;
 
-        $('tafsir-surah-name').textContent =
-            `سورة ${state.currentSurah.name.replace('سُورَةُ ', '')}`;
-        $('tafsir-surah-meta').textContent =
-            `${state.currentSurah.revelationType} · ${state.currentSurah.numberOfAyahs} آية · ترتيبها ${state.currentSurah.number}`;
-
-        $('prev-btn').href = num > 1 ? `javascript:void(0)` : '#';
-        $('next-btn').href = num < 114 ? `javascript:void(0)` : '#';
-        $('prev-btn').onclick = () => { if (num > 1) openSurah(num - 1); };
-        $('next-btn').onclick = () => { if (num < 114) openSurah(num + 1); };
+        $('tafsir-surah-name').textContent = `سورة ${currentSurah.name.replace('سُورَةُ ', '')}`;
+        $('tafsir-surah-meta').textContent = `${currentSurah.revelationType} · ${currentSurah.numberOfAyahs} آية · ترتيبها ${currentSurah.number}`;
 
         renderAyahsWithTafsir();
     } catch (e) {
-        $('ayahs-tafsir-container').innerHTML =
-            '<div class="no-results">⚠️ تعذر تحميل السورة.</div>';
+        $('ayahs-tafsir-container').innerHTML = '<div class="no-results">⚠️ تعذر تحميل السورة.</div>';
     }
 }
 
 function renderAyahsWithTafsir() {
     const container = $('ayahs-tafsir-container');
-    container.innerHTML = state.currentSurah.ayahs.map(ayah => `
+    container.innerHTML = currentSurah.ayahs.map(ayah => `
         <div class="ayah-tafsir-card">
             <div class="ayah-text">
                 ${escapeHtml(ayah.text)}
@@ -244,17 +232,14 @@ function renderAyahsWithTafsir() {
             </div>
         </div>
     `).join('');
-
-    state.currentSurah.ayahs.forEach(ayah => {
-        loadTafsir(ayah.number, ayah.numberInSurah);
-    });
+    currentSurah.ayahs.forEach(ayah => loadTafsir(ayah.number, ayah.numberInSurah));
 }
 
 async function loadTafsir(globalNum, ayahNum) {
     const el = $('tafsir-ayah-' + ayahNum);
     if (!el) return;
     try {
-        const res = await fetch(`${API}/ayah/${globalNum}/${state.currentTafsir}`);
+        const res = await fetch(`${API}/ayah/${globalNum}/${currentTafsir}`);
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
         const text = data.data.text;
@@ -270,17 +255,16 @@ function backToList() {
     $('list-view').style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-window.backToList = backToList;
 
 $('search-input').addEventListener('input', (e) => {
-    state.currentSearch = e.target.value;
+    currentSearch = e.target.value;
     renderSurahs();
 });
 
 $('tafsir-select').addEventListener('change', (e) => {
-    state.currentTafsir = e.target.value;
-    if (state.currentSurah) {
-        state.currentSurah.ayahs.forEach(ayah => {
+    currentTafsir = e.target.value;
+    if (currentSurah) {
+        currentSurah.ayahs.forEach(ayah => {
             const el = $('tafsir-ayah-' + ayah.numberInSurah);
             if (el) el.innerHTML = '<div class="tafsir-loading">⏳ جارٍ التحميل...</div>';
             loadTafsir(ayah.number, ayah.numberInSurah);
@@ -288,7 +272,18 @@ $('tafsir-select').addEventListener('change', (e) => {
     }
 });
 
+$('back-btn').addEventListener('click', backToList);
+
+$('prev-btn').addEventListener('click', () => {
+    if (currentSurahNum > 1) openSurah(currentSurahNum - 1);
+});
+
+$('next-btn').addEventListener('click', () => {
+    if (currentSurahNum < 114) openSurah(currentSurahNum + 1);
+});
+
 loadSurahs();
+
 })();
 </script>
 
