@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مكتبة ابن القيم — ملاك المعرفة</title>
+<meta name="description" content="مكتبة الإمام ابن القيم: 23 كتابًا في تزكية النفوس وأعمال القلوب، بقراءة داخل الموقع.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+<style>
+.iq-hero{background:linear-gradient(135deg,rgba(212,175,55,0.22) 0%,rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:20px;padding:35px 20px;text-align:center;margin-bottom:30px}
+.iq-hero h1{font-family:'Amiri',serif;font-size:32px;color:var(--gold);margin-bottom:12px}
+.iq-hero p{color:var(--cream);opacity:0.9;max-width:680px;margin:0 auto;font-size:15px}
+.iq-hero .author{font-family:'Amiri',serif;font-size:20px;color:var(--gold);margin-top:15px;font-weight:700}
+.section-title{font-family:'Amiri',serif;font-size:22px;color:var(--gold);margin:35px 0 15px;padding-bottom:10px;border-bottom:1px solid rgba(212,175,55,0.3);display:flex;align-items:center;gap:10px}
+.section-title::before{content:'';width:4px;height:24px;background:var(--gold);border-radius:2px}
+.books-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-bottom:20px}
+.book-card{background:linear-gradient(135deg,rgba(26,107,84,0.35) 0%,rgba(13,77,60,0.55) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:14px;padding:16px 18px;transition:all 0.3s;cursor:pointer;position:relative;overflow:hidden;display:flex;align-items:center;gap:12px}
+.book-card::before{content:'';position:absolute;top:0;right:0;width:4px;height:100%;background:var(--gold);transform:scaleY(0);transition:transform 0.3s;transform-origin:top}
+.book-card:hover{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 6px 20px rgba(212,175,55,0.2)}
+.book-card:hover::before{transform:scaleY(1)}
+.book-icon{font-size:32px;flex-shrink:0}
+.book-info{flex:1;min-width:0}
+.book-name{font-family:'Amiri',serif;font-size:18px;color:var(--gold);margin-bottom:4px;line-height:1.3}
+.book-hint{font-size:11px;color:var(--cream);opacity:0.7}
+.book-card.missing{opacity:0.7}
+.book-card.missing .book-icon{filter:grayscale(1)}
+.book-card.missing .book-hint{color:#ff8888}
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.92);backdrop-filter:blur(6px);z-index:3000;padding:15px;align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal-content{background:linear-gradient(135deg,#0a3a2c 0%,#0d4d3c 100%);border:2px solid var(--gold);border-radius:16px;width:100%;max-width:1100px;height:90vh;display:flex;flex-direction:column;overflow:hidden}
+.modal-header{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;border-bottom:1px solid rgba(212,175,55,0.3);background:rgba(10,58,44,0.7);flex-wrap:wrap;gap:10px}
+.modal-title{font-family:'Amiri',serif;font-size:22px;color:var(--gold);margin:0;flex:1;min-width:150px}
+.modal-actions{display:flex;gap:8px;flex-wrap:wrap}
+.modal-btn{padding:8px 14px;background:rgba(212,175,55,0.15);color:var(--gold);border:1px solid rgba(212,175,55,0.4);border-radius:20px;font-family:inherit;font-size:12px;cursor:pointer;text-decoration:none;transition:all 0.3s;white-space:nowrap}
+.modal-btn:hover{background:var(--gold);color:var(--green-dark)}
+.modal-btn.close{background:rgba(200,50,50,0.7);color:white;border-color:rgba(200,50,50,0.7);padding:8px 12px}
+.modal-btn.close:hover{background:rgba(220,60,60,1)}
+.modal-body{flex:1;position:relative;background:#000}
+.modal-body iframe{width:100%;height:100%;border:none;display:block}
+.modal-loading{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(10,58,44,0.95);color:var(--gold);gap:15px;z-index:1}
+.spinner{width:50px;height:50px;border:4px solid rgba(212,175,55,0.2);border-top-color:var(--gold);border-radius:50%;animation:spin 0.9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.modal-fallback{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;background:rgba(10,58,44,0.98);color:var(--cream);gap:20px;padding:30px;text-align:center;z-index:2}
+.modal-fallback.show{display:flex}
+.modal-fallback h3{font-family:'Amiri',serif;font-size:22px;color:var(--gold);margin:0}
+.modal-fallback p{font-size:14px;line-height:1.8;opacity:0.9;max-width:500px;margin:0}
+.modal-fallback a{display:inline-block;padding:12px 24px;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark);text-decoration:none;border-radius:25px;font-weight:700;font-size:14px}
+@media (max-width:640px){
+.iq-hero h1{font-size:24px}
+.books-grid{grid-template-columns:1fr}
+.modal-content{height:95vh;max-width:none}
+.modal-title{font-size:16px}
+.modal-btn{font-size:11px;padding:6px 10px}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+<div class="header-container">
+<a href="index.html" class="logo">
+<div class="logo-icon">☪</div>
+<div class="logo-text">
+<span class="main">ملاك المعرفة</span>
+<span class="sub">منصة إسلامية شاملة</span>
+</div>
+</a>
+<button class="nav-toggle" onclick="document.querySelector('.main-nav').style.display = document.querySelector('.main-nav').style.display === 'none' ? 'block' : 'none'">☰</button>
+</div>
+</header>
+
+<nav class="main-nav">
+<ul class="nav-list">
+<li><a href="index.html">🏠 الرئيسية</a></li>
+<li><a href="quran.html">📖 القرآن</a></li>
+<li><a href="tafsir.html">📚 التفسير</a></li>
+<li><a href="hadith.html">🕌 السنة</a></li>
+<li><a href="seerah.html">🌙 السيرة</a></li>
+<li><a href="ghazawat.html">⚔️ الغزوات</a></li>
+<li><a href="prophets.html">🕊️ الأنبياء</a></li>
+<li><a href="sahaba.html">⭐ الصحابة</a></li>
+<li><a href="adhkar.html">🤲 الأذكار</a></li>
+<li><a href="prayer.html">🕌 الصلاة</a></li>
+<li><a href="tasbih.html">📿 المسبحة</a></li>
+<li><a href="calendar.html">📅 التقويم</a></li>
+<li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="zuhd.html">🕋 الزهد والرقائق</a></li>
+<li><a href="ibn-qayyim.html" class="active">📚 مكتبة ابن القيم</a></li>
+<li><a href="search.html">🔍 البحث</a></li>
+<li><a href="bot.html">📖 المسائل الشرعية</a></li>
+</ul>
+</nav>
+
+<main class="main-container">
+
+<section class="iq-hero">
+<h1>📚 مكتبة الإمام ابن القيم</h1>
+<p>تزكية النفوس وأعمال القلوب — مجموعة من أنفس كتب الإمام ابن القيم رحمه الله، مرتبة حسب الموضوع، تُقرأ داخل الموقع مباشرة.</p>
+<div class="author">🖋️ الإمام شمس الدين محمد بن أبي بكر ابن القيم الجوزية (691 - 751 هـ)</div>
+</section>
+
+<div id="library-container"></div>
+
+</main>
+
+<footer class="site-footer">
+<p class="footer-ayah">﴿ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ ﴾</p>
+<p>ملاك المعرفة — منصة دعوية غير ربحية</p>
+<p>© 2026 <strong>Emad Halawh</strong> — جميع الحقوق محفوظة.</p>
+</footer>
+
+<div class="modal-overlay" id="reader-modal" onclick="if(event.target===this)closeReader()">
+<div class="modal-content" onclick="event.stopPropagation()">
+<div class="modal-header">
+<h2 class="modal-title" id="reader-title">—</h2>
+<div class="modal-actions">
+<a class="modal-btn" id="open-external" href="#" target="_blank" rel="noopener">↗ فتح خارجيًا</a>
+<a class="modal-btn" id="download-pdf" href="#" target="_blank" rel="noopener">📥 تحميل PDF</a>
+<button class="modal-btn close" onclick="closeReader()">✕</button>
+</div>
+</div>
+<div class="modal-body">
+<div class="modal-loading" id="modal-loading">
+<div class="spinner"></div>
+<div>جارٍ تحميل الكتاب...</div>
+</div>
+<div class="modal-fallback" id="modal-fallback">
+<h3>⚠️ تعذر عرض الكتاب داخل الموقع</h3>
+<p>المصدر الخارجي يمنع العرض داخل الإطارات لأسباب أمنية. يمكنك فتحه في نافذة جديدة.</p>
+<a id="fallback-open" href="#" target="_blank" rel="noopener">فتح الكتاب في نافذة جديدة ↗</a>
+</div>
+<iframe id="reader-iframe"
+        sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+        allowfullscreen="true"></iframe>
+</div>
+</div>
+</div>
+
+<script>
+/* ============================================================
+   مكتبة ابن القيم — كتب مجمّعة حسب الموضوع
+   الروابط إلى archive.org (قراءة داخل iframe)
+   ============================================================ */
+
+const LIBRARY = [
+{
+    section: '🕋 السلوك والمقامات',
+    books: [
+        { name: 'مدارج السالكين بين منازل إياك نعبد وإياك نستعين',
+          archiveId: 'madarij-alsalikin', shamela: 'http://shamela.ws/index.php/book/9356' },
+        { name: 'طريق الهجرتين وباب السعادتين',
+          archiveId: 'tariq-alhijratayn', shamela: 'http://shamela.ws/index.php/book/2352' },
+        { name: 'طريق السعادتين',
+          archiveId: 'tariq-alsadatayn', shamela: 'http://shamela.ws/index.php/book/2454' },
+        { name: 'رسالة في أسماء السائرين إلى الله ومقاماتهم',
+          archiveId: 'asama-alsaireen', shamela: null },
+        { name: 'تفصيل عوائق السلوك الباطنة والظاهرة',
+          archiveId: 'awaik-alsuluk', shamela: null },
+        { name: 'كتاب المقامات',
+          archiveId: 'kitab-almaqamat', shamela: null },
+        { name: 'تحفة المحبين في السلوك',
+          archiveId: 'tuhfat-almohibeen', shamela: null }
+    ]
+},
+{
+    section: '❤️ أعمال القلوب والمحبة',
+    books: [
+        { name: 'روضة المحبين ونزهة المشتاقين',
+          archiveId: 'rawdat-almohibeen', shamela: 'http://shamela.ws/index.php/book/9126' },
+        { name: 'علاج العشق النفسي',
+          archiveId: 'ilaj-alishq', shamela: null },
+        { name: 'ذم الهوى',
+          archiveId: 'dhamm-alhawa', shamela: null },
+        { name: 'النكت والخواطر النفسية',
+          archiveId: 'alnukat-walkhawatir', shamela: null }
+    ]
+},
+{
+    section: '💊 الداء والدواء والرقائق',
+    books: [
+        { name: 'الجواب الكافي لمن سأل عن الدواء الشافي (الداء والدواء)',
+          archiveId: 'aljawab-alkafi', shamela: 'http://shamela.ws/index.php/book/9107' },
+        { name: 'إغاثة اللهفان من مصائد الشيطان',
+          archiveId: 'ighathat-allahfan', shamela: 'http://shamela.ws/index.php/book/9713' },
+        { name: 'بطلان التشوف إلى مصارع السوء',
+          archiveId: 'butlan-altashawwuf', shamela: null },
+        { name: 'رسالة في داء المقت والنفاق النفسي',
+          archiveId: 'daa-almqat', shamela: null },
+        { name: 'الصراط المستقيم أحكام أهل الاستقامة',
+          archiveId: 'alsirat-almustaqim', shamela: null }
+    ]
+},
+{
+    section: '🕌 الذكر والصبر والشكر',
+    books: [
+        { name: 'الوابل الصيب من الكلم الطيب',
+          archiveId: 'alwabil-alsayib', shamela: 'http://shamela.ws/index.php/book/2404' },
+        { name: 'عدة الصابرين وذخيرة الشاكرين',
+          archiveId: 'uddat-alsabirin', shamela: 'http://shamela.ws/index.php/book/9063' },
+        { name: 'حادي الأرواح إلى بلاد الأفراح',
+          archiveId: 'hadi-alarwah', shamela: 'http://shamela.ws/index.php/book/9082' },
+        { name: 'الرسالة التبوكية',
+          archiveId: 'alrisala-altabukiyya', shamela: null }
+    ]
+},
+{
+    section: '📖 متفرقات ومؤلفات قصيرة',
+    books: [
+        { name: 'الفوائد',
+          archiveId: 'alfawaid-ibnqayyim', shamela: 'http://shamela.ws/index.php/book/9205' },
+        { name: 'الروح',
+          archiveId: 'alruh-ibnqayyim', shamela: 'http://shamela.ws/index.php/book/9091' },
+        { name: 'رسالة ابن القيم إلى أحد إخوانه',
+          archiveId: 'risalat-ibnqayyim', shamela: null }
+    ]
+}
+];
+
+function escapeHtml(t) {
+    const d = document.createElement('div');
+    d.textContent = String(t);
+    return d.innerHTML;
+}
+
+function buildLibrary() {
+    const container = document.getElementById('library-container');
+    container.innerHTML = LIBRARY.map(group => `
+        <h2 class="section-title">${group.section}</h2>
+        <div class="books-grid">
+            ${group.books.map(b => `
+                <div class="book-card" data-id="${escapeHtml(b.archiveId)}"
+                     data-name="${escapeHtml(b.name)}"
+                     data-shamela="${b.shamela ? escapeHtml(b.shamela) : ''}">
+                    <span class="book-icon">📖</span>
+                    <div class="book-info">
+                        <div class="book-name">${escapeHtml(b.name)}</div>
+                        <div class="book-hint">اضغط للقراءة داخل الموقع</div>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `).join('');
+
+    container.querySelectorAll('.book-card').forEach(card => {
+        card.addEventListener('click', () => {
+            openReader(card.dataset.id, card.dataset.name, card.dataset.shamela);
+        });
+    });
+}
+
+function openReader(archiveId, bookName, shamelaUrl) {
+    const modal = document.getElementById('reader-modal');
+    const title = document.getElementById('reader-title');
+    const iframe = document.getElementById('reader-iframe');
+    const loading = document.getElementById('modal-loading');
+    const fallback = document.getElementById('modal-fallback');
+    const externalBtn = document.getElementById('open-external');
+    const pdfBtn = document.getElementById('download-pdf');
+    const fallbackOpen = document.getElementById('fallback-open');
+
+    title.textContent = bookName;
+
+    const archiveDetails = `https://archive.org/details/${archiveId}`;
+    const archiveEmbed = `https://archive.org/embed/${archiveId}`;
+    const archivePdf = `https://archive.org/download/${archiveId}/${archiveId}.pdf`;
+
+    externalBtn.href = archiveDetails;
+    pdfBtn.href = archivePdf;
+    fallbackOpen.href = archiveDetails;
+
+    // إعادة تعيين الحالة
+    loading.style.display = 'flex';
+    fallback.classList.remove('show');
+    iframe.src = 'about:blank';
+
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+
+    // محاولة تحميل iframe
+    let iframeLoaded = false;
+    iframe.onload = () => {
+        iframeLoaded = true;
+        loading.style.display = 'none';
+    };
+    iframe.onerror = () => {
+        showFallback();
+    };
+
+    setTimeout(() => {
+        if (!iframeLoaded) showFallback();
+    }, 8000);
+
+    iframe.src = archiveEmbed;
+
+    function showFallback() {
+        loading.style.display = 'none';
+        fallback.classList.add('show');
+    }
+}
+
+function closeReader() {
+    const modal = document.getElementById('reader-modal');
+    const iframe = document.getElementById('reader-iframe');
+    modal.classList.remove('show');
+    iframe.src = 'about:blank';
+    document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeReader();
+});
+
+window.closeReader = closeReader;
+
+try {
+    buildLibrary();
+} catch (err) {
+    document.getElementById('library-container').innerHTML =
+        '<div style="text-align:center;padding:40px;color:#ff8888">⚠️ خطأ في تحميل المكتبة: ' + escapeHtml(err.message) + '</div>';
+}
+</script>
+
+</body>
+</html>
