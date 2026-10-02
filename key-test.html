@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اختبار مفتاح Gemini</title>
+<style>
+body{font-family:sans-serif;padding:20px;background:#0a3a2c;color:#f5f0e1}
+h1{color:#d4af37}
+input{width:100%;padding:12px;font-size:14px;border-radius:10px;border:2px solid #d4af37;background:#000;color:#0f0;direction:ltr;font-family:monospace;box-sizing:border-box}
+button{background:#d4af37;color:#0a3a2c;border:none;padding:14px 24px;border-radius:25px;font-size:16px;font-weight:700;cursor:pointer;margin:15px 5px;width:100%}
+button:disabled{opacity:0.5}
+pre{background:#000;color:#0f0;padding:15px;border-radius:10px;overflow-x:auto;white-space:pre-wrap;word-break:break-all;font-size:12px;direction:ltr;text-align:left;max-height:600px}
+.status{padding:12px;border-radius:8px;margin:10px 0;font-weight:700;text-align:center}
+.status.loading{background:rgba(212,175,55,0.2);border:1px solid #d4af37}
+.status.ok{background:rgba(74,222,128,0.25);border:2px solid #4ade80;color:#4ade80}
+.status.err{background:rgba(220,60,60,0.2);border:1px solid #ff6b6b;color:#ff8888}
+.warn{background:rgba(212,175,55,0.15);border:1px solid #d4af37;padding:12px;border-radius:8px;font-size:13px;margin-bottom:15px}
+</style>
+</head>
+<body>
+<h1>🔑 اختبار مفتاح Gemini</h1>
+
+<div class="warn">
+⚠️ هذا اختبار مؤقت. المفتاح لا يُخزَّن — يبقى في الذاكرة فقط. لن يُحفظ في أي مكان.
+</div>
+
+<p style="font-size:14px;opacity:0.9">الصق مفتاح Gemini هنا (يبدأ بـ <code style="direction:ltr;display:inline-block">AQ.</code>):</p>
+<input type="text" id="key" placeholder="AQ.Ab8..." autocomplete="off" spellcheck="false">
+
+<button id="test">🔍 اختبر المفتاح</button>
+
+<div id="status"></div>
+<pre id="out">النتيجة ستظهر هنا...</pre>
+
+<script>
+const btn = document.getElementById('test');
+const statusEl = document.getElementById('status');
+const outEl = document.getElementById('out');
+
+btn.addEventListener('click', async () => {
+    const key = document.getElementById('key').value.trim();
+    if (!key) {
+        statusEl.className = 'status err';
+        statusEl.textContent = '❌ اكتب المفتاح أولًا';
+        return;
+    }
+    if (!key.startsWith('AQ.') && !key.startsWith('AIza')) {
+        statusEl.className = 'status err';
+        statusEl.textContent = '❌ المفتاح لا يبدأ بـ AQ. أو AIza';
+        return;
+    }
+
+    btn.disabled = true;
+    statusEl.className = 'status loading';
+    statusEl.textContent = '⏳ جارٍ الاختبار...';
+    outEl.textContent = 'جاري الاتصال بـ Google...';
+
+    const models = [
+        'gemini-2.0-flash',
+        'gemini-1.5-flash'
+    ];
+
+    for (const model of models) {
+        try {
+            const url = 'https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent?key=' + encodeURIComponent(key);
+            const res = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ role: 'user', parts: [{ text: 'قل: اختبار ناجح' }] }]
+                })
+            });
+            const text = await res.text();
+
+            if (res.ok) {
+                statusEl.className = 'status ok';
+                statusEl.textContent = '✅ نجح! المفتاح صحيح (النموذج: ' + model + ')';
+                outEl.textContent = 'HTTP ' + res.status + '\n\n' + text;
+                btn.disabled = false;
+                return;
+            } else {
+                outEl.textContent = 'محاولة مع ' + model + ':\nHTTP ' + res.status + '\n\n' + text.substring(0, 600) + '\n\n---\n';
+                if (text.includes('API_KEY_INVALID') || text.includes('API key not valid')) {
+                    statusEl.className = 'status err';
+                    statusEl.textContent = '❌ المفتاح غير صالح';
+                    btn.disabled = false;
+                    return;
+                }
+            }
+        } catch (err) {
+            outEl.textContent += '\n[' + model + '] خطأ: ' + err.message + '\n';
+        }
+    }
+
+    statusEl.className = 'status err';
+    statusEl.textContent = '❌ فشلت جميع المحاولات - راجع النص أعلاه';
+    btn.disabled = false;
+});
+
+document.getElementById('key').focus();
+</script>
+</body>
+</html>
