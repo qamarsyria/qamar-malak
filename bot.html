@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>البوت الإسلامي — ملاك المعرفة</title>
-<meta name="description" content="بوت إسلامي موثّق: 204 سؤال وجواب من القرآن الكريم والسنة الصحيحة، بلا مذاهب.">
+<meta name="description" content="بوت إسلامي موثّق: 204 سؤال وجواب من القرآن الكريم والسنة الصحيحة.">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
 <style>
@@ -51,42 +51,14 @@
 .no-results .icon{font-size:60px;margin-bottom:15px;display:block;opacity:0.6}
 .no-results h3{font-family:'Amiri',serif;color:var(--gold);font-size:20px;margin-bottom:10px}
 .no-results p{font-size:14px;line-height:1.8;margin-bottom:15px}
-.ollama-btn{padding:10px 22px;background:linear-gradient(135deg,#4ade80 0%,#22c55e 100%);color:white;border:none;border-radius:22px;font-family:inherit;font-weight:700;font-size:14px;cursor:pointer;transition:all 0.3s}
-.ollama-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(74,222,128,0.4)}
-.ollama-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
-.settings-btn{position:fixed;bottom:20px;left:20px;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark);border:none;width:52px;height:52px;border-radius:50%;font-size:22px;cursor:pointer;box-shadow:0 6px 20px rgba(212,175,55,0.4);z-index:100;transition:all 0.3s}
-.settings-btn:hover{transform:scale(1.1) rotate(45deg)}
-.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);backdrop-filter:blur(6px);z-index:2000;justify-content:center;align-items:flex-start;padding:20px;overflow-y:auto}
-.modal-overlay.show{display:flex}
-.modal-content{background:linear-gradient(135deg,#0a3a2c 0%,#0d4d3c 100%);border:2px solid var(--gold);border-radius:20px;max-width:600px;width:100%;padding:28px 22px;position:relative;margin-top:40px;margin-bottom:40px;animation:slideUp 0.3s ease}
-@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-.modal-close{position:absolute;top:15px;left:15px;width:36px;height:36px;border-radius:50%;background:rgba(200,50,50,0.7);color:white;border:none;font-size:18px;cursor:pointer;font-family:inherit}
-.modal-content h2{font-family:'Amiri',serif;font-size:22px;color:var(--gold);margin-bottom:8px;text-align:center}
-.modal-content .sub{color:var(--cream);opacity:0.8;font-size:13px;text-align:center;margin-bottom:20px}
-.form-row{margin-bottom:16px}
-.form-row label{display:block;color:var(--gold);font-size:13px;font-weight:600;margin-bottom:6px}
-.form-row input,.form-row select{width:100%;padding:11px 14px;background:rgba(10,58,44,0.8);border:1px solid rgba(212,175,55,0.3);border-radius:10px;color:var(--cream);font-family:inherit;font-size:14px;outline:none;direction:ltr}
-.form-row input:focus,.form-row select:focus{border-color:var(--gold)}
-.form-row .help{font-size:11px;color:var(--cream);opacity:0.65;margin-top:5px;line-height:1.6}
-.modal-actions{display:flex;gap:10px;margin-top:20px}
-.modal-actions button{flex:1;padding:12px;border-radius:10px;font-family:inherit;font-weight:700;font-size:14px;cursor:pointer;border:none;transition:all 0.3s}
-.btn-save{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark)}
-.btn-save:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(212,175,55,0.4)}
-.btn-test{background:rgba(74,222,128,0.15);color:#4ade80;border:1px solid rgba(74,222,128,0.4)!important}
-.btn-test:hover{background:rgba(74,222,128,0.25)}
-.status-msg{margin-top:12px;padding:10px 14px;border-radius:10px;font-size:13px;text-align:center;display:none}
-.status-msg.show{display:block}
-.status-msg.ok{background:rgba(74,222,128,0.15);color:#4ade80;border:1px solid rgba(74,222,128,0.3)}
-.status-msg.err{background:rgba(220,60,60,0.15);color:#ff8888;border:1px solid rgba(220,60,60,0.3)}
-.loading{text-align:center;padding:30px;color:var(--gold)}
-.spinner{display:inline-block;width:36px;height:36px;border:3px solid rgba(212,175,55,0.2);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;margin-bottom:12px}
-@keyframes spin{to{transform:rotate(360deg)}}
+.debug-box{background:rgba(220,60,60,0.15);border:2px solid rgba(220,60,60,0.4);border-radius:12px;padding:16px;margin:20px auto;max-width:700px;color:#ff8888;font-size:14px;line-height:1.8;display:none}
+.debug-box.show{display:block}
+.debug-box code{background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:4px;direction:ltr;display:inline-block;font-size:12px}
 @media (max-width:640px){
 .bot-hero h1{font-size:22px}
 .q-text{font-size:18px}
 .evidence-text{font-size:15px}
 .a-text{font-size:15px}
-.settings-btn{width:46px;height:46px;font-size:19px}
 }
 </style>
 </head>
@@ -129,17 +101,19 @@
 
 <section class="bot-hero">
 <h1>🤖 البوت الإسلامي الموثّق</h1>
-<p>ابحث عن أي سؤال ديني — كل جواب من القرآن الكريم والسنة الصحيحة فقط، بلا مذاهب ولا طرق غريبة. <strong>204 أسئلة موثّقة</strong> + دعم Ollama للأجهزة المحلية.</p>
+<p>اسأل أي سؤال ديني — كل جواب من القرآن الكريم والسنة الصحيحة فقط، بلا مذاهب ولا طرق غريبة.</p>
 </section>
 
 <a href="search.html" class="search-link">🔍 ابحث في نص القرآن والأذكار والصحابة والأنبياء ←</a>
 
 <div class="notice">
-<strong>📌 المنهج:</strong> كل جواب إما آية قرآنية أو حديث من الصحيحين/السنن بسند صحيح. لا آراء شخصية، لا مذاهب، لا فروع غريبة.
+<strong>📌 المنهج:</strong> كل جواب إما آية قرآنية أو حديث من الصحيحين/السنن بسند صحيح. لا آراء شخصية، لا مذاهب.
 </div>
 
+<div id="debug-box" class="debug-box"></div>
+
 <div class="big-search">
-<input type="text" id="search-input" placeholder="اكتب سؤالك... مثال: ما حكم الربا؟ كيف أصلي؟ ما هي أركان الإسلام؟" autofocus>
+<input type="text" id="search-input" placeholder="اكتب سؤالك... مثال: ما حكم الربا؟ كيف أصلي؟" autofocus>
 <span class="search-icon">🔍</span>
 </div>
 
@@ -147,80 +121,43 @@
 
 <div class="suggestions" id="suggestions"></div>
 
-<div id="results-container">
-<div class="no-results">
-<span class="icon">🕌</span>
-<h3>اسألني أي سؤال ديني</h3>
-<p>مثال: ما حكم الربا؟ • كيف أتوضأ؟ • ما فضل صيام عرفة؟ • ما هي أركان الإيمان؟</p>
-</div>
-</div>
+<div id="results-container"></div>
 
 </main>
 
 <footer class="site-footer">
 <p class="footer-ayah">﴿ فَاسْأَلُوا أَهْلَ الذِّكْرِ إِن كُنتُمْ لَا تَعْلَمُونَ ﴾</p>
 <p>ملاك المعرفة — منصة دعوية غير ربحية</p>
-<p>© 2026 <strong>Emad Halawh</strong> — جميع الحقوق محفوظة. نسألكم الدعاء.</p>
+<p>© 2026 <strong>Emad Halawh</strong> — جميع الحقوق محفوظة.</p>
 </footer>
 
-<button class="settings-btn" onclick="openSettings()" title="إعدادات البوت">⚙️</button>
-
-<div class="modal-overlay" id="settings-modal">
-<div class="modal-content">
-<button class="modal-close" onclick="closeSettings()">✕</button>
-<h2>⚙️ إعدادات البوت الذكي</h2>
-<p class="sub">ربط Ollama المحلي للحصول على إجابات أعمق</p>
-
-<div class="form-row">
-<label>عنوان خادم Ollama</label>
-<input type="text" id="ollama-url" placeholder="http://localhost:11434" value="http://localhost:11434">
-<div class="help">العنوان الافتراضي لـ Ollama على جهازك. يجب تشغيل: <code style="direction:ltr;display:inline-block">OLLAMA_ORIGINS=* ollama serve</code></div>
-</div>
-
-<div class="form-row">
-<label>النموذج</label>
-<select id="ollama-model">
-<option value="llama3.2">llama3.2</option>
-<option value="llama3.1">llama3.1</option>
-<option value="mistral">mistral</option>
-<option value="qwen2.5">qwen2.5</option>
-<option value="gemma2">gemma2</option>
-<option value="aya">aya (يدعم العربية)</option>
-</select>
-<div class="help">اختر النموذج المثبّت عندك. <code style="direction:ltr;display:inline-block">ollama pull llama3.2</code></div>
-</div>
-
-<div class="modal-actions">
-<button class="btn-test" onclick="testOllama()">🔌 اختبار الاتصال</button>
-<button class="btn-save" onclick="saveSettings()">💾 حفظ</button>
-</div>
-
-<div class="status-msg" id="status-msg"></div>
-</div>
-</div>
-
-<script src="faq-data.js"></script>
+<script src="faq-data.js" onerror="document.getElementById('debug-box').classList.add('show');document.getElementById('debug-box').innerHTML='⚠️ <strong>ملف faq-data.js غير موجود!</strong><br>تأكد من وجود الملف بجانب <code>bot.html</code> في نفس المجلد.';"></script>
 <script>
 /* ============================================================
-   البوت الإسلامي الموثّق — محرك بحث عربي + Ollama اختياري
+   البوت الإسلامي الموثّق — بدون أي اعتماديات خارجية
    ============================================================ */
 (function () {
 'use strict';
 
-const STORAGE_OLLAMA_URL   = 'qamar_ollama_url';
-const STORAGE_OLLAMA_MODEL = 'qamar_ollama_model';
+// ====== التحقق من وجود FAQ_DATA ======
+const debugBox = document.getElementById('debug-box');
 
 if (typeof FAQ_DATA === 'undefined') {
-    document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('results-container').innerHTML =
-            '<div class="no-results"><span class="icon">⚠️</span><h3>ملف faq-data.js مفقود</h3><p>تأكد من وجود الملف بجانب bot.html</p></div>';
-    });
+    debugBox.classList.add('show');
+    debugBox.innerHTML = '⚠️ <strong>لم يتم تحميل FAQ_DATA</strong><br>السبب: إما أن ملف <code>faq-data.js</code> غير موجود، أو فيه خطأ نحوي.<br>افتح <code>F12 → Console</code> لمعرفة الخطأ.';
     return;
 }
 
+if (!Array.isArray(FAQ_DATA) || FAQ_DATA.length === 0) {
+    debugBox.classList.add('show');
+    debugBox.innerHTML = '⚠️ <strong>FAQ_DATA فارغ أو ليس مصفوفة</strong><br>عدد العناصر: ' + (FAQ_DATA.length || 0);
+    return;
+}
+
+// ====== نظام التطبيع العربي ======
 function normalizeArabic(text) {
     if (!text) return '';
-    return text
+    return String(text)
         .replace(/[\u064B-\u0652\u0670\u0640]/g, '')
         .replace(/[إأآا]/g, 'ا')
         .replace(/[ىي]/g, 'ي')
@@ -237,6 +174,13 @@ function tokenize(text) {
     return normalizeArabic(text).split(/\s+/).filter(w => w.length > 1);
 }
 
+function escapeHtml(t) {
+    const d = document.createElement('div');
+    d.textContent = String(t);
+    return d.innerHTML;
+}
+
+// ====== محرك البحث ======
 function searchFAQ(query, category) {
     const qNorm = normalizeArabic(query);
     const qTokens = tokenize(query);
@@ -247,8 +191,8 @@ function searchFAQ(query, category) {
     FAQ_DATA.forEach((item, idx) => {
         if (category && category !== 'all' && item.c !== category) return;
 
-        const qText = normalizeArabic(item.q);
-        const aText = normalizeArabic(item.a);
+        const qText  = normalizeArabic(item.q);
+        const aText  = normalizeArabic(item.a);
         const kwText = (item.k || []).map(normalizeArabic).join(' ');
 
         let score = 0;
@@ -271,12 +215,7 @@ function searchFAQ(query, category) {
     return results.slice(0, 8);
 }
 
-function escapeHtml(t) {
-    const d = document.createElement('div');
-    d.textContent = t;
-    return d.innerHTML;
-}
-
+// ====== بناء بطاقة الجواب ======
 function buildAnswerHTML(item) {
     const evidences = (item.e || []).map(ev => {
         const cls = ev.t === 'ayah' ? 'ayah' : 'hadith';
@@ -302,18 +241,22 @@ function buildAnswerHTML(item) {
     `;
 }
 
+// ====== الحالة ======
 let currentQuery = '';
 let currentCategory = 'all';
 
+// ====== العرض ======
 function renderResults() {
     const container = document.getElementById('results-container');
+    const trimmed = currentQuery.trim();
 
-    if (!currentQuery || currentQuery.trim().length < 3) {
+    if (trimmed.length < 2) {
         container.innerHTML = `
             <div class="no-results">
                 <span class="icon">🕌</span>
                 <h3>اسألني أي سؤال ديني</h3>
                 <p>مثال: ما حكم الربا؟ • كيف أتوضأ؟ • ما فضل صيام عرفة؟</p>
+                <p style="opacity:0.5;font-size:12px">اكتب حرفين على الأقل للبحث</p>
             </div>
         `;
         return;
@@ -322,29 +265,24 @@ function renderResults() {
     const results = searchFAQ(currentQuery, currentCategory);
 
     if (results.length === 0) {
-        const hasOllama = !!localStorage.getItem(STORAGE_OLLAMA_URL);
         container.innerHTML = `
             <div class="no-results">
                 <span class="icon">🤔</span>
                 <h3>لا يوجد جواب موثّق لهذا السؤال</h3>
-                <p>القاعدة المحلية فيها 204 سؤالًا موثّقًا.<br>جرّب صيغة أخرى، أو اسأل البوت الذكي المحلي.</p>
-                ${hasOllama
-                    ? '<button class="ollama-btn" onclick="askOllama()">🤖 اسأل البوت الذكي (Ollama)</button>'
-                    : '<button class="ollama-btn" onclick="openSettings()">⚙️ فعّل البوت الذكي (Ollama)</button>'
-                }
+                <p>القاعدة المحلية فيها ${FAQ_DATA.length} سؤالًا موثّقًا.<br>جرّب صيغة أخرى أو كلمة مفتاحية مختلفة.</p>
             </div>
-            <div id="ollama-answer"></div>
         `;
         return;
     }
 
     const stats = `<div class="stats-line">عدد النتائج: <strong>${results.length}</strong></div>`;
     const cards = results.map(r => buildAnswerHTML(r.item)).join('');
-    container.innerHTML = stats + cards + '<div id="ollama-answer"></div>';
+    container.innerHTML = stats + cards;
 }
 
+// ====== الفلاتر ======
 function buildFilters() {
-    const cats = ['all', ...new Set(FAQ_DATA.map(x => x.c))];
+    const cats = ['all', ...new Set(FAQ_DATA.map(x => x.c).filter(Boolean))];
     const labels = {
         'all': '🔍 الكل',
         'العقيدة': '🕋 العقيدة',
@@ -368,7 +306,7 @@ function buildFilters() {
     const filters = document.getElementById('filters');
     filters.innerHTML = cats.map(c => `
         <button class="filter-btn ${c === currentCategory ? 'active' : ''}" data-cat="${escapeHtml(c)}">
-            ${labels[c] || c}
+            ${labels[c] || escapeHtml(c)} (${c === 'all' ? FAQ_DATA.length : FAQ_DATA.filter(x => x.c === c).length})
         </button>
     `).join('');
 
@@ -382,6 +320,7 @@ function buildFilters() {
     });
 }
 
+// ====== الاقتراحات ======
 function buildSuggestions() {
     const sugs = ['أركان الإسلام','حكم الربا','كيف أتوضأ','فضل صيام عرفة','أركان الإيمان','حكم الغيبة','دعاء الاستخارة','فضل سورة الإخلاص'];
     const container = document.getElementById('suggestions');
@@ -393,118 +332,17 @@ function buildSuggestions() {
             document.getElementById('search-input').value = btn.dataset.q;
             currentQuery = btn.dataset.q;
             renderResults();
-            window.scrollTo({ top: 200, behavior: 'smooth' });
+            window.scrollTo({ top: 250, behavior: 'smooth' });
         });
     });
 }
 
-function openSettings() {
-    const url = localStorage.getItem(STORAGE_OLLAMA_URL) || 'http://localhost:11434';
-    const model = localStorage.getItem(STORAGE_OLLAMA_MODEL) || 'llama3.2';
-    document.getElementById('ollama-url').value = url;
-    document.getElementById('ollama-model').value = model;
-    document.getElementById('settings-modal').classList.add('show');
-}
-
-function closeSettings() {
-    document.getElementById('settings-modal').classList.remove('show');
-    document.getElementById('status-msg').classList.remove('show');
-}
-
-function showStatus(msg, type) {
-    const el = document.getElementById('status-msg');
-    el.textContent = msg;
-    el.className = 'status-msg show ' + (type || 'ok');
-}
-
-function saveSettings() {
-    const url = document.getElementById('ollama-url').value.trim().replace(/\/$/, '');
-    const model = document.getElementById('ollama-model').value;
-    if (!url) { showStatus('أدخل عنوان الخادم', 'err'); return; }
-    localStorage.setItem(STORAGE_OLLAMA_URL, url);
-    localStorage.setItem(STORAGE_OLLAMA_MODEL, model);
-    showStatus('✓ تم الحفظ', 'ok');
-    setTimeout(closeSettings, 800);
-}
-
-async function testOllama() {
-    const url = document.getElementById('ollama-url').value.trim().replace(/\/$/, '');
-    if (!url) { showStatus('أدخل عنوان الخادم', 'err'); return; }
-    showStatus('⏳ جارٍ الاختبار...', 'ok');
-    try {
-        const res = await fetch(`${url}/api/tags`, { method: 'GET' });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const data = await res.json();
-        const models = (data.models || []).map(m => m.name).join(', ');
-        showStatus(`✓ الاتصال ناجح. النماذج: ${models || 'لا يوجد'}`, 'ok');
-    } catch (e) {
-        showStatus(`✗ فشل الاتصال: ${e.message}`, 'err');
-    }
-}
-
-async function askOllama() {
-    const url = localStorage.getItem(STORAGE_OLLAMA_URL);
-    const model = localStorage.getItem(STORAGE_OLLAMA_MODEL) || 'llama3.2';
-    if (!url) { openSettings(); return; }
-
-    const answerBox = document.getElementById('ollama-answer');
-    if (!answerBox) return;
-    answerBox.innerHTML = '<div class="loading"><div class="spinner"></div><div>🤖 البوت الذكي يفكر...</div></div>';
-    answerBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-    const systemPrompt = `أنت مساعد إسلامي متخصص في الفقه الإسلامي على منهج أهل السنة والجماعة.
-
-قواعد صارمة لا يجوز خرقها:
-1. أجب فقط من القرآن الكريم والأحاديث النبوية الصحيحة (البخاري، مسلم، السنن).
-2. لا تذكر أي مذهب فقهي (حنفي، مالكي، شافعي، حنبلي) ولا تفضّل بينهم.
-3. لا تتكلم عن الطرق الصوفية ولا الفرق الغريبة.
-4. اذكر الدليل: (سورة: آية) للقرآن، أو (اسم الكتاب: رقم الحديث) للحديث.
-5. لا تفتِ في مسائل الخلاف المعقدة، وقل: "هذه مسألة خلافية يُرجع فيها لأهل العلم".
-6. إذا لم تعرف الجواب الموثّق، قل بصراحة: "لا أعلم"، ولا تخترع.
-7. أجب بالعربية الفصحى، بإيجاز، وبلا حشو.
-8. إن كان السؤال طبيًا/قانونيًا، انصح باستشارة مختص.`;
-
-    try {
-        const res = await fetch(`${url}/api/chat`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                model: model,
-                messages: [
-                    { role: 'system', content: systemPrompt },
-                    { role: 'user', content: currentQuery }
-                ],
-                stream: false,
-                options: { temperature: 0.2 }
-            })
-        });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const data = await res.json();
-        const text = (data.message && data.message.content) || 'لا يوجد رد.';
-        answerBox.innerHTML = `
-            <div class="answer-card" style="border-right-color:#4ade80">
-                <span class="q-label" style="background:rgba(74,222,128,0.18);color:#4ade80;border-color:rgba(74,222,128,0.4)">🤖 جواب البوت الذكي</span>
-                <div class="q-text">${escapeHtml(currentQuery)}</div>
-                <div class="a-text" style="white-space:pre-wrap;line-height:2">${escapeHtml(text)}</div>
-                <div class="evidence-ref" style="margin-top:10px">⚠️ الجواب من Ollama (${model}). راجعه دائمًا مع أهل العلم.</div>
-            </div>
-        `;
-    } catch (e) {
-        answerBox.innerHTML = `
-            <div class="no-results">
-                <span class="icon">❌</span>
-                <h3>فشل الاتصال بالبوت الذكي</h3>
-                <p>${escapeHtml(e.message)}<br>تأكد من تشغيل Ollama مع تمكين CORS.</p>
-            </div>
-        `;
-    }
-}
-
+// ====== ربط الأحداث ======
 let searchTimeout = null;
 document.getElementById('search-input').addEventListener('input', (e) => {
     currentQuery = e.target.value;
     clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(renderResults, 250);
+    searchTimeout = setTimeout(renderResults, 200);
 });
 
 document.getElementById('search-input').addEventListener('keydown', (e) => {
@@ -514,15 +352,16 @@ document.getElementById('search-input').addEventListener('keydown', (e) => {
     }
 });
 
-window.openSettings = openSettings;
-window.closeSettings = closeSettings;
-window.saveSettings = saveSettings;
-window.testOllama = testOllama;
-window.askOllama = askOllama;
-
-buildFilters();
-buildSuggestions();
-renderResults();
+// ====== التشغيل ======
+try {
+    buildFilters();
+    buildSuggestions();
+    renderResults();
+} catch (err) {
+    debugBox.classList.add('show');
+    debugBox.innerHTML = '⚠️ <strong>خطأ في التشغيل:</strong> ' + escapeHtml(err.message) + '<br>افتح F12 → Console للتفاصيل.';
+    console.error(err);
+}
 
 })();
 </script>
