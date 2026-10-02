@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>قصص الأنبياء — ملاك المعرفة الإسلامية</title>
+<title>قصص الأنبياء — ملاك المعرفة</title>
 <meta name="description" content="قصص الأنبياء والرسل المذكورين في القرآن الكريم — 25 نبي بمعلومات موثقة من القرآن والسنة.">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕊️</text></svg>">
@@ -30,13 +30,11 @@
 .prophet-brief{font-size:14px;line-height:1.7;color:var(--cream);opacity:0.9;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .prophet-badge{display:inline-block;background:rgba(212,175,55,0.15);color:var(--gold);padding:3px 10px;border-radius:12px;font-size:11px;margin-top:12px;border:1px solid rgba(212,175,55,0.3)}
 .no-results{text-align:center;padding:40px;color:var(--cream);opacity:0.7;grid-column:1/-1}
-
-/* Modal للتفاصيل */
 .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);backdrop-filter:blur(5px);z-index:2000;justify-content:center;align-items:flex-start;padding:20px;overflow-y:auto}
 .modal-overlay.show{display:flex}
 .modal-content{background:linear-gradient(135deg,#0a3a2c 0%,#0d4d3c 100%);border:2px solid var(--gold);border-radius:20px;max-width:750px;width:100%;padding:30px 25px;position:relative;margin-top:30px;margin-bottom:30px;animation:slideUp 0.3s ease}
 @keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-.modal-close{position:absolute;top:15px;left:15px;width:38px;height:38px;border-radius:50%;background:rgba(200,50,50,0.7);color:white;border:none;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.modal-close{position:absolute;top:15px;left:15px;width:38px;height:38px;border-radius:50%;background:rgba(200,50,50,0.7);color:white;border:none;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit}
 .modal-close:hover{background:rgba(220,60,60,1)}
 .modal-icon{font-size:60px;text-align:center;margin-bottom:15px}
 .modal-name{font-family:'Amiri',serif;font-size:32px;color:var(--gold);text-align:center;margin-bottom:8px}
@@ -46,7 +44,6 @@
 .modal-section p{color:var(--cream);line-height:1.9;font-size:15px}
 .modal-section .ayah{font-family:'Amiri',serif;font-size:18px;color:var(--gold);padding:10px 0;display:block;line-height:1.9;text-align:center}
 .modal-source{font-size:13px;color:var(--gold);opacity:0.7;text-align:center;margin-top:8px;font-style:italic}
-
 @media (max-width:640px){.prophets-hero h1{font-size:24px}.modal-content{padding:20px 15px}.modal-name{font-size:26px}.prophets-grid{grid-template-columns:1fr}}
 </style>
 </head>
@@ -68,16 +65,21 @@
 <nav class="main-nav">
 <ul class="nav-list">
 <li><a href="index.html">🏠 الرئيسية</a></li>
-<li><a href="quran.html">📖 القرآن الكريم</a></li>
+<li><a href="quran.html">📖 القرآن</a></li>
 <li><a href="tafsir.html">📚 التفسير</a></li>
-<li><a href="hadith.html">🕌 السنة النبوية</a></li>
-<li><a href="seerah.html">🌙 السيرة النبوية</a></li>
+<li><a href="hadith.html">🕌 السنة</a></li>
+<li><a href="seerah.html">🌙 السيرة</a></li>
 <li><a href="ghazawat.html">⚔️ الغزوات</a></li>
-<li><a href="prophets.html" class="active">🕊️ قصص الأنبياء</a></li>
+<li><a href="prophets.html" class="active">🕊️ الأنبياء</a></li>
 <li><a href="sahaba.html">⭐ الصحابة</a></li>
 <li><a href="adhkar.html">🤲 الأذكار</a></li>
+<li><a href="prayer.html">🕌 الصلاة</a></li>
+<li><a href="tasbih.html">📿 المسبحة</a></li>
+<li><a href="calendar.html">📅 التقويم</a></li>
 <li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="library.html">📚 المكتبة</a></li>
 <li><a href="search.html">🔍 البحث</a></li>
+<li><a href="masael.html">📖 المسائل الشرعية</a></li>
 </ul>
 </nav>
 
@@ -108,8 +110,8 @@
 
 <footer class="site-footer">
 <p class="footer-ayah">﴿ وَكُلًّا نَّقُصُّ عَلَيْكَ مِنْ أَنبَاءِ الرُّسُلِ مَا نُثَبِّتُ بِهِ فُؤَادَكَ ﴾</p>
-<p>ملاك المعرفة الإسلامية — منصة دعوية غير ربحية</p>
-<p>© 2026 — نسألكم الدعاء</p>
+<p>ملاك المعرفة — منصة دعوية غير ربحية</p>
+<p>© 2026 <strong>Emad Halawh</strong> — جميع الحقوق محفوظة. نسألكم الدعاء.</p>
 </footer>
 
 <div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
@@ -117,6 +119,9 @@
 </div>
 
 <script>
+(function () {
+'use strict';
+
 const PROPHETS = [
     {
         name: "آدم عليه السلام",
@@ -451,10 +456,17 @@ const PROPHETS = [
 let currentFilter = 'all';
 let currentSearch = '';
 
-function renderProphets() {
-    const container = document.getElementById('prophets-container');
+function $(id) { return document.getElementById(id); }
 
-    let filtered = PROPHETS.filter(p => {
+function escapeHtml(t) {
+    const d = document.createElement('div');
+    d.textContent = String(t);
+    return d.innerHTML;
+}
+
+function renderProphets() {
+    const container = $('prophets-container');
+    const filtered = PROPHETS.filter(p => {
         const matchFilter = currentFilter === 'all' || p.category === currentFilter;
         const matchSearch = currentSearch === '' ||
             p.name.includes(currentSearch) ||
@@ -468,34 +480,41 @@ function renderProphets() {
         return;
     }
 
-    container.innerHTML = filtered.map((p, i) => `
-        <div class="prophet-card" onclick="openModal(${PROPHETS.indexOf(p)})">
-            <div class="prophet-icon">${p.icon}</div>
-            <div class="prophet-name">${p.name}</div>
-            <div class="prophet-title">${p.title}</div>
-            <div class="prophet-brief">${p.brief}</div>
-            <span class="prophet-badge">${p.category}</span>
-        </div>
-    `).join('');
+    container.innerHTML = filtered.map(p => {
+        const idx = PROPHETS.indexOf(p);
+        return `
+            <div class="prophet-card" data-idx="${idx}">
+                <div class="prophet-icon">${p.icon}</div>
+                <div class="prophet-name">${escapeHtml(p.name)}</div>
+                <div class="prophet-title">${escapeHtml(p.title)}</div>
+                <div class="prophet-brief">${escapeHtml(p.brief)}</div>
+                <span class="prophet-badge">${escapeHtml(p.category)}</span>
+            </div>
+        `;
+    }).join('');
+
+    container.querySelectorAll('.prophet-card').forEach(card => {
+        card.addEventListener('click', () => openModal(parseInt(card.dataset.idx, 10)));
+    });
 }
 
 function openModal(index) {
     const p = PROPHETS[index];
-    const modal = document.getElementById('modal');
-    const content = document.getElementById('modal-content');
+    const modal = $('modal');
+    const content = $('modal-content');
 
     content.innerHTML = `
         <button class="modal-close" onclick="closeModal()">✕</button>
         <div class="modal-icon">${p.icon}</div>
-        <div class="modal-name">${p.name}</div>
-        <div class="modal-title">${p.title}</div>
+        <div class="modal-name">${escapeHtml(p.name)}</div>
+        <div class="modal-title">${escapeHtml(p.title)}</div>
         ${p.sections.map(s => `
             <div class="modal-section">
-                <h3>${s.h}</h3>
-                <p>${s.p}</p>
+                <h3>${escapeHtml(s.h)}</h3>
+                <p>${escapeHtml(s.p)}</p>
             </div>
         `).join('')}
-        <div class="modal-source">📖 المراجع: ${p.refs}</div>
+        <div class="modal-source">📖 المراجع: ${escapeHtml(p.refs)}</div>
     `;
 
     modal.classList.add('show');
@@ -503,11 +522,11 @@ function openModal(index) {
 }
 
 function closeModal() {
-    document.getElementById('modal').classList.remove('show');
+    $('modal').classList.remove('show');
     document.body.style.overflow = '';
 }
 
-document.getElementById('search-input').addEventListener('input', (e) => {
+$('search-input').addEventListener('input', (e) => {
     currentSearch = e.target.value.trim();
     renderProphets();
 });
@@ -525,7 +544,11 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeModal();
 });
 
+window.closeModal = closeModal;
+
 renderProphets();
+
+})();
 </script>
 
 </body>
