@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>الغزوات والفتوحات — ملاك المعرفة الإسلامية</title>
+<title>الغزوات والفتوحات — ملاك المعرفة</title>
 <meta name="description" content="غزوات النبي ﷺ والفتوحات الإسلامية الكبرى — بتفاصيل موثقة من السيرة والتاريخ الإسلامي.">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
@@ -64,16 +64,21 @@
 <nav class="main-nav">
 <ul class="nav-list">
 <li><a href="index.html">🏠 الرئيسية</a></li>
-<li><a href="quran.html">📖 القرآن الكريم</a></li>
+<li><a href="quran.html">📖 القرآن</a></li>
 <li><a href="tafsir.html">📚 التفسير</a></li>
-<li><a href="hadith.html">🕌 السنة النبوية</a></li>
-<li><a href="seerah.html">🌙 السيرة النبوية</a></li>
+<li><a href="hadith.html">🕌 السنة</a></li>
+<li><a href="seerah.html">🌙 السيرة</a></li>
 <li><a href="ghazawat.html" class="active">⚔️ الغزوات</a></li>
-<li><a href="prophets.html">🕊️ قصص الأنبياء</a></li>
+<li><a href="prophets.html">🕊️ الأنبياء</a></li>
 <li><a href="sahaba.html">⭐ الصحابة</a></li>
 <li><a href="adhkar.html">🤲 الأذكار</a></li>
+<li><a href="prayer.html">🕌 الصلاة</a></li>
+<li><a href="tasbih.html">📿 المسبحة</a></li>
+<li><a href="calendar.html">📅 التقويم</a></li>
 <li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="library.html">📚 المكتبة</a></li>
 <li><a href="search.html">🔍 البحث</a></li>
+<li><a href="masael.html">📖 المسائل الشرعية</a></li>
 </ul>
 </nav>
 
@@ -102,8 +107,8 @@
 
 <footer class="site-footer">
 <p class="footer-ayah">﴿ إِنَّا لَنَنصُرُ رُسُلَنَا وَالَّذِينَ آمَنُوا فِي الْحَيَاةِ الدُّنْيَا وَيَوْمَ يَقُومُ الْأَشْهَادُ ﴾</p>
-<p>ملاك المعرفة الإسلامية — منصة دعوية غير ربحية</p>
-<p>© 2026 — نسألكم الدعاء</p>
+<p>ملاك المعرفة — منصة دعوية غير ربحية</p>
+<p>© 2026 <strong>Emad Halawh</strong> — جميع الحقوق محفوظة. نسألكم الدعاء.</p>
 </footer>
 
 <div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
@@ -111,6 +116,9 @@
 </div>
 
 <script>
+(function () {
+'use strict';
+
 const BATTLES = [
     {
         name: "غزوة بدر الكبرى",
@@ -316,9 +324,17 @@ const BATTLES = [
 let currentFilter = 'all';
 let currentSearch = '';
 
+function $(id) { return document.getElementById(id); }
+
+function escapeHtml(t) {
+    const d = document.createElement('div');
+    d.textContent = String(t);
+    return d.innerHTML;
+}
+
 function renderBattles() {
-    const container = document.getElementById('gh-container');
-    let filtered = BATTLES.filter(b => {
+    const container = $('gh-container');
+    const filtered = BATTLES.filter(b => {
         const matchFilter = currentFilter === 'all' || b.category === currentFilter;
         const matchSearch = currentSearch === '' ||
             b.name.includes(currentSearch) ||
@@ -331,34 +347,41 @@ function renderBattles() {
         return;
     }
 
-    container.innerHTML = filtered.map(b => `
-        <div class="gh-card" onclick="openModal(${BATTLES.indexOf(b)})">
-            <div class="gh-icon">${b.icon}</div>
-            <div class="gh-name">${b.name}</div>
-            <div class="gh-year">${b.year}</div>
-            <div class="gh-brief">${b.brief}</div>
-            <span class="gh-badge">${b.category}</span>
-        </div>
-    `).join('');
+    container.innerHTML = filtered.map(b => {
+        const idx = BATTLES.indexOf(b);
+        return `
+            <div class="gh-card" data-idx="${idx}">
+                <div class="gh-icon">${b.icon}</div>
+                <div class="gh-name">${escapeHtml(b.name)}</div>
+                <div class="gh-year">${escapeHtml(b.year)}</div>
+                <div class="gh-brief">${escapeHtml(b.brief)}</div>
+                <span class="gh-badge">${escapeHtml(b.category)}</span>
+            </div>
+        `;
+    }).join('');
+
+    container.querySelectorAll('.gh-card').forEach(card => {
+        card.addEventListener('click', () => openModal(parseInt(card.dataset.idx, 10)));
+    });
 }
 
 function openModal(index) {
     const b = BATTLES[index];
-    const modal = document.getElementById('modal');
-    const content = document.getElementById('modal-content');
+    const modal = $('modal');
+    const content = $('modal-content');
 
     content.innerHTML = `
         <button class="modal-close" onclick="closeModal()">✕</button>
         <div class="modal-icon">${b.icon}</div>
-        <div class="modal-name">${b.name}</div>
-        <div class="modal-year">${b.year}</div>
+        <div class="modal-name">${escapeHtml(b.name)}</div>
+        <div class="modal-year">${escapeHtml(b.year)}</div>
         ${b.sections.map(s => `
             <div class="modal-section">
-                <h3>${s.h}</h3>
-                <p>${s.p}</p>
+                <h3>${escapeHtml(s.h)}</h3>
+                <p>${escapeHtml(s.p)}</p>
             </div>
         `).join('')}
-        <div class="modal-source">📖 المراجع: ${b.refs}</div>
+        <div class="modal-source">📖 المراجع: ${escapeHtml(b.refs)}</div>
     `;
 
     modal.classList.add('show');
@@ -366,11 +389,11 @@ function openModal(index) {
 }
 
 function closeModal() {
-    document.getElementById('modal').classList.remove('show');
+    $('modal').classList.remove('show');
     document.body.style.overflow = '';
 }
 
-document.getElementById('search-input').addEventListener('input', (e) => {
+$('search-input').addEventListener('input', (e) => {
     currentSearch = e.target.value.trim();
     renderBattles();
 });
@@ -388,7 +411,11 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeModal();
 });
 
+window.closeModal = closeModal;
+
 renderBattles();
+
+})();
 </script>
 
 </body>
