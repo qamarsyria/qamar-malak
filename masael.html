@@ -68,6 +68,10 @@
 .debug-box.show{display:block}
 .debug-box code{background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:4px;direction:ltr;display:inline-block;font-size:12px}
 .verify-badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(74,222,128,0.15);color:#4ade80;border:1px solid rgba(74,222,128,0.3);margin-left:6px}
+.ai-divider{text-align:center;margin:30px 0 20px;color:#60a5fa;font-family:'Amiri',serif;font-size:16px;font-weight:700;position:relative}
+.ai-divider::before,.ai-divider::after{content:'';position:absolute;top:50%;width:35%;height:1px;background:linear-gradient(90deg,transparent,rgba(96,165,250,0.5),transparent)}
+.ai-divider::before{right:0}
+.ai-divider::after{left:0}
 @media (max-width:640px){
 .masael-hero h1{font-size:22px}
 .q-text{font-size:18px}
@@ -148,10 +152,13 @@
 <p>ملاك المعرفة — منصة دعوية غير ربحية</p>
 <p>© 2026 <strong>Emad Halawh</strong> — جميع الحقوق محفوظة.</p>
 </footer>
-
 <script src="faq-data.js" onerror="showDebug('⚠️ <strong>ملف faq-data.js غير موجود!</strong><br>تأكد من وجود الملف بجانب <code>masael.html</code>.')"></script>
 <script src="hadith-db.js" onerror="showDebug('⚠️ <strong>ملف hadith-db.js غير موجود!</strong><br>سيتم تعطيل التحقق الآلي من الأحاديث.')"></script>
 <script>
+/* ============================================================
+   المسائل الشرعية — بحث محلي + Gemini معًا
+   ============================================================ */
+
 function showDebug(msg) {
     const b = document.getElementById('debug-box');
     if (b) { b.classList.add('show'); b.innerHTML = msg; }
@@ -208,7 +215,7 @@ function searchFAQ(query, category) {
     const results = [];
     FAQ_DATA.forEach((item, idx) => {
         if (category && category !== 'all' && item.c !== category) return;
-        const qText = item.q, aText = item.a, kwArr = item.k || [], kwText = kwArr.join(' ');
+        const qText = item.q, aText = item.a, kwText = (item.k || []).join(' ');
         let score = 0, exactMatched = 0;
         keywords.forEach(tok => {
             if (hasWord(kwText, tok)) { score += 120; exactMatched++; return; }
@@ -224,7 +231,7 @@ function searchFAQ(query, category) {
         if (score > 100) results.push({ item, score, idx });
     });
     results.sort((a, b) => b.score - a.score);
-    return results.slice(0, 8);
+    return results.slice(0, 5);
 }
 
 function escapeHtml(t) {
@@ -270,7 +277,7 @@ function buildLocalAnswerHTML(item, score) {
 function buildAIAnswerHTML(query, answer, quranItems, hadithItems) {
     const ayahHtml = quranItems.map(item => `<div class="evidence ayah"><span class="evidence-type">📖 آية قرآنية <span class="verify-badge">✓ موثّق</span></span><div class="evidence-text">${escapeHtml(item.text)}</div><div class="evidence-ref">— ${escapeHtml(item.ref)}</div></div>`).join('');
     const hadithHtml = hadithItems.map(item => `<div class="evidence hadith"><span class="evidence-type">🕌 حديث صحيح <span class="verify-badge">✓ موثّق</span></span><div class="evidence-text">${escapeHtml(item.text)}</div><div class="evidence-ref">— ${escapeHtml(item.book)} رقم ${item.num}</div></div>`).join('');
-    return `<div class="answer-card ai-answer"><span class="match-score ai-badge">🔎 بحث موسّع</span><span class="q-label">❓ المسألة</span><div class="q-text">${escapeHtml(query)}</div><span class="a-label">✅ الجواب</span><div class="a-text">${escapeHtml(answer)}</div><span class="evidence-label">🔍 الدليل من القرآن والسنة (مُتحقَّق منه آليًا):</span>${ayahHtml}${hadithHtml}</div>`;
+    return `<div class="answer-card ai-answer"><span class="match-score ai-badge">🔎 بحث موسّع</span><span class="q-label">❓ المسألة</span><div class="q-text">${escapeHtml(query)}</div><span class="a-label">✅ الجواب الموسّع</span><div class="a-text">${escapeHtml(answer)}</div><span class="evidence-label">🔍 الدليل من القرآن والسنة (مُتحقَّق منه آليًا):</span>${ayahHtml}${hadithHtml}</div>`;
 }
 
 async function callGeminiAI(query, localMatches) {
@@ -298,67 +305,118 @@ const searchWrapper = document.getElementById('search-wrapper');
 const resultsContainer = document.getElementById('results-container');
 
 function setSearching(msg) { searchWrapper.classList.add('searching'); statusBar.className = 'status-bar show searching'; statusBar.textContent = msg || '🔍 جارٍ البحث...'; }
-function setAISearching() { searchWrapper.classList.add('searching'); statusBar.className = 'status-bar show ai-search'; statusBar.textContent = '🔎 لا توجد نتيجة محلية — جارٍ البحث في المسائل الموسّعة...'; }
-function setFound(count, ms, fromAI) { searchWrapper.classList.remove('searching'); statusBar.className = 'status-bar show found'; statusBar.textContent = fromAI ? `✅ تم توليد جواب موثّق في ${ms} م.ث` : `✅ تم العثور على ${count} نتيجة في ${ms} م.ث`; }
+function setAISearching(hasLocal) { searchWrapper.classList.add('searching'); statusBar.className = 'status-bar show ai-search'; statusBar.textContent = hasLocal ? '🔎 جارٍ البحث الموسّع في المسائل الشرعية...' : '🔎 لا توجد نتيجة محلية — جارٍ البحث الموسّع...'; }
+function setFound(count, ms, fromAI) { searchWrapper.classList.remove('searching'); statusBar.className = 'status-bar show found'; statusBar.textContent = fromAI ? `✅ تم العثور على ${count} نتيجة + جواب موسّع في ${ms} م.ث` : `✅ تم العثور على ${count} نتيجة في ${ms} م.ث`; }
 function setNotFound(msg) { searchWrapper.classList.remove('searching'); statusBar.className = 'status-bar show not-found'; statusBar.textContent = msg || '❌ لم يتم العثور على نتيجة موثّقة'; }
 function setIdle() { searchWrapper.classList.remove('searching'); statusBar.classList.remove('show'); }
 
 async function renderResults() {
     const trimmed = currentQuery.trim();
     const mySeq = ++requestSeq;
+
     if (trimmed.length < 2) {
         setIdle();
-        resultsContainer.innerHTML = `<div class="no-results"><span class="icon">📖</span><h3>اكتب مسألتك الشرعية</h3><p>مثال: ما حكم الربا؟ • كيف أتوضأ؟ • ما فضل صيام عرفة؟</p><p style="opacity:0.5;font-size:12px">اكتب حرفين على الأقل للبحث</p></div>`;
+        resultsContainer.innerHTML = `<div class="no-results">
+            <span class="icon">📖</span>
+            <h3>اكتب مسألتك الشرعية</h3>
+            <p>مثال: ما حكم الربا؟ • كيف أتوضأ؟ • ما فضل صيام عرفة؟</p>
+            <p style="opacity:0.5;font-size:12px">اكتب حرفين على الأقل للبحث</p>
+        </div>`;
         return;
     }
+
     setSearching();
     const t0 = performance.now();
+
+    // المرحلة 1: البحث المحلي (فوري)
     const localResults = searchFAQ(currentQuery, currentCategory);
     if (mySeq !== requestSeq) return;
-    if (localResults.length > 0 && localResults[0].score >= 300) {
-        const t1 = performance.now();
-        setFound(localResults.length, Math.round(t1 - t0), false);
-        resultsContainer.innerHTML = localResults.map(r => buildLocalAnswerHTML(r.item, r.score)).join('');
-        return;
+
+    let localHtml = '';
+    if (localResults.length > 0) {
+        localHtml = localResults.map(r => buildLocalAnswerHTML(r.item, r.score)).join('');
+        setFound(localResults.length, Math.round(performance.now() - t0), false);
     }
+
+    resultsContainer.innerHTML = localHtml + '<div id="ai-answer-section"></div>';
+
+    // المرحلة 2: اتصل بـ Gemini دائمًا (بحث موسّع)
+    setAISearching(localResults.length > 0);
+
     try {
-        setAISearching();
         const ai = await callGeminiAI(currentQuery, localResults);
         if (mySeq !== requestSeq) return;
+
+        const elapsed = Math.round(performance.now() - t0);
+        const aiSection = document.getElementById('ai-answer-section');
+        if (!aiSection) return;
+
         if (ai.not_enough_evidence || (!ai.quran_refs.length && !ai.hadith_refs.length)) {
-            if (localResults.length > 0) {
-                const t1 = performance.now();
-                setFound(localResults.length, Math.round(t1 - t0), false);
-                resultsContainer.innerHTML = '<div style="text-align:center;padding:15px;color:var(--cream);opacity:0.8;font-size:14px;line-height:1.8">لا توجد أدلة قرآنية أو حديثية قطعية لهذه المسألة. قد تفيدك المسائل التالية:</div>' + localResults.map(r => buildLocalAnswerHTML(r.item, r.score)).join('');
-                return;
+            if (localResults.length === 0) {
+                setNotFound('لا أعلم — لم أجد دليلًا موثّقًا لهذه المسألة');
+                aiSection.innerHTML = `<div class="no-results">
+                    <span class="icon">🤔</span>
+                    <h3>لا أعلم</h3>
+                    <p>لم أجد دليلًا قطعيًا من القرآن الكريم أو السنة الصحيحة لهذه المسألة.</p>
+                    <p style="opacity:0.6;font-size:13px">يُرجع في مثل هذه المسائل إلى أهل العلم المختصين.</p>
+                </div>`;
+            } else {
+                setFound(localResults.length, elapsed, false);
             }
-            setNotFound('لا أعلم — لم أجد دليلًا موثّقًا لهذه المسألة');
-            resultsContainer.innerHTML = `<div class="no-results"><span class="icon">🤔</span><h3>لا أعلم</h3><p>لم أجد دليلًا قطعيًا من القرآن الكريم أو السنة الصحيحة لهذه المسألة.</p><p style="opacity:0.6;font-size:13px">يُرجع في مثل هذه المسائل إلى أهل العلم المختصين.</p></div>`;
             return;
         }
-        const verifiedAyat = [], verifiedHadiths = [];
-        for (const ref of ai.quran_refs) { const v = await fetchQuranRef(ref); if (v) verifiedAyat.push(v); }
-        for (const ref of ai.hadith_refs) { const v = verifyHadithRef(ref); if (v) verifiedHadiths.push(v); }
+
+        const verifiedAyat = [];
+        const verifiedHadiths = [];
+        for (const ref of ai.quran_refs) {
+            const v = await fetchQuranRef(ref);
+            if (v) verifiedAyat.push(v);
+        }
+        for (const ref of ai.hadith_refs) {
+            const v = verifyHadithRef(ref);
+            if (v) verifiedHadiths.push(v);
+        }
         if (mySeq !== requestSeq) return;
-        const t1 = performance.now();
-        const elapsed = Math.round(t1 - t0);
+
         if (verifiedAyat.length === 0 && verifiedHadiths.length === 0) {
-            setNotFound('⚠️ تم رفض الجواب: المراجع المُقترحة غير موجودة في قواعد التحقق');
-            resultsContainer.innerHTML = `<div class="no-results"><span class="icon">🛡️</span><h3>لم يتمكن النظام من التحقق</h3><p>النموذج اقترح جوابًا، لكن مراجعه لم تُطابق قواعد التحقق الصارمة.</p><p style="opacity:0.6;font-size:13px">التزامًا بالأمانة العلمية، لا نعرض جوابًا غير موثّق.</p>${localResults.length > 0 ? '<p style="margin-top:20px;opacity:0.7;font-size:13px">هل تقصد إحدى هذه المسائل؟</p>' : ''}</div>${localResults.slice(0, 3).map(r => buildLocalAnswerHTML(r.item, r.score)).join('')}`;
+            if (localResults.length === 0) {
+                setNotFound('⚠️ تم رفض الجواب: المراجع المُقترحة غير موجودة في قواعد التحقق');
+                aiSection.innerHTML = `<div class="no-results">
+                    <span class="icon">🛡️</span>
+                    <h3>لم يتمكن النظام من التحقق</h3>
+                    <p>النموذج اقترح جوابًا، لكن مراجعه لم تُطابق قواعد التحقق الصارمة.</p>
+                    <p style="opacity:0.6;font-size:13px">التزامًا بالأمانة العلمية، لا نعرض جوابًا غير موثّق.</p>
+                </div>`;
+            } else {
+                setFound(localResults.length, elapsed, false);
+            }
             return;
         }
-        setFound(1, elapsed, true);
-        resultsContainer.innerHTML = buildAIAnswerHTML(currentQuery, ai.answer, verifiedAyat, verifiedHadiths);
+
+        // عرض جواب Gemini بعد فاصل بصري
+        const divider = localResults.length > 0
+            ? '<div class="ai-divider">🔎 البحث الموسّع في المسائل الشرعية</div>'
+            : '';
+        aiSection.innerHTML = divider + buildAIAnswerHTML(currentQuery, ai.answer, verifiedAyat, verifiedHadiths);
+        setFound(localResults.length + 1, elapsed, true);
+
     } catch (err) {
         if (mySeq !== requestSeq) return;
-        if (localResults.length > 0) {
-            const t1 = performance.now();
-            setFound(localResults.length, Math.round(t1 - t0), false);
-            resultsContainer.innerHTML = localResults.map(r => buildLocalAnswerHTML(r.item, r.score)).join('');
-            return;
+
+        if (localResults.length === 0) {
+            setNotFound('تعذر البحث الموسّع');
+            const aiSection = document.getElementById('ai-answer-section');
+            if (aiSection) {
+                aiSection.innerHTML = `<div class="no-results">
+                    <span class="icon">⚠️</span>
+                    <h3>لا توجد مسألة مطابقة</h3>
+                    <p>لم أجد مسألة موثّقة في القاعدة الحالية تطابق "${escapeHtml(currentQuery)}".</p>
+                    <p style="opacity:0.6;font-size:13px">حاول مرة أخرى أو جرّب صيغة أقصر.</p>
+                </div>`;
+            }
+        } else {
+            setFound(localResults.length, Math.round(performance.now() - t0), false);
         }
-        setNotFound('لا توجد مسألة مطابقة');
-        resultsContainer.innerHTML = `<div class="no-results"><span class="icon">🤔</span><h3>لا توجد مسألة مطابقة</h3><p>لم أجد مسألة موثّقة في القاعدة الحالية تطابق "${escapeHtml(currentQuery)}".</p><p style="opacity:0.65;font-size:13px">جرّب كلمة مفتاحية أخرى، أو صيغة أقصر.</p><p style="opacity:0.5;font-size:12px;margin-top:15px">القاعدة المحلية فيها ${FAQ_DATA.length} مسألة موثّقة.</p></div>`;
     }
 }
 
