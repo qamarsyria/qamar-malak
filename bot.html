@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>البوت الإسلامي — ملاك المعرفة</title>
-<meta name="description" content="بوت إسلامي موثّق: 204 سؤال وجواب من القرآن الكريم والسنة الصحيحة.">
+<title>المسائل الشرعية — ملاك المعرفة</title>
+<meta name="description" content="المسائل الشرعية الموثّقة: أحكام وفتاوى من القرآن الكريم والسنة النبوية الصحيحة.">
 <link rel="stylesheet" href="style.css">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
 <style>
-.bot-hero{background:linear-gradient(135deg,rgba(212,175,55,0.22) 0%,rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:20px;padding:30px 20px;text-align:center;margin-bottom:20px}
-.bot-hero h1{font-family:'Amiri',serif;font-size:30px;color:var(--gold);margin-bottom:12px}
-.bot-hero p{color:var(--cream);opacity:0.9;max-width:680px;margin:0 auto;font-size:14px}
+.masael-hero{background:linear-gradient(135deg,rgba(212,175,55,0.22) 0%,rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:20px;padding:30px 20px;text-align:center;margin-bottom:20px}
+.masael-hero h1{font-family:'Amiri',serif;font-size:30px;color:var(--gold);margin-bottom:12px}
+.masael-hero p{color:var(--cream);opacity:0.9;max-width:680px;margin:0 auto;font-size:14px}
 .search-link{display:block;text-align:center;color:var(--gold);text-decoration:none;font-size:13px;opacity:0.85;margin-bottom:20px;padding:10px;border-radius:10px;background:rgba(212,175,55,0.08);border:1px dashed rgba(212,175,55,0.3);transition:all 0.3s}
 .search-link:hover{background:rgba(212,175,55,0.15);opacity:1}
 .notice{background:linear-gradient(135deg,rgba(74,222,128,0.12) 0%,rgba(74,222,128,0.03) 100%);border:2px solid rgba(74,222,128,0.35);border-radius:14px;padding:14px 18px;margin-bottom:20px;text-align:center;font-size:13px;color:var(--cream)}
@@ -19,7 +19,11 @@
 .big-search input{width:100%;padding:18px 60px 18px 20px;background:rgba(10,58,44,0.7);border:2px solid rgba(212,175,55,0.35);border-radius:35px;color:var(--cream);font-family:inherit;font-size:16px;outline:none;transition:all 0.3s}
 .big-search input:focus{border-color:var(--gold);background:rgba(10,58,44,0.95);box-shadow:0 0 0 5px rgba(212,175,55,0.15)}
 .big-search input::placeholder{color:rgba(245,240,225,0.55)}
-.big-search .search-icon{position:absolute;right:22px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:22px;pointer-events:none}
+.big-search .search-icon{position:absolute;right:22px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:22px;pointer-events:none;transition:all 0.3s}
+.big-search.searching .search-icon{opacity:0}
+.big-search .spinner-inline{position:absolute;right:22px;top:50%;transform:translateY(-50%);width:22px;height:22px;border:3px solid rgba(212,175,55,0.25);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;display:none}
+.big-search.searching .spinner-inline{display:block}
+@keyframes spin{to{transform:translateY(-50%) rotate(360deg)}}
 .filters{display:flex;gap:8px;overflow-x:auto;padding-bottom:12px;margin-bottom:20px;scrollbar-width:thin;justify-content:flex-start}
 .filters::-webkit-scrollbar{height:4px}
 .filters::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
@@ -29,10 +33,16 @@
 .suggestions{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:25px}
 .suggestion{padding:6px 14px;background:rgba(212,175,55,0.12);border:1px solid rgba(212,175,55,0.3);border-radius:15px;color:var(--gold);font-size:12px;cursor:pointer;transition:all 0.3s;font-family:inherit}
 .suggestion:hover{background:var(--gold);color:var(--green-dark)}
-.stats-line{text-align:center;color:var(--cream);opacity:0.85;font-size:14px;margin-bottom:20px;padding:10px}
-.stats-line strong{color:var(--gold);font-size:16px}
-.answer-card{background:linear-gradient(135deg,rgba(26,107,84,0.35) 0%,rgba(13,77,60,0.55) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:16px;padding:22px;margin-bottom:18px;border-right:4px solid var(--gold);transition:all 0.3s}
+.status-bar{text-align:center;padding:12px;border-radius:12px;margin-bottom:20px;font-size:14px;font-weight:600;transition:all 0.3s;display:none}
+.status-bar.show{display:block;animation:fadeIn 0.3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+.status-bar.searching{background:rgba(212,175,55,0.15);color:var(--gold);border:1px solid rgba(212,175,55,0.4)}
+.status-bar.found{background:rgba(74,222,128,0.15);color:#4ade80;border:1px solid rgba(74,222,128,0.4)}
+.status-bar.not-found{background:rgba(220,60,60,0.15);color:#ff8888;border:1px solid rgba(220,60,60,0.4)}
+.answer-card{background:linear-gradient(135deg,rgba(26,107,84,0.35) 0%,rgba(13,77,60,0.55) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:16px;padding:22px;margin-bottom:18px;border-right:4px solid var(--gold);transition:all 0.3s;animation:cardIn 0.35s ease}
+@keyframes cardIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .answer-card:hover{border-right-color:var(--gold-light);box-shadow:0 6px 20px rgba(212,175,55,0.15)}
+.match-score{float:left;font-size:10px;background:rgba(212,175,55,0.15);color:var(--gold);padding:3px 9px;border-radius:10px;border:1px solid rgba(212,175,55,0.3)}
 .q-label{display:inline-block;background:rgba(212,175,55,0.18);color:var(--gold);padding:3px 12px;border-radius:12px;font-size:11px;margin-bottom:10px;border:1px solid rgba(212,175,55,0.3);font-weight:600}
 .q-text{font-family:'Amiri',serif;font-size:22px;color:var(--gold);line-height:1.7;margin-bottom:14px;font-weight:700}
 .a-label{display:inline-block;background:rgba(74,222,128,0.18);color:#4ade80;padding:3px 12px;border-radius:12px;font-size:11px;margin-bottom:10px;border:1px solid rgba(74,222,128,0.3);font-weight:600}
@@ -55,7 +65,7 @@
 .debug-box.show{display:block}
 .debug-box code{background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:4px;direction:ltr;display:inline-block;font-size:12px}
 @media (max-width:640px){
-.bot-hero h1{font-size:22px}
+.masael-hero h1{font-size:22px}
 .q-text{font-size:18px}
 .evidence-text{font-size:15px}
 .a-text{font-size:15px}
@@ -93,15 +103,15 @@
 <li><a href="calendar.html">📅 التقويم</a></li>
 <li><a href="fiqh.html">⚖️ الفقه</a></li>
 <li><a href="search.html">🔍 البحث</a></li>
-<li><a href="bot.html" class="active">🤖 البوت</a></li>
+<li><a href="bot.html" class="active">📖 المسائل الشرعية</a></li>
 </ul>
 </nav>
 
 <main class="main-container">
 
-<section class="bot-hero">
-<h1>🤖 البوت الإسلامي الموثّق</h1>
-<p>اسأل أي سؤال ديني — كل جواب من القرآن الكريم والسنة الصحيحة فقط، بلا مذاهب ولا طرق غريبة.</p>
+<section class="masael-hero">
+<h1>📖 المسائل الشرعية</h1>
+<p>أحكام وفتاوى موثّقة من القرآن الكريم والسنة النبوية الصحيحة — بلا مذاهب ولا طرق غريبة.</p>
 </section>
 
 <a href="search.html" class="search-link">🔍 ابحث في نص القرآن والأذكار والصحابة والأنبياء ←</a>
@@ -112,10 +122,13 @@
 
 <div id="debug-box" class="debug-box"></div>
 
-<div class="big-search">
-<input type="text" id="search-input" placeholder="اكتب سؤالك... مثال: ما حكم الربا؟ كيف أصلي؟" autofocus>
-<span class="search-icon">🔍</span>
+<div class="big-search" id="search-wrapper">
+<input type="text" id="search-input" placeholder="اكتب مسألتك... مثال: ما حكم الربا؟ كيف أتوضأ؟" autofocus>
+<span class="search-icon" id="search-icon">🔍</span>
+<span class="spinner-inline"></span>
 </div>
+
+<div class="status-bar" id="status-bar"></div>
 
 <div class="filters" id="filters"></div>
 
@@ -131,30 +144,75 @@
 <p>© 2026 <strong>Emad Halawh</strong> — جميع الحقوق محفوظة.</p>
 </footer>
 
-<script src="faq-data.js" onerror="document.getElementById('debug-box').classList.add('show');document.getElementById('debug-box').innerHTML='⚠️ <strong>ملف faq-data.js غير موجود!</strong><br>تأكد من وجود الملف بجانب <code>bot.html</code> في نفس المجلد.';"></script>
+<script src="faq-data.js" onerror="showDebug('⚠️ <strong>ملف faq-data.js غير موجود!</strong><br>تأكد من وجود الملف بجانب <code>bot.html</code>.')"></script>
 <script>
 /* ============================================================
-   البوت الإسلامي الموثّق — بدون أي اعتماديات خارجية
+   المسائل الشرعية — محرك بحث عربي متقدم
+   • إزالة كلمات التوقف
+   • مطابقة تقريبية (bigrams)
+   • قاموس مرادفات إسلامي
+   • مؤشرات بصرية واضحة
    ============================================================ */
+
+function showDebug(msg) {
+    const b = document.getElementById('debug-box');
+    if (b) { b.classList.add('show'); b.innerHTML = msg; }
+}
+
 (function () {
 'use strict';
 
-// ====== التحقق من وجود FAQ_DATA ======
-const debugBox = document.getElementById('debug-box');
-
 if (typeof FAQ_DATA === 'undefined') {
-    debugBox.classList.add('show');
-    debugBox.innerHTML = '⚠️ <strong>لم يتم تحميل FAQ_DATA</strong><br>السبب: إما أن ملف <code>faq-data.js</code> غير موجود، أو فيه خطأ نحوي.<br>افتح <code>F12 → Console</code> لمعرفة الخطأ.';
+    showDebug('⚠️ <strong>لم يتم تحميل قاعدة المسائل</strong><br>افتح <code>F12 → Console</code> لمعرفة الخطأ، أو تأكد من وجود <code>faq-data.js</code> بجانب <code>bot.html</code>.');
     return;
 }
-
 if (!Array.isArray(FAQ_DATA) || FAQ_DATA.length === 0) {
-    debugBox.classList.add('show');
-    debugBox.innerHTML = '⚠️ <strong>FAQ_DATA فارغ أو ليس مصفوفة</strong><br>عدد العناصر: ' + (FAQ_DATA.length || 0);
+    showDebug('⚠️ <strong>قاعدة المسائل فارغة</strong> — عدد العناصر: ' + (FAQ_DATA ? FAQ_DATA.length : 'undefined'));
     return;
 }
 
-// ====== نظام التطبيع العربي ======
+// ============================================================
+// قاموس المرادفات الإسلامية
+// ============================================================
+const SYNONYMS = {
+    'ربا': ['فائدة', 'فوائد', 'قرض', 'بنك'],
+    'خمر': ['مسكر', 'سكر', 'شرب'],
+    'تدخين': ['دخان', 'سيجارة', 'سجائر'],
+    'حجاب': ['ستر', 'تغطية', 'نقاب'],
+    'غيبة': ['ذكر', 'همز', 'لمز'],
+    'نميمة': ['نقل', 'كلام', 'إفساد'],
+    'حسد': ['غيرة', 'بغض', 'عين'],
+    'تكبر': ['كبر', 'خيلاء', 'عجب'],
+    'صلاة': ['صلوات', 'ركعة', 'ركعات', 'سجود'],
+    'وضوء': ['طهارة', 'غسل', 'استنجاء'],
+    'زكاة': ['صدقة', 'نصاب', 'مال'],
+    'صيام': ['صوم', 'رمضان', 'فطر'],
+    'حج': ['عمرة', 'إحرام', 'طواف'],
+    'توبة': ['استغفار', 'ندم', 'رجوع'],
+    'جنة': ['فردوس', 'نعيم', 'آخرة'],
+    'نار': ['جهنم', 'عذاب', 'سعير'],
+    'ملائكة': ['جبريل', 'ملك', 'ميكائيل'],
+    'جن': ['شيطان', 'إبليس', 'مارج']
+};
+
+// ============================================================
+// كلمات التوقف
+// ============================================================
+const STOP_WORDS = new Set([
+    'ما', 'هل', 'كيف', 'لماذا', 'ليش', 'متى', 'اين', 'أين', 'من', 'ماذا',
+    'هذا', 'هذه', 'ذلك', 'تلك', 'هو', 'هي', 'هم', 'هن',
+    'التي', 'الذي', 'الذين', 'اللاتي',
+    'في', 'على', 'عن', 'الى', 'إلى', 'مع', 'عند', 'لدى',
+    'و', 'أو', 'ثم', 'بل', 'لكن', 'حتى', 'إذا', 'إن', 'أن', 'ان',
+    'كان', 'كانت', 'يكون', 'تكون', 'قال', 'قالت', 'يقول', 'تقول',
+    'هناك', 'هنا', 'أيضا', 'أيضاً', 'كذلك', 'كل', 'بعض',
+    'السلام', 'عليكم', 'ورحمة', 'الله', 'وبركاته', 'اخي', 'أخي', 'اختي',
+    'لو', 'لولا', 'ليت', 'لعل', 'لعلى'
+]);
+
+// ============================================================
+// التطبيع العربي
+// ============================================================
 function normalizeArabic(text) {
     if (!text) return '';
     return String(text)
@@ -170,22 +228,59 @@ function normalizeArabic(text) {
         .toLowerCase();
 }
 
-function tokenize(text) {
-    return normalizeArabic(text).split(/\s+/).filter(w => w.length > 1);
+function bigrams(str) {
+    const s = new Set();
+    for (let i = 0; i < str.length - 1; i++) s.add(str.substring(i, i + 2));
+    return s;
 }
 
-function escapeHtml(t) {
-    const d = document.createElement('div');
-    d.textContent = String(t);
-    return d.innerHTML;
+function similarity(a, b) {
+    if (!a || !b) return 0;
+    if (a === b) return 1;
+    if (a.length < 2 || b.length < 2) return a.includes(b) || b.includes(a) ? 0.5 : 0;
+    const ga = bigrams(a);
+    const gb = bigrams(b);
+    let inter = 0;
+    ga.forEach(g => { if (gb.has(g)) inter++; });
+    const union = ga.size + gb.size - inter;
+    return union === 0 ? 0 : inter / union;
 }
 
-// ====== محرك البحث ======
+function extractKeywords(text) {
+    const normalized = normalizeArabic(text);
+    const words = normalized.split(/\s+/).filter(w => w.length > 1);
+    return words.filter(w => !STOP_WORDS.has(w));
+}
+
+function expandWithSynonyms(words) {
+    const expanded = new Set(words);
+    words.forEach(w => {
+        for (const key in SYNONYMS) {
+            const keyN = normalizeArabic(key);
+            const synsN = SYNONYMS[key].map(normalizeArabic);
+            if (w === keyN || synsN.includes(w) || similarity(w, keyN) > 0.7) {
+                expanded.add(keyN);
+                synsN.forEach(s => expanded.add(s));
+            }
+        }
+    });
+    return Array.from(expanded);
+}
+
+// ============================================================
+// محرك البحث
+// ============================================================
 function searchFAQ(query, category) {
     const qNorm = normalizeArabic(query);
-    const qTokens = tokenize(query);
-    if (qTokens.length === 0) return [];
+    const originalKeywords = extractKeywords(query);
 
+    const keywords = originalKeywords.length > 0
+        ? originalKeywords
+        : normalizeArabic(query).split(/\s+/).filter(w => w.length > 1);
+
+    if (keywords.length === 0) return [];
+
+    const expandedKeywords = expandWithSynonyms(keywords);
     const results = [];
 
     FAQ_DATA.forEach((item, idx) => {
@@ -194,29 +289,81 @@ function searchFAQ(query, category) {
         const qText  = normalizeArabic(item.q);
         const aText  = normalizeArabic(item.a);
         const kwText = (item.k || []).map(normalizeArabic).join(' ');
+        const eText  = (item.e || []).map(ev => normalizeArabic(ev.x)).join(' ');
 
         let score = 0;
-        if (qText === qNorm) score += 1000;
-        if (qText.includes(qNorm) && qNorm.length >= 4) score += 300;
 
-        qTokens.forEach(tok => {
-            if (kwText.includes(tok)) score += 50;
-            if (qText.includes(tok))  score += 30;
-            if (aText.includes(tok))  score += 10;
+        if (qText === qNorm) score += 2000;
+
+        if (qNorm.length >= 4) {
+            if (qText.includes(qNorm)) score += 600;
+            if (qNorm.includes(qText)) score += 400;
+        }
+
+        const qSim = similarity(qNorm, qText);
+        score += qSim * 400;
+
+        let matchedKeywords = 0;
+
+        keywords.forEach(tok => {
+            if (kwText.includes(tok)) { score += 100; matchedKeywords++; return; }
+            if (qText.includes(tok))  { score += 70;  matchedKeywords++; return; }
+            if (aText.includes(tok))  { score += 25;  matchedKeywords++; return; }
+            if (eText.includes(tok))  { score += 15;  matchedKeywords++; return; }
         });
 
-        const matched = qTokens.filter(t => qText.includes(t) || kwText.includes(t)).length;
-        score += (matched / qTokens.length) * 100;
+        expandedKeywords.forEach(tok => {
+            if (keywords.includes(tok)) return;
+            if (kwText.includes(tok)) { score += 40; }
+            else if (qText.includes(tok)) { score += 25; }
+        });
 
-        if (score > 0) results.push({ item, score, idx });
+        if (keywords.length > 0) {
+            const coverage = matchedKeywords / keywords.length;
+            score += coverage * 150;
+            if (coverage >= 0.8) score += 100;
+        }
+
+        keywords.forEach(tok => {
+            if (tok.length < 4) return;
+            const qWords = qText.split(/\s+/);
+            for (const qw of qWords) {
+                if (qw.length < 3) continue;
+                const sim = similarity(tok, qw);
+                if (sim >= 0.7 && !qText.includes(tok)) {
+                    score += 30 * sim;
+                    break;
+                }
+            }
+        });
+
+        if (category !== 'all' && item.c === category) score += 30;
+
+        if (score > 50) results.push({ item, score, idx });
     });
 
     results.sort((a, b) => b.score - a.score);
     return results.slice(0, 8);
 }
 
-// ====== بناء بطاقة الجواب ======
-function buildAnswerHTML(item) {
+// ============================================================
+// أدوات
+// ============================================================
+function escapeHtml(t) {
+    const d = document.createElement('div');
+    d.textContent = String(t);
+    return d.innerHTML;
+}
+
+function getMatchLabel(score) {
+    if (score >= 1500) return '🎯 تطابق تام';
+    if (score >= 800)  return '⭐ تطابق قوي';
+    if (score >= 400)  return '✓ تطابق جيد';
+    if (score >= 200)  return '~ تطابق متوسط';
+    return '· نتائج قريبة';
+}
+
+function buildAnswerHTML(item, score) {
     const evidences = (item.e || []).map(ev => {
         const cls = ev.t === 'ayah' ? 'ayah' : 'hadith';
         const label = ev.t === 'ayah' ? '📖 آية قرآنية' : '🕌 حديث صحيح';
@@ -231,7 +378,8 @@ function buildAnswerHTML(item) {
 
     return `
         <div class="answer-card">
-            <span class="q-label">❓ السؤال</span>
+            <span class="match-score">${getMatchLabel(score)}</span>
+            <span class="q-label">❓ المسألة</span>
             <div class="q-text">${escapeHtml(item.q)}</div>
             <span class="a-label">✅ الجواب</span>
             <div class="a-text">${escapeHtml(item.a)}</div>
@@ -241,20 +389,52 @@ function buildAnswerHTML(item) {
     `;
 }
 
-// ====== الحالة ======
+// ============================================================
+// الحالة
+// ============================================================
 let currentQuery = '';
 let currentCategory = 'all';
+let searchTimeout = null;
 
-// ====== العرض ======
+const statusBar = document.getElementById('status-bar');
+const searchWrapper = document.getElementById('search-wrapper');
+
+function setSearching() {
+    searchWrapper.classList.add('searching');
+    statusBar.className = 'status-bar show searching';
+    statusBar.textContent = '🔍 جارٍ البحث في المسائل...';
+}
+
+function setFound(count, ms) {
+    searchWrapper.classList.remove('searching');
+    statusBar.className = 'status-bar show found';
+    statusBar.textContent = `✅ تم العثور على ${count} نتيجة في ${ms} م.ث`;
+}
+
+function setNotFound(ms) {
+    searchWrapper.classList.remove('searching');
+    statusBar.className = 'status-bar show not-found';
+    statusBar.textContent = `❌ لم يتم العثور على نتيجة في ${ms} م.ث`;
+}
+
+function setIdle() {
+    searchWrapper.classList.remove('searching');
+    statusBar.classList.remove('show');
+}
+
+// ============================================================
+// العرض
+// ============================================================
 function renderResults() {
     const container = document.getElementById('results-container');
     const trimmed = currentQuery.trim();
 
     if (trimmed.length < 2) {
+        setIdle();
         container.innerHTML = `
             <div class="no-results">
-                <span class="icon">🕌</span>
-                <h3>اسألني أي سؤال ديني</h3>
+                <span class="icon">📖</span>
+                <h3>اكتب مسألتك الشرعية</h3>
                 <p>مثال: ما حكم الربا؟ • كيف أتوضأ؟ • ما فضل صيام عرفة؟</p>
                 <p style="opacity:0.5;font-size:12px">اكتب حرفين على الأقل للبحث</p>
             </div>
@@ -262,25 +442,42 @@ function renderResults() {
         return;
     }
 
-    const results = searchFAQ(currentQuery, currentCategory);
+    setSearching();
 
-    if (results.length === 0) {
-        container.innerHTML = `
-            <div class="no-results">
-                <span class="icon">🤔</span>
-                <h3>لا يوجد جواب موثّق لهذا السؤال</h3>
-                <p>القاعدة المحلية فيها ${FAQ_DATA.length} سؤالًا موثّقًا.<br>جرّب صيغة أخرى أو كلمة مفتاحية مختلفة.</p>
-            </div>
-        `;
-        return;
-    }
+    setTimeout(() => {
+        try {
+            const t0 = performance.now();
+            const results = searchFAQ(currentQuery, currentCategory);
+            const t1 = performance.now();
+            const elapsed = Math.round(t1 - t0);
 
-    const stats = `<div class="stats-line">عدد النتائج: <strong>${results.length}</strong></div>`;
-    const cards = results.map(r => buildAnswerHTML(r.item)).join('');
-    container.innerHTML = stats + cards;
+            if (results.length === 0) {
+                setNotFound(elapsed);
+                container.innerHTML = `
+                    <div class="no-results">
+                        <span class="icon">🤔</span>
+                        <h3>لا توجد مسألة مطابقة</h3>
+                        <p>القاعدة المحلية فيها ${FAQ_DATA.length} مسألة موثّقة.<br>جرّب صيغة أخرى أو كلمة مفتاحية مختلفة.</p>
+                        <p style="opacity:0.6;font-size:12px">نصائح: استخدم كلمات قصيرة • تجنّب الجمل الطويلة • جرّب كلمة واحدة قوية</p>
+                    </div>
+                `;
+                return;
+            }
+
+            setFound(results.length, elapsed);
+            const cards = results.map(r => buildAnswerHTML(r.item, r.score)).join('');
+            container.innerHTML = cards;
+        } catch (err) {
+            setIdle();
+            showDebug('⚠️ خطأ في البحث: ' + escapeHtml(err.message));
+            console.error(err);
+        }
+    }, 180);
 }
 
-// ====== الفلاتر ======
+// ============================================================
+// الفلاتر
+// ============================================================
 function buildFilters() {
     const cats = ['all', ...new Set(FAQ_DATA.map(x => x.c).filter(Boolean))];
     const labels = {
@@ -304,23 +501,24 @@ function buildFilters() {
         'متفرقات': '📌 متفرقات'
     };
     const filters = document.getElementById('filters');
-    filters.innerHTML = cats.map(c => `
-        <button class="filter-btn ${c === currentCategory ? 'active' : ''}" data-cat="${escapeHtml(c)}">
-            ${labels[c] || escapeHtml(c)} (${c === 'all' ? FAQ_DATA.length : FAQ_DATA.filter(x => x.c === c).length})
-        </button>
-    `).join('');
+    filters.innerHTML = cats.map(c => {
+        const count = c === 'all' ? FAQ_DATA.length : FAQ_DATA.filter(x => x.c === c).length;
+        return `<button class="filter-btn ${c === currentCategory ? 'active' : ''}" data-cat="${escapeHtml(c)}">${labels[c] || escapeHtml(c)} (${count})</button>`;
+    }).join('');
 
     filters.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             currentCategory = btn.dataset.cat;
             filters.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            renderResults();
+            if (currentQuery.trim().length >= 2) renderResults();
         });
     });
 }
 
-// ====== الاقتراحات ======
+// ============================================================
+// الاقتراحات
+// ============================================================
 function buildSuggestions() {
     const sugs = ['أركان الإسلام','حكم الربا','كيف أتوضأ','فضل صيام عرفة','أركان الإيمان','حكم الغيبة','دعاء الاستخارة','فضل سورة الإخلاص'];
     const container = document.getElementById('suggestions');
@@ -332,17 +530,18 @@ function buildSuggestions() {
             document.getElementById('search-input').value = btn.dataset.q;
             currentQuery = btn.dataset.q;
             renderResults();
-            window.scrollTo({ top: 250, behavior: 'smooth' });
+            window.scrollTo({ top: 300, behavior: 'smooth' });
         });
     });
 }
 
-// ====== ربط الأحداث ======
-let searchTimeout = null;
+// ============================================================
+// ربط الأحداث
+// ============================================================
 document.getElementById('search-input').addEventListener('input', (e) => {
     currentQuery = e.target.value;
     clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(renderResults, 200);
+    searchTimeout = setTimeout(renderResults, 250);
 });
 
 document.getElementById('search-input').addEventListener('keydown', (e) => {
@@ -352,14 +551,15 @@ document.getElementById('search-input').addEventListener('keydown', (e) => {
     }
 });
 
-// ====== التشغيل ======
+// ============================================================
+// التشغيل
+// ============================================================
 try {
     buildFilters();
     buildSuggestions();
     renderResults();
 } catch (err) {
-    debugBox.classList.add('show');
-    debugBox.innerHTML = '⚠️ <strong>خطأ في التشغيل:</strong> ' + escapeHtml(err.message) + '<br>افتح F12 → Console للتفاصيل.';
+    showDebug('⚠️ خطأ في التشغيل: ' + escapeHtml(err.message));
     console.error(err);
 }
 
