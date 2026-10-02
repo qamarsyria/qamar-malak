@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>الأذكار والأدعية — ملاك المعرفة الإسلامية</title>
+<title>الأذكار والأدعية — ملاك المعرفة</title>
 <meta name="description" content="أذكار الصباح والمساء والنوم والاستيقاظ وأذكار بعد الصلاة، مع المصادر وعدد التكرار.">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤲</text></svg>">
@@ -27,16 +27,21 @@
 .dhikr-source{color:var(--gold);font-size:13px;font-style:italic;flex:1}
 .dhikr-counter{display:flex;align-items:center;gap:10px}
 .counter-btn{width:45px;height:45px;border-radius:50%;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark);border:none;font-size:20px;font-weight:700;cursor:pointer;font-family:'Amiri',serif;transition:all 0.3s}
-.counter-btn:hover{transform:scale(1.1);box-shadow:0 5px 15px rgba(212,175,55,0.4)}
-.counter-btn.done{background:linear-gradient(135deg,#4ade80 0%,#22c55e 100%);color:white}
+.counter-btn:hover:not(:disabled){transform:scale(1.1);box-shadow:0 5px 15px rgba(212,175,55,0.4)}
+.counter-btn.done{background:linear-gradient(135deg,#4ade80 0%,#22c55e 100%);color:white;cursor:default}
+.counter-btn:disabled{opacity:0.85;cursor:not-allowed}
 .counter-display{min-width:60px;text-align:center;color:var(--cream);font-size:15px;font-weight:600}
 .counter-display span{color:var(--gold);font-size:18px}
 .reset-btn{padding:6px 12px;background:rgba(200,50,50,0.3);border:1px solid rgba(200,50,50,0.5);color:#ff8888;border-radius:15px;font-size:12px;font-family:inherit;cursor:pointer}
 .reset-btn:hover{background:rgba(200,50,50,0.5);color:white}
-.empty-state{text-align:center;padding:40px;color:var(--cream);opacity:0.7}
 .done-msg{text-align:center;padding:8px;color:#4ade80;font-size:13px;font-weight:600;display:none;margin-top:10px}
 .done-msg.show{display:block}
-@media (max-width:640px){.dhikr-text{font-size:19px;line-height:2}.adhkar-hero h1{font-size:24px}.dhikr-meta{flex-direction:column;align-items:stretch}.dhikr-counter{justify-content:center}}
+@media (max-width:640px){
+.dhikr-text{font-size:19px;line-height:2}
+.adhkar-hero h1{font-size:24px}
+.dhikr-meta{flex-direction:column;align-items:stretch}
+.dhikr-counter{justify-content:center}
+}
 </style>
 </head>
 <body>
@@ -57,16 +62,20 @@
 <nav class="main-nav">
 <ul class="nav-list">
 <li><a href="index.html">🏠 الرئيسية</a></li>
-<li><a href="quran.html">📖 القرآن الكريم</a></li>
+<li><a href="quran.html">📖 القرآن</a></li>
 <li><a href="tafsir.html">📚 التفسير</a></li>
-<li><a href="hadith.html">🕌 السنة النبوية</a></li>
-<li><a href="seerah.html">🌙 السيرة النبوية</a></li>
+<li><a href="hadith.html">🕌 السنة</a></li>
+<li><a href="seerah.html">🌙 السيرة</a></li>
 <li><a href="ghazawat.html">⚔️ الغزوات</a></li>
-<li><a href="prophets.html">🕊️ قصص الأنبياء</a></li>
+<li><a href="prophets.html">🕊️ الأنبياء</a></li>
 <li><a href="sahaba.html">⭐ الصحابة</a></li>
 <li><a href="adhkar.html" class="active">🤲 الأذكار</a></li>
+<li><a href="prayer.html">🕌 الصلاة</a></li>
+<li><a href="tasbih.html">📿 المسبحة</a></li>
+<li><a href="calendar.html">📅 التقويم</a></li>
 <li><a href="fiqh.html">⚖️ الفقه</a></li>
 <li><a href="search.html">🔍 البحث</a></li>
+<li><a href="bot.html">📖 المسائل الشرعية</a></li>
 </ul>
 </nav>
 
@@ -85,13 +94,19 @@
 
 <footer class="site-footer">
 <p class="footer-ayah">﴿ فَاذْكُرُونِي أَذْكُرْكُمْ وَاشْكُرُوا لِي وَلَا تَكْفُرُونِ ﴾</p>
-<p>ملاك المعرفة الإسلامية — منصة دعوية غير ربحية</p>
-<p>© 2026 — نسألكم الدعاء</p>
+<p>ملاك المعرفة — منصة دعوية غير ربحية</p>
+<p>© 2026 <strong>Emad Halawh</strong> — جميع الحقوق محفوظة. نسألكم الدعاء.</p>
 </footer>
 
 <script>
+/* ============================================================
+   الأذكار والأدعية — عدّاد ذكي مع حفظ الحالة
+   ============================================================ */
+(function () {
+'use strict';
+
 const ADHKAR_DATA = {
-    "morning": {
+    morning: {
         title: "🌅 أذكار الصباح",
         desc: "تُقال بعد صلاة الفجر حتى طلوع الشمس",
         items: [
@@ -110,7 +125,7 @@ const ADHKAR_DATA = {
             { text: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ.", source: "رواه البخاري", count: 10 }
         ]
     },
-    "evening": {
+    evening: {
         title: "🌆 أذكار المساء",
         desc: "تُقال بعد صلاة العصر حتى المغرب",
         items: [
@@ -127,7 +142,7 @@ const ADHKAR_DATA = {
             { text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ.", source: "رواه مسلم", count: 100 }
         ]
     },
-    "sleep": {
+    sleep: {
         title: "🌙 أذكار النوم",
         desc: "تُقال عند الاستعداد للنوم",
         items: [
@@ -140,7 +155,7 @@ const ADHKAR_DATA = {
             { text: "اللَّهُمَّ أَسْلَمْتُ نَفْسِي إِلَيْكَ، وَفَوَّضْتُ أَمْرِي إِلَيْكَ، وَوَجَّهْتُ وَجْهِي إِلَيْكَ...", source: "رواه البخاري ومسلم", count: 1 }
         ]
     },
-    "wakeup": {
+    wakeup: {
         title: "☀️ أذكار الاستيقاظ",
         desc: "تُقال عند الاستيقاظ من النوم",
         items: [
@@ -149,7 +164,7 @@ const ADHKAR_DATA = {
             { text: "الْحَمْدُ لِلَّهِ الَّذِي رَدَّ عَلَيَّ رُوحِي وَعَافَانِي فِي جَسَدِي وَأَذِنَ لِي بِذِكْرِهِ.", source: "رواه الترمذي", count: 1 }
         ]
     },
-    "prayer": {
+    prayer: {
         title: "🕌 أذكار بعد الصلاة",
         desc: "تُقال بعد كل صلاة مفروضة",
         items: [
@@ -163,7 +178,7 @@ const ADHKAR_DATA = {
             { text: "آية الكرسي بعد كل صلاة.", source: "رواه النسائي", count: 1 }
         ]
     },
-    "misc": {
+    misc: {
         title: "📿 أذكار متنوعة",
         desc: "أذكار المواقف اليومية",
         items: [
@@ -180,20 +195,25 @@ const ADHKAR_DATA = {
 };
 
 let currentTab = 'morning';
-let counters = {};
+const counters = {};
+let tabsEl, headerEl, containerEl;
 
 function renderTabs() {
-    const tabs = document.getElementById('tabs');
-    tabs.innerHTML = Object.keys(ADHKAR_DATA).map(key => `
-        <button class="tab-btn ${key === currentTab ? 'active' : ''}" onclick="switchTab('${key}')">
+    tabsEl.innerHTML = Object.keys(ADHKAR_DATA).map(key => `
+        <button class="tab-btn ${key === currentTab ? 'active' : ''}" data-tab="${key}">
             ${ADHKAR_DATA[key].title}
         </button>
     `).join('');
+
+    tabsEl.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
 }
 
 function switchTab(key) {
+    if (!ADHKAR_DATA[key]) return;
     currentTab = key;
-    counters = {};
+    Object.keys(counters).forEach(k => { if (k.startsWith(currentTab + '-')) delete counters[k]; });
     renderTabs();
     renderContent();
 }
@@ -201,30 +221,33 @@ function switchTab(key) {
 function renderContent() {
     const data = ADHKAR_DATA[currentTab];
 
-    document.getElementById('section-header-container').innerHTML = `
+    headerEl.innerHTML = `
         <div class="section-header">
             <h2>${data.title}</h2>
             <p>${data.desc}</p>
         </div>
     `;
 
-    const container = document.getElementById('adhkar-container');
-    container.innerHTML = data.items.map((item, i) => {
+    containerEl.innerHTML = data.items.map((item, i) => {
         const key = `${currentTab}-${i}`;
-        const done = counters[key] === item.count;
+        const current = counters[key] || 0;
+        const done = current >= item.count;
         return `
             <div class="dhikr-card">
                 <div class="dhikr-text">${item.text}</div>
                 <div class="dhikr-meta">
                     <div class="dhikr-source">📖 ${item.source}</div>
                     <div class="dhikr-counter">
-                        <button class="counter-btn ${done ? 'done' : ''}" onclick="increment('${key}', ${item.count})">
+                        <button class="counter-btn ${done ? 'done' : ''}"
+                                data-key="${key}"
+                                data-count="${item.count}"
+                                ${done ? 'disabled' : ''}>
                             ${done ? '✓' : '+'}
                         </button>
                         <div class="counter-display">
-                            <span id="count-${key}">${counters[key] || 0}</span> / ${item.count}
+                            <span id="count-${key}">${current}</span> / ${item.count}
                         </div>
-                        <button class="reset-btn" onclick="reset('${key}')">إعادة</button>
+                        <button class="reset-btn" data-reset="${key}">إعادة</button>
                     </div>
                 </div>
                 <div class="done-msg ${done ? 'show' : ''}" id="done-${key}">
@@ -235,30 +258,62 @@ function renderContent() {
     }).join('');
 }
 
-function increment(key, target) {
-    counters[key] = (counters[key] || 0) + 1;
+function handleIncrement(btn) {
+    const key = btn.dataset.key;
+    const target = parseInt(btn.dataset.count, 10);
+    const current = counters[key] || 0;
+
+    if (current >= target) return;
+
+    counters[key] = current + 1;
     const countEl = document.getElementById(`count-${key}`);
     if (countEl) countEl.textContent = counters[key];
 
-    const btn = event.target.closest('.counter-btn');
-    const doneMsg = document.getElementById(`done-${key}`);
-
     if (counters[key] >= target) {
-        counters[key] = target;
-        countEl.textContent = target;
         btn.classList.add('done');
         btn.innerHTML = '✓';
+        btn.disabled = true;
+        const doneMsg = document.getElementById(`done-${key}`);
         if (doneMsg) doneMsg.classList.add('show');
     }
 }
 
-function reset(key) {
+function handleReset(key) {
     counters[key] = 0;
     renderContent();
 }
 
-renderTabs();
-renderContent();
+function onContainerClick(ev) {
+    const incBtn = ev.target.closest('.counter-btn');
+    if (incBtn && !incBtn.disabled) {
+        handleIncrement(incBtn);
+        return;
+    }
+    const resetBtn = ev.target.closest('.reset-btn');
+    if (resetBtn) {
+        handleReset(resetBtn.dataset.reset);
+        return;
+    }
+}
+
+function init() {
+    tabsEl = document.getElementById('tabs');
+    headerEl = document.getElementById('section-header-container');
+    containerEl = document.getElementById('adhkar-container');
+
+    renderTabs();
+    renderContent();
+
+    containerEl.addEventListener('click', onContainerClick);
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}
+
+})();
 </script>
 
 </body>
