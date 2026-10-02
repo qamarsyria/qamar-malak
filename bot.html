@@ -39,10 +39,13 @@
 .status-bar.searching{background:rgba(212,175,55,0.15);color:var(--gold);border:1px solid rgba(212,175,55,0.4)}
 .status-bar.found{background:rgba(74,222,128,0.15);color:#4ade80;border:1px solid rgba(74,222,128,0.4)}
 .status-bar.not-found{background:rgba(220,60,60,0.15);color:#ff8888;border:1px solid rgba(220,60,60,0.4)}
+.status-bar.ai-search{background:rgba(96,165,250,0.15);color:#60a5fa;border:1px solid rgba(96,165,250,0.4)}
 .answer-card{background:linear-gradient(135deg,rgba(26,107,84,0.35) 0%,rgba(13,77,60,0.55) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:16px;padding:22px;margin-bottom:18px;border-right:4px solid var(--gold);transition:all 0.3s;animation:cardIn 0.35s ease}
 @keyframes cardIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .answer-card:hover{border-right-color:var(--gold-light);box-shadow:0 6px 20px rgba(212,175,55,0.15)}
+.answer-card.ai-answer{border-right-color:#60a5fa}
 .match-score{float:left;font-size:10px;background:rgba(212,175,55,0.15);color:var(--gold);padding:3px 9px;border-radius:10px;border:1px solid rgba(212,175,55,0.3)}
+.match-score.ai-badge{background:rgba(96,165,250,0.15);color:#60a5fa;border-color:rgba(96,165,250,0.3)}
 .q-label{display:inline-block;background:rgba(212,175,55,0.18);color:var(--gold);padding:3px 12px;border-radius:12px;font-size:11px;margin-bottom:10px;border:1px solid rgba(212,175,55,0.3);font-weight:600}
 .q-text{font-family:'Amiri',serif;font-size:22px;color:var(--gold);line-height:1.7;margin-bottom:14px;font-weight:700}
 .a-label{display:inline-block;background:rgba(74,222,128,0.18);color:#4ade80;padding:3px 12px;border-radius:12px;font-size:11px;margin-bottom:10px;border:1px solid rgba(74,222,128,0.3);font-weight:600}
@@ -64,6 +67,7 @@
 .debug-box{background:rgba(220,60,60,0.15);border:2px solid rgba(220,60,60,0.4);border-radius:12px;padding:16px;margin:20px auto;max-width:700px;color:#ff8888;font-size:14px;line-height:1.8;display:none}
 .debug-box.show{display:block}
 .debug-box code{background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:4px;direction:ltr;display:inline-block;font-size:12px}
+.verify-badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(74,222,128,0.15);color:#4ade80;border:1px solid rgba(74,222,128,0.3);margin-left:6px}
 @media (max-width:640px){
 .masael-hero h1{font-size:22px}
 .q-text{font-size:18px}
@@ -145,13 +149,13 @@
 </footer>
 
 <script src="faq-data.js" onerror="showDebug('⚠️ <strong>ملف faq-data.js غير موجود!</strong><br>تأكد من وجود الملف بجانب <code>bot.html</code>.')"></script>
+<script src="hadith-db.js" onerror="showDebug('⚠️ <strong>ملف hadith-db.js غير موجود!</strong><br>تأكد من وجود الملف بجانب <code>bot.html</code>.')"></script>
 <script>
 /* ============================================================
-   المسائل الشرعية — محرك بحث عربي متقدم
-   • إزالة كلمات التوقف
-   • مطابقة تقريبية (bigrams)
-   • قاموس مرادفات إسلامي
-   • مؤشرات بصرية واضحة
+   المسائل الشرعية — نظام ثلاثي:
+   1. بحث محلي في 253 مسألة
+   2. إن لم يجد → استدعاء Gemini عبر Vercel
+   3. تحقق آلي من المراجع قبل العرض
    ============================================================ */
 
 function showDebug(msg) {
@@ -163,56 +167,42 @@ function showDebug(msg) {
 'use strict';
 
 if (typeof FAQ_DATA === 'undefined') {
-    showDebug('⚠️ <strong>لم يتم تحميل قاعدة المسائل</strong><br>افتح <code>F12 → Console</code> لمعرفة الخطأ، أو تأكد من وجود <code>faq-data.js</code> بجانب <code>bot.html</code>.');
-    return;
-}
-if (!Array.isArray(FAQ_DATA) || FAQ_DATA.length === 0) {
-    showDebug('⚠️ <strong>قاعدة المسائل فارغة</strong> — عدد العناصر: ' + (FAQ_DATA ? FAQ_DATA.length : 'undefined'));
+    showDebug('⚠️ <strong>لم يتم تحميل قاعدة المسائل</strong><br>تأكد من وجود <code>faq-data.js</code>.');
     return;
 }
 
 // ============================================================
-// قاموس المرادفات الإسلامية
+// المرادفات
 // ============================================================
 const SYNONYMS = {
-    'ربا': ['فائدة', 'فوائد', 'قرض', 'بنك'],
-    'خمر': ['مسكر', 'سكر', 'شرب'],
+    'ربا': ['فائدة', 'فوائد', 'بنك'],
+    'خمر': ['مسكر', 'سكر'],
     'تدخين': ['دخان', 'سيجارة', 'سجائر'],
     'حجاب': ['ستر', 'تغطية', 'نقاب'],
-    'غيبة': ['ذكر', 'همز', 'لمز'],
-    'نميمة': ['نقل', 'كلام', 'إفساد'],
-    'حسد': ['غيرة', 'بغض', 'عين'],
-    'تكبر': ['كبر', 'خيلاء', 'عجب'],
-    'صلاة': ['صلوات', 'ركعة', 'ركعات', 'سجود'],
-    'وضوء': ['طهارة', 'غسل', 'استنجاء'],
-    'زكاة': ['صدقة', 'نصاب', 'مال'],
+    'غيبة': ['همز', 'لمز'],
+    'حسد': ['غيرة', 'عين'],
+    'صلاة': ['صلوات', 'ركعة', 'سجود'],
+    'وضوء': ['طهارة', 'غسل'],
+    'زكاة': ['صدقة', 'نصاب'],
     'صيام': ['صوم', 'رمضان', 'فطر'],
     'حج': ['عمرة', 'إحرام', 'طواف'],
-    'توبة': ['استغفار', 'ندم', 'رجوع'],
-    'جنة': ['فردوس', 'نعيم', 'آخرة'],
-    'نار': ['جهنم', 'عذاب', 'سعير'],
-    'ملائكة': ['جبريل', 'ملك', 'ميكائيل'],
-    'جن': ['شيطان', 'إبليس', 'مارج']
+    'توبة': ['استغفار', 'ندم'],
+    'جنة': ['فردوس', 'نعيم'],
+    'نار': ['جهنم', 'عذاب']
 };
 
-// ============================================================
-// كلمات التوقف
-// ============================================================
 const STOP_WORDS = new Set([
-    'ما', 'هل', 'كيف', 'لماذا', 'ليش', 'متى', 'اين', 'أين', 'من', 'ماذا',
-    'هذا', 'هذه', 'ذلك', 'تلك', 'هو', 'هي', 'هم', 'هن',
-    'التي', 'الذي', 'الذين', 'اللاتي',
-    'في', 'على', 'عن', 'الى', 'إلى', 'مع', 'عند', 'لدى',
-    'و', 'أو', 'ثم', 'بل', 'لكن', 'حتى', 'إذا', 'إن', 'أن', 'ان',
-    'كان', 'كانت', 'يكون', 'تكون', 'قال', 'قالت', 'يقول', 'تقول',
-    'هناك', 'هنا', 'أيضا', 'أيضاً', 'كذلك', 'كل', 'بعض',
-    'السلام', 'عليكم', 'ورحمة', 'الله', 'وبركاته', 'اخي', 'أخي', 'اختي',
-    'لو', 'لولا', 'ليت', 'لعل', 'لعلى'
+    'ما','هل','كيف','لماذا','ليش','متى','اين','أين','من','ماذا',
+    'هذا','هذه','ذلك','تلك','هو','هي','هم','هن',
+    'التي','الذي','الذين','اللاتي',
+    'في','على','عن','الى','إلى','مع','عند','لدى',
+    'و','أو','ثم','بل','لكن','حتى','إذا','إن','أن','ان',
+    'كان','كانت','يكون','تكون','قال','قالت','يقول','تقول',
+    'هناك','هنا','أيضا','أيضاً','كذلك','كل','بعض',
+    'السلام','عليكم','ورحمة','الله','وبركاته',
+    'لو','لولا','ليت','لعل'
 ]);
 
-// ============================================================
-// التطبيع العربي
-// ============================================================
 function normalizeArabic(text) {
     if (!text) return '';
     return String(text)
@@ -268,12 +258,11 @@ function expandWithSynonyms(words) {
 }
 
 // ============================================================
-// محرك البحث
+// البحث المحلي
 // ============================================================
 function searchFAQ(query, category) {
     const qNorm = normalizeArabic(query);
     const originalKeywords = extractKeywords(query);
-
     const keywords = originalKeywords.length > 0
         ? originalKeywords
         : normalizeArabic(query).split(/\s+/).filter(w => w.length > 1);
@@ -289,57 +278,40 @@ function searchFAQ(query, category) {
         const qText  = normalizeArabic(item.q);
         const aText  = normalizeArabic(item.a);
         const kwText = (item.k || []).map(normalizeArabic).join(' ');
-        const eText  = (item.e || []).map(ev => normalizeArabic(ev.x)).join(' ');
 
         let score = 0;
+        let exactMatched = 0;
 
         if (qText === qNorm) score += 2000;
-
         if (qNorm.length >= 4) {
             if (qText.includes(qNorm)) score += 600;
             if (qNorm.includes(qText)) score += 400;
         }
 
-        const qSim = similarity(qNorm, qText);
-        score += qSim * 400;
-
-        let matchedKeywords = 0;
-
         keywords.forEach(tok => {
-            if (kwText.includes(tok)) { score += 100; matchedKeywords++; return; }
-            if (qText.includes(tok))  { score += 70;  matchedKeywords++; return; }
-            if (aText.includes(tok))  { score += 25;  matchedKeywords++; return; }
-            if (eText.includes(tok))  { score += 15;  matchedKeywords++; return; }
+            if (kwText.includes(tok)) { score += 100; exactMatched++; return; }
+            if (qText.includes(tok))  { score += 70;  exactMatched++; return; }
+            if (aText.includes(tok))  { score += 25;  exactMatched++; return; }
         });
 
         expandedKeywords.forEach(tok => {
             if (keywords.includes(tok)) return;
-            if (kwText.includes(tok)) { score += 40; }
-            else if (qText.includes(tok)) { score += 25; }
+            if (kwText.includes(tok)) score += 40;
+            else if (qText.includes(tok)) score += 25;
         });
 
         if (keywords.length > 0) {
-            const coverage = matchedKeywords / keywords.length;
+            const coverage = exactMatched / keywords.length;
             score += coverage * 150;
             if (coverage >= 0.8) score += 100;
         }
 
-        keywords.forEach(tok => {
-            if (tok.length < 4) return;
-            const qWords = qText.split(/\s+/);
-            for (const qw of qWords) {
-                if (qw.length < 3) continue;
-                const sim = similarity(tok, qw);
-                if (sim >= 0.7 && !qText.includes(tok)) {
-                    score += 30 * sim;
-                    break;
-                }
-            }
-        });
+        // شرط أساسي: على الأقل كلمة واحدة تطابقت فعلاً
+        if (exactMatched === 0) return;
 
         if (category !== 'all' && item.c === category) score += 30;
 
-        if (score > 50) results.push({ item, score, idx });
+        if (score > 150) results.push({ item, score, idx });
     });
 
     results.sort((a, b) => b.score - a.score);
@@ -359,11 +331,42 @@ function getMatchLabel(score) {
     if (score >= 1500) return '🎯 تطابق تام';
     if (score >= 800)  return '⭐ تطابق قوي';
     if (score >= 400)  return '✓ تطابق جيد';
-    if (score >= 200)  return '~ تطابق متوسط';
-    return '· نتائج قريبة';
+    return '~ تطابق متوسط';
 }
 
-function buildAnswerHTML(item, score) {
+// ============================================================
+// التحقق من المراجع (الطبقة الحرجة)
+// ============================================================
+async function fetchQuranRef(ref) {
+    // ref صيغة "surah:ayah" مثل "2:255"
+    try {
+        const [surah, ayah] = ref.split(':').map(s => s.trim());
+        if (!surah || !ayah) return null;
+        if (isNaN(parseInt(surah)) || isNaN(parseInt(ayah))) return null;
+
+        const res = await fetch(`https://api.alquran.cloud/v1/ayah/${surah}:${ayah}/ar`);
+        if (!res.ok) return null;
+        const data = await res.json();
+        if (!data.data) return null;
+
+        return {
+            text: data.data.text,
+            ref: `سورة ${data.data.surah.name.replace('سُورَةُ ', '')} — الآية ${data.data.numberInSurah}`
+        };
+    } catch (e) {
+        return null;
+    }
+}
+
+function verifyHadithRef(ref) {
+    if (typeof verifyHadith !== 'function') return null;
+    return verifyHadith(ref);
+}
+
+// ============================================================
+// بناء البطاقة
+// ============================================================
+function buildLocalAnswerHTML(item, score) {
     const evidences = (item.e || []).map(ev => {
         const cls = ev.t === 'ayah' ? 'ayah' : 'hadith';
         const label = ev.t === 'ayah' ? '📖 آية قرآنية' : '🕌 حديث صحيح';
@@ -389,32 +392,98 @@ function buildAnswerHTML(item, score) {
     `;
 }
 
+function buildAIAnswerHTML(query, answer, quranItems, hadithItems) {
+    const ayahHtml = quranItems.map(item => `
+        <div class="evidence ayah">
+            <span class="evidence-type">📖 آية قرآنية <span class="verify-badge">✓ موثّق</span></span>
+            <div class="evidence-text">${escapeHtml(item.text)}</div>
+            <div class="evidence-ref">— ${escapeHtml(item.ref)}</div>
+        </div>
+    `).join('');
+
+    const hadithHtml = hadithItems.map(item => `
+        <div class="evidence hadith">
+            <span class="evidence-type">🕌 حديث صحيح <span class="verify-badge">✓ موثّق</span></span>
+            <div class="evidence-text">${escapeHtml(item.text)}</div>
+            <div class="evidence-ref">— ${escapeHtml(item.book)} رقم ${item.num}</div>
+        </div>
+    `).join('');
+
+    return `
+        <div class="answer-card ai-answer">
+            <span class="match-score ai-badge">🔎 بحث موسّع</span>
+            <span class="q-label">❓ المسألة</span>
+            <div class="q-text">${escapeHtml(query)}</div>
+            <span class="a-label">✅ الجواب</span>
+            <div class="a-text">${escapeHtml(answer)}</div>
+            <span class="evidence-label">🔍 الدليل من القرآن والسنة (مُتحقَّق منه آليًا):</span>
+            ${ayahHtml}
+            ${hadithHtml}
+        </div>
+    `;
+}
+
+// ============================================================
+// استدعاء Gemini
+// ============================================================
+async function callGeminiAI(query, localMatches) {
+    // نبني سياق من أعلى 5 مسائل محلية
+    const context = localMatches.slice(0, 5).map(m =>
+        `س: ${m.item.q}\nج: ${m.item.a}`
+    ).join('\n\n');
+
+    const res = await fetch('/api/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query, context })
+    });
+
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || ('HTTP ' + res.status));
+    }
+
+    return await res.json();
+}
+
 // ============================================================
 // الحالة
 // ============================================================
 let currentQuery = '';
 let currentCategory = 'all';
 let searchTimeout = null;
+let lastAbortController = null;
 
 const statusBar = document.getElementById('status-bar');
 const searchWrapper = document.getElementById('search-wrapper');
+const resultsContainer = document.getElementById('results-container');
 
-function setSearching() {
+function setSearching(msg) {
     searchWrapper.classList.add('searching');
     statusBar.className = 'status-bar show searching';
-    statusBar.textContent = '🔍 جارٍ البحث في المسائل...';
+    statusBar.textContent = msg || '🔍 جارٍ البحث...';
 }
 
-function setFound(count, ms) {
+function setAISearching() {
+    searchWrapper.classList.add('searching');
+    statusBar.className = 'status-bar show ai-search';
+    statusBar.textContent = '🔎 لا توجد نتيجة محلية — جارٍ البحث في المسائل الموسّعة...';
+}
+
+function setFound(count, ms, fromAI) {
     searchWrapper.classList.remove('searching');
     statusBar.className = 'status-bar show found';
-    statusBar.textContent = `✅ تم العثور على ${count} نتيجة في ${ms} م.ث`;
+    if (fromAI) {
+        statusBar.textContent = `✅ تم توليد ${count} جواب موثّق في ${ms} م.ث`;
+    } else {
+        statusBar.textContent = `✅ تم العثور على ${count} نتيجة في ${ms} م.ث`;
+    }
 }
 
-function setNotFound(ms) {
+function setNotFound(msg) {
     searchWrapper.classList.remove('searching');
     statusBar.className = 'status-bar show not-found';
-    statusBar.textContent = `❌ لم يتم العثور على نتيجة في ${ms} م.ث`;
+    statusBar.textContent = msg || '❌ لم يتم العثور على نتيجة موثّقة';
 }
 
 function setIdle() {
@@ -423,15 +492,14 @@ function setIdle() {
 }
 
 // ============================================================
-// العرض
+// العرض الرئيسي
 // ============================================================
-function renderResults() {
-    const container = document.getElementById('results-container');
+async function renderResults() {
     const trimmed = currentQuery.trim();
 
     if (trimmed.length < 2) {
         setIdle();
-        container.innerHTML = `
+        resultsContainer.innerHTML = `
             <div class="no-results">
                 <span class="icon">📖</span>
                 <h3>اكتب مسألتك الشرعية</h3>
@@ -444,35 +512,105 @@ function renderResults() {
 
     setSearching();
 
-    setTimeout(() => {
-        try {
-            const t0 = performance.now();
-            const results = searchFAQ(currentQuery, currentCategory);
-            const t1 = performance.now();
-            const elapsed = Math.round(t1 - t0);
+    // إلغاء أي طلب سابق
+    if (lastAbortController) lastAbortController.abort();
+    lastAbortController = new AbortController();
 
-            if (results.length === 0) {
-                setNotFound(elapsed);
-                container.innerHTML = `
-                    <div class="no-results">
-                        <span class="icon">🤔</span>
-                        <h3>لا توجد مسألة مطابقة</h3>
-                        <p>القاعدة المحلية فيها ${FAQ_DATA.length} مسألة موثّقة.<br>جرّب صيغة أخرى أو كلمة مفتاحية مختلفة.</p>
-                        <p style="opacity:0.6;font-size:12px">نصائح: استخدم كلمات قصيرة • تجنّب الجمل الطويلة • جرّب كلمة واحدة قوية</p>
-                    </div>
-                `;
+    const t0 = performance.now();
+
+    // المرحلة 1: البحث المحلي
+    const localResults = searchFAQ(currentQuery, currentCategory);
+
+    // إذا وجدنا نتيجة قوية محليًا
+    if (localResults.length > 0 && localResults[0].score >= 500) {
+        const t1 = performance.now();
+        setFound(localResults.length, Math.round(t1 - t0), false);
+        resultsContainer.innerHTML = localResults.map(r => buildLocalAnswerHTML(r.item, r.score)).join('');
+        return;
+    }
+
+    // المرحلة 2: Gemini
+    try {
+        setAISearching();
+        const ai = await callGeminiAI(currentQuery, localResults);
+
+        if (ai.not_enough_evidence || (!ai.quran_refs.length && !ai.hadith_refs.length)) {
+            // نعرض نتائج محلية ضعيفة إن وجدت
+            if (localResults.length > 0) {
+                const t1 = performance.now();
+                setFound(localResults.length, Math.round(t1 - t0), false);
+                resultsContainer.innerHTML =
+                    '<div class="no-results" style="padding:20px"><p style="font-size:14px">لا توجد أدلة قرآنية أو حديثية قطعية لهذه المسألة. اقترب من الأسئلة التالية:</p></div>' +
+                    localResults.map(r => buildLocalAnswerHTML(r.item, r.score)).join('');
                 return;
             }
-
-            setFound(results.length, elapsed);
-            const cards = results.map(r => buildAnswerHTML(r.item, r.score)).join('');
-            container.innerHTML = cards;
-        } catch (err) {
-            setIdle();
-            showDebug('⚠️ خطأ في البحث: ' + escapeHtml(err.message));
-            console.error(err);
+            setNotFound('لا أعلم — لم أجد دليلاً موثّقًا لهذه المسألة');
+            resultsContainer.innerHTML = `
+                <div class="no-results">
+                    <span class="icon">🤔</span>
+                    <h3>لا أعلم</h3>
+                    <p>لم أجد دليلاً قطعيًا من القرآن الكريم أو السنة الصحيحة لهذه المسألة.</p>
+                    <p style="opacity:0.6;font-size:13px">يُرجع في مثل هذه المسائل إلى أهل العلم المختصين.</p>
+                </div>
+            `;
+            return;
         }
-    }, 180);
+
+        // المرحلة 3: التحقق من المراجع
+        const verifiedAyat = [];
+        const verifiedHadiths = [];
+
+        for (const ref of ai.quran_refs) {
+            const v = await fetchQuranRef(ref);
+            if (v) verifiedAyat.push(v);
+        }
+
+        for (const ref of ai.hadith_refs) {
+            const v = verifyHadithRef(ref);
+            if (v) verifiedHadiths.push(v);
+        }
+
+        const t1 = performance.now();
+        const elapsed = Math.round(t1 - t0);
+
+        // إذا لا يوجد أي مرجع صحيح بعد التحقق
+        if (verifiedAyat.length === 0 && verifiedHadiths.length === 0) {
+            setNotFound('⚠️ تم رفض الجواب: المراجع المُقترحة غير موجودة في قواعد التحقق');
+            resultsContainer.innerHTML = `
+                <div class="no-results">
+                    <span class="icon">🛡️</span>
+                    <h3>لم يتمكن النظام من التحقق</h3>
+                    <p>النموذج اقترح جوابًا، لكن مراجعه لم تُطابق قواعد التحقق الصارمة.</p>
+                    <p style="opacity:0.6;font-size:13px">التزامًا بالأمانة العلمية، لا نعرض جوابًا غير موثّق.</p>
+                    ${localResults.length > 0 ? '<p style="margin-top:20px;opacity:0.7;font-size:13px">هل تقصد إحدى هذه المسائل؟</p>' : ''}
+                </div>
+                ${localResults.slice(0, 3).map(r => buildLocalAnswerHTML(r.item, r.score)).join('')}
+            `;
+            return;
+        }
+
+        setFound(1, elapsed, true);
+        resultsContainer.innerHTML = buildAIAnswerHTML(currentQuery, ai.answer, verifiedAyat, verifiedHadiths);
+
+    } catch (err) {
+        console.error('AI error:', err);
+        // عند فشل AI، نعرض نتائج محلية إن وجدت
+        if (localResults.length > 0) {
+            const t1 = performance.now();
+            setFound(localResults.length, Math.round(t1 - t0), false);
+            resultsContainer.innerHTML = localResults.map(r => buildLocalAnswerHTML(r.item, r.score)).join('');
+            return;
+        }
+        setNotFound('تعذر الاتصال بالبحث الموسّع');
+        resultsContainer.innerHTML = `
+            <div class="no-results">
+                <span class="icon">⚠️</span>
+                <h3>تعذر البحث الموسّع</h3>
+                <p>${escapeHtml(err.message || 'خطأ غير معروف')}</p>
+                <p style="opacity:0.6;font-size:13px">تأكد من اتصالك بالإنترنت، أو جرّب صيغة أخرى.</p>
+            </div>
+        `;
+    }
 }
 
 // ============================================================
@@ -541,7 +679,7 @@ function buildSuggestions() {
 document.getElementById('search-input').addEventListener('input', (e) => {
     currentQuery = e.target.value;
     clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(renderResults, 250);
+    searchTimeout = setTimeout(renderResults, 400);
 });
 
 document.getElementById('search-input').addEventListener('keydown', (e) => {
