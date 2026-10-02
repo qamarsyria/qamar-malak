@@ -4,35 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>البوت الإسلامي — ملاك المعرفة</title>
+<meta name="description" content="بوت إسلامي موثّق: 204 سؤال وجواب من القرآن الكريم والسنة الصحيحة، بلا مذاهب.">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
 <style>
-.bot-hero{background:linear-gradient(135deg,rgba(212,175,55,0.22) 0%,rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:20px;padding:30px 20px;text-align:center;margin-bottom:25px}
+.bot-hero{background:linear-gradient(135deg,rgba(212,175,55,0.22) 0%,rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:20px;padding:30px 20px;text-align:center;margin-bottom:20px}
 .bot-hero h1{font-family:'Amiri',serif;font-size:30px;color:var(--gold);margin-bottom:12px}
 .bot-hero p{color:var(--cream);opacity:0.9;max-width:680px;margin:0 auto;font-size:14px}
+.search-link{display:block;text-align:center;color:var(--gold);text-decoration:none;font-size:13px;opacity:0.85;margin-bottom:20px;padding:10px;border-radius:10px;background:rgba(212,175,55,0.08);border:1px dashed rgba(212,175,55,0.3);transition:all 0.3s}
+.search-link:hover{background:rgba(212,175,55,0.15);opacity:1}
 .notice{background:linear-gradient(135deg,rgba(74,222,128,0.12) 0%,rgba(74,222,128,0.03) 100%);border:2px solid rgba(74,222,128,0.35);border-radius:14px;padding:14px 18px;margin-bottom:20px;text-align:center;font-size:13px;color:var(--cream)}
 .notice strong{color:#4ade80}
-
 .big-search{max-width:750px;margin:25px auto;position:relative}
 .big-search input{width:100%;padding:18px 60px 18px 20px;background:rgba(10,58,44,0.7);border:2px solid rgba(212,175,55,0.35);border-radius:35px;color:var(--cream);font-family:inherit;font-size:16px;outline:none;transition:all 0.3s}
 .big-search input:focus{border-color:var(--gold);background:rgba(10,58,44,0.95);box-shadow:0 0 0 5px rgba(212,175,55,0.15)}
 .big-search input::placeholder{color:rgba(245,240,225,0.55)}
 .big-search .search-icon{position:absolute;right:22px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:22px;pointer-events:none}
-
 .filters{display:flex;gap:8px;overflow-x:auto;padding-bottom:12px;margin-bottom:20px;scrollbar-width:thin;justify-content:flex-start}
 .filters::-webkit-scrollbar{height:4px}
 .filters::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
 .filter-btn{flex-shrink:0;padding:8px 16px;background:rgba(26,107,84,0.4);border:1px solid rgba(212,175,55,0.3);border-radius:20px;color:var(--cream);font-family:inherit;font-size:13px;cursor:pointer;transition:all 0.3s;white-space:nowrap}
 .filter-btn:hover{background:rgba(212,175,55,0.2)}
 .filter-btn.active{background:var(--gold);color:var(--green-dark);border-color:var(--gold);font-weight:700}
-
 .suggestions{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:25px}
 .suggestion{padding:6px 14px;background:rgba(212,175,55,0.12);border:1px solid rgba(212,175,55,0.3);border-radius:15px;color:var(--gold);font-size:12px;cursor:pointer;transition:all 0.3s;font-family:inherit}
 .suggestion:hover{background:var(--gold);color:var(--green-dark)}
-
 .stats-line{text-align:center;color:var(--cream);opacity:0.85;font-size:14px;margin-bottom:20px;padding:10px}
 .stats-line strong{color:var(--gold);font-size:16px}
-
 .answer-card{background:linear-gradient(135deg,rgba(26,107,84,0.35) 0%,rgba(13,77,60,0.55) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:16px;padding:22px;margin-bottom:18px;border-right:4px solid var(--gold);transition:all 0.3s}
 .answer-card:hover{border-right-color:var(--gold-light);box-shadow:0 6px 20px rgba(212,175,55,0.15)}
 .q-label{display:inline-block;background:rgba(212,175,55,0.18);color:var(--gold);padding:3px 12px;border-radius:12px;font-size:11px;margin-bottom:10px;border:1px solid rgba(212,175,55,0.3);font-weight:600}
@@ -49,7 +47,6 @@
 .evidence-text{font-family:'Amiri',serif;font-size:17px;line-height:1.9;color:var(--cream);margin-bottom:8px}
 .evidence.ayah .evidence-text{color:var(--gold);text-align:center}
 .evidence-ref{font-size:11px;color:var(--cream);opacity:0.7;font-style:italic}
-
 .no-results{text-align:center;padding:50px 20px;color:var(--cream);opacity:0.75}
 .no-results .icon{font-size:60px;margin-bottom:15px;display:block;opacity:0.6}
 .no-results h3{font-family:'Amiri',serif;color:var(--gold);font-size:20px;margin-bottom:10px}
@@ -57,10 +54,8 @@
 .ollama-btn{padding:10px 22px;background:linear-gradient(135deg,#4ade80 0%,#22c55e 100%);color:white;border:none;border-radius:22px;font-family:inherit;font-weight:700;font-size:14px;cursor:pointer;transition:all 0.3s}
 .ollama-btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(74,222,128,0.4)}
 .ollama-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
-
 .settings-btn{position:fixed;bottom:20px;left:20px;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark);border:none;width:52px;height:52px;border-radius:50%;font-size:22px;cursor:pointer;box-shadow:0 6px 20px rgba(212,175,55,0.4);z-index:100;transition:all 0.3s}
 .settings-btn:hover{transform:scale(1.1) rotate(45deg)}
-
 .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);backdrop-filter:blur(6px);z-index:2000;justify-content:center;align-items:flex-start;padding:20px;overflow-y:auto}
 .modal-overlay.show{display:flex}
 .modal-content{background:linear-gradient(135deg,#0a3a2c 0%,#0d4d3c 100%);border:2px solid var(--gold);border-radius:20px;max-width:600px;width:100%;padding:28px 22px;position:relative;margin-top:40px;margin-bottom:40px;animation:slideUp 0.3s ease}
@@ -83,11 +78,9 @@
 .status-msg.show{display:block}
 .status-msg.ok{background:rgba(74,222,128,0.15);color:#4ade80;border:1px solid rgba(74,222,128,0.3)}
 .status-msg.err{background:rgba(220,60,60,0.15);color:#ff8888;border:1px solid rgba(220,60,60,0.3)}
-
 .loading{text-align:center;padding:30px;color:var(--gold)}
 .spinner{display:inline-block;width:36px;height:36px;border:3px solid rgba(212,175,55,0.2);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;margin-bottom:12px}
 @keyframes spin{to{transform:rotate(360deg)}}
-
 @media (max-width:640px){
 .bot-hero h1{font-size:22px}
 .q-text{font-size:18px}
@@ -115,16 +108,20 @@
 <nav class="main-nav">
 <ul class="nav-list">
 <li><a href="index.html">🏠 الرئيسية</a></li>
-<li><a href="quran.html">📖 القرآن الكريم</a></li>
+<li><a href="quran.html">📖 القرآن</a></li>
 <li><a href="tafsir.html">📚 التفسير</a></li>
-<li><a href="hadith.html">🕌 السنة النبوية</a></li>
-<li><a href="seerah.html">🌙 السيرة النبوية</a></li>
+<li><a href="hadith.html">🕌 السنة</a></li>
+<li><a href="seerah.html">🌙 السيرة</a></li>
 <li><a href="ghazawat.html">⚔️ الغزوات</a></li>
-<li><a href="prophets.html">🕊️ قصص الأنبياء</a></li>
+<li><a href="prophets.html">🕊️ الأنبياء</a></li>
 <li><a href="sahaba.html">⭐ الصحابة</a></li>
 <li><a href="adhkar.html">🤲 الأذكار</a></li>
+<li><a href="prayer.html">🕌 الصلاة</a></li>
+<li><a href="tasbih.html">📿 المسبحة</a></li>
+<li><a href="calendar.html">📅 التقويم</a></li>
 <li><a href="fiqh.html">⚖️ الفقه</a></li>
-<li><a href="search.html" class="active">🔍 البحث</a></li>
+<li><a href="search.html">🔍 البحث</a></li>
+<li><a href="bot.html" class="active">🤖 البوت</a></li>
 </ul>
 </nav>
 
@@ -134,6 +131,8 @@
 <h1>🤖 البوت الإسلامي الموثّق</h1>
 <p>ابحث عن أي سؤال ديني — كل جواب من القرآن الكريم والسنة الصحيحة فقط، بلا مذاهب ولا طرق غريبة. <strong>204 أسئلة موثّقة</strong> + دعم Ollama للأجهزة المحلية.</p>
 </section>
+
+<a href="search.html" class="search-link">🔍 ابحث في نص القرآن والأذكار والصحابة والأنبياء ←</a>
 
 <div class="notice">
 <strong>📌 المنهج:</strong> كل جواب إما آية قرآنية أو حديث من الصحيحين/السنن بسند صحيح. لا آراء شخصية، لا مذاهب، لا فروع غريبة.
@@ -160,8 +159,8 @@
 
 <footer class="site-footer">
 <p class="footer-ayah">﴿ فَاسْأَلُوا أَهْلَ الذِّكْرِ إِن كُنتُمْ لَا تَعْلَمُونَ ﴾</p>
-<p>ملاك المعرفة الإسلامية — منصة دعوية غير ربحية</p>
-<p>© 2026 — نسألكم الدعاء</p>
+<p>ملاك المعرفة — منصة دعوية غير ربحية</p>
+<p>© 2026 <strong>Emad Halawh</strong> — جميع الحقوق محفوظة. نسألكم الدعاء.</p>
 </footer>
 
 <button class="settings-btn" onclick="openSettings()" title="إعدادات البوت">⚙️</button>
@@ -203,8 +202,7 @@
 <script src="faq-data.js"></script>
 <script>
 /* ============================================================
-   البوت الإسلامي الموثّق
-   محرك بحث عربي + Ollama اختياري
+   البوت الإسلامي الموثّق — محرك بحث عربي + Ollama اختياري
    ============================================================ */
 (function () {
 'use strict';
@@ -212,18 +210,24 @@
 const STORAGE_OLLAMA_URL   = 'qamar_ollama_url';
 const STORAGE_OLLAMA_MODEL = 'qamar_ollama_model';
 
-// ====== نظام التطبيع العربي ======
-// يزيل التشكيل ويوحّد الأشكال المتقاربة للبحث
+if (typeof FAQ_DATA === 'undefined') {
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('results-container').innerHTML =
+            '<div class="no-results"><span class="icon">⚠️</span><h3>ملف faq-data.js مفقود</h3><p>تأكد من وجود الملف بجانب bot.html</p></div>';
+    });
+    return;
+}
+
 function normalizeArabic(text) {
     if (!text) return '';
     return text
-        .replace(/[\u064B-\u0652\u0670\u0640]/g, '')   // تشكيل + تطويل
-        .replace(/[إأآا]/g, 'ا')                        // ألف
-        .replace(/[ىي]/g, 'ي')                          // ياء
-        .replace(/ة/g, 'ه')                             // تاء مربوطة
-        .replace(/ؤ/g, 'و')                             // واو مهموزة
-        .replace(/ئ/g, 'ي')                             // ياء مهموزة
-        .replace(/[^\u0600-\u06FF\s]/g, ' ')            // إزالة الرموز
+        .replace(/[\u064B-\u0652\u0670\u0640]/g, '')
+        .replace(/[إأآا]/g, 'ا')
+        .replace(/[ىي]/g, 'ي')
+        .replace(/ة/g, 'ه')
+        .replace(/ؤ/g, 'و')
+        .replace(/ئ/g, 'ي')
+        .replace(/[^\u0600-\u06FF\s]/g, ' ')
         .replace(/\s+/g, ' ')
         .trim()
         .toLowerCase();
@@ -233,7 +237,6 @@ function tokenize(text) {
     return normalizeArabic(text).split(/\s+/).filter(w => w.length > 1);
 }
 
-// ====== البحث في FAQ ======
 function searchFAQ(query, category) {
     const qNorm = normalizeArabic(query);
     const qTokens = tokenize(query);
@@ -249,24 +252,17 @@ function searchFAQ(query, category) {
         const kwText = (item.k || []).map(normalizeArabic).join(' ');
 
         let score = 0;
-
-        // تطابق تام في السؤال
         if (qText === qNorm) score += 1000;
-
-        // تطابق جزئي في السؤال
         if (qText.includes(qNorm) && qNorm.length >= 4) score += 300;
 
-        // كلمات مفتاحية
         qTokens.forEach(tok => {
             if (kwText.includes(tok)) score += 50;
             if (qText.includes(tok))  score += 30;
             if (aText.includes(tok))  score += 10;
         });
 
-        // نسبة تغطية الكلمات
         const matched = qTokens.filter(t => qText.includes(t) || kwText.includes(t)).length;
-        const coverage = matched / qTokens.length;
-        score += coverage * 100;
+        score += (matched / qTokens.length) * 100;
 
         if (score > 0) results.push({ item, score, idx });
     });
@@ -275,16 +271,20 @@ function searchFAQ(query, category) {
     return results.slice(0, 8);
 }
 
-// ====== بناء بطاقات النتائج ======
+function escapeHtml(t) {
+    const d = document.createElement('div');
+    d.textContent = t;
+    return d.innerHTML;
+}
+
 function buildAnswerHTML(item) {
     const evidences = (item.e || []).map(ev => {
         const cls = ev.t === 'ayah' ? 'ayah' : 'hadith';
         const label = ev.t === 'ayah' ? '📖 آية قرآنية' : '🕌 حديث صحيح';
-        const text = escapeHtml(ev.x);
         return `
             <div class="evidence ${cls}">
                 <span class="evidence-type">${label}</span>
-                <div class="evidence-text">${text}</div>
+                <div class="evidence-text">${escapeHtml(ev.x)}</div>
                 <div class="evidence-ref">— ${escapeHtml(ev.r)}</div>
             </div>
         `;
@@ -302,13 +302,6 @@ function buildAnswerHTML(item) {
     `;
 }
 
-function escapeHtml(t) {
-    const d = document.createElement('div');
-    d.textContent = t;
-    return d.innerHTML;
-}
-
-// ====== عرض النتائج ======
 let currentQuery = '';
 let currentCategory = 'all';
 
@@ -347,11 +340,9 @@ function renderResults() {
 
     const stats = `<div class="stats-line">عدد النتائج: <strong>${results.length}</strong></div>`;
     const cards = results.map(r => buildAnswerHTML(r.item)).join('');
-
     container.innerHTML = stats + cards + '<div id="ollama-answer"></div>';
 }
 
-// ====== الفلاتر ======
 function buildFilters() {
     const cats = ['all', ...new Set(FAQ_DATA.map(x => x.c))];
     const labels = {
@@ -391,18 +382,8 @@ function buildFilters() {
     });
 }
 
-// ====== الاقتراحات ======
 function buildSuggestions() {
-    const sugs = [
-        'أركان الإسلام',
-        'حكم الربا',
-        'كيف أتوضأ',
-        'فضل صيام عرفة',
-        'أركان الإيمان',
-        'حكم الغيبة',
-        'دعاء الاستخارة',
-        'فضل سورة الإخلاص'
-    ];
+    const sugs = ['أركان الإسلام','حكم الربا','كيف أتوضأ','فضل صيام عرفة','أركان الإيمان','حكم الغيبة','دعاء الاستخارة','فضل سورة الإخلاص'];
     const container = document.getElementById('suggestions');
     container.innerHTML = sugs.map(s =>
         `<button class="suggestion" data-q="${escapeHtml(s)}">${escapeHtml(s)}</button>`
@@ -417,7 +398,6 @@ function buildSuggestions() {
     });
 }
 
-// ====== Ollama ======
 function openSettings() {
     const url = localStorage.getItem(STORAGE_OLLAMA_URL) || 'http://localhost:11434';
     const model = localStorage.getItem(STORAGE_OLLAMA_MODEL) || 'llama3.2';
@@ -456,9 +436,9 @@ async function testOllama() {
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
         const models = (data.models || []).map(m => m.name).join(', ');
-        showStatus(`✓ الاتصال ناجح. النماذج المتوفرة: ${models || 'لا يوجد'}`, 'ok');
+        showStatus(`✓ الاتصال ناجح. النماذج: ${models || 'لا يوجد'}`, 'ok');
     } catch (e) {
-        showStatus(`✗ فشل الاتصال: ${e.message}. تأكد من تشغيل Ollama وتمكين CORS.`, 'err');
+        showStatus(`✗ فشل الاتصال: ${e.message}`, 'err');
     }
 }
 
@@ -482,9 +462,7 @@ async function askOllama() {
 5. لا تفتِ في مسائل الخلاف المعقدة، وقل: "هذه مسألة خلافية يُرجع فيها لأهل العلم".
 6. إذا لم تعرف الجواب الموثّق، قل بصراحة: "لا أعلم"، ولا تخترع.
 7. أجب بالعربية الفصحى، بإيجاز، وبلا حشو.
-8. إن كان السؤال طبيًا/قانونيًا، انصح باستشارة مختص.
-
-تنبيه: المستخدم يبحث عن الحقيقة الشرعية الموثّقة، فلا تجامل ولا تجتهد بغير دليل.`;
+8. إن كان السؤال طبيًا/قانونيًا، انصح باستشارة مختص.`;
 
     try {
         const res = await fetch(`${url}/api/chat`, {
@@ -522,7 +500,6 @@ async function askOllama() {
     }
 }
 
-// ====== ربط الأحداث ======
 let searchTimeout = null;
 document.getElementById('search-input').addEventListener('input', (e) => {
     currentQuery = e.target.value;
@@ -537,14 +514,12 @@ document.getElementById('search-input').addEventListener('keydown', (e) => {
     }
 });
 
-// تصدير الدوال المستخدمة في HTML
 window.openSettings = openSettings;
 window.closeSettings = closeSettings;
 window.saveSettings = saveSettings;
 window.testOllama = testOllama;
 window.askOllama = askOllama;
 
-// ====== التشغيل ======
 buildFilters();
 buildSuggestions();
 renderResults();
