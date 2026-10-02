@@ -3,13 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>قمر الشام — منصة إسلامية شاملة</title>
-<meta name="description" content="قمر الشام: منصة إسلامية شاملة — القرآن، السنة، السيرة، الأذكار، مواقيت الصلاة، المسبحة، والروزنامة.">
+<title>ملاك المعرفة — منصة إسلامية شاملة</title>
+<meta name="description" content="ملاك المعرفة: منصة إسلامية شاملة — القرآن، السنة، السيرة، الأذكار، مواقيت الصلاة، المسبحة، الروزنامة، والبوت الإسلامي الموثّق.">
 <meta name="author" content="Emad Halawh">
 <link rel="stylesheet" href="style.css">
-<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☪</text></svg>">
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon-192.png">
 <meta name="theme-color" content="#0d4d3c">
 <style>
 .top-bar{background:linear-gradient(135deg,rgba(212,175,55,0.15) 0%,rgba(212,175,55,0.03) 100%);border:1px solid rgba(212,175,55,0.3);border-radius:14px;padding:15px 20px;margin-bottom:25px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;text-align:center}
@@ -23,6 +22,13 @@
 .quick-search .icon{position:absolute;right:22px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:20px;pointer-events:none}
 .quick-search .btn-go{position:absolute;left:6px;top:50%;transform:translateY(-50%);background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark);border:none;padding:12px 24px;border-radius:28px;font-family:inherit;font-weight:700;font-size:14px;cursor:pointer;transition:all 0.3s}
 .quick-search .btn-go:hover{transform:translateY(-50%) scale(1.05)}
+.bot-cta{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(74,222,128,0.15) 0%,rgba(74,222,128,0.03) 100%);border:2px solid rgba(74,222,128,0.4);border-radius:16px;padding:18px 20px;margin-bottom:30px;flex-wrap:wrap}
+.bot-cta .bot-icon{font-size:42px;flex-shrink:0}
+.bot-cta .bot-text{flex:1;min-width:180px}
+.bot-cta h3{font-family:'Amiri',serif;font-size:20px;color:#4ade80;margin-bottom:6px}
+.bot-cta p{color:var(--cream);opacity:0.9;font-size:14px;line-height:1.7}
+.bot-cta .bot-btn{background:linear-gradient(135deg,#4ade80 0%,#22c55e 100%);color:white;text-decoration:none;padding:12px 24px;border-radius:25px;font-weight:700;font-size:14px;flex-shrink:0;transition:all 0.3s}
+.bot-cta .bot-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(74,222,128,0.4)}
 .quick-features{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:35px}
 .feature-btn{background:linear-gradient(135deg,rgba(26,107,84,0.5) 0%,rgba(13,77,60,0.7) 100%);border:2px solid rgba(212,175,55,0.3);border-radius:16px;padding:20px 12px;text-align:center;text-decoration:none;color:var(--cream);transition:all 0.3s;display:block;position:relative;overflow:hidden}
 .feature-btn:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 8px 25px rgba(212,175,55,0.3)}
@@ -90,6 +96,7 @@
 .feature-btn .label{font-size:13px}
 .dev-name{font-size:18px}
 .thanks-title{font-size:20px}
+.bot-cta{flex-direction:column;text-align:center}
 }
 </style>
 </head>
@@ -98,9 +105,9 @@
 <header class="site-header">
 <div class="header-container">
 <a href="index.html" class="logo">
-<div class="logo-icon">🌙</div>
+<div class="logo-icon">☪</div>
 <div class="logo-text">
-<span class="main">قمر الشام</span>
+<span class="main">ملاك المعرفة</span>
 <span class="sub">منصة إسلامية شاملة</span>
 </div>
 </a>
@@ -112,13 +119,19 @@
 <ul class="nav-list">
 <li><a href="index.html" class="active">🏠 الرئيسية</a></li>
 <li><a href="quran.html">📖 القرآن</a></li>
+<li><a href="tafsir.html">📚 التفسير</a></li>
 <li><a href="hadith.html">🕌 السنة</a></li>
 <li><a href="seerah.html">🌙 السيرة</a></li>
+<li><a href="ghazawat.html">⚔️ الغزوات</a></li>
+<li><a href="prophets.html">🕊️ الأنبياء</a></li>
+<li><a href="sahaba.html">⭐ الصحابة</a></li>
 <li><a href="adhkar.html">🤲 الأذكار</a></li>
 <li><a href="prayer.html">🕌 الصلاة</a></li>
 <li><a href="tasbih.html">📿 المسبحة</a></li>
-<li><a href="calendar.html">📅 الروزنامة</a></li>
+<li><a href="calendar.html">📅 التقويم</a></li>
+<li><a href="fiqh.html">⚖️ الفقه</a></li>
 <li><a href="search.html">🔍 البحث</a></li>
+<li><a href="bot.html">🤖 البوت</a></li>
 </ul>
 </nav>
 
@@ -132,13 +145,22 @@
 <section class="hero">
 <div class="hero-content">
 <h1>﷽</h1>
-<h1>قمر الشام</h1>
-<p>منصة إسلامية شاملة تجمع القرآن الكريم بالتفسير والصوت، السنة النبوية الصحيحة، السيرة العطرة، قصص الأنبياء والصحابة، الفقه، الأذكار، مواقيت الصلاة، المسبحة الرقمية، والروزنامة الهجرية.</p>
+<h1>ملاك المعرفة</h1>
+<p>منصة إسلامية شاملة تجمع القرآن الكريم بالتفسير والصوت، السنة النبوية الصحيحة، السيرة العطرة، قصص الأنبياء والصحابة، الفقه، الأذكار، مواقيت الصلاة، المسبحة الرقمية، الروزنامة الهجرية، والبوت الإسلامي الموثّق.</p>
 <div class="hero-actions">
 <a href="quran.html" class="btn btn-primary">📖 ابدأ بالقرآن</a>
-<a href="prayer.html" class="btn btn-outline">🕌 مواقيت الصلاة</a>
+<a href="bot.html" class="btn btn-outline">🤖 اسأل البوت</a>
 </div>
 </div>
+</section>
+
+<section class="bot-cta">
+<span class="bot-icon">🤖</span>
+<div class="bot-text">
+<h3>البوت الإسلامي الموثّق</h3>
+<p>204 سؤال وجواب من القرآن الكريم والسنة الصحيحة — بلا مذاهب ولا طرق غريبة. اسأل أي سؤال ديني.</p>
+</div>
+<a href="bot.html" class="bot-btn">اسأل الآن ←</a>
 </section>
 
 <section class="quick-features">
@@ -188,10 +210,11 @@
 <section class="stats-bar">
 <div class="stat-item"><span class="stat-number">114</span><span class="stat-label">سورة</span></div>
 <div class="stat-item"><span class="stat-number">8</span><span class="stat-label">قرّاء</span></div>
-<div class="stat-item"><span class="stat-number">36</span><span class="stat-label">حديث</span></div>
+<div class="stat-item"><span class="stat-number">34</span><span class="stat-label">حديث</span></div>
 <div class="stat-item"><span class="stat-number">25</span><span class="stat-label">نبي</span></div>
-<div class="stat-item"><span class="stat-number">21</span><span class="stat-label">صحابي</span></div>
-<div class="stat-item"><span class="stat-number">15</span><span class="stat-label">غزوة</span></div>
+<div class="stat-item"><span class="stat-number">23</span><span class="stat-label">صحابي</span></div>
+<div class="stat-item"><span class="stat-number">13</span><span class="stat-label">شهيد</span></div>
+<div class="stat-item"><span class="stat-number">204</span><span class="stat-label">سؤال</span></div>
 </section>
 
 <h2 class="section-group-title">🕌 العبادات اليومية</h2>
@@ -230,20 +253,20 @@
 <a href="quran.html" class="section-card">
 <span class="section-icon">📖</span>
 <h3>القرآن الكريم</h3>
-<p>114 سورة كاملة مع القراءة الصوتية لثمانية من كبار القراء، والتنقل السريع.</p>
+<p>114 سورة كاملة مع القراءة الصوتية لثمانية من كبار القراء، والتنقل السريع، وتتبع الآيات.</p>
 <span class="content-count">114 سورة</span>
 </a>
 <a href="tafsir.html" class="section-card">
 <span class="section-icon">📚</span>
 <h3>التفسير</h3>
-<p>تفسير القرآن الكريم حسب أشهر التفاسير المعتمدة: ابن كثير، الطبري، السعدي، الجلالين.</p>
-<span class="content-count">3 تفاسير</span>
+<p>تفسير القرآن الكريم: التفسير الميسّر (مجمع الملك فهد)، وتنوير المقباس (ابن عباس).</p>
+<span class="content-count">تفسيران</span>
 </a>
 <a href="hadith.html" class="section-card">
 <span class="section-icon">🕌</span>
 <h3>السنة النبوية</h3>
 <p>أحاديث صحيحة من الصحيحين والسنن الأربعة، مصنّفة حسب الموضوع مع التخريج.</p>
-<span class="content-count">36 حديث</span>
+<span class="content-count">34 حديث</span>
 </a>
 </section>
 
@@ -253,7 +276,7 @@
 <span class="section-icon">🌙</span>
 <h3>السيرة النبوية</h3>
 <p>حياة النبي محمد ﷺ كاملة: من المولد إلى الوفاة، بخط زمني تفاعلي.</p>
-<span class="content-count">24 محطة</span>
+<span class="content-count">25 محطة</span>
 </a>
 <a href="prophets.html" class="section-card">
 <span class="section-icon">🕊️</span>
@@ -281,13 +304,13 @@
 <span class="section-icon">⭐</span>
 <h3>الصحابة الكرام</h3>
 <p>الخلفاء الراشدون، والعشرة المبشّرون بالجنة، والسابقون الأولون، ورواة الحديث.</p>
-<span class="content-count">21 صحابي</span>
+<span class="content-count">23 صحابي</span>
 </a>
 <a href="shuhada.html" class="section-card">
 <span class="section-icon">🎖️</span>
 <h3>الشهداء</h3>
-<p>فضل الشهادة، وسير شهداء الإسلام من الصحابة والتابعين والقادة — 15 شهيدًا.</p>
-<span class="content-count">15 شهيد</span>
+<p>فضل الشهادة، وسير شهداء الإسلام من الصحابة والتابعين والقادة — 13 شهيدًا.</p>
+<span class="content-count">13 شهيد</span>
 </a>
 </section>
 
@@ -319,7 +342,24 @@
 </a>
 </section>
 
-<h2 class="section-group-title">💎 لماذا قمر الشام؟</h2>
+<h2 class="section-group-title">🤖 البوت الإسلامي</h2>
+<section class="sections-grid">
+<a href="bot.html" class="section-card">
+<span class="new-badge">جديد</span>
+<span class="section-icon">🤖</span>
+<h3>البوت الموثّق</h3>
+<p>اسأل أي سؤال ديني — كل جواب من القرآن والسنة الصحيحة، بلا مذاهب ولا طرق غريبة.</p>
+<span class="content-count">204 أسئلة</span>
+</a>
+<a href="search.html" class="section-card">
+<span class="section-icon">🔍</span>
+<h3>البحث الشامل</h3>
+<p>ابحث في نص القرآن الكريم، والأذكار، وأسماء السور والأنبياء والصحابة.</p>
+<span class="content-count">بحث فوري</span>
+</a>
+</section>
+
+<h2 class="section-group-title">💎 لماذا ملاك المعرفة؟</h2>
 <section class="sections-grid">
 <div class="why-us-card">
 <span class="icon">🛡️</span>
@@ -420,7 +460,7 @@
 <section class="dev-signature">
 <div class="dev-label">تطوير وبناء</div>
 <div class="dev-name">Emad Halawh</div>
-<div class="dev-role">مطوّر سوري — منصة قمر الشام</div>
+<div class="dev-role">مطوّر سوري — منصة ملاك المعرفة</div>
 <div class="dev-contact">📧 <a href="mailto:emadhlaweh@gmail.com">emadhlaweh@gmail.com</a></div>
 </section>
 
@@ -428,7 +468,7 @@
 
 <footer class="site-footer">
 <p class="footer-ayah">﴿ وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ عَلَيْهِ تَوَكَّلْتُ وَإِلَيْهِ أُنِيبُ ﴾</p>
-<p>قمر الشام — منصة دعوية غير ربحية</p>
+<p>ملاك المعرفة — منصة دعوية غير ربحية</p>
 <p>© 2026 <strong>Emad Halawh</strong> — جميع الحقوق محفوظة. نسألكم الدعاء.</p>
 </footer>
 
