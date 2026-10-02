@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اختبار API</title>
+<style>
+body{font-family:sans-serif;padding:20px;background:#0a3a2c;color:#f5f0e1;direction:rtl}
+h1{color:#d4af37;font-family:'Amiri',serif}
+button{background:#d4af37;color:#0a3a2c;border:none;padding:12px 24px;border-radius:25px;font-size:16px;font-weight:700;cursor:pointer;margin:10px 5px}
+button:disabled{opacity:0.5}
+pre{background:#000;color:#0f0;padding:15px;border-radius:10px;overflow-x:auto;white-space:pre-wrap;word-break:break-all;font-size:12px;direction:ltr;text-align:left;max-height:500px}
+.status{padding:10px;border-radius:8px;margin:10px 0}
+.status.loading{background:rgba(212,175,55,0.2);border:1px solid #d4af37}
+.status.ok{background:rgba(74,222,128,0.2);border:1px solid #4ade80}
+.status.err{background:rgba(220,60,60,0.2);border:1px solid #ff6b6b}
+</style>
+</head>
+<body>
+<h1>🔍 اختبار API</h1>
+<p>هذه الصفحة تختبر الاتصال بخادم Render و Gemini.</p>
+
+<button id="test1">1️⃣ اختبار الخادم (Ping)</button>
+<button id="test2">2️⃣ اختبار Gemini (سؤال حقيقي)</button>
+
+<div id="status"></div>
+<pre id="output">اضغط على زر للبدء...</pre>
+
+<script>
+const API = 'https://qamar-malak-api.onrender.com';
+const statusEl = document.getElementById('status');
+const outputEl = document.getElementById('output');
+
+function setStatus(msg, type) {
+    statusEl.textContent = msg;
+    statusEl.className = 'status ' + type;
+}
+
+document.getElementById('test1').addEventListener('click', async () => {
+    setStatus('⏳ اختبار الخادم...', 'loading');
+    outputEl.textContent = 'جاري الاتصال...\nقد يستغرق 60 ثانية في المرة الأولى (الخادم يستيقظ).';
+    const t0 = Date.now();
+    try {
+        const res = await fetch(API + '/');
+        const text = await res.text();
+        const elapsed = ((Date.now() - t0) / 1000).toFixed(1);
+        setStatus('✅ الخادم يعمل (' + elapsed + ' ثانية)', 'ok');
+        outputEl.textContent = 'Status: ' + res.status + '\nTime: ' + elapsed + 's\n\n' + text;
+    } catch (err) {
+        setStatus('❌ فشل الاتصال بالخادم', 'err');
+        outputEl.textContent = 'Error: ' + err.message + '\n\nName: ' + err.name;
+    }
+});
+
+document.getElementById('test2').addEventListener('click', async () => {
+    setStatus('⏳ اختبار Gemini...', 'loading');
+    outputEl.textContent = 'جاري الطلب...\nقد يستغرق 30-90 ثانية.';
+    const t0 = Date.now();
+    try {
+        const res = await fetch(API + '/api/ask', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                query: 'ما حكم العملات الرقمية؟',
+                context: '(لا يوجد سياق)'
+            })
+        });
+        const elapsed = ((Date.now() - t0) / 1000).toFixed(1);
+        const text = await res.text();
+        if (res.ok) {
+            setStatus('✅ نجح (' + elapsed + ' ثانية)', 'ok');
+        } else {
+            setStatus('❌ فشل (HTTP ' + res.status + ') - ' + elapsed + ' ثانية', 'err');
+        }
+        outputEl.textContent = 'Status: ' + res.status + '\nTime: ' + elapsed + 's\n\n' + text;
+    } catch (err) {
+        setStatus('❌ فشل الاتصال', 'err');
+        outputEl.textContent = 'Error: ' + err.message + '\n\nName: ' + err.name;
+    }
+});
+</script>
+</body>
+</html>
