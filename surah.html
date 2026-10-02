@@ -14,6 +14,17 @@
 .surah-nav{display:flex;justify-content:space-between;gap:10px;margin-bottom:20px;flex-wrap:wrap}
 .nav-btn{flex:1;min-width:120px;padding:10px 15px;background:rgba(26,107,84,0.5);border:1px solid rgba(212,175,55,0.3);border-radius:10px;color:var(--gold);text-decoration:none;text-align:center;font-family:inherit;font-size:14px;cursor:pointer;transition:all 0.3s}
 .nav-btn:hover{background:var(--gold);color:var(--green-dark)}
+
+/* شريط الموضع الحالي */
+.position-bar{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,rgba(10,58,44,0.98) 0%,rgba(13,77,60,0.98) 100%);border:2px solid var(--gold);border-radius:25px;padding:8px 18px;z-index:1000;display:none;align-items:center;gap:12px;box-shadow:0 8px 25px rgba(0,0,0,0.5);animation:barIn 0.3s ease;max-width:calc(100vw - 30px)}
+.position-bar.show{display:flex}
+@keyframes barIn{from{opacity:0;transform:translateX(-50%) translateY(15px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.position-bar .label{color:var(--cream);font-size:12px;white-space:nowrap}
+.position-bar .ayah-num{color:var(--gold);font-weight:700;font-size:15px}
+.position-bar .actions{display:flex;gap:6px}
+.position-bar .mini-btn{background:rgba(212,175,55,0.2);border:1px solid rgba(212,175,55,0.5);color:var(--gold);padding:5px 12px;border-radius:15px;font-family:inherit;font-size:11px;cursor:pointer;transition:all 0.3s}
+.position-bar .mini-btn:hover{background:var(--gold);color:var(--green-dark)}
+
 .resume-banner{display:none;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(74,222,128,0.18) 0%,rgba(34,197,94,0.08) 100%);border:2px solid rgba(74,222,128,0.5);border-radius:14px;padding:14px 18px;margin-bottom:20px;flex-wrap:wrap}
 .resume-banner.show{display:flex}
 .resume-icon{font-size:22px}
@@ -22,6 +33,7 @@
 .resume-btn{background:linear-gradient(135deg,#4ade80 0%,#22c55e 100%);color:white;border:none;padding:8px 18px;border-radius:20px;font-family:inherit;font-weight:700;font-size:13px;cursor:pointer;transition:all 0.3s}
 .resume-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(74,222,128,0.4)}
 .resume-dismiss{background:transparent;border:1px solid rgba(212,175,55,0.4);color:var(--gold);width:30px;height:30px;border-radius:50%;cursor:pointer;font-family:inherit;font-size:14px}
+
 .controls{background:rgba(10,58,44,0.6);border:1px solid rgba(212,175,55,0.25);border-radius:15px;padding:20px;margin-bottom:25px}
 .control-row{display:flex;align-items:center;gap:12px;margin-bottom:15px;flex-wrap:wrap}
 .control-row:last-child{margin-bottom:0}
@@ -49,15 +61,18 @@
 .playing-info.show{display:block}
 .playing-info .loop-badge{display:inline-block;background:rgba(74,222,128,0.2);color:#4ade80;padding:2px 8px;border-radius:10px;font-size:11px;margin-right:8px;border:1px solid rgba(74,222,128,0.4)}
 .basmala{text-align:center;font-family:'Amiri',serif;font-size:28px;color:var(--gold);margin:30px 0;padding:20px;border-top:1px solid rgba(212,175,55,0.3);border-bottom:1px solid rgba(212,175,55,0.3)}
-.ayah{background:linear-gradient(135deg,rgba(26,107,84,0.25) 0%,rgba(13,77,60,0.4) 100%);border-right:4px solid var(--gold);border-radius:12px;padding:20px;margin-bottom:15px;transition:all 0.35s}
+.ayah{background:linear-gradient(135deg,rgba(26,107,84,0.25) 0%,rgba(13,77,60,0.4) 100%);border-right:4px solid var(--gold);border-radius:12px;padding:20px;margin-bottom:15px;transition:all 0.35s;position:relative}
 .ayah:hover{background:linear-gradient(135deg,rgba(26,107,84,0.4) 0%,rgba(13,77,60,0.6) 100%);box-shadow:0 4px 15px rgba(212,175,55,0.15)}
 .ayah.playing{border-right-color:#ff6b6b;background:linear-gradient(135deg,rgba(200,50,50,0.25) 0%,rgba(150,30,30,0.35) 100%);box-shadow:0 0 22px rgba(255,107,107,0.35);transform:scale(1.01)}
-.ayah.saved{outline:2px dashed rgba(74,222,128,0.5);outline-offset:3px}
+.ayah.saved-marker{border-right-color:#4ade80;border-right-width:6px}
+.ayah.saved-marker::after{content:'📍';position:absolute;top:8px;left:8px;font-size:18px}
 .ayah-text{font-family:'Amiri','Scheherazade New',serif;font-size:26px;line-height:2.2;color:var(--cream);text-align:justify;margin-bottom:15px;padding-right:15px;position:relative}
 .ayah-number-badge{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark);border-radius:50%;font-family:'Amiri',serif;font-weight:700;font-size:14px;margin-right:12px;vertical-align:middle}
 .ayah-actions{display:flex;gap:10px;flex-wrap:wrap;padding-top:12px;border-top:1px dashed rgba(212,175,55,0.2)}
 .ayah-action-btn{padding:6px 14px;background:rgba(10,58,44,0.7);border:1px solid rgba(212,175,55,0.3);border-radius:20px;color:var(--gold);font-size:12px;font-family:inherit;cursor:pointer;transition:all 0.3s}
 .ayah-action-btn:hover{background:var(--gold);color:var(--green-dark)}
+.ayah-action-btn.save-btn{border-color:rgba(74,222,128,0.4);color:#4ade80}
+.ayah-action-btn.save-btn:hover{background:#4ade80;color:white}
 .tafsir-box{background:rgba(10,58,44,0.9);border:1px solid rgba(212,175,55,0.3);border-radius:10px;padding:15px;margin-top:12px;display:none;font-size:15px;line-height:1.9;color:var(--cream)}
 .tafsir-box.show{display:block}
 .tafsir-box strong{color:var(--gold);display:block;margin-bottom:8px;font-size:14px}
@@ -65,12 +80,18 @@
 .spinner{display:inline-block;width:50px;height:50px;border:4px solid rgba(212,175,55,0.2);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;margin-bottom:20px}
 @keyframes spin{to{transform:rotate(360deg)}}
 .error-msg{text-align:center;padding:40px 20px;color:#ff6b6b;font-size:16px}
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(74,222,128,0.95);color:white;padding:10px 20px;border-radius:25px;font-size:14px;font-weight:600;z-index:1500;display:none;box-shadow:0 6px 20px rgba(74,222,128,0.4)}
+.toast.show{display:block;animation:toastIn 0.3s ease}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 @media (max-width:640px){
 .ayah-text{font-size:22px;line-height:2}
 .surah-header h1{font-size:26px}
 .control-row{flex-direction:column;align-items:stretch}
 .control-label{min-width:auto}
 .repeat-inputs{justify-content:center}
+.position-bar{bottom:8px;padding:6px 12px;gap:8px}
+.position-bar .label{font-size:11px}
+.position-bar .ayah-num{font-size:13px}
 }
 </style>
 </head>
@@ -104,8 +125,9 @@
 <li><a href="tasbih.html">📿 المسبحة</a></li>
 <li><a href="calendar.html">📅 التقويم</a></li>
 <li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="library.html">📚 المكتبة</a></li>
 <li><a href="search.html">🔍 البحث</a></li>
-<li><a href="bot.html">📖 المسائل الشرعية</a></li>
+<li><a href="masael.html">📖 المسائل الشرعية</a></li>
 </ul>
 </nav>
 
@@ -179,6 +201,17 @@
 
 </main>
 
+<div class="position-bar" id="position-bar">
+<span class="label">📍 أنت عند الآية</span>
+<span class="ayah-num" id="position-bar-num">—</span>
+<div class="actions">
+<button class="mini-btn" id="position-bar-save">احفظ هنا</button>
+<button class="mini-btn" id="position-bar-jump">اذهب للآية</button>
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
 <footer class="site-footer">
 <p class="footer-ayah">﴿ إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ وَإِنَّا لَهُ لَحَافِظُونَ ﴾</p>
 <p>ملاك المعرفة — منصة دعوية غير ربحية</p>
@@ -190,16 +223,16 @@
 
 <script>
 /* ============================================================
-   محرّك تشغيل القرآن — Double Buffer + تكرار + حفظ الموضع
+   محرّك تشغيل القرآن — Double Buffer + تكرار + حفظ موضع
    ============================================================ */
 (function () {
 'use strict';
 
 const STORAGE_LAST_AYAH = 'qamar_last_ayah_';
-const STORAGE_REPEAT    = 'qamar_repeat_';
-const STORAGE_RECITER   = 'qamar_reciter';
-const API_BASE          = 'https://api.alquran.cloud/v1';
-const AUDIO_BASE        = 'https://everyayah.com/data';
+const STORAGE_REPEAT = 'qamar_repeat_';
+const STORAGE_RECITER = 'qamar_reciter';
+const API_BASE = 'https://api.alquran.cloud/v1';
+const AUDIO_BASE = 'https://everyayah.com/data';
 
 const state = {
     surahNumber: 1,
@@ -213,7 +246,10 @@ const state = {
     repeatEnabled: false,
     repeatStart: 0,
     repeatEnd: 0,
-    tafsirCache: {}
+    tafsirCache: {},
+    visibleAyah: 1,
+    scrollTimeout: null,
+    toastTimeout: null
 };
 
 const els = {};
@@ -227,8 +263,16 @@ function buildAudioUrl(ayahNumInSurah) {
 
 function escapeHtml(text) {
     const d = document.createElement('div');
-    d.textContent = text;
+    d.textContent = String(text);
     return d.innerHTML;
+}
+
+function showToast(msg) {
+    const t = $('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(state.toastTimeout);
+    state.toastTimeout = setTimeout(() => t.classList.remove('show'), 2200);
 }
 
 function computeNextIndex(current) {
@@ -253,6 +297,7 @@ function normalizeIndex(idx) {
     return idx;
 }
 
+// ====== حفظ واستعادة الموضع ======
 function saveLastPosition(ayahNumInSurah) {
     try {
         localStorage.setItem(
@@ -288,6 +333,7 @@ function loadRepeatSettings() {
     } catch (e) { return null; }
 }
 
+// ====== التظليل ======
 function highlightAyah(ayahNumInSurah) {
     document.querySelectorAll('.ayah.playing').forEach(el => el.classList.remove('playing'));
     if (ayahNumInSurah == null) return;
@@ -308,7 +354,7 @@ function updatePlayingInfo() {
     }
     const ayah = state.surah.ayahs[state.currentIdx];
     let html = '';
-    if (state.repeatEnabled) html += `<span class="loop-badge">🔁 تكرار</span>`;
+    if (state.repeatEnabled) html += '<span class="loop-badge">🔁 تكرار</span>';
     html += `🎧 الآية ${ayah.numberInSurah} من ${state.surah.numberOfAyahs}`;
     if (state.repeatEnabled) {
         html += ` — نطاق: ${state.repeatStart + 1}–${state.repeatEnd + 1}`;
@@ -317,6 +363,7 @@ function updatePlayingInfo() {
     els.playingInfo.classList.add('show');
 }
 
+// ====== محرّك التشغيل (Double Buffer) ======
 function handleAyahEnded() {
     if (state.isSingleAyah) {
         state.isSingleAyah = false;
@@ -434,6 +481,7 @@ function playSingleAyah(numInSurah) {
     els.playingInfo.classList.add('show');
 }
 
+// ====== التكرار ======
 function syncRepeatUI() {
     els.repeatToggleLabel.classList.toggle('active', state.repeatEnabled);
     els.repeatStart.value = state.repeatStart + 1;
@@ -467,6 +515,7 @@ function applyRepeatRange() {
     updatePlayButtonLabel();
 }
 
+// ====== تحميل السورة ======
 async function loadSurah() {
     const params = new URLSearchParams(window.location.search);
     state.surahNumber = Math.max(1, Math.min(114, parseInt(params.get('n'), 10) || 1));
@@ -505,13 +554,14 @@ function renderSurah() {
 
     const container = $('ayahs-container');
     container.innerHTML = s.ayahs.map(ayah => `
-        <div class="ayah" id="ayah-${ayah.numberInSurah}">
+        <div class="ayah" id="ayah-${ayah.numberInSurah}" data-ayah="${ayah.numberInSurah}">
             <div class="ayah-text">
                 ${escapeHtml(ayah.text)}
                 <span class="ayah-number-badge">${ayah.numberInSurah}</span>
             </div>
             <div class="ayah-actions">
                 <button class="ayah-action-btn" data-action="play" data-ayah="${ayah.numberInSurah}">🎧 استمع</button>
+                <button class="ayah-action-btn save-btn" data-action="save" data-ayah="${ayah.numberInSurah}">📍 احفظ هنا</button>
                 <button class="ayah-action-btn" data-action="tafsir" data-ayah="${ayah.numberInSurah}" data-global="${ayah.number}">📚 التفسير</button>
                 <button class="ayah-action-btn" data-action="copy" data-ayah="${ayah.numberInSurah}">📋 نسخ</button>
             </div>
@@ -527,6 +577,9 @@ function renderSurah() {
         ? `surah.html?n=${state.surahNumber - 1}` : 'quran.html';
     els.nextBtn.href = state.surahNumber < 114
         ? `surah.html?n=${state.surahNumber + 1}` : 'quran.html';
+
+    // ربط التتبع بالتمرير
+    setupScrollTracker();
 }
 
 function onAyahActionClick(ev) {
@@ -538,8 +591,51 @@ function onAyahActionClick(ev) {
     if (action === 'play')   playSingleAyah(ayahNum);
     if (action === 'copy')   copyAyah(ayahNum);
     if (action === 'tafsir') toggleTafsir(ayahNum, parseInt(btn.dataset.global, 10));
+    if (action === 'save')   saveManual(ayahNum);
 }
 
+function saveManual(ayahNum) {
+    saveLastPosition(ayahNum);
+    // علامة بصرية
+    document.querySelectorAll('.ayah.saved-marker').forEach(el => el.classList.remove('saved-marker'));
+    const el = $('ayah-' + ayahNum);
+    if (el) {
+        el.classList.add('saved-marker');
+        setTimeout(() => el.classList.remove('saved-marker'), 4000);
+    }
+    showToast(`✓ تم حفظ الآية ${ayahNum}`);
+}
+
+// ====== التتبع بالتمرير ======
+function setupScrollTracker() {
+    const container = $('ayahs-container');
+    if (!container) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const num = parseInt(entry.target.dataset.ayah, 10);
+                if (num && num !== state.visibleAyah) {
+                    state.visibleAyah = num;
+                    updatePositionBar(num);
+                }
+            }
+        });
+    }, {
+        rootMargin: '-40% 0px -40% 0px',
+        threshold: 0
+    });
+
+    document.querySelectorAll('.ayah').forEach(el => observer.observe(el));
+}
+
+function updatePositionBar(num) {
+    const bar = $('position-bar');
+    $('position-bar-num').textContent = num;
+    bar.classList.add('show');
+}
+
+// ====== التفسير ======
 async function toggleTafsir(ayahNumInSurah, globalAyahNumber) {
     const box = $('tafsir-' + ayahNumInSurah);
     if (!box) return;
@@ -563,25 +659,23 @@ async function toggleTafsir(ayahNumInSurah, globalAyahNumber) {
     }
 }
 
+// ====== نسخ ======
 function copyAyah(ayahNum) {
     const ayah = state.surah.ayahs[ayahNum - 1];
     const text = `${ayah.text}\n\n[سورة ${state.surah.name.replace('سُورَةُ ', '')} — الآية ${ayahNum}]`;
     if (navigator.clipboard) {
         navigator.clipboard.writeText(text)
-            .then(() => alert('✓ تم نسخ الآية'))
+            .then(() => showToast('✓ تم نسخ الآية'))
             .catch(() => alert(text));
     } else {
         alert(text);
     }
 }
 
+// ====== بانر الاستئناف ======
 function setupResumeBanner() {
     const lastAyah = loadLastPosition();
     if (!lastAyah || lastAyah < 1 || lastAyah > state.surah.numberOfAyahs) {
-        els.resumeBanner.classList.remove('show');
-        return;
-    }
-    if (lastAyah === 1) {
         els.resumeBanner.classList.remove('show');
         return;
     }
@@ -596,12 +690,13 @@ function resumeFromSaved() {
     const el = $('ayah-' + savedAyah);
     if (el) {
         el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        el.classList.add('saved');
-        setTimeout(() => el.classList.remove('saved'), 3000);
+        el.classList.add('saved-marker');
+        setTimeout(() => el.classList.remove('saved-marker'), 4000);
     }
     els.resumeBanner.classList.remove('show');
 }
 
+// ====== عناصر DOM ======
 function cacheElements() {
     els.surahName    = $('surah-name');
     els.surahMeta    = $('surah-meta');
@@ -684,6 +779,16 @@ function bindUI() {
 
     els.resumeBtn.addEventListener('click', resumeFromSaved);
     els.resumeDismiss.addEventListener('click', () => els.resumeBanner.classList.remove('show'));
+
+    // شريط الموضع
+    $('position-bar-save').addEventListener('click', () => saveManual(state.visibleAyah));
+    $('position-bar-jump').addEventListener('click', () => {
+        const saved = loadLastPosition();
+        if (saved) {
+            const el = $('ayah-' + saved);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    });
 
     window.addEventListener('beforeunload', () => {
         if (state.currentIdx >= 0 && state.surah) {
