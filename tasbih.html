@@ -3,26 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>المسبحة الرقمية — قمر الشام</title>
+<title>المسبحة الرقمية — ملاك المعرفة</title>
 <link rel="stylesheet" href="style.css">
-<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📿</text></svg>">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0d4d3c">
 <style>
 .tasbih-hero{background:linear-gradient(135deg,rgba(212,175,55,0.22) 0%,rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:20px;padding:25px 20px;text-align:center;margin-bottom:25px}
 .tasbih-hero h1{font-family:'Amiri',serif;font-size:28px;color:var(--gold);margin-bottom:8px}
-
 .dhikr-selector{background:linear-gradient(135deg,rgba(26,107,84,0.25) 0%,rgba(13,77,60,0.4) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:16px;padding:15px;margin-bottom:25px}
 .dhikr-selector label{display:block;color:var(--gold);font-size:14px;margin-bottom:8px;font-weight:600}
 .dhikr-select{width:100%;padding:12px 15px;background:rgba(10,58,44,0.8);border:1px solid rgba(212,175,55,0.3);border-radius:12px;color:var(--cream);font-family:inherit;font-size:15px;outline:none}
 .dhikr-select:focus{border-color:var(--gold)}
-
 .counter-area{background:linear-gradient(135deg,rgba(26,107,84,0.4) 0%,rgba(13,77,60,0.6) 100%);border:2px solid rgba(212,175,55,0.35);border-radius:24px;padding:30px 20px;text-align:center;margin-bottom:25px;position:relative;overflow:hidden}
 .counter-area::before{content:'📿';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:280px;color:rgba(212,175,55,0.04);z-index:0;pointer-events:none}
 .counter-content{position:relative;z-index:1}
-
 .dhikr-text{font-family:'Amiri','Scheherazade New',serif;font-size:28px;color:var(--gold);line-height:2;margin-bottom:25px;padding:20px;background:rgba(10,58,44,0.5);border-radius:16px;border:1px solid rgba(212,175,55,0.2)}
-
 .counter-circle{width:220px;height:220px;margin:0 auto 25px;position:relative;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
 .counter-circle:active{transform:scale(0.95);transition:transform 0.1s}
 .counter-svg{width:100%;height:100%;transform:rotate(-90deg)}
@@ -32,25 +28,21 @@
 .counter-number{font-family:'Amiri',serif;font-size:60px;color:var(--gold);font-weight:700;line-height:1}
 .counter-target{font-size:16px;color:var(--cream);opacity:0.7;margin-top:5px}
 .counter-hint{font-size:12px;color:var(--cream);opacity:0.5;margin-top:10px}
-
 .counter-buttons{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .counter-btn{padding:12px 25px;border-radius:25px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.3s;border:none;min-width:120px}
-.btn-increment{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark);display:none}
+.btn-increment{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);color:var(--green-dark)}
 .btn-increment:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(212,175,55,0.4)}
 .btn-reset{background:rgba(200,50,50,0.7);color:white}
 .btn-reset:hover{background:rgba(220,60,60,1)}
-
 .stats-box{background:linear-gradient(135deg,rgba(26,107,84,0.25) 0%,rgba(13,77,60,0.4) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:16px;padding:20px;margin-bottom:25px}
 .stats-box h3{font-family:'Amiri',serif;font-size:20px;color:var(--gold);margin-bottom:15px;text-align:center}
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:15px}
 .stat-card{background:rgba(10,58,44,0.6);border-radius:12px;padding:15px;text-align:center;border:1px solid rgba(212,175,55,0.2)}
 .stat-value{font-family:'Amiri',serif;font-size:32px;color:var(--gold);font-weight:700;line-height:1}
 .stat-label{font-size:12px;color:var(--cream);opacity:0.8;margin-top:8px}
-
 .completed-badge{display:none;background:linear-gradient(135deg,#4ade80 0%,#22c55e 100%);color:white;padding:10px 20px;border-radius:25px;font-size:14px;font-weight:700;margin-top:15px;animation:popIn 0.5s ease}
 .completed-badge.show{display:inline-block}
 @keyframes popIn{0%{transform:scale(0.5);opacity:0}100%{transform:scale(1);opacity:1}}
-
 @media (max-width:640px){
 .tasbih-hero h1{font-size:22px}
 .dhikr-text{font-size:22px}
@@ -65,9 +57,9 @@
 <header class="site-header">
 <div class="header-container">
 <a href="index.html" class="logo">
-<div class="logo-icon">🌙</div>
+<div class="logo-icon">☪</div>
 <div class="logo-text">
-<span class="main">قمر الشام</span>
+<span class="main">ملاك المعرفة</span>
 <span class="sub">منصة إسلامية شاملة</span>
 </div>
 </a>
@@ -79,13 +71,20 @@
 <ul class="nav-list">
 <li><a href="index.html">🏠 الرئيسية</a></li>
 <li><a href="quran.html">📖 القرآن</a></li>
+<li><a href="tafsir.html">📚 التفسير</a></li>
 <li><a href="hadith.html">🕌 السنة</a></li>
 <li><a href="seerah.html">🌙 السيرة</a></li>
+<li><a href="ghazawat.html">⚔️ الغزوات</a></li>
+<li><a href="prophets.html">🕊️ الأنبياء</a></li>
+<li><a href="sahaba.html">⭐ الصحابة</a></li>
 <li><a href="adhkar.html">🤲 الأذكار</a></li>
 <li><a href="prayer.html">🕌 الصلاة</a></li>
 <li><a href="tasbih.html" class="active">📿 المسبحة</a></li>
-<li><a href="calendar.html">📅 الروزنامة</a></li>
+<li><a href="calendar.html">📅 التقويم</a></li>
+<li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="library.html">📚 المكتبة</a></li>
 <li><a href="search.html">🔍 البحث</a></li>
+<li><a href="masael.html">📖 المسائل الشرعية</a></li>
 </ul>
 </nav>
 
@@ -98,7 +97,7 @@
 
 <div class="dhikr-selector">
 <label>🕌 اختر الذكر:</label>
-<select class="dhikr-select" id="dhikr-select" onchange="changeDhikr()">
+<select class="dhikr-select" id="dhikr-select">
 <option value="subhanallah" data-target="33">سُبْحَانَ اللَّهِ (33 مرة)</option>
 <option value="alhamdulillah" data-target="33">الْحَمْدُ لِلَّهِ (33 مرة)</option>
 <option value="allahuakbar" data-target="34">اللَّهُ أَكْبَرُ (34 مرة)</option>
@@ -117,7 +116,7 @@
 
 <div class="dhikr-text" id="dhikr-text">سُبْحَانَ اللَّهِ</div>
 
-<div class="counter-circle" id="counter-circle" onclick="increment()">
+<div class="counter-circle" id="counter-circle">
 <svg class="counter-svg" viewBox="0 0 220 220">
 <defs>
 <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -138,8 +137,8 @@
 <div class="completed-badge" id="completed-badge">✅ أتممت الذكر — تقبّل الله</div>
 
 <div class="counter-buttons">
-<button class="counter-btn btn-increment" id="btn-increment" onclick="increment()">➕ تسبيح</button>
-<button class="counter-btn btn-reset" onclick="resetCounter()">🔄 إعادة</button>
+<button class="counter-btn btn-increment" id="btn-increment">➕ تسبيح</button>
+<button class="counter-btn btn-reset" id="btn-reset">🔄 إعادة</button>
 </div>
 
 </div>
@@ -171,12 +170,14 @@
 
 <footer class="site-footer">
 <p class="footer-ayah">﴿ فَاذْكُرُونِي أَذْكُرْكُمْ وَاشْكُرُوا لِي وَلَا تَكْفُرُونِ ﴾</p>
-<p>قمر الشام — منصة دعوية غير ربحية</p>
-<p>© 2026 <strong>Emad Halawh</strong> — جميع الحقوق محفوظة.</p>
+<p>ملاك المعرفة — منصة دعوية غير ربحية</p>
+<p>© 2026 <strong>Emad Halawh</strong> — جميع الحقوق محفوظة. نسألكم الدعاء.</p>
 </footer>
 
 <script>
-// ====== الأذكار ======
+(function () {
+'use strict';
+
 const DHIKR_TEXTS = {
     subhanallah: 'سُبْحَانَ اللَّهِ',
     alhamdulillah: 'الْحَمْدُ لِلَّهِ',
@@ -195,17 +196,14 @@ let currentTarget = 33;
 let currentCount = 0;
 let vibrationEnabled = true;
 
-// ====== التحميل ======
+function $(id) { return document.getElementById(id); }
+
 function loadStats() {
     const stats = JSON.parse(localStorage.getItem('qamar_tasbih_stats') || '{}');
     const today = new Date().toDateString();
-
-    // إعادة تعيين إحصائية اليوم إذا تغير اليوم
     if (stats.lastDay !== today) {
         stats.todayCount = 0;
         stats.lastDay = today;
-
-        // حساب الأيام المتتالية
         if (stats.yesterday === new Date(Date.now() - 86400000).toDateString()) {
             stats.streak = (stats.streak || 0) + 1;
         } else {
@@ -214,12 +212,10 @@ function loadStats() {
         stats.yesterday = today;
         saveStats(stats);
     }
-
-    document.getElementById('stat-today').textContent = stats.todayCount || 0;
-    document.getElementById('stat-total').textContent = stats.totalCount || 0;
-    document.getElementById('stat-streak').textContent = stats.streak || 0;
-    document.getElementById('stat-completed').textContent = stats.completed || 0;
-
+    $('stat-today').textContent = stats.todayCount || 0;
+    $('stat-total').textContent = stats.totalCount || 0;
+    $('stat-streak').textContent = stats.streak || 0;
+    $('stat-completed').textContent = stats.completed || 0;
     return stats;
 }
 
@@ -227,45 +223,29 @@ function saveStats(stats) {
     localStorage.setItem('qamar_tasbih_stats', JSON.stringify(stats));
 }
 
-// ====== العدّاد ======
 function increment() {
     currentCount++;
     updateCounterDisplay();
+    if (vibrationEnabled && navigator.vibrate) navigator.vibrate(30);
 
-    // اهتزاز
-    if (vibrationEnabled && navigator.vibrate) {
-        navigator.vibrate(30);
-    }
-
-    // إحصائيات
     const stats = loadStats();
     stats.todayCount = (stats.todayCount || 0) + 1;
     stats.totalCount = (stats.totalCount || 0) + 1;
     saveStats(stats);
-    document.getElementById('stat-today').textContent = stats.todayCount;
-    document.getElementById('stat-total').textContent = stats.totalCount;
+    $('stat-today').textContent = stats.todayCount;
+    $('stat-total').textContent = stats.totalCount;
 
-    // إكمال الهدف
-    if (currentCount === currentTarget) {
-        onComplete();
-    }
+    if (currentCount === currentTarget) onComplete();
 }
 
 function onComplete() {
-    document.getElementById('completed-badge').classList.add('show');
-
-    if (vibrationEnabled && navigator.vibrate) {
-        navigator.vibrate([100, 50, 100, 50, 200]);
-    }
-
+    $('completed-badge').classList.add('show');
+    if (vibrationEnabled && navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 200]);
     const stats = loadStats();
     stats.completed = (stats.completed || 0) + 1;
     saveStats(stats);
-    document.getElementById('stat-completed').textContent = stats.completed;
-
-    setTimeout(() => {
-        document.getElementById('completed-badge').classList.remove('show');
-    }, 4000);
+    $('stat-completed').textContent = stats.completed;
+    setTimeout(() => $('completed-badge').classList.remove('show'), 4000);
 }
 
 function resetCounter() {
@@ -275,70 +255,59 @@ function resetCounter() {
 }
 
 function updateCounterDisplay() {
-    document.getElementById('counter-number').textContent = currentCount;
-    document.getElementById('counter-target').textContent = `/ ${currentTarget}`;
-
+    $('counter-number').textContent = currentCount;
+    $('counter-target').textContent = '/ ' + currentTarget;
     const progress = Math.min(currentCount / currentTarget, 1);
     const circumference = 2 * Math.PI * 100;
     const offset = circumference * (1 - progress);
-    document.getElementById('counter-progress').style.strokeDashoffset = offset;
-
-    // إظهار زر التسبيح في حال عدم الرغبة بالضغط على الدائرة
-    document.getElementById('btn-increment').style.display = 'inline-block';
+    $('counter-progress').style.strokeDashoffset = offset;
 }
 
-// ====== تغيير الذكر ======
 function changeDhikr() {
-    const select = document.getElementById('dhikr-select');
+    const select = $('dhikr-select');
     currentDhikr = select.value;
-    currentTarget = parseInt(select.options[select.selectedIndex].dataset.target);
-
-    document.getElementById('dhikr-text').textContent = DHIKR_TEXTS[currentDhikr] || 'سُبْحَانَ اللَّهِ';
-
-    // استرجاع العد الحالي لهذا الذكر
+    currentTarget = parseInt(select.options[select.selectedIndex].dataset.target, 10);
+    $('dhikr-text').textContent = DHIKR_TEXTS[currentDhikr] || 'سُبْحَانَ اللَّهِ';
     const savedCounts = JSON.parse(localStorage.getItem('qamar_tasbih_counts') || '{}');
     currentCount = savedCounts[currentDhikr] || 0;
-
     updateCounterDisplay();
 }
 
-// ====== حفظ العد الحالي ======
 function saveCurrentCount() {
     const savedCounts = JSON.parse(localStorage.getItem('qamar_tasbih_counts') || '{}');
     savedCounts[currentDhikr] = currentCount;
     localStorage.setItem('qamar_tasbih_counts', JSON.stringify(savedCounts));
 }
 
-// ====== حفظ عند الخروج ======
-window.addEventListener('beforeunload', saveCurrentCount);
+$('counter-circle').addEventListener('click', increment);
+$('btn-increment').addEventListener('click', increment);
+$('btn-reset').addEventListener('click', resetCounter);
 
-// ====== الاستمرار عند العودة ======
-window.addEventListener('load', () => {
-    loadStats();
-
-    // استرجاع الذكر المفضل
-    const savedDhikr = localStorage.getItem('qamar_tasbih_dhikr');
-    if (savedDhikr && DHIKR_TEXTS[savedDhikr]) {
-        document.getElementById('dhikr-select').value = savedDhikr;
-    }
-
+$('dhikr-select').addEventListener('change', () => {
+    saveCurrentCount();
     changeDhikr();
-
-    // حفظ اختيار الذكر عند تغييره
-    document.getElementById('dhikr-select').addEventListener('change', () => {
-        localStorage.setItem('qamar_tasbih_dhikr', currentDhikr);
-    });
+    localStorage.setItem('qamar_tasbih_dhikr', currentDhikr);
 });
 
-// حفظ عند مغادرة الصفحة
+window.addEventListener('beforeunload', saveCurrentCount);
 document.addEventListener('visibilitychange', () => {
     if (document.hidden) saveCurrentCount();
 });
 
-// ====== Service Worker ======
+window.addEventListener('load', () => {
+    loadStats();
+    const savedDhikr = localStorage.getItem('qamar_tasbih_dhikr');
+    if (savedDhikr && DHIKR_TEXTS[savedDhikr]) {
+        $('dhikr-select').value = savedDhikr;
+    }
+    changeDhikr();
+});
+
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service-worker.js').catch(() => {});
 }
+
+})();
 </script>
 
 </body>
