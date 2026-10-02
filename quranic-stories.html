@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>القصص القرآنية — ملاك المعرفة الإسلامية</title>
+<title>القصص القرآنية — ملاك المعرفة</title>
 <meta name="description" content="قصص قرآنية موثقة: أصحاب الكهف، أصحاب الفيل، قارون، ذو القرنين، وموسى والخضر — بمصادرها من القرآن والسنة.">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📜</text></svg>">
@@ -66,16 +66,21 @@
 <nav class="main-nav">
 <ul class="nav-list">
 <li><a href="index.html">🏠 الرئيسية</a></li>
-<li><a href="quran.html">📖 القرآن الكريم</a></li>
+<li><a href="quran.html">📖 القرآن</a></li>
 <li><a href="tafsir.html">📚 التفسير</a></li>
-<li><a href="hadith.html">🕌 السنة النبوية</a></li>
-<li><a href="seerah.html">🌙 السيرة النبوية</a></li>
+<li><a href="hadith.html">🕌 السنة</a></li>
+<li><a href="seerah.html">🌙 السيرة</a></li>
 <li><a href="ghazawat.html">⚔️ الغزوات</a></li>
-<li><a href="prophets.html">🕊️ قصص الأنبياء</a></li>
+<li><a href="prophets.html">🕊️ الأنبياء</a></li>
 <li><a href="sahaba.html">⭐ الصحابة</a></li>
 <li><a href="adhkar.html">🤲 الأذكار</a></li>
+<li><a href="prayer.html">🕌 الصلاة</a></li>
+<li><a href="tasbih.html">📿 المسبحة</a></li>
+<li><a href="calendar.html">📅 التقويم</a></li>
 <li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="library.html">📚 المكتبة</a></li>
 <li><a href="search.html">🔍 البحث</a></li>
+<li><a href="masael.html">📖 المسائل الشرعية</a></li>
 </ul>
 </nav>
 
@@ -104,8 +109,8 @@
 
 <footer class="site-footer">
 <p class="footer-ayah">﴿ لَقَدْ كَانَ فِي يُوسُفَ وَإِخْوَتِهِ آيَاتٌ لِّلسَّائِلِينَ ﴾</p>
-<p>ملاك المعرفة الإسلامية — منصة دعوية غير ربحية</p>
-<p>© 2026 — نسألكم الدعاء</p>
+<p>ملاك المعرفة — منصة دعوية غير ربحية</p>
+<p>© 2026 <strong>Emad Halawh</strong> — جميع الحقوق محفوظة. نسألكم الدعاء.</p>
 </footer>
 
 <div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
@@ -113,6 +118,9 @@
 </div>
 
 <script>
+(function () {
+'use strict';
+
 const STORIES = [
     {
         name: "أصحاب الكهف",
@@ -231,7 +239,7 @@ const STORIES = [
             { h: "النعمة", p: "كانت لسبأ جنتان عظيمتان، وبُنيت بلادهم بأجمل العمارة، وكان سد مأرب يحفظ ماء السيول، فأعرضوا عن شكر الله." },
             { h: "الفتنة", p: "قال الله: ﴿اعْمَلُوا آلَ دَاوُودَ شُكْرًا﴾، لكن قوم سبأ (غير آل داود) أعرضوا، و﴿فَأَعْرَضُوا فَأَرْسَلْنَا عَلَيْهِمْ سَيْلَ الْعَرِمِ﴾، فتهدّم السد، وذهب الماء." },
             { h: "النتيجة", p: "﴿وَبَدَّلْنَاهُم بِجَنَّتَيْنِ ذَوَاتَيْ أُكُلٍ خَمْطٍ وَأَثْلٍ وَشَيْءٍ مِّن سِدْرٍ قَلِيلٍ﴾، فأصبحت أرضهم قاحلة، وتفرّقوا في البلاد." },
-            { h: "العبرة", p: "شكر النعم سببٌ لبقائها، وجحودها سببٌ لزوالها. ۞ ۞ ۞" },
+            { h: "العبرة", p: "شكر النعم سببٌ لبقائها، وجحودها سببٌ لزوالها." },
             { h: "آية", text: "﴿ذَٰلِكَ جَزَيْنَاهُم بِمَا كَفَرُوا ۖ وَهَلْ نُجَازِي إِلَّا الْكَفُورَ﴾", ayah: true }
         ],
         refs: "سورة سبأ: 15-21، تفسير ابن كثير"
@@ -286,9 +294,17 @@ const STORIES = [
 let currentFilter = 'all';
 let currentSearch = '';
 
+function $(id) { return document.getElementById(id); }
+
+function escapeHtml(t) {
+    const d = document.createElement('div');
+    d.textContent = String(t);
+    return d.innerHTML;
+}
+
 function renderStories() {
-    const container = document.getElementById('stories-container');
-    let filtered = STORIES.filter(s => {
+    const container = $('stories-container');
+    const filtered = STORIES.filter(s => {
         const matchFilter = currentFilter === 'all' || s.category === currentFilter;
         const matchSearch = currentSearch === '' ||
             s.name.includes(currentSearch) ||
@@ -301,35 +317,42 @@ function renderStories() {
         return;
     }
 
-    container.innerHTML = filtered.map(s => `
-        <div class="story-card" onclick="openModal(${STORIES.indexOf(s)})">
-            <div class="story-icon">${s.icon}</div>
-            <div class="story-name">${s.name}</div>
-            <div class="story-surah">📖 ${s.surah}</div>
-            <div class="story-brief">${s.brief}</div>
-            <span class="story-badge">${s.category}</span>
-        </div>
-    `).join('');
+    container.innerHTML = filtered.map(s => {
+        const idx = STORIES.indexOf(s);
+        return `
+            <div class="story-card" data-idx="${idx}">
+                <div class="story-icon">${s.icon}</div>
+                <div class="story-name">${escapeHtml(s.name)}</div>
+                <div class="story-surah">📖 ${escapeHtml(s.surah)}</div>
+                <div class="story-brief">${escapeHtml(s.brief)}</div>
+                <span class="story-badge">${escapeHtml(s.category)}</span>
+            </div>
+        `;
+    }).join('');
+
+    container.querySelectorAll('.story-card').forEach(card => {
+        card.addEventListener('click', () => openModal(parseInt(card.dataset.idx, 10)));
+    });
 }
 
 function openModal(index) {
     const s = STORIES[index];
-    const modal = document.getElementById('modal');
-    const content = document.getElementById('modal-content');
+    const modal = $('modal');
+    const content = $('modal-content');
 
     content.innerHTML = `
         <button class="modal-close" onclick="closeModal()">✕</button>
         <div class="modal-icon">${s.icon}</div>
-        <div class="modal-name">${s.name}</div>
-        <div class="modal-surah">📖 ${s.surah}</div>
+        <div class="modal-name">${escapeHtml(s.name)}</div>
+        <div class="modal-surah">📖 ${escapeHtml(s.surah)}</div>
         ${s.sections.map(sec => `
             <div class="modal-section">
-                <h3>${sec.h}</h3>
-                ${sec.text ? `<div class="ayah">${sec.text}</div>` : ''}
-                ${sec.p ? `<p>${sec.p}</p>` : ''}
+                <h3>${escapeHtml(sec.h)}</h3>
+                ${sec.text ? `<div class="ayah">${escapeHtml(sec.text)}</div>` : ''}
+                ${sec.p ? `<p>${escapeHtml(sec.p)}</p>` : ''}
             </div>
         `).join('')}
-        <div class="modal-source">📖 المراجع: ${s.refs}</div>
+        <div class="modal-source">📖 المراجع: ${escapeHtml(s.refs)}</div>
     `;
 
     modal.classList.add('show');
@@ -337,11 +360,11 @@ function openModal(index) {
 }
 
 function closeModal() {
-    document.getElementById('modal').classList.remove('show');
+    $('modal').classList.remove('show');
     document.body.style.overflow = '';
 }
 
-document.getElementById('search-input').addEventListener('input', (e) => {
+$('search-input').addEventListener('input', (e) => {
     currentSearch = e.target.value.trim();
     renderStories();
 });
@@ -359,7 +382,11 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeModal();
 });
 
+window.closeModal = closeModal;
+
 renderStories();
+
+})();
 </script>
 
 </body>
