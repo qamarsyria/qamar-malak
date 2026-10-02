@@ -3,109 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>اختبار مفتاح Gemini</title>
+<title>اختبار API</title>
 <style>
 body{font-family:sans-serif;padding:20px;background:#0a3a2c;color:#f5f0e1}
 h1{color:#d4af37}
-input{width:100%;padding:12px;font-size:14px;border-radius:10px;border:2px solid #d4af37;background:#000;color:#0f0;direction:ltr;font-family:monospace;box-sizing:border-box}
-button{background:#d4af37;color:#0a3a2c;border:none;padding:14px 24px;border-radius:25px;font-size:16px;font-weight:700;cursor:pointer;margin:15px 0;width:100%}
+button{background:#d4af37;color:#0a3a2c;border:none;padding:14px 24px;border-radius:25px;font-size:16px;font-weight:700;cursor:pointer;margin:10px 5px;width:100%}
 button:disabled{opacity:0.5}
 pre{background:#000;color:#0f0;padding:15px;border-radius:10px;overflow-x:auto;white-space:pre-wrap;word-break:break-all;font-size:12px;direction:ltr;text-align:left;max-height:600px}
 .status{padding:12px;border-radius:8px;margin:10px 0;font-weight:700;text-align:center}
 .status.loading{background:rgba(212,175,55,0.2);border:1px solid #d4af37}
 .status.ok{background:rgba(74,222,128,0.25);border:2px solid #4ade80;color:#4ade80}
 .status.err{background:rgba(220,60,60,0.2);border:1px solid #ff6b6b;color:#ff8888}
-.warn{background:rgba(212,175,55,0.15);border:1px solid #d4af37;padding:12px;border-radius:8px;font-size:13px;margin-bottom:15px}
 </style>
 </head>
 <body>
-<h1>🔑 اختبار مفتاح Gemini</h1>
+<h1>🔍 اختبار API</h1>
 
-<div class="warn">
-⚠️ اختبار مؤقت. المفتاح لا يُخزَّن.
-</div>
+<button id="test1">1️⃣ اختبار الخادم</button>
+<button id="test2">2️⃣ اختبار Gemini</button>
 
-<p style="font-size:14px;opacity:0.9">الصق مفتاح Gemini (يبدأ بـ <code style="direction:ltr;display:inline-block">AQ.</code>):</p>
-<input type="text" id="key" placeholder="AQ.Ab8..." autocomplete="off" spellcheck="false">
-
-<button id="test">🔍 اعرض النماذج المتاحة واختبر</button>
-
-<div id="status"></div>
-<pre id="out">النتيجة ستظهر هنا...</pre>
+<div id="status" class="status"></div>
+<pre id="out">اضغط على زر للبدء...</pre>
 
 <script>
-const btn = document.getElementById('test');
+const API = 'https://qamar-malak-api.onrender.com';
 const statusEl = document.getElementById('status');
 const outEl = document.getElementById('out');
 
-btn.addEventListener('click', async () => {
-    const key = document.getElementById('key').value.trim();
-    if (!key) {
-        statusEl.className = 'status err';
-        statusEl.textContent = '❌ اكتب المفتاح أولًا';
-        return;
-    }
-
-    btn.disabled = true;
+document.getElementById('test1').addEventListener('click', async () => {
     statusEl.className = 'status loading';
-    statusEl.textContent = '⏳ جارٍ الاتصال بـ Google...';
-    outEl.textContent = '';
-
-    // 1) اعرض قائمة النماذج
+    statusEl.textContent = '⏳ اختبار الخادم...';
+    outEl.textContent = 'انتظر 60 ثانية في المرة الأولى...';
+    const t0 = Date.now();
     try {
-        const listUrl = 'https://generativelanguage.googleapis.com/v1beta/models?key=' + encodeURIComponent(key);
-        const listRes = await fetch(listUrl);
-        const listText = await listRes.text();
-
-        if (listRes.ok) {
-            const data = JSON.parse(listText);
-            const models = (data.models || [])
-                .filter(m => m.supportedGenerationMethods && m.supportedGenerationMethods.includes('generateContent'))
-                .map(m => m.name.replace('models/', ''));
-
-            statusEl.className = 'status ok';
-            statusEl.textContent = '✅ المفتاح يعمل! عدد النماذج: ' + models.length;
-            outEl.textContent = 'النماذج المتاحة لمفتاحك:\n\n' + models.map(m => '• ' + m).join('\n');
-
-            // اختبار سريع بأول نموذج
-            if (models.length > 0) {
-                const testModel = models.find(m => m.includes('flash')) || models[0];
-                outEl.textContent += '\n\n---\nجارٍ اختبار النموذج: ' + testModel + ' ...\n';
-
-                try {
-                    const testUrl = 'https://generativelanguage.googleapis.com/v1beta/models/' + testModel + ':generateContent?key=' + encodeURIComponent(key);
-                    const testRes = await fetch(testUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            contents: [{ role: 'user', parts: [{ text: 'قل فقط: نجح' }] }]
-                        })
-                    });
-                    const testText = await testRes.text();
-                    if (testRes.ok) {
-                        outEl.textContent += '✅ نجح!\n\n' + testText.substring(0, 500);
-                    } else {
-                        outEl.textContent += '❌ فشل: HTTP ' + testRes.status + '\n' + testText.substring(0, 400);
-                    }
-                } catch (e) {
-                    outEl.textContent += '❌ خطأ: ' + e.message;
-                }
-            }
-        } else {
-            statusEl.className = 'status err';
-            statusEl.textContent = '❌ فشل طلب قائمة النماذج - HTTP ' + listRes.status;
-            outEl.textContent = listText.substring(0, 1000);
-        }
+        const res = await fetch(API + '/');
+        const text = await res.text();
+        const el = ((Date.now() - t0) / 1000).toFixed(1);
+        statusEl.className = 'status ok';
+        statusEl.textContent = '✅ الخادم يعمل (' + el + 'ث)';
+        outEl.textContent = 'Status: ' + res.status + '\n\n' + text;
     } catch (err) {
         statusEl.className = 'status err';
-        statusEl.textContent = '❌ خطأ في الاتصال';
+        statusEl.textContent = '❌ فشل الاتصال';
         outEl.textContent = 'Error: ' + err.message;
     }
-
-    btn.disabled = false;
 });
 
-document.getElementById('key').focus();
+document.getElementById('test2').addEventListener('click', async () => {
+    statusEl.className = 'status loading';
+    statusEl.textContent = '⏳ اختبار Gemini...';
+    outEl.textContent = 'جارٍ الطلب... قد يأخذ 10-30 ثانية.';
+    const t0 = Date.now();
+    try {
+        const res = await fetch(API + '/api/ask', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                query: 'ما حكم الربا؟',
+                context: '(لا يوجد سياق)'
+            })
+        });
+        const el = ((Date.now() - t0) / 1000).toFixed(1);
+        const text = await res.text();
+        if (res.ok) {
+            statusEl.className = 'status ok';
+            statusEl.textContent = '✅ نجح (' + el + 'ث)';
+        } else {
+            statusEl.className = 'status err';
+            statusEl.textContent = '❌ فشل (HTTP ' + res.status + ')';
+        }
+        outEl.textContent = 'Status: ' + res.status + '\nTime: ' + el + 's\n\n' + text;
+    } catch (err) {
+        statusEl.className = 'status err';
+        statusEl.textContent = '❌ فشل الاتصال';
+        outEl.textContent = 'Error: ' + err.message;
+    }
+});
 </script>
 </body>
 </html>
