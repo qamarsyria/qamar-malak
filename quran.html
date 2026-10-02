@@ -1,272 +1,141 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>القرآن الكريم — ملاك المعرفة الإسلامية</title>
-    <meta name="description" content="اقرأ القرآن الكريم كاملاً مع التفسير الميسر والقراءة الصوتية لأشهر القراء.">
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
-    <style>
-        .quran-hero {
-            background: linear-gradient(135deg, rgba(212,175,55,0.2) 0%, rgba(212,175,55,0.05) 100%);
-            border: 1px solid rgba(212,175,55,0.35);
-            border-radius: 20px;
-            padding: 35px 20px;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .quran-hero .basmala {
-            font-family: 'Amiri', serif;
-            font-size: 32px;
-            color: var(--gold);
-            margin-bottom: 15px;
-        }
-        .quran-hero p {
-            color: var(--cream);
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-            font-size: 15px;
-        }
-
-        .search-box {
-            max-width: 500px;
-            margin: 25px auto;
-            position: relative;
-        }
-        .search-box input {
-            width: 100%;
-            padding: 14px 50px 14px 20px;
-            background: rgba(10,58,44,0.6);
-            border: 2px solid rgba(212,175,55,0.3);
-            border-radius: 30px;
-            color: var(--cream);
-            font-family: inherit;
-            font-size: 15px;
-            outline: none;
-            transition: all 0.3s;
-        }
-        .search-box input:focus {
-            border-color: var(--gold);
-            background: rgba(10,58,44,0.9);
-            box-shadow: 0 0 0 4px rgba(212,175,55,0.1);
-        }
-        .search-box input::placeholder {
-            color: rgba(245,240,225,0.5);
-        }
-        .search-box .search-icon {
-            position: absolute;
-            right: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gold);
-            font-size: 18px;
-        }
-
-        .surah-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 12px;
-            margin-top: 25px;
-        }
-
-        .surah-card {
-            background: linear-gradient(135deg, rgba(26,107,84,0.35) 0%, rgba(13,77,60,0.55) 100%);
-            border: 1px solid rgba(212,175,55,0.2);
-            border-radius: 14px;
-            padding: 15px;
-            text-decoration: none;
-            color: var(--cream);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: all 0.3s;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .surah-card:hover {
-            transform: translateY(-3px);
-            border-color: var(--gold);
-            box-shadow: 0 8px 20px rgba(212,175,55,0.2);
-            background: linear-gradient(135deg, rgba(26,107,84,0.6) 0%, rgba(13,77,60,0.8) 100%);
-        }
-
-        .surah-number {
-            flex-shrink: 0;
-            width: 42px;
-            height: 42px;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-            color: var(--green-dark);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 16px;
-            font-family: 'Amiri', serif;
-            transform: rotate(45deg);
-        }
-        .surah-number span {
-            transform: rotate(-45deg);
-        }
-
-        .surah-info {
-            flex: 1;
-            min-width: 0;
-        }
-        .surah-name {
-            font-family: 'Amiri', serif;
-            font-size: 20px;
-            color: var(--gold);
-            margin-bottom: 3px;
-            line-height: 1.3;
-        }
-        .surah-meta {
-            font-size: 12px;
-            color: var(--cream);
-            opacity: 0.7;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: var(--gold);
-            font-size: 18px;
-        }
-        .loading .spinner {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(212,175,55,0.3);
-            border-top-color: var(--gold);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 15px;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        .filters {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-        .filter-btn {
-            padding: 8px 16px;
-            background: transparent;
-            border: 1px solid rgba(212,175,55,0.4);
-            color: var(--cream);
-            border-radius: 20px;
-            font-size: 13px;
-            cursor: pointer;
-            font-family: inherit;
-            transition: all 0.3s;
-        }
-        .filter-btn.active,
-        .filter-btn:hover {
-            background: var(--gold);
-            color: var(--green-dark);
-            border-color: var(--gold);
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 40px;
-            color: var(--cream);
-            opacity: 0.7;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>القرآن الكريم — ملاك المعرفة</title>
+<meta name="description" content="اقرأ القرآن الكريم كاملاً مع التفسير الميسر والقراءة الصوتية لأشهر القراء.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
+<style>
+.quran-hero {background:linear-gradient(135deg, rgba(212,175,55,0.2) 0%, rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:20px;padding:35px 20px;text-align:center;margin-bottom:30px}
+.quran-hero .basmala {font-family:'Amiri', serif;font-size:32px;color:var(--gold);margin-bottom:15px}
+.quran-hero h1 {font-family:'Amiri', serif;font-size:30px;color:var(--gold);margin-bottom:12px}
+.quran-hero p {color:var(--cream);opacity:0.9;max-width:600px;margin:0 auto;font-size:15px}
+.search-box {max-width:500px;margin:25px auto;position:relative}
+.search-box input {width:100%;padding:14px 50px 14px 20px;background:rgba(10,58,44,0.6);border:2px solid rgba(212,175,55,0.3);border-radius:30px;color:var(--cream);font-family:inherit;font-size:15px;outline:none;transition:all 0.3s}
+.search-box input:focus {border-color:var(--gold);background:rgba(10,58,44,0.9);box-shadow:0 0 0 4px rgba(212,175,55,0.1)}
+.search-box input::placeholder {color:rgba(245,240,225,0.5)}
+.search-box .search-icon {position:absolute;right:18px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:18px}
+.surah-grid {display:grid;grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));gap:12px;margin-top:25px}
+.surah-card {background:linear-gradient(135deg, rgba(26,107,84,0.35) 0%, rgba(13,77,60,0.55) 100%);border:1px solid rgba(212,175,55,0.2);border-radius:14px;padding:15px;text-decoration:none;color:var(--cream);display:flex;align-items:center;gap:12px;transition:all 0.3s;cursor:pointer;position:relative;overflow:hidden}
+.surah-card:hover {transform:translateY(-3px);border-color:var(--gold);box-shadow:0 8px 20px rgba(212,175,55,0.2);background:linear-gradient(135deg, rgba(26,107,84,0.6) 0%, rgba(13,77,60,0.8) 100%)}
+.surah-number {flex-shrink:0;width:42px;height:42px;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);color:var(--green-dark);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;font-family:'Amiri', serif;transform:rotate(45deg)}
+.surah-number span {transform:rotate(-45deg)}
+.surah-info {flex:1;min-width:0}
+.surah-name {font-family:'Amiri', serif;font-size:20px;color:var(--gold);margin-bottom:3px;line-height:1.3}
+.surah-meta {font-size:12px;color:var(--cream);opacity:0.7}
+.loading {text-align:center;padding:40px;color:var(--gold);font-size:18px}
+.loading .spinner {display:inline-block;width:40px;height:40px;border:3px solid rgba(212,175,55,0.3);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;margin-bottom:15px}
+@keyframes spin {to {transform:rotate(360deg)}}
+.filters {display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+.filter-btn {padding:8px 16px;background:transparent;border:1px solid rgba(212,175,55,0.4);color:var(--cream);border-radius:20px;font-size:13px;cursor:pointer;font-family:inherit;transition:all 0.3s}
+.filter-btn.active, .filter-btn:hover {background:var(--gold);color:var(--green-dark);border-color:var(--gold)}
+.no-results {text-align:center;padding:40px;color:var(--cream);opacity:0.7}
+@media (max-width:640px){.quran-hero h1{font-size:24px}.quran-hero .basmala{font-size:24px}.surah-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 
 <header class="site-header">
-    <div class="header-container">
-        <a href="index.html" class="logo">
-            <div class="logo-icon">☪</div>
-            <div class="logo-text">
-                <span class="main">ملاك المعرفة</span>
-                <span class="sub">منصة إسلامية شاملة</span>
-            </div>
-        </a>
-        <button class="nav-toggle" onclick="document.querySelector('.main-nav').style.display = document.querySelector('.main-nav').style.display === 'none' ? 'block' : 'none'">☰</button>
-    </div>
+<div class="header-container">
+<a href="index.html" class="logo">
+<div class="logo-icon">☪</div>
+<div class="logo-text">
+<span class="main">ملاك المعرفة</span>
+<span class="sub">منصة إسلامية شاملة</span>
+</div>
+</a>
+<button class="nav-toggle" onclick="document.querySelector('.main-nav').style.display = document.querySelector('.main-nav').style.display === 'none' ? 'block' : 'none'">☰</button>
+</div>
 </header>
 
 <nav class="main-nav">
-    <ul class="nav-list">
-        <li><a href="index.html">🏠 الرئيسية</a></li>
-        <li><a href="quran.html" class="active">📖 القرآن الكريم</a></li>
-        <li><a href="tafsir.html">📚 التفسير</a></li>
-        <li><a href="hadith.html">🕌 السنة النبوية</a></li>
-        <li><a href="seerah.html">🌙 السيرة النبوية</a></li>
-        <li><a href="ghazawat.html">⚔️ الغزوات</a></li>
-        <li><a href="prophets.html">🕊️ قصص الأنبياء</a></li>
-        <li><a href="sahaba.html">⭐ الصحابة</a></li>
-        <li><a href="adhkar.html">🤲 الأذكار</a></li>
-        <li><a href="fiqh.html">⚖️ الفقه</a></li>
-        <li><a href="search.html">🔍 البحث</a></li>
-    </ul>
+<ul class="nav-list">
+<li><a href="index.html">🏠 الرئيسية</a></li>
+<li><a href="quran.html" class="active">📖 القرآن</a></li>
+<li><a href="tafsir.html">📚 التفسير</a></li>
+<li><a href="hadith.html">🕌 السنة</a></li>
+<li><a href="seerah.html">🌙 السيرة</a></li>
+<li><a href="ghazawat.html">⚔️ الغزوات</a></li>
+<li><a href="prophets.html">🕊️ الأنبياء</a></li>
+<li><a href="sahaba.html">⭐ الصحابة</a></li>
+<li><a href="adhkar.html">🤲 الأذكار</a></li>
+<li><a href="prayer.html">🕌 الصلاة</a></li>
+<li><a href="tasbih.html">📿 المسبحة</a></li>
+<li><a href="calendar.html">📅 التقويم</a></li>
+<li><a href="fiqh.html">⚖️ الفقه</a></li>
+<li><a href="library.html">📚 المكتبة</a></li>
+<li><a href="search.html">🔍 البحث</a></li>
+<li><a href="masael.html">📖 المسائل الشرعية</a></li>
+</ul>
 </nav>
 
 <main class="main-container">
 
-    <section class="quran-hero">
-        <div class="basmala">﷽</div>
-        <h1 style="font-family: 'Amiri', serif; font-size: 30px; color: var(--gold); margin-bottom: 12px;">القرآن الكريم</h1>
-        <p>اقرأ القرآن الكريم كاملاً — 114 سورة — مع القراءة الصوتية لأشهر القراء، والتفسير الميسّر المعتمد.</p>
-    </section>
+<section class="quran-hero">
+<div class="basmala">﷽</div>
+<h1>القرآن الكريم</h1>
+<p>اقرأ القرآن الكريم كاملاً — 114 سورة — مع القراءة الصوتية لأشهر القراء، والتفسير الميسّر المعتمد.</p>
+</section>
 
-    <div class="search-box">
-        <input type="text" id="search-input" placeholder="ابحث عن سورة...">
-        <span class="search-icon">🔍</span>
-    </div>
+<div class="search-box">
+<input type="text" id="search-input" placeholder="ابحث عن سورة...">
+<span class="search-icon">🔍</span>
+</div>
 
-    <div class="filters">
-        <button class="filter-btn active" data-filter="all">الكل</button>
-        <button class="filter-btn" data-filter="مكية">مكية</button>
-        <button class="filter-btn" data-filter="مدنية">مدنية</button>
-    </div>
+<div class="filters">
+<button class="filter-btn active" data-filter="all">الكل</button>
+<button class="filter-btn" data-filter="مكية">مكية</button>
+<button class="filter-btn" data-filter="مدنية">مدنية</button>
+</div>
 
-    <div id="surahs-container">
-        <div class="loading">
-            <div class="spinner"></div>
-            <div>جارٍ تحميل السور...</div>
-        </div>
-    </div>
+<div id="surahs-container">
+<div class="loading">
+<div class="spinner"></div>
+<div>جارٍ تحميل السور...</div>
+</div>
+</div>
 
 </main>
 
 <footer class="site-footer">
-    <p class="footer-ayah">﴿ إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ وَإِنَّا لَهُ لَحَافِظُونَ ﴾</p>
-    <p>ملاك المعرفة الإسلامية — منصة دعوية غير ربحية</p>
-    <p>© 2026 — نسألكم الدعاء</p>
+<p class="footer-ayah">﴿ إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ وَإِنَّا لَهُ لَحَافِظُونَ ﴾</p>
+<p>ملاك المعرفة — منصة دعوية غير ربحية</p>
+<p>© 2026 <strong>Emad Halawh</strong> — جميع الحقوق محفوظة. نسألكم الدعاء.</p>
 </footer>
 
 <script>
+(function () {
+'use strict';
+
 let allSurahs = [];
 let currentFilter = 'all';
 let currentSearch = '';
+
+function $(id) { return document.getElementById(id); }
+
+function escapeHtml(t) {
+    const d = document.createElement('div');
+    d.textContent = String(t);
+    return d.innerHTML;
+}
 
 async function loadSurahs() {
     try {
         const response = await fetch('https://api.alquran.cloud/v1/surah');
         const data = await response.json();
-        allSurahs = data.data;
+        allSurahs = data.data || [];
         renderSurahs();
     } catch (error) {
-        document.getElementById('surahs-container').innerHTML =
+        $('surahs-container').innerHTML =
             '<div class="no-results">⚠️ تعذر تحميل السور. تأكد من اتصالك بالإنترنت.</div>';
     }
 }
 
 function renderSurahs() {
-    const container = document.getElementById('surahs-container');
-
-    let filtered = allSurahs.filter(s => {
+    const container = $('surahs-container');
+    const filtered = allSurahs.filter(s => {
         const matchFilter = currentFilter === 'all' || s.revelationType === currentFilter;
         const matchSearch = currentSearch === '' ||
             s.name.includes(currentSearch) ||
@@ -280,20 +149,18 @@ function renderSurahs() {
         return;
     }
 
-    const html = '<div class="surah-grid">' + filtered.map(s => `
+    container.innerHTML = '<div class="surah-grid">' + filtered.map(s => `
         <a href="surah.html?n=${s.number}" class="surah-card">
             <div class="surah-number"><span>${s.number}</span></div>
             <div class="surah-info">
-                <div class="surah-name">${s.name}</div>
-                <div class="surah-meta">${s.revelationType} · ${s.numberOfAyahs} آية</div>
+                <div class="surah-name">${escapeHtml(s.name.replace('سُورَةُ ', ''))}</div>
+                <div class="surah-meta">${escapeHtml(s.revelationType)} · ${s.numberOfAyahs} آية</div>
             </div>
         </a>
     `).join('') + '</div>';
-
-    container.innerHTML = html;
 }
 
-document.getElementById('search-input').addEventListener('input', (e) => {
+$('search-input').addEventListener('input', (e) => {
     currentSearch = e.target.value.trim();
     renderSurahs();
 });
@@ -308,6 +175,8 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 });
 
 loadSurahs();
+
+})();
 </script>
 
 </body>
