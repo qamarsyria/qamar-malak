@@ -8,99 +8,95 @@
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
 <style>
-.wm-hero{background:linear-gradient(135deg,rgba(212,175,55,0.22) 0%,rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:20px;padding:35px 20px;text-align:center;margin-bottom:30px;position:relative;overflow:hidden}
+.wm-hero{background:linear-gradient(135deg,rgba(212,175,55,0.22) 0%,rgba(212,175,55,0.05) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:20px;padding:30px 20px;text-align:center;margin-bottom:20px;position:relative;overflow:hidden}
 .wm-hero::before{content:'🌸';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:180px;color:rgba(212,175,55,0.05);z-index:0;pointer-events:none}
 .wm-hero-content{position:relative;z-index:1}
-.wm-hero h1{font-family:'Amiri',serif;font-size:32px;color:var(--gold);margin-bottom:12px}
-.wm-hero p{color:var(--cream);opacity:0.9;max-width:720px;margin:0 auto;font-size:15px;line-height:1.9}
+.wm-hero h1{font-family:'Amiri',serif;font-size:30px;color:var(--gold);margin-bottom:12px}
+.wm-hero p{color:var(--cream);opacity:0.9;max-width:720px;margin:0 auto;font-size:14px;line-height:1.9}
 .wm-hero .stats-mini{display:flex;justify-content:center;gap:25px;flex-wrap:wrap;margin-top:18px;padding-top:18px;border-top:1px dashed rgba(212,175,55,0.3)}
 .wm-hero .stat{text-align:center}
-.wm-hero .num{font-family:'Amiri',serif;font-size:24px;color:var(--gold);font-weight:700;display:block;line-height:1}
+.wm-hero .num{font-family:'Amiri',serif;font-size:22px;color:var(--gold);font-weight:700;display:block;line-height:1}
 .wm-hero .lbl{font-size:11px;color:var(--cream);opacity:0.75;margin-top:5px}
 
-/* Hub */
-.hub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:15px}
-.hub-card{background:linear-gradient(135deg,rgba(26,107,84,0.35) 0%,rgba(13,77,60,0.55) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:16px;padding:22px;transition:all 0.3s;cursor:pointer;position:relative;overflow:hidden;text-align:center}
-.hub-card::before{content:'';position:absolute;top:0;right:0;width:4px;height:100%;background:var(--gold);transform:scaleY(0);transition:transform 0.3s;transform-origin:top}
-.hub-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 8px 25px rgba(212,175,55,0.25)}
-.hub-card:hover::before{transform:scaleY(1)}
-.hub-icon{font-size:48px;display:block;margin-bottom:12px;line-height:1}
-.hub-title{font-family:'Amiri',serif;font-size:22px;color:var(--gold);margin-bottom:8px}
-.hub-desc{font-size:13px;line-height:1.7;color:var(--cream);opacity:0.85;min-height:44px}
-.hub-count{display:inline-block;background:rgba(212,175,55,0.15);color:var(--gold);padding:3px 12px;border-radius:12px;font-size:11px;margin-top:14px;border:1px solid rgba(212,175,55,0.3);font-weight:600}
+/* Tabs */
+.wm-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:12px;margin-bottom:20px;scrollbar-width:thin;justify-content:flex-start}
+.wm-tabs::-webkit-scrollbar{height:5px}
+.wm-tabs::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}
+.wm-tab{flex-shrink:0;padding:10px 18px;background:rgba(26,107,84,0.4);border:1px solid rgba(212,175,55,0.3);border-radius:25px;color:var(--cream);font-family:inherit;font-size:14px;cursor:pointer;transition:all 0.3s;white-space:nowrap;font-weight:600;display:flex;align-items:center;gap:6px}
+.wm-tab:hover{background:rgba(212,175,55,0.2)}
+.wm-tab.active{background:var(--gold);color:var(--green-dark);border-color:var(--gold);font-weight:700}
+.wm-tab .tab-icon{font-size:16px}
 
-/* Section view */
-.wm-back{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:rgba(26,107,84,0.5);border:1px solid rgba(212,175,55,0.3);border-radius:12px;color:var(--gold);text-decoration:none;font-family:inherit;font-size:14px;cursor:pointer;transition:all 0.3s;margin-bottom:20px}
-.wm-back:hover{background:var(--gold);color:var(--green-dark)}
-
-.wm-section-header{background:linear-gradient(135deg,rgba(212,175,55,0.15) 0%,rgba(212,175,55,0.03) 100%);border:1px solid rgba(212,175,55,0.35);border-radius:16px;padding:25px 20px;text-align:center;margin-bottom:20px}
-.wm-section-header h2{font-family:'Amiri',serif;font-size:28px;color:var(--gold);margin-bottom:8px}
-.wm-section-header p{color:var(--cream);opacity:0.85;font-size:14px;line-height:1.8;max-width:680px;margin:0 auto}
+/* Section container */
+.wm-section{padding:20px 15px;background:linear-gradient(135deg,rgba(26,107,84,0.15) 0%,rgba(13,77,60,0.3) 100%);border:1px solid rgba(212,175,55,0.2);border-radius:16px;min-height:300px}
+.wm-section-header{text-align:center;margin-bottom:20px;padding-bottom:15px;border-bottom:1px dashed rgba(212,175,55,0.25)}
+.wm-section-header h2{font-family:'Amiri',serif;font-size:26px;color:var(--gold);margin-bottom:8px}
+.wm-section-header p{color:var(--cream);opacity:0.85;font-size:13px;line-height:1.8;max-width:680px;margin:0 auto}
 
 .wm-search{max-width:600px;margin:0 auto 20px;position:relative}
-.wm-search input{width:100%;padding:14px 50px 14px 20px;background:rgba(10,58,44,0.6);border:2px solid rgba(212,175,55,0.3);border-radius:30px;color:var(--cream);font-family:inherit;font-size:15px;outline:none;transition:all 0.3s}
+.wm-search input{width:100%;padding:12px 45px 12px 18px;background:rgba(10,58,44,0.6);border:2px solid rgba(212,175,55,0.3);border-radius:25px;color:var(--cream);font-family:inherit;font-size:14px;outline:none;transition:all 0.3s}
 .wm-search input:focus{border-color:var(--gold);background:rgba(10,58,44,0.9);box-shadow:0 0 0 4px rgba(212,175,55,0.1)}
 .wm-search input::placeholder{color:rgba(245,240,225,0.5)}
-.wm-search .search-icon{position:absolute;right:18px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:18px;pointer-events:none}
+.wm-search .search-icon{position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:16px;pointer-events:none}
 
 .wm-topic{background:linear-gradient(135deg,rgba(26,107,84,0.3) 0%,rgba(13,77,60,0.5) 100%);border:1px solid rgba(212,175,55,0.25);border-radius:14px;margin-bottom:12px;overflow:hidden;transition:all 0.3s}
 .wm-topic:hover{border-color:rgba(212,175,55,0.5)}
 .wm-topic.open{border-color:var(--gold);box-shadow:0 8px 25px rgba(212,175,55,0.2)}
-.wm-topic-head{padding:18px 20px;cursor:pointer;display:flex;align-items:center;gap:15px;user-select:none}
-.wm-topic-icon{font-size:26px;flex-shrink:0}
-.wm-topic-title{flex:1;font-family:'Amiri',serif;font-size:20px;color:var(--gold);line-height:1.4}
-.wm-topic-arrow{color:var(--gold);font-size:18px;transition:transform 0.3s;flex-shrink:0}
+.wm-topic-head{padding:16px 18px;cursor:pointer;display:flex;align-items:center;gap:12px;user-select:none}
+.wm-topic-icon{font-size:22px;flex-shrink:0}
+.wm-topic-title{flex:1;font-family:'Amiri',serif;font-size:19px;color:var(--gold);line-height:1.4}
+.wm-topic-arrow{color:var(--gold);font-size:16px;transition:transform 0.3s;flex-shrink:0}
 .wm-topic.open .wm-topic-arrow{transform:rotate(180deg)}
 .wm-topic-body{max-height:0;overflow:hidden;transition:max-height 0.6s ease}
-.wm-topic.open .wm-topic-body{max-height:8000px}
-.wm-topic-content{padding:0 20px 20px;border-top:1px dashed rgba(212,175,55,0.2);margin-top:5px;padding-top:18px}
-.wm-summary{color:var(--cream);font-size:15px;line-height:1.9;margin-bottom:18px;opacity:0.9;font-style:italic;border-right:3px solid var(--gold);padding-right:15px}
-.wm-block{margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid rgba(212,175,55,0.15)}
+.wm-topic.open .wm-topic-body{max-height:9000px}
+.wm-topic-content{padding:0 18px 18px;border-top:1px dashed rgba(212,175,55,0.2);margin-top:5px;padding-top:16px}
+.wm-summary{color:var(--cream);font-size:14px;line-height:1.9;margin-bottom:16px;opacity:0.9;font-style:italic;border-right:3px solid var(--gold);padding-right:12px}
+.wm-block{margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid rgba(212,175,55,0.15)}
 .wm-block:last-child{border-bottom:none;padding-bottom:0}
-.wm-block-title{font-family:'Amiri',serif;font-size:18px;color:var(--gold);margin-bottom:12px;padding-right:12px;border-right:3px solid var(--gold)}
-.wm-block p{color:var(--cream);font-size:15px;line-height:1.9;margin-bottom:10px}
+.wm-block-title{font-family:'Amiri',serif;font-size:17px;color:var(--gold);margin-bottom:10px;padding-right:10px;border-right:3px solid var(--gold)}
+.wm-block p{color:var(--cream);font-size:14px;line-height:1.9;margin-bottom:10px}
 .wm-block-list{list-style:none;padding:0}
-.wm-block-list li{color:var(--cream);font-size:15px;line-height:1.9;padding:8px 0 8px 25px;position:relative;border-bottom:1px dashed rgba(212,175,55,0.1)}
+.wm-block-list li{color:var(--cream);font-size:14px;line-height:1.9;padding:7px 0 7px 22px;position:relative;border-bottom:1px dashed rgba(212,175,55,0.1)}
 .wm-block-list li:last-child{border-bottom:none}
-.wm-block-list li::before{content:'◆';position:absolute;right:0;color:var(--gold);font-size:11px;top:12px}
+.wm-block-list li::before{content:'◆';position:absolute;right:0;color:var(--gold);font-size:10px;top:11px}
 
-.wm-evidence{background:rgba(10,58,44,0.6);border-radius:12px;padding:14px 16px;margin:12px 0;border-right:4px solid var(--gold)}
+.wm-evidence{background:rgba(10,58,44,0.6);border-radius:10px;padding:12px 14px;margin:10px 0;border-right:4px solid var(--gold)}
 .wm-evidence.ayah{border-right-color:var(--gold)}
 .wm-evidence.hadith{border-right-color:#4ade80}
 .wm-evidence-type{display:inline-block;font-size:10px;padding:2px 8px;border-radius:8px;margin-bottom:6px;font-weight:700}
 .wm-evidence.ayah .wm-evidence-type{background:rgba(212,175,55,0.2);color:var(--gold)}
 .wm-evidence.hadith .wm-evidence-type{background:rgba(74,222,128,0.2);color:#4ade80}
-.wm-evidence-text{font-family:'Amiri',serif;font-size:17px;color:var(--cream);line-height:2;margin-bottom:8px}
+.wm-evidence-text{font-family:'Amiri',serif;font-size:16px;color:var(--cream);line-height:2;margin-bottom:8px}
 .wm-evidence.ayah .wm-evidence-text{color:var(--gold);text-align:center}
-.wm-evidence-ref{font-size:12px;color:var(--gold);opacity:0.8;font-style:italic;text-align:left;padding-top:6px;border-top:1px dashed rgba(212,175,55,0.2)}
+.wm-evidence-ref{font-size:11px;color:var(--gold);opacity:0.8;font-style:italic;text-align:left;padding-top:6px;border-top:1px dashed rgba(212,175,55,0.2)}
 
-.wm-actions{display:flex;gap:8px;flex-wrap:wrap;padding-top:12px;border-top:1px dashed rgba(212,175,55,0.2);margin-top:15px}
-.wm-action-btn{padding:6px 14px;background:rgba(10,58,44,0.7);border:1px solid rgba(212,175,55,0.3);border-radius:20px;color:var(--gold);font-size:12px;font-family:inherit;cursor:pointer;transition:all 0.3s}
+.wm-actions{display:flex;gap:8px;flex-wrap:wrap;padding-top:12px;border-top:1px dashed rgba(212,175,55,0.2);margin-top:14px}
+.wm-action-btn{padding:6px 12px;background:rgba(10,58,44,0.7);border:1px solid rgba(212,175,55,0.3);border-radius:20px;color:var(--gold);font-size:11px;font-family:inherit;cursor:pointer;transition:all 0.3s}
 .wm-action-btn:hover{background:var(--gold);color:var(--green-dark)}
 
-.wm-related{margin-top:15px;padding-top:12px;border-top:1px dashed rgba(212,175,55,0.2)}
-.wm-related-title{font-size:12px;color:var(--gold);opacity:0.85;margin-bottom:8px;font-weight:600}
+.wm-related{margin-top:14px;padding-top:12px;border-top:1px dashed rgba(212,175,55,0.2)}
+.wm-related-title{font-size:11px;color:var(--gold);opacity:0.85;margin-bottom:8px;font-weight:600}
 .wm-related-list{display:flex;flex-wrap:wrap;gap:6px}
-.wm-related-link{padding:4px 12px;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.3);border-radius:15px;color:var(--gold);font-size:11px;cursor:pointer;transition:all 0.3s;font-family:inherit}
+.wm-related-link{padding:4px 11px;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.3);border-radius:15px;color:var(--gold);font-size:11px;cursor:pointer;transition:all 0.3s;font-family:inherit}
 .wm-related-link:hover{background:var(--gold);color:var(--green-dark)}
 
-.wm-loading{text-align:center;padding:60px 20px;color:var(--gold)}
-.wm-spinner{display:inline-block;width:50px;height:50px;border:4px solid rgba(212,175,55,0.2);border-top-color:var(--gold);border-radius:50%;animation:wmspin 1s linear infinite;margin-bottom:20px}
+.wm-loading{text-align:center;padding:50px 20px;color:var(--gold)}
+.wm-spinner{display:inline-block;width:45px;height:45px;border:4px solid rgba(212,175,55,0.2);border-top-color:var(--gold);border-radius:50%;animation:wmspin 1s linear infinite;margin-bottom:15px}
 @keyframes wmspin{to{transform:rotate(360deg)}}
-.wm-error{background:rgba(220,60,60,0.15);border:2px solid rgba(220,60,60,0.4);border-radius:14px;padding:20px;color:#ff8888;text-align:center;line-height:1.8}
-.wm-empty{text-align:center;padding:40px 20px;color:var(--cream);opacity:0.7;font-size:15px}
+.wm-error{background:rgba(220,60,60,0.15);border:2px solid rgba(220,60,60,0.4);border-radius:14px;padding:25px 20px;color:#ff8888;text-align:center;line-height:1.8}
+.wm-empty{text-align:center;padding:40px 20px;color:var(--cream);opacity:0.7;font-size:14px}
 .wm-toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(74,222,128,0.95);color:white;padding:10px 20px;border-radius:25px;font-size:14px;font-weight:600;z-index:1500;display:none;box-shadow:0 6px 20px rgba(74,222,128,0.4)}
 .wm-toast.show{display:block;animation:wmtoastIn 0.3s ease}
 @keyframes wmtoastIn{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 
 @media (max-width:640px){
-.wm-hero h1{font-size:24px}
-.hub-grid{grid-template-columns:1fr}
-.wm-section-header h2{font-size:22px}
+.wm-hero h1{font-size:22px}
+.wm-section-header h2{font-size:20px}
 .wm-topic-title{font-size:16px}
-.wm-topic-icon{font-size:22px}
-.wm-block p,.wm-block-list li{font-size:14px}
+.wm-topic-icon{font-size:20px}
+.wm-block p,.wm-block-list li{font-size:13px}
 .wm-evidence-text{font-size:15px}
+.wm-tab{font-size:12px;padding:8px 14px}
 }
 </style>
 </head>
@@ -143,7 +139,6 @@
 
 <main class="main-container">
 
-<div id="hub-view">
 <section class="wm-hero">
 <div class="wm-hero-content">
 <h1>🌸 قسم المرأة المسلمة</h1>
@@ -156,10 +151,14 @@
 </div>
 </section>
 
-<div class="hub-grid" id="hub-grid"></div>
-</div>
+<div class="wm-tabs" id="wm-tabs"></div>
 
-<div id="section-view" style="display:none"></div>
+<div class="wm-section" id="wm-section">
+    <div class="wm-loading">
+        <div class="wm-spinner"></div>
+        <div>جارٍ تحميل القسم...</div>
+    </div>
+</div>
 
 </main>
 
@@ -175,10 +174,6 @@
 (function () {
 'use strict';
 
-// ============================================================
-// فهرس الأقسام — ثابت (10 أقسام)
-// لاحقًا: نضيف ملف بيانات لكل قسم في مجلد women-data/
-// ============================================================
 const SECTIONS = [
     { id: 'aqeedah',      icon: '🕋', title: 'العقيدة والمكانة',       desc: 'مكانة المرأة، تكريم الإسلام لها، الرد على الشبهات',         file: 'women-data/women-aqeedah.js' },
     { id: 'ibadat',       icon: '🕌', title: 'العبادات',                desc: 'الطهارة، الصلاة، الصيام، الزكاة، الحج، الدعاء — خاصّ بالمرأة', file: 'women-data/women-ibadat.js' },
@@ -214,97 +209,66 @@ function showToast(msg) {
 }
 
 // ============================================================
-// عرض الصفحة الرئيسية (Hub)
+// عرض التبويبات
 // ============================================================
-function renderHub() {
-    $('hub-view').style.display = 'block';
-    $('section-view').style.display = 'none';
-    document.title = 'المرأة المسلمة — ملاك المعرفة';
-
-    const grid = $('hub-grid');
-    grid.innerHTML = SECTIONS.map(s => `
-        <div class="hub-card" data-section="${s.id}">
-            <span class="hub-icon">${s.icon}</span>
-            <div class="hub-title">${escapeHtml(s.title)}</div>
-            <div class="hub-desc">${escapeHtml(s.desc)}</div>
-            <span class="hub-count" id="count-${s.id}">جارٍ التحميل...</span>
-        </div>
+function renderTabs() {
+    const tabs = $('wm-tabs');
+    tabs.innerHTML = SECTIONS.map(s => `
+        <button class="wm-tab ${state.currentSection && state.currentSection.id === s.id ? 'active' : ''}" data-tab="${s.id}">
+            <span class="tab-icon">${s.icon}</span>
+            <span>${escapeHtml(s.title)}</span>
+        </button>
     `).join('');
 
-    grid.querySelectorAll('.hub-card').forEach(card => {
-        card.addEventListener('click', () => openSection(card.dataset.section));
+    tabs.querySelectorAll('.wm-tab').forEach(tab => {
+        tab.addEventListener('click', () => openTab(tab.dataset.tab));
     });
 
-    // حاول تحميل عدّاد المواضيع من كل قسم (بدون عرض المحتوى)
-    SECTIONS.forEach(s => loadCountFor(s));
-}
-
-function loadCountFor(section) {
-    const el = $('count-' + section.id);
-    if (!el) return;
-
-    // إذا الملف محمّل مسبقًا
-    if (state.loadedScripts[section.id]) {
-        const data = window['WOMEN_SECTION_' + section.id.toUpperCase()];
-        if (data && Array.isArray(data.items)) {
-            el.textContent = data.items.length + ' موضوع';
-        }
-        return;
+    // اجعل التبويب النشط مرئيًا دائمًا
+    const activeTab = tabs.querySelector('.wm-tab.active');
+    if (activeTab) {
+        activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
-
-    // حاول جلبه بشكل خفيف (بدون تنفيذ)
-    fetch(section.file, { method: 'HEAD' })
-        .then(res => {
-            if (res.ok) {
-                el.textContent = 'اضغط للتصفح';
-            } else {
-                el.textContent = 'قريبًا';
-                el.style.opacity = '0.5';
-            }
-        })
-        .catch(() => {
-            el.textContent = 'قريبًا';
-            el.style.opacity = '0.5';
-        });
 }
 
 // ============================================================
-// فتح قسم
+// فتح تبويب
 // ============================================================
-function openSection(sectionId) {
+function openTab(sectionId) {
     const section = SECTIONS.find(s => s.id === sectionId);
     if (!section) return;
 
     state.currentSection = section;
-    $('hub-view').style.display = 'none';
-    $('section-view').style.display = 'block';
-    document.title = section.title + ' — المرأة المسلمة';
+    state.currentData = null;
 
-    $('section-view').innerHTML = `
-        <button class="wm-back" id="back-btn">← رجوع للأقسام</button>
+    // تحديث التبويبات
+    renderTabs();
+
+    // تحديث الرابط
+    const url = new URL(window.location);
+    url.searchParams.set('s', sectionId);
+    window.history.replaceState({}, '', url);
+
+    // عرض تحميل
+    $('wm-section').innerHTML = `
         <div class="wm-loading">
             <div class="wm-spinner"></div>
             <div>جارٍ تحميل القسم...</div>
         </div>
     `;
 
-    $('back-btn').addEventListener('click', renderHub);
-
-    // تحديث الرابط
-    const url = new URL(window.location);
-    url.searchParams.set('s', sectionId);
-    window.history.pushState({}, '', url);
-
-    // تحميل الملف
+    // تحميل البيانات
     loadSectionData(section);
 }
 
 async function loadSectionData(section) {
-    // إذا محمّل مسبقًا
     const varName = 'WOMEN_SECTION_' + section.id.toUpperCase();
+
+    // إذا محمّل مسبقًا
     if (state.loadedScripts[section.id] && window[varName]) {
         state.currentData = window[varName];
         renderSectionContent(state.currentData);
+        updateStats();
         return;
     }
 
@@ -326,17 +290,16 @@ async function loadSectionData(section) {
 
         state.currentData = data;
         renderSectionContent(data);
+        updateStats();
 
     } catch (err) {
-        $('section-view').innerHTML = `
-            <button class="wm-back" id="back-btn">← رجوع للأقسام</button>
+        $('wm-section').innerHTML = `
             <div class="wm-error">
-                <strong>⚠️ هذا القسم قيد الإعداد</strong>
+                <div style="font-size:45px;margin-bottom:10px">🌸</div>
+                <strong>هذا القسم قيد الإعداد</strong>
                 <p style="margin-top:10px">سيتم إضافة محتواه قريبًا بإذن الله.</p>
-                <p style="margin-top:10px;font-size:12px;opacity:0.7">${escapeHtml(err.message)}</p>
             </div>
         `;
-        $('back-btn').addEventListener('click', renderHub);
     }
 }
 
@@ -346,9 +309,7 @@ async function loadSectionData(section) {
 function renderSectionContent(data) {
     const section = state.currentSection;
 
-    $('section-view').innerHTML = `
-        <button class="wm-back" id="back-btn">← رجوع للأقسام</button>
-
+    $('wm-section').innerHTML = `
         <div class="wm-section-header">
             <h2>${section.icon} ${escapeHtml(data.title || section.title)}</h2>
             <p>${escapeHtml(data.desc || section.desc)}</p>
@@ -361,8 +322,6 @@ function renderSectionContent(data) {
 
         <div id="wm-topics-container"></div>
     `;
-
-    $('back-btn').addEventListener('click', renderHub);
 
     renderTopics(data.items);
 
@@ -390,7 +349,7 @@ function renderTopics(items, query) {
         return;
     }
 
-    container.innerHTML = items.map((item, i) => renderTopicCard(item, i)).join('');
+    container.innerHTML = items.map((item) => renderTopicCard(item)).join('');
 
     container.querySelectorAll('.wm-topic-head').forEach(head => {
         head.addEventListener('click', () => {
@@ -421,12 +380,11 @@ function renderTopics(items, query) {
     });
 }
 
-function renderTopicCard(item, idx) {
+function renderTopicCard(item) {
     const blocksHtml = (item.blocks || []).map(b => {
         let content = '';
         if (b.p) {
-            const paragraphs = String(b.p).split('\n\n').map(p => `<p>${escapeHtml(p)}</p>`).join('');
-            content = paragraphs;
+            content = String(b.p).split('\n\n').map(p => `<p>${escapeHtml(p)}</p>`).join('');
         }
         if (b.list) {
             content += `<ul class="wm-block-list">${b.list.map(li => `<li>${escapeHtml(li)}</li>`).join('')}</ul>`;
@@ -526,28 +484,41 @@ function copyTopicContent(topicId) {
 }
 
 // ============================================================
-// التنقل من الرابط
+// تحديث الإحصائيات
 // ============================================================
-function initFromUrl() {
-    const params = new URLSearchParams(window.location.search);
-    const sectionId = params.get('s');
-    if (sectionId && SECTIONS.find(s => s.id === sectionId)) {
-        openSection(sectionId);
-    } else {
-        renderHub();
-    }
+function updateStats() {
+    let total = 0;
+    Object.keys(state.loadedScripts).forEach(key => {
+        const varName = 'WOMEN_SECTION_' + key.toUpperCase();
+        const data = window[varName];
+        if (data && Array.isArray(data.items)) {
+            total += data.items.length;
+        }
+    });
+    const el = $('stat-topics');
+    if (el) el.textContent = total > 0 ? total : '—';
 }
 
-window.addEventListener('popstate', initFromUrl);
+// ============================================================
+// البدء
+// ============================================================
+function init() {
+    renderTabs();
 
-// ============================================================
-// التشغيل
-// ============================================================
+    const params = new URLSearchParams(window.location.search);
+    const sectionId = params.get('s');
+    const initial = sectionId && SECTIONS.find(s => s.id === sectionId)
+        ? sectionId
+        : SECTIONS[0].id;
+
+    openTab(initial);
+}
+
 try {
-    initFromUrl();
+    init();
 } catch (err) {
     console.error(err);
-    renderHub();
+    $('wm-section').innerHTML = `<div class="wm-error">حدث خطأ أثناء التحميل: ${escapeHtml(err.message)}</div>`;
 }
 
 })();
