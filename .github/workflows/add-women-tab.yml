@@ -1,0 +1,33 @@
+name: Add Women Tab to Navigation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  add-tab:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Add women.html tab to all HTML files
+        run: |
+          for file in *.html; do
+            if [ "$file" = "women.html" ]; then
+              continue
+            fi
+            if grep -q 'href="women.html"' "$file"; then
+              echo "تخطي: $file (يحتوي على التبويب بالفعل)"
+              continue
+            fi
+            sed -i 's|<li><a href="library.html"|<li><a href="women.html">🌸 المرأة المسلمة</a></li>\n            <li><a href="library.html"|g' "$file"
+            echo "تم التعديل: $file"
+          done
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Add women.html to navigation"
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "github-actions[bot]@users.noreply.github.com"
