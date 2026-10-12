@@ -1,93 +1,164 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <!-- الصفحة الرئيسية -->
     <url>
         <loc>https://qamarsyria.github.io/qamar-malak/</loc>
+        <lastmod>2026-10-12</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>https://qamarsyria.github.io/qamar-malak/index.html</loc>
+        <lastmod>2026-10-12</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
+
+    <!-- القرآن والتفسير -->
     <url>
         <loc>https://qamarsyria.github.io/qamar-malak/quran.html</loc>
+        <lastmod>2026-10-12</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://qamarsyria.github.io/qamar-malak/surah.html</loc>
-        <changefreq>daily</changefreq>
+        <lastmod>2026-10-12</lastmod>
+        <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://qamarsyria.github.io/qamar-malak/tafsir.html</loc>
-        <changefreq>daily</changefreq>
+        <lastmod>2026-10-12</lastmod>
+        <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
+
+    <!-- السنة والسيرة -->
     <url>
         <loc>https://qamarsyria.github.io/qamar-malak/hadith.html</loc>
+        <lastmod>2026-10-12</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://qamarsyria.github.io/qamar-malak/seerah.html</loc>
+        <lastmod>2026-10-12</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://qamarsyria.github.io/qamar-malak/ghazawat.html</loc>
+        <lastmod>2026-10-12</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
+
+    <!-- الأنبياء والصحابة والشهداء -->
     <url>
         <loc>https://qamarsyria.github.io/qamar-malak/prophets.html</loc>
+        <lastmod>2026-10-12</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://qamarsyria.github.io/qamar-malak/quranic-stories.html</loc>
+        <lastmod>2026-10-12</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://qamarsyria.github.io/qamar-malak/sahaba.html</loc>
+        <lastmod>2026-10-12</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://qamarsyria.github.io/qamar-malak/shuhada.html</loc>
+        <lastmod>2026-10-12</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
+
+    <!-- العبادات اليومية -->
     <url>
         <loc>https://qamarsyria.github.io/qamar-malak/adhkar.html</loc>
+        <lastmod>2026-10-12</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
-        <loc>https://qamarsyria.github.io/qamar-malak/fiqh.html</loc>
+        <loc>https://qamarsyria.github.io/qamar-malak/prayer.html</loc>
+        <lastmod>2026-10-12</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://qamarsyria.github.io/qamar-malak/tasbih.html</loc>
+        <lastmod>2026-10-12</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
+        <loc>https://qamarsyria.github.io/qamar-malak/calendar.html</loc>
+        <lastmod>2026-10-12</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- الفقه والزهد والفضائل -->
+    <url>
+        <loc>https://qamarsyria.github.io/qamar-malak/fiqh.html</loc>
+        <lastmod>2026-10-12</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
         <loc>https://qamarsyria.github.io/qamar-malak/zuhd.html</loc>
+        <lastmod>2026-10-12</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://qamarsyria.github.io/qamar-malak/fadail.html</loc>
+        <lastmod>2026-10-12</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://qamarsyria.github.io/qamar-malak/sihr.html</loc>
+        <lastmod>2026-10-12</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
+
+    <!-- المسائل والمكتبة والمرأة -->
+    <url>
+        <loc>https://qamarsyria.github.io/qamar-malak/masael.html</loc>
+        <lastmod>2026-10-12</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://qamarsyria.github.io/qamar-malak/library.html</loc>
+        <lastmod>2026-10-12</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://qamarsyria.github.io/qamar-malak/women.html</loc>
+        <lastmod>2026-10-12</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- البحث -->
     <url>
         <loc>https://qamarsyria.github.io/qamar-malak/search.html</loc>
+        <lastmod>2026-10-12</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
+
 </urlset>
