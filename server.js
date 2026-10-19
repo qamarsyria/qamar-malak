@@ -1,5 +1,12 @@
 /* ============================================================
-   Render Web Service — وسيط Gemini (النسخة النهائية v3)
+   Render Web Service — وسيط Gemini (v4)
+   ------------------------------------------------------------
+   1. دعم مفاتيح متعددة عبر GEMINI_API_KEYS (مفصولة بفاصلة)
+   2. اكتشاف تلقائي للموديلات + كاش 6 ساعات
+   3. تدوير المفاتيح عند 429/403
+   4. Fallback ثابت عند فشل الاكتشاف
+   5. /health و /api/models للتشخيص
+   6. التوافق الخلفي: GEMINI_API_KEY (مفرد) مدعوم
    ============================================================ */
 
 const express = require('express');
@@ -37,117 +44,312 @@ const SYSTEM_PROMPT = `أنت مساعد علمي متخصص في الفقه ا�
   "not_enough_evidence": false
 }`;
 
-// النماذج المتاحة (محدثة 2026)
-const MODELS_TO_TRY = [
+function loadKeys() {
+    const multi  = (process.env.GEMINI_API_KEYS || '').trim();
+    const single = (process.env.GEMINI_API_KEY  || '').trim();
+    const raw = multi || single;
+    if (!raw) return [];
+    return raw.split(',').map(k => k.trim()).filter(Boolean);
+}
+
+const keyState = new Map();
+
+function markKeyExhausted(key, retryAfterMs = 3600_000) {
+    keyState.set(key, { ...(keyState.get(key) || {}), exhaustedUntil: Date.now() + retryAfterMs });
+}
+function markKeyInvalid(key) {
+    keyState.set(key, { ...(keyState.get(key) || {}), invalid: true });
+}
+function getKeysByState() {
+    const now = Date.now();
+    const usable = [], exhausted = [], invalid = [];
+    for (const k of loadKeys()) {
+        const s = keyState.get(k);
+        if (!s) { usable.push(k); continue; }
+        if (s.invalid) { invalid.push(k); continue; }
+        if (s.exhaustedUntil && s.exhaustedUntil > now) { exhausted.push(k); continue; }
+        usable.push(k);
+    }
+    return { usable, exhausted, invalid };
+}
+
+const MODEL_CACHE_TTL = 6 * 3600 * 1000;
+let modelCache = { models: [], fetchedAt: 0, discoveredFrom: null };
+
+const PREFERRED_MODELS = [
     'gemini-flash-latest',
     'gemini-3.8-flash',
     'gemini-3.5-flash',
     'gemini-flash-lite-latest'
 ];
 
+const FALLBACK_MODELS = [
+    ...PREFERRED_MODELS,
+    'gemini-2.5-flash',
+    'gemini-2.0-flash',
+    'gemini-1.5-flash-latest'
+];
+
+function scoreModel(name) {
+    if (/flash-latest/i.test(name)) return 1000;
+    let s = 0;
+    if (/flash/i.test(name)) s += 100;
+    else if (/pro/i.test(name)) s += 50;
+    else s -= 100;
+    const m = name.match(/(\d+)\.(\d+)/);
+    if (m) s += Number(m[1]) * 30 + Number(m[2]) * 3;
+    if (/lite/i.test(name)) s -= 40;
+    if (/exp|experimental|preview/i.test(name)) s -= 60;
+    if (/-00\d$/.test(name)) s -= 30;
+    if (/vision|embedding|aqa/i.test(name)) return -999;
+    return s;
+}
+
+async function fetchModelsFromKey(apiKey) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`;
+    const resp = await fetch(url);
+    if (!resp.ok) {
+        const t = await resp.text();
+        throw new Error(`discovery ${resp.status}: ${t.substring(0, 200)}`);
+    }
+    const data = await resp.json();
+    const all = Array.isArray(data.models) ? data.models : [];
+    const usable = all.filter(m => {
+        const methods = m.supportedGenerationMethods || [];
+        if (!methods.includes('generateContent')) return false;
+        const name = (m.name || '').replace(/^models\//, '');
+        if (/embedding|aqa|vision/i.test(name)) return false;
+        return true;
+    });
+    const scored = usable
+        .map(m => {
+            const name = (m.name || '').replace(/^models\//, '');
+            return { name, score: scoreModel(name) };
+        })
+        .filter(x => x.score > -100 && x.name)
+        .sort((a, b) => b.score - a.score);
+    const seen = new Set();
+    const unique = [];
+    for (const x of scored) {
+        if (seen.has(x.name)) continue;
+        seen.add(x.name);
+        unique.push(x.name);
+    }
+    return unique;
+}
+
+function mergeWithPreferred(discovered) {
+    if (!discovered.length) return [...FALLBACK_MODELS];
+    const set = new Set(discovered);
+    const result = [];
+    for (const m of PREFERRED_MODELS) {
+        if (set.has(m)) { result.push(m); set.delete(m); }
+    }
+    for (const m of discovered) {
+        if (set.has(m)) { result.push(m); set.delete(m); }
+    }
+    return result;
+}
+
+function invalidateModelCache() {
+    modelCache = { models: [], fetchedAt: 0, discoveredFrom: null };
+}
+
+async function getModels(forceRefresh = false) {
+    if (!forceRefresh && modelCache.models.length &&
+        (Date.now() - modelCache.fetchedAt) < MODEL_CACHE_TTL) {
+        return modelCache.models;
+    }
+    const { usable, exhausted } = getKeysByState();
+    const discoveryKeys = [...usable, ...exhausted];
+    for (const key of discoveryKeys) {
+        try {
+            const discovered = await fetchModelsFromKey(key);
+            if (discovered.length) {
+                const merged = mergeWithPreferred(discovered);
+                modelCache = { models: merged, fetchedAt: Date.now(), discoveredFrom: 'api' };
+                console.log(`[discovery] ${merged.length} model(s) — top: ${merged.slice(0, 3).join(', ')}`);
+                return merged;
+            }
+        } catch (err) {
+            console.warn(`[discovery] key failed: ${err.message}`);
+        }
+    }
+    console.warn('[discovery] all keys failed — using fallback');
+    modelCache = { models: [...FALLBACK_MODELS], fetchedAt: Date.now(), discoveredFrom: 'fallback' };
+    return modelCache.models;
+}
+
+async function tryOne(model, apiKey, prompt) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{ role: 'user', parts: [{ text: prompt }] }],
+                generationConfig: {
+                    temperature: 0.1,
+                    topP: 0.8,
+                    maxOutputTokens: 800,
+                    responseMimeType: 'application/json'
+                },
+                safetySettings: [
+                    { category: 'HARM_CATEGORY_HARASSMENT',         threshold: 'BLOCK_NONE' },
+                    { category: 'HARM_CATEGORY_HATE_SPEECH',        threshold: 'BLOCK_NONE' },
+                    { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',  threshold: 'BLOCK_NONE' },
+                    { category: 'HARM_CATEGORY_DANGEROUS_CONTENT',  threshold: 'BLOCK_NONE' }
+                ]
+            })
+        });
+        if (response.status === 429) return { type: 'key_exhausted' };
+        if (response.status === 404) return { type: 'model_not_found' };
+        if (response.status === 400 || response.status === 403) {
+            const t = await response.text();
+            if (/API_KEY_INVALID|API key not valid/i.test(t)) return { type: 'key_invalid' };
+            return { type: 'error', status: response.status, details: t.substring(0, 200) };
+        }
+        if (!response.ok) {
+            const t = await response.text();
+            return { type: 'error', status: response.status, details: t.substring(0, 200) };
+        }
+        const data = await response.json();
+        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (!text) return { type: 'error', status: 200, details: 'empty response' };
+        const cleaned = text.replace(/^```json\s*/, '').replace(/\s*```$/, '').trim();
+        let parsed;
+        try { parsed = JSON.parse(cleaned); }
+        catch (e) { return { type: 'error', status: 200, details: 'invalid JSON' }; }
+        if (typeof parsed.answer !== 'string') parsed.answer = '';
+        if (!Array.isArray(parsed.quran_refs)) parsed.quran_refs = [];
+        if (!Array.isArray(parsed.hadith_refs)) parsed.hadith_refs = [];
+        if (typeof parsed.not_enough_evidence !== 'boolean') parsed.not_enough_evidence = false;
+        parsed.quran_refs = parsed.quran_refs.slice(0, 5);
+        parsed.hadith_refs = parsed.hadith_refs.slice(0, 5);
+        parsed._model_used = model;
+        return { type: 'success', data: parsed, model };
+    } catch (err) {
+        return { type: 'error', status: 0, details: err.message };
+    }
+}
+
+async function runAttempts(models, keys, prompt, maxAttempts = 15) {
+    let attempts = 0;
+    let lastError = null;
+    for (const model of models) {
+        if (attempts >= maxAttempts) break;
+        for (const key of keys) {
+            if (attempts >= maxAttempts) break;
+            const s = keyState.get(key);
+            if (s?.invalid) continue;
+            if (s?.exhaustedUntil && s.exhaustedUntil > Date.now()) continue;
+            attempts++;
+            const r = await tryOne(model, key, prompt);
+            if (r.type === 'success') return r;
+            if (r.type === 'model_not_found') {
+                lastError = { model, status: 404, reason: 'model not available' };
+                break;
+            }
+            if (r.type === 'key_invalid') {
+                markKeyInvalid(key);
+                lastError = { model, status: 400, reason: 'key invalid' };
+                continue;
+            }
+            if (r.type === 'key_exhausted') {
+                markKeyExhausted(key);
+                lastError = { model, status: 429, reason: 'key quota exhausted' };
+                continue;
+            }
+            lastError = { model, status: r.status, details: r.details };
+        }
+    }
+    return { type: 'failed', lastError, attempts };
+}
+
 app.get('/', (req, res) => {
-    res.json({ status: 'ok', service: 'qamar-malak-api', version: '3' });
+    res.json({ status: 'ok', service: 'qamar-malak-api', version: '4' });
+});
+
+app.get('/health', (req, res) => {
+    const { usable, exhausted, invalid } = getKeysByState();
+    res.json({
+        status: 'ok',
+        uptime_sec: Math.round(process.uptime()),
+        keys: {
+            total: usable.length + exhausted.length + invalid.length,
+            usable: usable.length,
+            exhausted: exhausted.length,
+            invalid: invalid.length
+        },
+        models: {
+            count: modelCache.models.length,
+            source: modelCache.discoveredFrom,
+            cached_at: modelCache.fetchedAt ? new Date(modelCache.fetchedAt).toISOString() : null
+        }
+    });
+});
+
+app.get('/api/models', async (req, res) => {
+    try {
+        const models = await getModels();
+        res.json({
+            count: models.length,
+            source: modelCache.discoveredFrom,
+            cached_at: new Date(modelCache.fetchedAt).toISOString(),
+            models: models.slice(0, 20)
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 app.post('/api/ask', async (req, res) => {
     const { query, context } = req.body || {};
-
     if (!query || typeof query !== 'string' || query.trim().length < 2) {
         return res.status(400).json({ error: 'query too short' });
     }
     if (query.length > 500) {
         return res.status(400).json({ error: 'query too long' });
     }
-
-    const apiKey = (process.env.GEMINI_API_KEY || '').trim();
-    if (!apiKey) {
-        return res.status(500).json({ error: 'GEMINI_API_KEY not set' });
+    const { usable, exhausted, invalid } = getKeysByState();
+    if (usable.length + exhausted.length + invalid.length === 0) {
+        return res.status(500).json({ error: 'GEMINI_API_KEYS not set' });
     }
-
+    if (usable.length === 0 && exhausted.length === 0) {
+        return res.status(500).json({ error: 'all API keys are invalid' });
+    }
     const contextText = (context && typeof context === 'string')
         ? context.substring(0, 4000)
         : '(لا يوجد سياق)';
-
     const finalPrompt = SYSTEM_PROMPT.replace('{{CONTEXT}}', contextText)
         + '\n\nالسؤال من المستخدم: ' + query.trim();
-
-    let lastError = null;
-
-    for (const model of MODELS_TO_TRY) {
-        try {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    contents: [{ role: 'user', parts: [{ text: finalPrompt }] }],
-                    generationConfig: {
-                        temperature: 0.1,
-                        topP: 0.8,
-                        maxOutputTokens: 800,
-                        responseMimeType: 'application/json'
-                    },
-                    safetySettings: [
-                        { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
-                        { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
-                        { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
-                        { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' }
-                    ]
-                })
-            });
-
-            if (!response.ok) {
-                const errText = await response.text();
-                lastError = { model, status: response.status, details: errText.substring(0, 400) };
-
-                if (errText.includes('API_KEY_INVALID') || errText.includes('API key not valid')) {
-                    return res.status(500).json({
-                        error: 'API key invalid',
-                        last_error: lastError
-                    });
-                }
-                continue;
-            }
-
-            const data = await response.json();
-            if (!data.candidates || !data.candidates[0]?.content?.parts?.[0]?.text) {
-                lastError = { model, error: 'empty response' };
-                continue;
-            }
-
-            const text = data.candidates[0].content.parts[0].text;
-            let parsed;
-            try {
-                const cleaned = text.replace(/^```json\s*/, '').replace(/\s*```$/, '').trim();
-                parsed = JSON.parse(cleaned);
-            } catch (e) {
-                lastError = { model, error: 'invalid JSON', raw: text.substring(0, 200) };
-                continue;
-            }
-
-            if (typeof parsed.answer !== 'string') parsed.answer = '';
-            if (!Array.isArray(parsed.quran_refs)) parsed.quran_refs = [];
-            if (!Array.isArray(parsed.hadith_refs)) parsed.hadith_refs = [];
-            if (typeof parsed.not_enough_evidence !== 'boolean') parsed.not_enough_evidence = false;
-
-            parsed.quran_refs = parsed.quran_refs.slice(0, 5);
-            parsed.hadith_refs = parsed.hadith_refs.slice(0, 5);
-            parsed._model_used = model;
-
-            return res.status(200).json(parsed);
-
-        } catch (err) {
-            lastError = { model, error: err.message };
-        }
+    const models = await getModels();
+    let result = await runAttempts(models, usable, finalPrompt);
+    if (result.type === 'failed' && exhausted.length > 0) {
+        result = await runAttempts(models, exhausted, finalPrompt);
     }
-
-    return res.status(500).json({
-        error: 'All models failed',
-        last_error: lastError
-    });
+    if (result.type === 'failed') {
+        if (modelCache.discoveredFrom === 'api') invalidateModelCache();
+        return res.status(500).json({
+            error: 'All models and keys failed',
+            last_error: result.lastError,
+            attempts: result.attempts
+        });
+    }
+    return res.status(200).json(result.data);
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log('✓ Server v3 running on port ' + PORT);
+
+app.listen(PORT, async () => {
+    console.log(`Server v4 running on port ${PORT}`);
+    const { usable, exhausted, invalid } = getKeysByState();
+    console.log(`[keys] total=${usable.length + exhausted.length + invalid.length} usable=${usable.length}`);
+    try {
+        const models = await getModels();
+        console.log(`[models] ${models.length} available — source=${modelCache.discoveredFrom}`);
+        console.log(`[models] priority: ${models.slice(0, 5).join(' → ')}`);
+    } catch (err) {
+        console.warn(`[models] startup discovery failed: ${err.message}`);
+    }
 });
