@@ -289,7 +289,7 @@ function buildAILoadingHTML() {
 
 async function callGeminiAI(query, localMatches) {
     const context = localMatches.slice(0, 5).map(m => `س: ${m.item.q}\nج: ${m.item.a}`).join('\n\n');
-    const res = await fetch('https://qamar-malak-api.onrender.com/api/ask', {
+    const res = await fetch('https://qamar-malak.wasmer.app/api/ask', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query, context })
