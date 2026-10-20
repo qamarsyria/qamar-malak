@@ -1,0 +1,6 @@
+kind: wasmer.io/App.v0
+name: qamar-malak
+owner: qamarsyria
+package:
+  name: qamar-malak
+  version: 0.1.0
