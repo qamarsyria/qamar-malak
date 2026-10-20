@@ -4,3 +4,10 @@ owner: qamarsyria
 package:
   name: qamar-malak
   version: 0.1.0
+jobs:
+  - name: keep-server-awake
+    trigger: '*/5 * * * *'
+    action:
+      fetch:
+        path: /health
+        timeout: 30s
