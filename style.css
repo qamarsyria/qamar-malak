@@ -44,9 +44,9 @@ body {
     backdrop-filter: blur(10px);
     border-bottom: 2px solid var(--gold);
     padding: 15px 20px;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    /* position: sticky; تم إزالتها من هنا لأننا سنستخدم الحاوية الأب */
+    /* top: 0; */
+    /* z-index: 1000; */
     box-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
 
@@ -108,7 +108,7 @@ body {
     cursor: pointer;
 }
 
-/* ============ القائمة ============ */
+/* ============ القائمة (تم تعديلها لتكون ثابتة) ============ */
 .main-nav {
     background: var(--green-dark);
     border-bottom: 1px solid rgba(212,175,55,0.3);
@@ -116,6 +116,12 @@ body {
     overflow-x: auto;
     white-space: nowrap;
     scrollbar-width: thin;
+    /* التعديلات الجديدة لضمان الثبات */
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    /* إضافة ظل خفيف لتمييز الشريط عن المحتوى */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
 
 .main-nav::-webkit-scrollbar {
