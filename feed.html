@@ -11,7 +11,10 @@
     .feed-container::-webkit-scrollbar { display: none; }
     .video-card { height: 100vh; width: 100vw; scroll-snap-align: start; position: relative; display: flex; justify-content: center; align-items: center; background-color: #000; }
     
-    /* إطار مشغل تلغرام */
+    /* فيديو عادي */
+    .video-element { width: 100%; height: 100%; object-fit: contain; background-color: #000; }
+    
+    /* مشغل تلغرام */
     .telegram-player { width: 100%; height: 100%; border: none; }
     
     .video-info { position: absolute; bottom: 60px; right: 0; left: 0; padding: 20px; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); color: #fff; pointer-events: none; }
@@ -72,20 +75,35 @@
 
             let html = '';
             videos.forEach((video) => {
-                // بما أن الفيديو سيكون رقم رسالة (msg_id)
-                // نبني رابط المشغل: https://t.me/malak_almarifa/37?embed=1
-                const telegramEmbedUrl = `https://t.me/malak_almarifa/${video.video_url}?embed=1`;
+                // نتحقق: هل الرابط رقم (msg_id) أم رابط (http)؟
+                const isTelegramId = /^\d+$/.test(video.video_url);
                 
-                html += `
-                    <div class="video-card">
-                        <iframe class="telegram-player" src="${telegramEmbedUrl}" allowfullscreen></iframe>
-                        <div class="video-info">
-                            ${video.category ? `<span class="video-category">${video.category}</span>` : ''}
-                            <div class="video-title">${video.title || 'بدون عنوان'}</div>
-                            <div class="video-desc">${video.description || ''}</div>
+                if (isTelegramId) {
+                    // عرض مشغل تلغرام
+                    const telegramEmbed = `https://t.me/malak_almarifa/${video.video_url}?embed=1`;
+                    html += `
+                        <div class="video-card">
+                            <iframe class="telegram-player" src="${telegramEmbed}" allowfullscreen></iframe>
+                            <div class="video-info">
+                                ${video.category ? `<span class="video-category">${video.category}</span>` : ''}
+                                <div class="video-title">${video.title || 'بدون عنوان'}</div>
+                                <div class="video-desc">${video.description || ''}</div>
+                            </div>
                         </div>
-                    </div>
-                `;
+                    `;
+                } else {
+                    // عرض فيديو عادي (من رابط)
+                    html += `
+                        <div class="video-card">
+                            <video class="video-element" src="${video.video_url}" controls playsinline></video>
+                            <div class="video-info">
+                                ${video.category ? `<span class="video-category">${video.category}</span>` : ''}
+                                <div class="video-title">${video.title || 'بدون عنوان'}</div>
+                                <div class="video-desc">${video.description || ''}</div>
+                            </div>
+                        </div>
+                    `;
+                }
             });
 
             feedContainer.innerHTML = html;
