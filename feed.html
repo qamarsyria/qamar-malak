@@ -36,11 +36,8 @@
 <div id="feed" class="feed-container" style="display: none;"></div>
 
 <script>
-    const SUPABASE_URL = 'https://mhmybkdghxamtviojxjd.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_dSCH3FinzsLnhvPfWiDqbg_lrqT_erA';
-
-    // استخدام وسيط CORS بديل
-    const PROXY_URL = 'https://cors.lol/?';
+    // التغيير الجذري: نطلب البيانات من سيرفرنا الخاص الذي يعمل كوسيط
+    const FEED_API_URL = 'https://qamar-malak.wasmer.app/api/feed';
 
     function showError(msg) {
         const loading = document.getElementById('loading');
@@ -56,20 +53,10 @@
         const loadingScreen = document.getElementById('loading');
 
         try {
-            const apiUrl = `${SUPABASE_URL}/rest/v1/videos?select=*&order=created_at.desc`;
-            const targetUrl = PROXY_URL + encodeURIComponent(apiUrl);
-
-            const response = await fetch(targetUrl, {
-                method: 'GET',
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`,
-                    'Accept': 'application/json'
-                }
-            });
+            const response = await fetch(FEED_API_URL);
 
             if (!response.ok) {
-                throw new Error(`فشل الاتصال بقاعدة البيانات. رمز الخطأ: ${response.status}`);
+                throw new Error(`فشل الاتصال بالسيرفر. رمز الخطأ: ${response.status}`);
             }
 
             const videos = await response.json();
