@@ -39,8 +39,8 @@
     const SUPABASE_URL = 'https://mhmybkdghxamtviojxjd.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_dSCH3FinzsLnhvPfWiDqbg_lrqT_erA';
 
-    // ⚠️ وسيط CORS لتجاوز حظر الشبكة في سوريا
-    const CORS_PROXY = 'https://corsproxy.io/?';
+    // وسيط CORS مجاني لا يحتاج مفتاح API
+    const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
 
     function showError(msg) {
         const loading = document.getElementById('loading');
@@ -56,18 +56,13 @@
         const loadingScreen = document.getElementById('loading');
 
         try {
-            // بناء رابط Supabase المباشر
-            const directUrl = `${SUPABASE_URL}/rest/v1/videos?select=*&order=created_at.desc`;
+            // نضع مفتاح API كجزء من رابط Supabase (كبديل عن الترويسات)
+            const directUrl = `${SUPABASE_URL}/rest/v1/videos?select=*&order=created_at.desc&apikey=${SUPABASE_KEY}`;
             
             // توجيه الطلب عبر الوسيط
             const proxiedUrl = CORS_PROXY + encodeURIComponent(directUrl);
 
-            const response = await fetch(proxiedUrl, {
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
-            });
+            const response = await fetch(proxiedUrl);
 
             if (!response.ok) {
                 throw new Error(`فشل الاتصال بقاعدة البيانات. رمز الخطأ: ${response.status}`);
