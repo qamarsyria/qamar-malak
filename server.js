@@ -1,9 +1,10 @@
 /* ============================================================
-   Server v6.0 — حل جذري لمشكلة DNS في Wasmer باستخدام DoH
+   Server v6.1 — حل جذري لمشكلة DNS في Wasmer (DoH)
    ============================================================ */
 
 const express = require('express');
-const { smartFetch } = require('supadns-js'); // مكتبة DNS-over-HTTPS
+const https = require('https');
+const dns = require('dns');
 const app = express();
 
 app.use(express.json({ limit: '100kb' }));
@@ -16,34 +17,102 @@ app.use((req, res, next) => {
     next();
 });
 
+// دالة مساعدة: ترجمة اسم النطاق باستخدام Cloudflare DoH (لتجاوز مشكلة DNS)
+function resolveDns(hostname) {
+    return new Promise((resolve, reject) => {
+        const options = {
+            hostname: 'cloudflare-dns.com',
+            port: 443,
+            path: `/dns-query?name=${hostname}&type=A`,
+            method: 'GET',
+            headers: { 'Accept': 'application/dns-json' }
+        };
+        const req = https.request(options, (res) => {
+            let data = '';
+            res.on('data', chunk => data += chunk);
+            res.on('end', () => {
+                try {
+                    const json = JSON.parse(data);
+                    if (json.Answer && json.Answer.length > 0) {
+                        const ipv4 = json.Answer.find(a => a.type === 1)?.data;
+                        if (ipv4) resolve(ipv4);
+                        else reject(new Error('No A record found'));
+                    } else {
+                        reject(new Error('No answers from DoH'));
+                    }
+                } catch (e) {
+                    reject(e);
+                }
+            });
+        });
+        req.on('error', reject);
+        req.end();
+    });
+}
+
 // ═══════════════════════════════════════════════════════════════════
-// مسار جلب الفيديوهات (عبر smartFetch الذي يحل DNS تلقائياً)
+// مسار جلب الفيديوهات
 // ═══════════════════════════════════════════════════════════════════
 app.get('/api/feed', async (req, res) => {
-    const SUPABASE_URL = 'https://mhmybkdghxamtviojxjd.supabase.co';
+    const SUPABASE_HOST = 'mhmybkdghxamtviojxjd.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_dSCH3FinzsLnhvPfWiDqbg_lrqT_erA';
-    const targetUrl = `${SUPABASE_URL}/rest/v1/videos?select=*&order=created_at.desc`;
-
+    
     try {
-        // smartFetch: يحاول DNS العادي، وإذا فشل يستخدم DNS-over-HTTPS تلقائياً
-        const response = await smartFetch(targetUrl, {
+        let ip;
+        try {
+            // 1. المحاولة أولاً باستخدام DNS العادي (في حال كان يعمل)
+            ip = await new Promise((resolve, reject) => {
+                dns.lookup(SUPABASE_HOST, (err, address) => {
+                    if (err) reject(err); else resolve(address);
+                });
+            });
+        } catch (e) {
+            // 2. إذا فشل، نستخدم Cloudflare DoH (وهي طريقة مسموحة حتى في Wasmer)
+            console.log('[feed] Normal DNS failed, using DoH...');
+            ip = await resolveDns(SUPABASE_HOST);
+        }
+
+        // 3. الاتصال بـ Supabase عبر عنوان IP المباشر
+        const options = {
+            hostname: ip, 
+            port: 443,
+            path: '/rest/v1/videos?select=*&order=created_at.desc',
+            method: 'GET',
+            servername: SUPABASE_HOST, // ضروري جداً لشهادة SSL
             headers: {
+                'Host': SUPABASE_HOST,
                 'apikey': SUPABASE_KEY,
                 'Authorization': `Bearer ${SUPABASE_KEY}`,
                 'Accept': 'application/json'
             }
+        };
+
+        const reqSupabase = https.request(options, (resSupabase) => {
+            let data = '';
+            resSupabase.on('data', chunk => data += chunk);
+            resSupabase.on('end', () => {
+                if (resSupabase.statusCode >= 200 && resSupabase.statusCode < 300) {
+                    try {
+                        res.status(200).json(JSON.parse(data));
+                    } catch (e) {
+                        res.status(500).json({ error: 'Invalid JSON', details: data.substring(0, 200) });
+                    }
+                } else {
+                    res.status(resSupabase.statusCode).json({ error: 'Supabase error', details: data.substring(0, 200) });
+                }
+            });
         });
 
-        if (!response.ok) {
-            const errText = await response.text();
-            throw new Error(`Supabase error ${response.status}: ${errText.substring(0, 200)}`);
-        }
+        reqSupabase.on('error', (e) => {
+            console.error('[feed] HTTPS Error:', e);
+            res.status(500).json({ error: 'Failed to connect to Supabase', details: `${e.message} | Code: ${e.code}` });
+        });
 
-        const data = await response.json();
-        res.status(200).json(data);
+        reqSupabase.end();
+
     } catch (err) {
-        console.error('[feed] Error:', err.message);
-        res.status(500).json({ error: 'Failed to fetch videos', details: err.message });
+        console.error('[feed] DNS Error:', err);
+        res.status(500).json({ error: 'Failed to resolve DNS', details: err.message });
     }
 });
 
@@ -229,7 +298,7 @@ async function runAttempts(models, keys, prompt, maxAttempts = 15) {
     return { type: 'failed', lastError, attempts };
 }
 
-app.get('/', (req, res) => res.json({ status: 'ok', service: 'qamar-malak-api', version: '6.0' }));
+app.get('/', (req, res) => res.json({ status: 'ok', service: 'qamar-malak-api', version: '6.1' }));
 app.get('/health', (req, res) => {
     const { usable, exhausted, invalid } = getKeysByState();
     res.json({ status: 'ok', uptime_sec: Math.round(process.uptime()), keys: { total: usable.length + exhausted.length + invalid.length, usable: usable.length, exhausted: exhausted.length, invalid: invalid.length }, models: { count: modelCache.models.length, source: modelCache.discoveredFrom, cached_at: modelCache.fetchedAt ? new Date(modelCache.fetchedAt).toISOString() : null } });
@@ -259,7 +328,7 @@ app.post('/api/ask', async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, async () => {
-    console.log(`Server v6.0 running on port ${PORT}`);
+    console.log(`Server v6.1 running on port ${PORT}`);
     const { usable } = getKeysByState();
     console.log(`[keys] usable=${usable.length}`);
     try {
