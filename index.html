@@ -11,6 +11,7 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0d4d3c">
 <style>
+/* ... (نفس الأنماط المضمنة السابقة، لم أغيّرها) ... */
 .top-bar{background:linear-gradient(135deg,rgba(212,175,55,0.15) 0%,rgba(212,175,55,0.03) 100%);border:1px solid rgba(212,175,55,0.3);border-radius:14px;padding:15px 20px;margin-bottom:25px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;text-align:center}
 .top-bar-greeting{font-family:'Amiri',serif;font-size:18px;color:var(--gold);font-weight:700}
 .top-bar-date{font-size:13px;color:var(--cream);opacity:0.85}
@@ -126,6 +127,7 @@
 <nav class="main-nav">
 <ul class="nav-list">
 <li><a href="index.html" class="active">🏠 الرئيسية</a></li>
+<li><a href="feed.html">🎬 الفيديوهات</a></li>
 <li><a href="quran.html">📖 القرآن</a></li>
 <li><a href="tafsir.html">📚 التفسير</a></li>
 <li><a href="hadith.html">🕌 السنة</a></li>
@@ -139,7 +141,7 @@
 <li><a href="calendar.html">📅 التقويم</a></li>
 <li><a href="fiqh.html">⚖️ الفقه</a></li>
 <li><a href="women.html">🌸 المرأة المسلمة</a></li>
-            <li><a href="library.html">📚 المكتبة</a></li>
+<li><a href="library.html">📚 المكتبة</a></li>
 <li><a href="search.html">🔍 البحث</a></li>
 <li><a href="masael.html">📖 المسائل الشرعية</a></li>
 </ul>
@@ -158,7 +160,8 @@
 <h1>ملاك المعرفة</h1>
 <p>منصة إسلامية شاملة تجمع القرآن الكريم بالتفسير والصوت، السنة النبوية الصحيحة، السيرة العطرة، قصص الأنبياء والصحابة، الفقه، الأذكار، مواقيت الصلاة، المسبحة الرقمية، التقويم الهجري، المكتبة، والمسائل الشرعية الموثّقة.</p>
 <div class="hero-actions">
-<a href="quran.html" class="btn btn-primary">📖 ابدأ بالقرآن</a>
+<a href="feed.html" class="btn btn-primary">🎬 شاهد الفيديوهات</a>
+<a href="quran.html" class="btn btn-outline">📖 ابدأ بالقرآن</a>
 <a href="masael.html" class="btn btn-outline">📖 المسائل الشرعية</a>
 </div>
 </div>
@@ -174,6 +177,11 @@
 </section>
 
 <section class="quick-features">
+<a href="feed.html" class="feature-btn">
+<span class="icon">🎬</span>
+<span class="label">الفيديوهات</span>
+<span class="sub">جديد كل يوم</span>
+</a>
 <a href="prayer.html" class="feature-btn">
 <span class="icon">🕌</span>
 <span class="label">مواقيت الصلاة</span>
@@ -202,419 +210,4 @@
 <button class="btn-go" onclick="quickSearch()">ابحث</button>
 </div>
 
-<section class="today-grid">
-<div class="today-card">
-<span class="today-label">📖 آية اليوم</span>
-<div class="today-text ayah" id="daily-ayah">—</div>
-<div class="today-ref" id="daily-ayah-ref">—</div>
-<a href="quran.html" class="today-action">📖 اقرأ القرآن الكريم ←</a>
-</div>
-<div class="today-card">
-<span class="today-label">🕌 حديث اليوم</span>
-<div class="today-text" id="daily-hadith">—</div>
-<div class="today-ref" id="daily-hadith-ref">—</div>
-<a href="hadith.html" class="today-action">🕌 تصفح السنة النبوية ←</a>
-</div>
-</section>
-
-<section class="stats-bar">
-<div class="stat-item"><span class="stat-number">114</span><span class="stat-label">سورة</span></div>
-<div class="stat-item"><span class="stat-number">8</span><span class="stat-label">قرّاء</span></div>
-<div class="stat-item"><span class="stat-number">34</span><span class="stat-label">حديث</span></div>
-<div class="stat-item"><span class="stat-number">25</span><span class="stat-label">نبي</span></div>
-<div class="stat-item"><span class="stat-number">23</span><span class="stat-label">صحابي</span></div>
-<div class="stat-item"><span class="stat-number">13</span><span class="stat-label">شهيد</span></div>
-<div class="stat-item"><span class="stat-number">253</span><span class="stat-label">مسألة</span></div>
-<div class="stat-item"><span class="stat-number">37</span><span class="stat-label">كتاب</span></div>
-</section>
-
-<h2 class="section-group-title">🕌 العبادات اليومية</h2>
-<section class="sections-grid">
-<a href="prayer.html" class="section-card">
-<span class="new-badge">جديد</span>
-<span class="section-icon">🕌</span>
-<h3>مواقيت الصلاة</h3>
-<p>مواقيت دقيقة حسب موقعك، مع الأذان بصوت 6 مؤذنين، والتكبير بـ 4 أصوات، وعدّاد تنازلي.</p>
-<span class="content-count">10 أصوات</span>
-</a>
-<a href="tasbih.html" class="section-card">
-<span class="new-badge">جديد</span>
-<span class="section-icon">📿</span>
-<h3>المسبحة الرقمية</h3>
-<p>عدّاد ذكي للتسبيح مع 10 أذكار جاهزة، وحفظ تلقائي، وإحصائيات يومية.</p>
-<span class="content-count">10 أذكار</span>
-</a>
-<a href="calendar.html" class="section-card">
-<span class="new-badge">جديد</span>
-<span class="section-icon">📅</span>
-<h3>التقويم الهجري</h3>
-<p>تقويم هجري وميلادي، مع المناسبات الإسلامية والصيام المستحب مع تنبيه.</p>
-<span class="content-count">12 مناسبة</span>
-</a>
-<a href="adhkar.html" class="section-card">
-<span class="section-icon">🤲</span>
-<h3>الأذكار والأدعية</h3>
-<p>أذكار الصباح والمساء، النوم، الاستيقاظ، وأذكار بعد الصلاة — بعدّاد ذكي.</p>
-<span class="content-count">6 أقسام</span>
-</a>
-</section>
-
-<h2 class="section-group-title">📖 القرآن والتفسير</h2>
-<section class="sections-grid">
-<a href="quran.html" class="section-card">
-<span class="section-icon">📖</span>
-<h3>القرآن الكريم</h3>
-<p>114 سورة كاملة مع القراءة الصوتية لثمانية من كبار القراء، والتنقل السريع، وتتبع الآيات.</p>
-<span class="content-count">114 سورة</span>
-</a>
-<a href="tafsir.html" class="section-card">
-<span class="section-icon">📚</span>
-<h3>التفسير</h3>
-<p>تفسير القرآن الكريم: التفسير الميسّر (مجمع الملك فهد)، وتنوير المقباس (ابن عباس).</p>
-<span class="content-count">تفسيران</span>
-</a>
-<a href="hadith.html" class="section-card">
-<span class="section-icon">🕌</span>
-<h3>السنة النبوية</h3>
-<p>أحاديث صحيحة من الصحيحين والسنن الأربعة، مصنّفة حسب الموضوع مع التخريج.</p>
-<span class="content-count">34 حديث</span>
-</a>
-</section>
-
-<h2 class="section-group-title">🌙 السيرة والقصص</h2>
-<section class="sections-grid">
-<a href="seerah.html" class="section-card">
-<span class="section-icon">🌙</span>
-<h3>السيرة النبوية</h3>
-<p>حياة النبي محمد ﷺ كاملة: من المولد إلى الوفاة، بخط زمني تفاعلي.</p>
-<span class="content-count">25 محطة</span>
-</a>
-<a href="prophets.html" class="section-card">
-<span class="section-icon">🕊️</span>
-<h3>قصص الأنبياء</h3>
-<p>قصص الأنبياء والرسل من آدم إلى محمد ﷺ — 25 نبيًّا بمعلومات موثقة.</p>
-<span class="content-count">25 نبي</span>
-</a>
-<a href="quranic-stories.html" class="section-card">
-<span class="section-icon">📜</span>
-<h3>القصص القرآنية</h3>
-<p>قصص ذكرها القرآن: أصحاب الكهف، أصحاب الفيل، قارون، ذو القرنين.</p>
-<span class="content-count">11 قصة</span>
-</a>
-<a href="ghazawat.html" class="section-card">
-<span class="section-icon">⚔️</span>
-<h3>الغزوات والفتوحات</h3>
-<p>غزوات النبي ﷺ الكبرى، والفتوحات الإسلامية العظيمة، والمعارك الحاسمة.</p>
-<span class="content-count">15 معركة</span>
-</a>
-</section>
-
-<h2 class="section-group-title">⭐ الصحابة والتراجم</h2>
-<section class="sections-grid">
-<a href="sahaba.html" class="section-card">
-<span class="section-icon">⭐</span>
-<h3>الصحابة الكرام</h3>
-<p>الخلفاء الراشدون، والعشرة المبشّرون بالجنة، والسابقون الأولون، ورواة الحديث.</p>
-<span class="content-count">23 صحابي</span>
-</a>
-<a href="shuhada.html" class="section-card">
-<span class="section-icon">🎖️</span>
-<h3>الشهداء</h3>
-<p>فضل الشهادة، وسير شهداء الإسلام من الصحابة والتابعين والقادة — 13 شهيدًا.</p>
-<span class="content-count">13 شهيد</span>
-</a>
-</section>
-
-<h2 class="section-group-title">⚖️ الفقه والزهد</h2>
-<section class="sections-grid">
-<a href="fiqh.html" class="section-card">
-<span class="section-icon">⚖️</span>
-<h3>الفقه الإسلامي</h3>
-<p>أحكام الطهارة والصلاة والصيام والزكاة والحج والجنائز — وفق ما أجمع عليه أهل العلم.</p>
-<span class="content-count">6 أبواب</span>
-</a>
-<a href="zuhd.html" class="section-card">
-<span class="section-icon">🕋</span>
-<h3>الزهد والرقائق</h3>
-<p>أبواب الزهد، التوبة، الخوف والرجاء، ومحاسبة النفس — بآيات وأحاديث صحيحة.</p>
-<span class="content-count">10 أبواب</span>
-</a>
-<a href="fadail.html" class="section-card">
-<span class="section-icon">✨</span>
-<h3>فضائل الأعمال</h3>
-<p>فضائل الصلاة، الصيام، الحج، الزكاة، قراءة القرآن، قيام الليل، والصدقة.</p>
-<span class="content-count">10 أبواب</span>
-</a>
-<a href="sihr.html" class="section-card">
-<span class="section-icon">🛡️</span>
-<h3>السحر والشعوذة</h3>
-<p>تحذير شرعي من السحر والشعوذة والكهانة، مع الأدلة الشرعية وطرق الوقاية.</p>
-<span class="content-count">8 أبواب</span>
-</a>
-</section>
-
-<h2 class="section-group-title">📖 المسائل الشرعية والمكتبة</h2>
-<section class="sections-grid">
-<a href="masael.html" class="section-card">
-<span class="new-badge">جديد</span>
-<span class="section-icon">📖</span>
-<h3>المسائل الشرعية</h3>
-<p>أحكام وفتاوى موثّقة من القرآن والسنة الصحيحة، بلا مذاهب ولا طرق غريبة.</p>
-<span class="content-count">253 مسألة</span>
-</a>
-<a href="library.html" class="section-card">
-<span class="new-badge">جديد</span>
-<span class="section-icon">📚</span>
-<h3>المكتبة</h3>
-<p>مختارات من أمهات كتب التراث في العقيدة والفقه والسلوك والقضاء والقدر.</p>
-<span class="content-count">37 كتابًا</span>
-</a>
-<a href="search.html" class="section-card">
-<span class="section-icon">🔍</span>
-<h3>البحث الشامل</h3>
-<p>ابحث في نص القرآن الكريم، والأذكار، وأسماء السور والأنبياء والصحابة.</p>
-<span class="content-count">بحث فوري</span>
-</a>
-</section>
-
-<h2 class="section-group-title">💎 لماذا ملاك المعرفة؟</h2>
-<section class="sections-grid">
-<div class="why-us-card">
-<span class="icon">🛡️</span>
-<h3>مصادر معتمدة</h3>
-<p>الاعتماد على: البخاري، مسلم، السنن الأربعة، وتفاسير ابن كثير والطبري والسعدي.</p>
-</div>
-<div class="why-us-card">
-<span class="icon">🚫</span>
-<h3>لا إعلانات مخالفة</h3>
-<p>المنصة خالية تماماً من الإعلانات — لا شيء يخدش الحياء أو يخالف التعاليم.</p>
-</div>
-<div class="why-us-card">
-<span class="icon">📱</span>
-<h3>يعمل بدون إنترنت</h3>
-<p>التطبيق يحفظ الصفحات للعمل بدون اتصال، مع تحديث تلقائي عند توفر الإنترنت.</p>
-</div>
-<div class="why-us-card">
-<span class="icon">🕌</span>
-<h3>منهج أهل السنة</h3>
-<p>المحتوى يتبع منهج أهل السنة والجماعة، ويبتعد عن الخلافات المذهبية.</p>
-</div>
-<div class="why-us-card">
-<span class="icon">🎧</span>
-<h3>محتوى صوتي</h3>
-<p>القرآن الكريم بصوت 8 من كبار القراء، والأذان والتكبير بأصوات متعددة.</p>
-</div>
-<div class="why-us-card">
-<span class="icon">🎁</span>
-<h3>مجاني للأبد</h3>
-<p>المنصة مجانية بالكامل، بدون اشتراكات أو إعلانات مزعجة — صدقة جارية.</p>
-</div>
-</section>
-
-<section style="text-align:center;padding:40px 20px;margin-top:40px;background:linear-gradient(135deg,rgba(212,175,55,0.15) 0%,rgba(212,175,55,0.03) 100%);border:1px solid rgba(212,175,55,0.3);border-radius:20px">
-<div style="font-family:'Amiri',serif;font-size:24px;color:var(--gold);line-height:2;margin-bottom:15px">﴿ رَبَّنَا تَقَبَّلْ مِنَّا ۖ إِنَّكَ أَنتَ السَّمِيعُ الْعَلِيمُ ﴾</div>
-<p style="color:var(--cream);opacity:0.85;font-size:15px">نسأل الله أن يجعل هذا العمل خالصًا لوجهه الكريم، وأن ينفع به أهل الشام والمسلمين.</p>
-</section>
-
-<section class="thanks-section">
-<h2 class="thanks-title">🤲 شكر وتقدير</h2>
-<p class="thanks-intro">
-هذا المشروع لم يكن ليُنجز لولا توفيق الله أولاً، ثم فضل كل من ساهم فيه بدعوة، أو رأي، أو جهد، أو معلومة.
-نسأل الله أن يكتب الأجر لكل من كان له يد في هذا العمل.
-</p>
-
-<div class="thanks-grid">
-<div class="thanks-card">
-<span class="thanks-icon">🤲</span>
-<div class="thanks-name">لله أولاً وآخراً</div>
-<div class="thanks-role">له الفضل والمنّة في إتمام هذا العمل</div>
-</div>
-<div class="thanks-card">
-<span class="thanks-icon">👨‍💻</span>
-<div class="thanks-name">Emad halaweh</div>
-<div class="thanks-role">المطوّر الرئيسي — بناء المنصة</div>
-</div>
-<div class="thanks-card">
-<span class="thanks-icon">📝</span>
-<div class="thanks-name">Malak Kamal Abdel Azim</div>
-<div class="thanks-role">مشارك في التطوير والمراجعة</div>
-</div>
-<div class="thanks-card">
-<span class="thanks-icon">📚</span>
-<div class="thanks-name">مصادر المحتوى</div>
-<div class="thanks-role">للقرآن والصحيحين والسنن وكتب التفسير</div>
-</div>
-<div class="thanks-card">
-<span class="thanks-icon">🎙️</span>
-<div class="thanks-name">القرّاء والمؤذنون</div>
-<div class="thanks-role">لأصحاب الأصوات المتاحة للتسجيل</div>
-</div>
-<div class="thanks-card">
-<span class="thanks-icon">📖</span>
-<div class="thanks-name">أهل العلم</div>
-<div class="thanks-role">لكل عالم وطالب علم له أثر في المحتوى</div>
-</div>
-<div class="thanks-card">
-<span class="thanks-icon">🕌</span>
-<div class="thanks-name">أهل الشام والمسلمون</div>
-<div class="thanks-role">لكل من دعا وشجّع وانتظر هذا العمل</div>
-</div>
-<div class="thanks-card">
-<span class="thanks-icon">👥</span>
-<div class="thanks-name">المستخدمون الأوائل</div>
-<div class="thanks-role">لكل من جرّب التطبيق وأرسل ملاحظاته</div>
-</div>
-<div class="thanks-card">
-<span class="thanks-icon">🧪</span>
-<div class="thanks-name">الجهات التقنية</div>
-<div class="thanks-role">GitHub، Alquran Cloud API، EveryAyah، AlAdhan</div>
-</div>
-</div>
-
-<div class="sheikh-thanks">
-<span class="sheikh-icon">🕌</span>
-<div class="sheikh-title">شكر خاص لفضيلة الشيخ</div>
-<div class="sheikh-name">فضيلة الشيخ الأستاذ / كامل أحمد أبو عماد</div>
-<p class="sheikh-msg">
-نشكر لفضيلته إثراءه الصفحة بمعلومات وكتب مفيدة، وسعة صدره، وحسن توجيهه،
-فجزاه الله خيرًا، ونفع بعلمه، وجعل ذلك في ميزان حسناته.
-</p>
-<div class="sheikh-dua">﴿ رَبَّنَا اغْفِرْ لَنَا وَلِإِخْوَانِنَا الَّذِينَ سَبَقُونَا بِالْإِيمَانِ ﴾</div>
-</div>
-
-<div class="thanks-footer">
-<strong>📝 رسالة للجميع:</strong><br>
-هذا العمل صدقة جارية. إن رأيت فيه خيراً فادعُ لصاحبه ولمن ساعد فيه. وإن رأيت فيه خطأً فصحّحه، ولا تحرمنا من دعوة صادقة.
-<div class="thanks-dua">
-﴿ رَبَّنَا اغْفِرْ لَنَا وَلِإِخْوَانِنَا الَّذِينَ سَبَقُونَا بِالْإِيمَانِ وَلَا تَجْعَلْ فِي قُلُوبِنَا غِلًّا لِّلَّذِينَ آمَنُوا رَبَّنَا إِنَّكَ رَءُوفٌ رَّحِيمٌ ﴾
-</div>
-</div>
-</section>
-
-<section class="dev-signature">
-<div class="dev-label">تطوير وبناء</div>
-<div class="dev-name">Emad halaweh</div>
-<div class="dev-role">مطوّر سوري — منصة ملاك المعرفة</div>
-<div class="dev-contact">📧 <a href="mailto:emadhlaweh@gmail.com">emadhlaweh@gmail.com</a></div>
-
-<div class="dev-reviewer">
-<div class="dev-label">مراجعة ومشاركة</div>
-<div class="dev-name">Malak Kamal Abdel Azim</div>
-<div class="dev-role">مشارك في التطوير والمراجعة العلمية</div>
-</div>
-</section>
-
-</main>
-
-<footer class="site-footer">
-<p class="footer-ayah">﴿ وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ عَلَيْهِ تَوَكَّلْتُ وَإِلَيْهِ أُنِيبُ ﴾</p>
-<p>ملاك المعرفة — منصة دعوية غير ربحية</p>
-<p>تطوير: <strong>Emad halaweh</strong> — مراجعة ومشاركة: <strong>Malak Kamal Abdel Azim</strong></p>
-<p>© 2026 — جميع الحقوق محفوظة. نسألكم الدعاء.</p>
-</footer>
-
-<div class="offline-badge" id="offline-badge">📡 أنت غير متصل بالإنترنت</div>
-
-<script>
-function updateTopBar() {
-    const now = new Date();
-    const hour = now.getHours();
-    let greeting = '';
-    if (hour >= 4 && hour < 12) greeting = '☀️ صباح الخير — لا تنسَ أذكار الصباح';
-    else if (hour >= 12 && hour < 17) greeting = '🌤️ طاب نهارك — حان وقت أذكار المساء';
-    else if (hour >= 17 && hour < 21) greeting = '🌆 مساء الخير — واظب على أذكار المساء';
-    else greeting = '🌙 ليلة طيبة — لا تنسَ أذكار النوم';
-    document.getElementById('greeting').textContent = greeting;
-
-    const greg = now.toLocaleDateString('ar-EG-u-nu-latn', {
-        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-    });
-
-    let hijri = '';
-    try {
-        hijri = now.toLocaleDateString('ar-SA-u-ca-islamic-nu-latn', {
-            day: 'numeric', month: 'long', year: 'numeric'
-        });
-        hijri = hijri.replace('AH', 'هـ').replace('after Hijrah', 'هـ');
-    } catch (e) { hijri = ''; }
-
-    document.getElementById('hijri-date').innerHTML = hijri
-        ? `<strong>${hijri}</strong> — ${greg}`
-        : greg;
-}
-
-const DAILY_AYAHS = [
-    { text: '﴿إِنَّ مَعَ الْعُسْرِ يُسْرًا﴾', ref: 'الشرح: 6' },
-    { text: '﴿وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ﴾', ref: 'الطلاق: 3' },
-    { text: '﴿فَاذْكُرُونِي أَذْكُرْكُمْ وَاشْكُرُوا لِي وَلَا تَكْفُرُونِ﴾', ref: 'البقرة: 152' },
-    { text: '﴿أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ﴾', ref: 'الرعد: 28' },
-    { text: '﴿وَاصْبِرْ فَإِنَّ اللَّهَ لَا يُضِيعُ أَجْرَ الْمُحْسِنِينَ﴾', ref: 'هود: 115' },
-    { text: '﴿إِنَّ اللَّهَ مَعَ الصَّابِرِينَ﴾', ref: 'البقرة: 153' },
-    { text: '﴿وَقُل رَّبِّ زِدْنِي عِلْمًا﴾', ref: 'طه: 114' },
-    { text: '﴿إِنَّ اللَّهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ﴾', ref: 'الأحزاب: 56' },
-    { text: '﴿وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ عَلَيْهِ تَوَكَّلْتُ﴾', ref: 'هود: 88' },
-    { text: '﴿وَاللَّهُ يُحِبُّ الصَّابِرِينَ﴾', ref: 'آل عمران: 146' },
-    { text: '﴿إِنَّ اللَّهَ يُحِبُّ الْمُتَوَكِّلِينَ﴾', ref: 'آل عمران: 159' },
-    { text: '﴿فَإِنَّ مَعَ الْعُسْرِ يُسْرًا﴾', ref: 'الشرح: 5' },
-    { text: '﴿يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ﴾', ref: 'الحشر: 18' },
-    { text: '﴿إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا﴾', ref: 'النساء: 103' },
-    { text: '﴿وَتَوَكَّلْ عَلَى اللَّهِ ۚ وَكَفَىٰ بِاللَّهِ وَكِيلًا﴾', ref: 'الأحزاب: 3' }
-];
-
-const DAILY_HADITHS = [
-    { text: 'قال ﷺ: «إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى».', ref: 'البخاري ومسلم' },
-    { text: 'قال ﷺ: «الدين النصيحة».', ref: 'مسلم' },
-    { text: 'قال ﷺ: «من كان يؤمن بالله واليوم الآخر فليقل خيرًا أو ليصمت».', ref: 'البخاري ومسلم' },
-    { text: 'قال ﷺ: «لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه».', ref: 'البخاري ومسلم' },
-    { text: 'قال ﷺ: «اتق الله حيثما كنت، وأتبع السيئة الحسنة تمحها، وخالق الناس بخلق حسن».', ref: 'الترمذي' },
-    { text: 'قال ﷺ: «المسلم من سلم المسلمون من لسانه ويده».', ref: 'البخاري' },
-    { text: 'قال ﷺ: «خيركم من تعلم القرآن وعلمه».', ref: 'البخاري' },
-    { text: 'قال ﷺ: «الطُّهور شطر الإيمان، والحمد لله تملأ الميزان».', ref: 'مسلم' },
-    { text: 'قال ﷺ: «من لا يَرحم لا يُرحم».', ref: 'البخاري ومسلم' },
-    { text: 'قال ﷺ: «من سلك طريقًا يطلب فيه علمًا، سلك الله به طريقًا من طرق الجنة».', ref: 'مسلم' },
-    { text: 'قال ﷺ: «ما نقصت صدقة من مال، وما زاد الله عبدًا بعفو إلا عِزًّا».', ref: 'مسلم' },
-    { text: 'قال ﷺ: «أكمل المؤمنين إيمانًا أحسنهم خُلقًا».', ref: 'الترمذي' },
-    { text: 'قال ﷺ: «من غشنا فليس منا».', ref: 'مسلم' },
-    { text: 'قال ﷺ: «الكيّس من دان نفسه وعمل لما بعد الموت».', ref: 'الترمذي' },
-    { text: 'قال ﷺ: «إذا مات الإنسان انقطع عمله إلا من ثلاثة: صدقة جارية، أو علم يُنتفع به، أو ولد صالح يدعو له».', ref: 'مسلم' }
-];
-
-function updateDailyContent() {
-    const now = new Date();
-    const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
-    const ayah = DAILY_AYAHS[dayOfYear % DAILY_AYAHS.length];
-    const hadith = DAILY_HADITHS[dayOfYear % DAILY_HADITHS.length];
-    document.getElementById('daily-ayah').textContent = ayah.text;
-    document.getElementById('daily-ayah-ref').textContent = '— سورة ' + ayah.ref;
-    document.getElementById('daily-hadith').textContent = hadith.text;
-    document.getElementById('daily-hadith-ref').textContent = '— رواه ' + hadith.ref;
-}
-
-function quickSearch() {
-    const q = document.getElementById('quick-search-input').value.trim();
-    if (!q) return;
-    window.location.href = 'search.html?q=' + encodeURIComponent(q);
-}
-
-document.getElementById('quick-search-input').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') quickSearch();
-});
-
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js').catch(() => {});
-    });
-}
-
-const offlineBadge = document.getElementById('offline-badge');
-window.addEventListener('online', () => offlineBadge.classList.remove('show'));
-window.addEventListener('offline', () => offlineBadge.classList.add('show'));
-if (!navigator.onLine) offlineBadge.classList.add('show');
-
-updateTopBar();
-updateDailyContent();
-setInterval(updateTopBar, 60000);
-</script>
-
-</body>
-</html>
+<section class="today
