@@ -36,8 +36,8 @@
 <div id="feed" class="feed-container" style="display: none;"></div>
 
 <script>
-    // رابط جوجل الجديد الذي أنشأته
-    const FEED_API_URL = 'https://script.google.com/macros/s/AKfycbzzMUyj2NiPBv97S3ovYMJilvBCn9dTvKk1vruZ06cmgrMbD1KVqUplIutsbAYp2Hwe/exec';
+    // نقرأ الملف من نفس المستودع (بدون أي اتصال خارجي)
+    const FEED_API_URL = 'videos.json';
 
     function showError(msg) {
         const loading = document.getElementById('loading');
@@ -56,7 +56,7 @@
             const response = await fetch(FEED_API_URL);
             
             if (!response.ok) {
-                throw new Error(`فشل الاتصال بالسيرفر. رمز الخطأ: ${response.status}`);
+                throw new Error(`فشل قراءة ملف الفيديوهات. رمز الخطأ: ${response.status}`);
             }
 
             const videos = await response.json();
