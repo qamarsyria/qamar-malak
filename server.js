@@ -1,17 +1,17 @@
 /* ============================================================
-   Render Web Service — وسيط Gemini (v5)
+   Render Web Service — وسيط Gemini (v5.1)
    ------------------------------------------------------------
    1. دعم مفاتيح متعددة واكتشاف تلقائي للموديلات.
-   2. إضافة مسار /api/feed لجلب الفيديوهات من Supabase
-      لتجاوز حظر الشبكة في سوريا (يعمل كوسيط خلفي).
+   2. مسار /api/feed يستخدم مكتبة https الأصلية لضمان
+      العمل على Wasmer وتجاوز حظر الشبكة في سوريا.
    ============================================================ */
 
 const express = require('express');
+const https = require('https'); // استخدام مكتبة https الأصلية بدلاً من fetch
 const app = express();
 
 app.use(express.json({ limit: '100kb' }));
 
-// إعدادات CORS للسماح لموقعك بالاتصال
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
@@ -21,32 +21,46 @@ app.use((req, res, next) => {
 });
 
 // ═══════════════════════════════════════════════════════════════════
-// مسار جديد: جلب الفيديوهات من Supabase (لحل مشكلة الحظر في سوريا)
+// مسار جلب الفيديوهات (باستخدام https)
 // ═══════════════════════════════════════════════════════════════════
-app.get('/api/feed', async (req, res) => {
-    const SUPABASE_URL = 'https://mhmybkdghxamtviojxjd.supabase.co';
+app.get('/api/feed', (req, res) => {
+    const SUPABASE_HOST = 'mhmybkdghxamtviojxjd.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_dSCH3FinzsLnhvPfWiDqbg_lrqT_erA';
 
-    try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/videos?select=*&order=created_at.desc`, {
-            headers: {
-                'apikey': SUPABASE_KEY,
-                'Authorization': `Bearer ${SUPABASE_KEY}`,
-                'Accept': 'application/json'
+    const options = {
+        hostname: SUPABASE_HOST,
+        port: 443,
+        path: '/rest/v1/videos?select=*&order=created_at.desc',
+        method: 'GET',
+        headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'Accept': 'application/json'
+        }
+    };
+
+    const supabaseReq = https.request(options, (supabaseRes) => {
+        let data = '';
+        supabaseRes.on('data', (chunk) => { data += chunk; });
+        supabaseRes.on('end', () => {
+            if (supabaseRes.statusCode >= 200 && supabaseRes.statusCode < 300) {
+                try {
+                    res.status(200).json(JSON.parse(data));
+                } catch (e) {
+                    res.status(500).json({ error: 'Invalid JSON from Supabase', details: data.substring(0, 200) });
+                }
+            } else {
+                res.status(supabaseRes.statusCode).json({ error: 'Supabase error', details: data.substring(0, 200) });
             }
         });
+    });
 
-        if (!response.ok) {
-            throw new Error(`Supabase error: ${response.status}`);
-        }
+    supabaseReq.on('error', (e) => {
+        console.error('[feed] HTTPS Error:', e);
+        res.status(500).json({ error: 'Failed to fetch videos', details: `${e.message} | Code: ${e.code}` });
+    });
 
-        const data = await response.json();
-        res.status(200).json(data);
-
-    } catch (err) {
-        console.error('[feed] Error fetching from Supabase:', err.message);
-        res.status(500).json({ error: 'Failed to fetch videos', details: err.message });
-    }
+    supabaseReq.end();
 });
 
 // ═══════════════════════════════════════════════════════════════════
@@ -231,7 +245,7 @@ async function runAttempts(models, keys, prompt, maxAttempts = 15) {
     return { type: 'failed', lastError, attempts };
 }
 
-app.get('/', (req, res) => res.json({ status: 'ok', service: 'qamar-malak-api', version: '5' }));
+app.get('/', (req, res) => res.json({ status: 'ok', service: 'qamar-malak-api', version: '5.1' }));
 app.get('/health', (req, res) => {
     const { usable, exhausted, invalid } = getKeysByState();
     res.json({ status: 'ok', uptime_sec: Math.round(process.uptime()), keys: { total: usable.length + exhausted.length + invalid.length, usable: usable.length, exhausted: exhausted.length, invalid: invalid.length }, models: { count: modelCache.models.length, source: modelCache.discoveredFrom, cached_at: modelCache.fetchedAt ? new Date(modelCache.fetchedAt).toISOString() : null } });
@@ -261,7 +275,7 @@ app.post('/api/ask', async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, async () => {
-    console.log(`Server v5 running on port ${PORT}`);
+    console.log(`Server v5.1 running on port ${PORT}`);
     const { usable } = getKeysByState();
     console.log(`[keys] usable=${usable.length}`);
     try {
