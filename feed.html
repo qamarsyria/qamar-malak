@@ -21,27 +21,7 @@
     .loading-screen { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #0d4d3c; color: #D4AF37; }
     .spinner { width: 50px; height: 50px; border: 5px solid rgba(212, 175, 55, 0.2); border-top-color: #D4AF37; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    
-    /* زر التشغيل الكبير في المنتصف */
-    .play-overlay {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 80px;
-        height: 80px;
-        background: rgba(212, 175, 55, 0.85);
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 35px;
-        color: #000;
-        cursor: pointer;
-        z-index: 50;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        transition: opacity 0.3s;
-    }
+    .play-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80px; height: 80px; background: rgba(212, 175, 55, 0.85); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 35px; color: #000; cursor: pointer; z-index: 50; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: opacity 0.3s; }
     .play-overlay:hover { transform: translate(-50%, -50%) scale(1.1); }
 </style>
 </head>
@@ -124,11 +104,9 @@
                     if (!video) return;
 
                     if (entry.isIntersecting) {
-                        // إذا كان الفيديو قد شُغل سابقاً، استمر في التشغيل بدون صوت
                         video.play().catch(e => console.log('Autoplay prevented'));
                     } else {
                         video.pause();
-                        // عند الخروج من الفيديو، قم بكتم الصوت وإعادة زر التشغيل (ليبدأ الفيديو التالي صامتاً)
                         video.muted = true;
                         if (overlay) overlay.style.display = 'flex';
                     }
@@ -142,13 +120,12 @@
         }
     }
 
-    // دالة تشغيل الفيديو بالصوت عند الضغط على زر التشغيل
     function playVideo(btn) {
         const video = btn.parentElement.querySelector('video');
         if (video) {
-            video.muted = false; // إلغاء الكتم
-            video.play();        // تشغيل الفيديو
-            btn.style.display = 'none'; // إخفاء زر التشغيل
+            video.muted = false;
+            video.play();
+            btn.style.display = 'none';
         }
     }
 
