@@ -39,8 +39,8 @@
     const SUPABASE_URL = 'https://mhmybkdghxamtviojxjd.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_dSCH3FinzsLnhvPfWiDqbg_lrqT_erA';
 
-    // وسيط يدعم الترويسات
-    const CORS_PROXY = 'https://api.codetabs.com/v1/proxy?quest=';
+    // استخدام وسيط CORS بديل
+    const PROXY_URL = 'https://cors.lol/?';
 
     function showError(msg) {
         const loading = document.getElementById('loading');
@@ -56,14 +56,15 @@
         const loadingScreen = document.getElementById('loading');
 
         try {
-            const directUrl = `${SUPABASE_URL}/rest/v1/videos?select=*&order=created_at.desc`;
-            const proxiedUrl = CORS_PROXY + encodeURIComponent(directUrl);
+            const apiUrl = `${SUPABASE_URL}/rest/v1/videos?select=*&order=created_at.desc`;
+            const targetUrl = PROXY_URL + encodeURIComponent(apiUrl);
 
-            // تمرير المفتاح في الترويسات (الطريقة الصحيحة)
-            const response = await fetch(proxiedUrl, {
+            const response = await fetch(targetUrl, {
+                method: 'GET',
                 headers: {
                     'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Accept': 'application/json'
                 }
             });
 
