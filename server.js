@@ -1,12 +1,9 @@
 /* ============================================================
-   Render Web Service — وسيط Gemini (v4)
+   Render Web Service — وسيط Gemini (v5)
    ------------------------------------------------------------
-   1. دعم مفاتيح متعددة عبر GEMINI_API_KEYS (مفصولة بفاصلة)
-   2. اكتشاف تلقائي للموديلات + كاش 6 ساعات
-   3. تدوير المفاتيح عند 429/403
-   4. Fallback ثابت عند فشل الاكتشاف
-   5. /health و /api/models للتشخيص
-   6. التوافق الخلفي: GEMINI_API_KEY (مفرد) مدعوم
+   1. دعم مفاتيح متعددة واكتشاف تلقائي للموديلات.
+   2. إضافة مسار /api/feed لجلب الفيديوهات من Supabase
+      لتجاوز حظر الشبكة في سوريا (يعمل كوسيط خلفي).
    ============================================================ */
 
 const express = require('express');
@@ -14,14 +11,47 @@ const app = express();
 
 app.use(express.json({ limit: '100kb' }));
 
+// إعدادات CORS للسماح لموقعك بالاتصال
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS, GET');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     if (req.method === 'OPTIONS') return res.status(200).end();
     next();
 });
 
+// ═══════════════════════════════════════════════════════════════════
+// مسار جديد: جلب الفيديوهات من Supabase (لحل مشكلة الحظر في سوريا)
+// ═══════════════════════════════════════════════════════════════════
+app.get('/api/feed', async (req, res) => {
+    const SUPABASE_URL = 'https://mhmybkdghxamtviojxjd.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_dSCH3FinzsLnhvPfWiDqbg_lrqT_erA';
+
+    try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/videos?select=*&order=created_at.desc`, {
+            headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`,
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Supabase error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        res.status(200).json(data);
+
+    } catch (err) {
+        console.error('[feed] Error fetching from Supabase:', err.message);
+        res.status(500).json({ error: 'Failed to fetch videos', details: err.message });
+    }
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// النظام البرمجي (لم يُلمس)
+// ═══════════════════════════════════════════════════════════════════
 const SYSTEM_PROMPT = `أنت مساعد علمي متخصص في الفقه الإسلامي على منهج أهل السنة والجماعة.
 
 قواعد صارمة:
@@ -45,15 +75,14 @@ const SYSTEM_PROMPT = `أنت مساعد علمي متخصص في الفقه ا�
 }`;
 
 function loadKeys() {
-    const multi  = (process.env.GEMINI_API_KEYS || '').trim();
-    const single = (process.env.GEMINI_API_KEY  || '').trim();
+    const multi = (process.env.GEMINI_API_KEYS || '').trim();
+    const single = (process.env.GEMINI_API_KEY || '').trim();
     const raw = multi || single;
     if (!raw) return [];
     return raw.split(',').map(k => k.trim()).filter(Boolean);
 }
 
 const keyState = new Map();
-
 function markKeyExhausted(key, retryAfterMs = 3600_000) {
     keyState.set(key, { ...(keyState.get(key) || {}), exhaustedUntil: Date.now() + retryAfterMs });
 }
@@ -75,20 +104,8 @@ function getKeysByState() {
 
 const MODEL_CACHE_TTL = 6 * 3600 * 1000;
 let modelCache = { models: [], fetchedAt: 0, discoveredFrom: null };
-
-const PREFERRED_MODELS = [
-    'gemini-flash-latest',
-    'gemini-3.8-flash',
-    'gemini-3.5-flash',
-    'gemini-flash-lite-latest'
-];
-
-const FALLBACK_MODELS = [
-    ...PREFERRED_MODELS,
-    'gemini-2.5-flash',
-    'gemini-2.0-flash',
-    'gemini-1.5-flash-latest'
-];
+const PREFERRED_MODELS = ['gemini-flash-latest', 'gemini-3.8-flash', 'gemini-3.5-flash', 'gemini-flash-lite-latest'];
+const FALLBACK_MODELS = [...PREFERRED_MODELS, 'gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash-latest'];
 
 function scoreModel(name) {
     if (/flash-latest/i.test(name)) return 1000;
@@ -108,10 +125,7 @@ function scoreModel(name) {
 async function fetchModelsFromKey(apiKey) {
     const url = `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`;
     const resp = await fetch(url);
-    if (!resp.ok) {
-        const t = await resp.text();
-        throw new Error(`discovery ${resp.status}: ${t.substring(0, 200)}`);
-    }
+    if (!resp.ok) throw new Error(`discovery ${resp.status}`);
     const data = await resp.json();
     const all = Array.isArray(data.models) ? data.models : [];
     const usable = all.filter(m => {
@@ -121,61 +135,35 @@ async function fetchModelsFromKey(apiKey) {
         if (/embedding|aqa|vision/i.test(name)) return false;
         return true;
     });
-    const scored = usable
-        .map(m => {
-            const name = (m.name || '').replace(/^models\//, '');
-            return { name, score: scoreModel(name) };
-        })
+    const scored = usable.map(m => ({ name: (m.name || '').replace(/^models\//, ''), score: scoreModel((m.name || '').replace(/^models\//, '')) }))
         .filter(x => x.score > -100 && x.name)
         .sort((a, b) => b.score - a.score);
     const seen = new Set();
-    const unique = [];
-    for (const x of scored) {
-        if (seen.has(x.name)) continue;
-        seen.add(x.name);
-        unique.push(x.name);
-    }
-    return unique;
+    return scored.map(x => x.name).filter(name => !seen.has(name) && seen.add(name));
 }
 
 function mergeWithPreferred(discovered) {
     if (!discovered.length) return [...FALLBACK_MODELS];
     const set = new Set(discovered);
     const result = [];
-    for (const m of PREFERRED_MODELS) {
-        if (set.has(m)) { result.push(m); set.delete(m); }
-    }
-    for (const m of discovered) {
-        if (set.has(m)) { result.push(m); set.delete(m); }
-    }
+    for (const m of PREFERRED_MODELS) if (set.has(m)) { result.push(m); set.delete(m); }
+    for (const m of discovered) if (set.has(m)) { result.push(m); set.delete(m); }
     return result;
 }
 
-function invalidateModelCache() {
-    modelCache = { models: [], fetchedAt: 0, discoveredFrom: null };
-}
-
 async function getModels(forceRefresh = false) {
-    if (!forceRefresh && modelCache.models.length &&
-        (Date.now() - modelCache.fetchedAt) < MODEL_CACHE_TTL) {
-        return modelCache.models;
-    }
+    if (!forceRefresh && modelCache.models.length && (Date.now() - modelCache.fetchedAt) < MODEL_CACHE_TTL) return modelCache.models;
     const { usable, exhausted } = getKeysByState();
-    const discoveryKeys = [...usable, ...exhausted];
-    for (const key of discoveryKeys) {
+    for (const key of [...usable, ...exhausted]) {
         try {
             const discovered = await fetchModelsFromKey(key);
             if (discovered.length) {
                 const merged = mergeWithPreferred(discovered);
                 modelCache = { models: merged, fetchedAt: Date.now(), discoveredFrom: 'api' };
-                console.log(`[discovery] ${merged.length} model(s) — top: ${merged.slice(0, 3).join(', ')}`);
                 return merged;
             }
-        } catch (err) {
-            console.warn(`[discovery] key failed: ${err.message}`);
-        }
+        } catch (err) { console.warn(`[discovery] key failed: ${err.message}`); }
     }
-    console.warn('[discovery] all keys failed — using fallback');
     modelCache = { models: [...FALLBACK_MODELS], fetchedAt: Date.now(), discoveredFrom: 'fallback' };
     return modelCache.models;
 }
@@ -188,17 +176,12 @@ async function tryOne(model, apiKey, prompt) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 contents: [{ role: 'user', parts: [{ text: prompt }] }],
-                generationConfig: {
-                    temperature: 0.1,
-                    topP: 0.8,
-                    maxOutputTokens: 800,
-                    responseMimeType: 'application/json'
-                },
+                generationConfig: { temperature: 0.1, topP: 0.8, maxOutputTokens: 800, responseMimeType: 'application/json' },
                 safetySettings: [
-                    { category: 'HARM_CATEGORY_HARASSMENT',         threshold: 'BLOCK_NONE' },
-                    { category: 'HARM_CATEGORY_HATE_SPEECH',        threshold: 'BLOCK_NONE' },
-                    { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',  threshold: 'BLOCK_NONE' },
-                    { category: 'HARM_CATEGORY_DANGEROUS_CONTENT',  threshold: 'BLOCK_NONE' }
+                    { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+                    { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+                    { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+                    { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' }
                 ]
             })
         });
@@ -209,17 +192,13 @@ async function tryOne(model, apiKey, prompt) {
             if (/API_KEY_INVALID|API key not valid/i.test(t)) return { type: 'key_invalid' };
             return { type: 'error', status: response.status, details: t.substring(0, 200) };
         }
-        if (!response.ok) {
-            const t = await response.text();
-            return { type: 'error', status: response.status, details: t.substring(0, 200) };
-        }
+        if (!response.ok) return { type: 'error', status: response.status, details: (await response.text()).substring(0, 200) };
         const data = await response.json();
         const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
         if (!text) return { type: 'error', status: 200, details: 'empty response' };
         const cleaned = text.replace(/^```json\s*/, '').replace(/\s*```$/, '').trim();
         let parsed;
-        try { parsed = JSON.parse(cleaned); }
-        catch (e) { return { type: 'error', status: 200, details: 'invalid JSON' }; }
+        try { parsed = JSON.parse(cleaned); } catch (e) { return { type: 'error', status: 200, details: 'invalid JSON' }; }
         if (typeof parsed.answer !== 'string') parsed.answer = '';
         if (!Array.isArray(parsed.quran_refs)) parsed.quran_refs = [];
         if (!Array.isArray(parsed.hadith_refs)) parsed.hadith_refs = [];
@@ -228,14 +207,11 @@ async function tryOne(model, apiKey, prompt) {
         parsed.hadith_refs = parsed.hadith_refs.slice(0, 5);
         parsed._model_used = model;
         return { type: 'success', data: parsed, model };
-    } catch (err) {
-        return { type: 'error', status: 0, details: err.message };
-    }
+    } catch (err) { return { type: 'error', status: 0, details: err.message }; }
 }
 
 async function runAttempts(models, keys, prompt, maxAttempts = 15) {
-    let attempts = 0;
-    let lastError = null;
+    let attempts = 0, lastError = null;
     for (const model of models) {
         if (attempts >= maxAttempts) break;
         for (const key of keys) {
@@ -246,110 +222,50 @@ async function runAttempts(models, keys, prompt, maxAttempts = 15) {
             attempts++;
             const r = await tryOne(model, key, prompt);
             if (r.type === 'success') return r;
-            if (r.type === 'model_not_found') {
-                lastError = { model, status: 404, reason: 'model not available' };
-                break;
-            }
-            if (r.type === 'key_invalid') {
-                markKeyInvalid(key);
-                lastError = { model, status: 400, reason: 'key invalid' };
-                continue;
-            }
-            if (r.type === 'key_exhausted') {
-                markKeyExhausted(key);
-                lastError = { model, status: 429, reason: 'key quota exhausted' };
-                continue;
-            }
+            if (r.type === 'model_not_found') { lastError = { model, status: 404, reason: 'model not available' }; break; }
+            if (r.type === 'key_invalid') { markKeyInvalid(key); lastError = { model, status: 400, reason: 'key invalid' }; continue; }
+            if (r.type === 'key_exhausted') { markKeyExhausted(key); lastError = { model, status: 429, reason: 'key quota exhausted' }; continue; }
             lastError = { model, status: r.status, details: r.details };
         }
     }
     return { type: 'failed', lastError, attempts };
 }
 
-app.get('/', (req, res) => {
-    res.json({ status: 'ok', service: 'qamar-malak-api', version: '4' });
-});
-
+app.get('/', (req, res) => res.json({ status: 'ok', service: 'qamar-malak-api', version: '5' }));
 app.get('/health', (req, res) => {
     const { usable, exhausted, invalid } = getKeysByState();
-    res.json({
-        status: 'ok',
-        uptime_sec: Math.round(process.uptime()),
-        keys: {
-            total: usable.length + exhausted.length + invalid.length,
-            usable: usable.length,
-            exhausted: exhausted.length,
-            invalid: invalid.length
-        },
-        models: {
-            count: modelCache.models.length,
-            source: modelCache.discoveredFrom,
-            cached_at: modelCache.fetchedAt ? new Date(modelCache.fetchedAt).toISOString() : null
-        }
-    });
+    res.json({ status: 'ok', uptime_sec: Math.round(process.uptime()), keys: { total: usable.length + exhausted.length + invalid.length, usable: usable.length, exhausted: exhausted.length, invalid: invalid.length }, models: { count: modelCache.models.length, source: modelCache.discoveredFrom, cached_at: modelCache.fetchedAt ? new Date(modelCache.fetchedAt).toISOString() : null } });
 });
-
 app.get('/api/models', async (req, res) => {
-    try {
-        const models = await getModels();
-        res.json({
-            count: models.length,
-            source: modelCache.discoveredFrom,
-            cached_at: new Date(modelCache.fetchedAt).toISOString(),
-            models: models.slice(0, 20)
-        });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+    try { const models = await getModels(); res.json({ count: models.length, source: modelCache.discoveredFrom, cached_at: new Date(modelCache.fetchedAt).toISOString(), models: models.slice(0, 20) }); }
+    catch (err) { res.status(500).json({ error: err.message }); }
 });
-
 app.post('/api/ask', async (req, res) => {
     const { query, context } = req.body || {};
-    if (!query || typeof query !== 'string' || query.trim().length < 2) {
-        return res.status(400).json({ error: 'query too short' });
-    }
-    if (query.length > 500) {
-        return res.status(400).json({ error: 'query too long' });
-    }
+    if (!query || typeof query !== 'string' || query.trim().length < 2) return res.status(400).json({ error: 'query too short' });
+    if (query.length > 500) return res.status(400).json({ error: 'query too long' });
     const { usable, exhausted, invalid } = getKeysByState();
-    if (usable.length + exhausted.length + invalid.length === 0) {
-        return res.status(500).json({ error: 'GEMINI_API_KEYS not set' });
-    }
-    if (usable.length === 0 && exhausted.length === 0) {
-        return res.status(500).json({ error: 'all API keys are invalid' });
-    }
-    const contextText = (context && typeof context === 'string')
-        ? context.substring(0, 4000)
-        : '(لا يوجد سياق)';
-    const finalPrompt = SYSTEM_PROMPT.replace('{{CONTEXT}}', contextText)
-        + '\n\nالسؤال من المستخدم: ' + query.trim();
+    if (usable.length + exhausted.length + invalid.length === 0) return res.status(500).json({ error: 'GEMINI_API_KEYS not set' });
+    if (usable.length === 0 && exhausted.length === 0) return res.status(500).json({ error: 'all API keys are invalid' });
+    const contextText = (context && typeof context === 'string') ? context.substring(0, 4000) : '(لا يوجد سياق)';
+    const finalPrompt = SYSTEM_PROMPT.replace('{{CONTEXT}}', contextText) + '\n\nالسؤال من المستخدم: ' + query.trim();
     const models = await getModels();
     let result = await runAttempts(models, usable, finalPrompt);
-    if (result.type === 'failed' && exhausted.length > 0) {
-        result = await runAttempts(models, exhausted, finalPrompt);
-    }
+    if (result.type === 'failed' && exhausted.length > 0) result = await runAttempts(models, exhausted, finalPrompt);
     if (result.type === 'failed') {
-        if (modelCache.discoveredFrom === 'api') invalidateModelCache();
-        return res.status(500).json({
-            error: 'All models and keys failed',
-            last_error: result.lastError,
-            attempts: result.attempts
-        });
+        if (modelCache.discoveredFrom === 'api') modelCache = { models: [], fetchedAt: 0, discoveredFrom: null };
+        return res.status(500).json({ error: 'All models and keys failed', last_error: result.lastError, attempts: result.attempts });
     }
     return res.status(200).json(result.data);
 });
 
 const PORT = process.env.PORT || 3000;
-
 app.listen(PORT, async () => {
-    console.log(`Server v4 running on port ${PORT}`);
-    const { usable, exhausted, invalid } = getKeysByState();
-    console.log(`[keys] total=${usable.length + exhausted.length + invalid.length} usable=${usable.length}`);
+    console.log(`Server v5 running on port ${PORT}`);
+    const { usable } = getKeysByState();
+    console.log(`[keys] usable=${usable.length}`);
     try {
         const models = await getModels();
         console.log(`[models] ${models.length} available — source=${modelCache.discoveredFrom}`);
-        console.log(`[models] priority: ${models.slice(0, 5).join(' → ')}`);
-    } catch (err) {
-        console.warn(`[models] startup discovery failed: ${err.message}`);
-    }
+    } catch (err) { console.warn(`[models] startup discovery failed: ${err.message}`); }
 });
