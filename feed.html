@@ -11,7 +11,7 @@
     .feed-container::-webkit-scrollbar { display: none; }
     .video-card { height: 100vh; width: 100vw; scroll-snap-align: start; position: relative; display: flex; justify-content: center; align-items: center; background-color: #000; }
     
-    /* فيديو عادي */
+    /* الفيديو العادي (التجريبي) */
     .video-element { width: 100%; height: 100%; object-fit: contain; background-color: #000; }
     
     /* مشغل تلغرام */
@@ -75,11 +75,11 @@
 
             let html = '';
             videos.forEach((video) => {
-                // نتحقق: هل الرابط رقم (msg_id) أم رابط (http)؟
+                // التحقق: هل الرابط رقم (msg_id) أم رابط خارجي؟
                 const isTelegramId = /^\d+$/.test(video.video_url);
                 
                 if (isTelegramId) {
-                    // عرض مشغل تلغرام
+                    // عرض الفيديو عبر مشغل تلغرام
                     const telegramEmbed = `https://t.me/malak_almarifa/${video.video_url}?embed=1`;
                     html += `
                         <div class="video-card">
@@ -92,7 +92,7 @@
                         </div>
                     `;
                 } else {
-                    // عرض فيديو عادي (من رابط)
+                    // عرض الفيديو العادي (التجريبي)
                     html += `
                         <div class="video-card">
                             <video class="video-element" src="${video.video_url}" controls playsinline></video>
