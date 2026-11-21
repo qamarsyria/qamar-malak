@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>قارئ الكتب — ملاك المعرفة</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
+<meta name="theme-color" content="#0b4133">
+<style>
+.reader-progress-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: rgba(212, 175, 55, 0.15);
+    z-index: 3000;
+}
+.reader-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+    transition: width 0.2s;
+}
+
+.reader-toolbar {
+    background: var(--bg-card);
+    border: 1px solid var(--border-strong);
+    border-radius: 16px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    box-shadow: var(--shadow);
+}
+.toolbar-left,
+.toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.tool-btn {
+    padding: 7px 13px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-soft);
+    border-radius: 20px;
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+.tool-btn:hover,
+.tool-btn.active {
+    background: var(--gold);
+    color: var(--text-on-gold);
+    border-color: var(--gold);
+}
+
+.reader-layout {
+    display: grid;
+    grid-template-columns: 290px 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+.reader-toc-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: 16px;
+    padding: 18px 14px;
+    position: sticky;
+    top: 68px;
+    max-height: calc(100vh - 90px);
+    overflow-y: auto;
+}
+.toc-book-title {
+    font-family: 'Amiri', serif;
+    font-size: 20px;
+    color: var(--text-accent);
+    margin-bottom: 4px;
+    font-weight: 700;
+}
+.toc-book-author {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-soft);
+}
+.toc-search {
+    width: 100%;
+    padding: 9px 12px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-soft);
+    border-radius: 10px;
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+    margin-bottom: 12px;
+}
+.toc-search:focus { border-color: var(--gold); }
+.toc-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.toc-item {
+    text-align: right;
+    padding: 9px 12px;
+    border-radius: 10px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 13.5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 1.5;
+}
+.toc-item:hover { background: rgba(212, 175, 55, 0.14); color: var(--text-accent); }
+.toc-item.active {
+    background: var(--gold);
+    color: var(--text-on-gold);
+    font-weight: 700;
+}
+
+.reader-page {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: 20px;
+    padding: 34px 30px;
+    box-shadow: var(--shadow);
+    --reader-size: 19px;
+}
+
+.book-banner {
+    text-align: center;
+    padding-bottom: 22px;
+    margin-bottom: 24px;
+    border-bottom: 1.5px solid var(--border-soft);
+}
+.book-banner .b-cat {
+    display: inline-block;
+    padding: 3px 12px;
+    background: rgba(212, 175, 55, 0.15);
+    color: var(--text-accent);
+    border: 1px solid var(--border-soft);
+    border-radius: 14px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.book-banner h1 {
+    font-family: 'Amiri', serif;
+    font-size: 32px;
+    color: var(--text-accent);
+    margin-bottom: 6px;
+}
+.book-banner .b-author { font-size: 15px; color: var(--text-main); font-weight: 600; }
+.book-banner .b-verify {
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: var(--text-muted);
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.chapter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 22px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--border-soft);
+}
+.chapter-header h2 {
+    font-family: 'Amiri', serif;
+    font-size: 26px;
+    color: var(--text-accent);
+}
+
+.book-body {
+    font-size: var(--reader-size);
+    line-height: 2;
+}
+.book-p {
+    margin-bottom: 16px;
+    text-align: justify;
+}
+.book-h {
+    font-family: 'Amiri', serif;
+    font-size: calc(var(--reader-size) + 4px);
+    color: var(--text-accent);
+    margin: 24px 0 12px;
+    padding-right: 12px;
+    border-right: 4px solid var(--gold);
+    font-weight: 700;
+}
+.book-ayah {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-soft);
+    border-right: 4px solid var(--gold);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    text-align: center;
+}
+.book-ayah-text {
+    font-family: 'Amiri', 'Scheherazade New', serif;
+    font-size: calc(var(--reader-size) + 3px);
+    color: var(--text-accent);
+    line-height: 2.1;
+}
+.book-ayah-ref {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+
+.book-hadith {
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-right: 4px solid #10b981;
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin: 16px 0;
+}
+.book-hadith-label {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 9px;
+    border-radius: 10px;
+    background: rgba(16, 185, 129, 0.16);
+    color: #34d399;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+html[data-theme="light"] .book-hadith-label { color: #047857; }
+.book-hadith-text {
+    font-family: 'Amiri', serif;
+    font-size: calc(var(--reader-size) + 1px);
+    line-height: 2;
+    color: var(--text-main);
+}
+.book-hadith-ref {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(16, 185, 129, 0.25);
+}
+
+.book-quote {
+    background: var(--bg-panel);
+    border-right: 3px solid var(--border-strong);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-family: 'Amiri', serif;
+    font-size: calc(var(--reader-size) + 1px);
+}
+.book-quote-ref { font-family: 'Tajawal', sans-serif; font-size: 12px; color: var(--text-accent); margin-top: 6px; }
+
+.book-note {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.32);
+    border-right: 4px solid #3b82f6;
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 14.5px;
+    line-height: 1.85;
+}
+.book-note strong { color: #60a5fa; display: block; margin-bottom: 4px; }
+html[data-theme="light"] .book-note strong { color: #1d4ed8; }
+
+.book-list {
+    list-style: none;
+    margin: 12px 0 18px;
+}
+.book-list li {
+    padding: 8px 22px 8px 0;
+    position: relative;
+    border-bottom: 1px dashed var(--border-soft);
+}
+.book-list li::before {
+    content: '◆';
+    position: absolute;
+    right: 0;
+    top: 11px;
+    color: var(--text-accent);
+    font-size: 11px;
+}
+
+.chapter-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-soft);
+    flex-wrap: wrap;
+}
+.chapter-nav button {
+    flex: 1;
+    min-width: 150px;
+    padding: 12px 18px;
+    border-radius: 12px;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-panel);
+    color: var(--text-accent);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.chapter-nav button:hover:not(:disabled) {
+    background: var(--gold);
+    color: var(--text-on-gold);
+}
+.chapter-nav button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.reader-search-box {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-soft);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 18px;
+    display: none;
+}
+.reader-search-box.show { display: block; }
+.search-hit {
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    margin-top: 8px;
+    cursor: pointer;
+}
+.search-hit:hover { border-color: var(--gold); }
+.search-hit-ch { font-size: 12px; color: var(--text-accent); font-weight: 700; margin-bottom: 4px; }
+.search-hit-txt { font-size: 13.5px; color: var(--text-muted); }
+
+body.focus-mode .site-header,
+body.focus-mode .main-nav,
+body.focus-mode .site-footer {
+    display: none !important;
+}
+body.focus-mode .reader-toc-panel {
+    top: 16px;
+    max-height: calc(100vh - 32px);
+}
+
+.toc-mobile-btn { display: none; }
+.toc-close-mobile { display: none; }
+
+.reader-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #059669;
+    color: #fff;
+    padding: 9px 20px;
+    border-radius: 24px;
+    font-size: 13.5px;
+    font-weight: 700;
+    z-index: 4000;
+    display: none;
+}
+.reader-toast.show { display: block; }
+
+@media (max-width: 900px) {
+    .reader-layout { grid-template-columns: 1fr; }
+    .toc-mobile-btn { display: inline-flex; }
+    .reader-toc-panel {
+        display: none;
+        position: fixed;
+        inset: 14px;
+        top: 14px;
+        max-height: none;
+        z-index: 2800;
+        background: var(--bg-dropdown);
+        border: 2px solid var(--gold);
+    }
+    .reader-toc-panel.open { display: block; }
+    .toc-close-mobile {
+        display: inline-flex;
+        float: left;
+        padding: 4px 10px;
+        border-radius: 14px;
+        border: 1px solid var(--border-strong);
+        background: transparent;
+        color: var(--text-accent);
+        cursor: pointer;
+        font-family: inherit;
+    }
+    .reader-page { padding: 22px 16px; }
+    .book-banner h1 { font-size: 25px; }
+    .chapter-header h2 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<div class="reader-progress-wrap"><div class="reader-progress-fill" id="reader-progress"></div></div>
+
+<div id="app-header"></div>
+<div id="app-nav"></div>
+
+<main class="main-container">
+
+    <div class="reader-toolbar">
+        <div class="toolbar-left">
+            <a href="library.html" class="tool-btn">📚 المكتبة</a>
+            <button type="button" class="tool-btn toc-mobile-btn" id="open-toc-btn">☰ الفهرس</button>
+            <button type="button" class="tool-btn" id="toggle-search-btn">🔍 بحث في الكتاب</button>
+        </div>
+        <div class="toolbar-right">
+            <button type="button" class="tool-btn" id="font-dec-btn" title="تصغير الخط">أ-</button>
+            <button type="button" class="tool-btn" id="font-inc-btn" title="تكبير الخط">أ+</button>
+            <button type="button" class="tool-btn" id="focus-btn">⛶ تركيز</button>
+            <button type="button" class="tool-btn" id="copy-chapter-btn">📋 نسخ الفصل</button>
+        </div>
+    </div>
+
+    <div class="reader-search-box" id="reader-search-box">
+        <input type="text" class="toc-search" id="book-full-search" placeholder="ابحث في كامل نص الكتاب الحالي..." style="margin-bottom:0;">
+        <div id="book-search-results"></div>
+    </div>
+
+    <div id="reader-root">
+        <div style="text-align:center;padding:60px 20px;color:var(--text-accent);">
+            ⏳ جارٍ تحميل الكتاب داخل المنصة...
+        </div>
+    </div>
+
+</main>
+
+<footer id="app-footer"></footer>
+<div class="reader-toast" id="reader-toast"></div>
+
+<script src="layout.js"></script>
+<script src="data/books/catalog.js"></script>
+<script>
+(function () {
+'use strict';
+
+const FONT_KEY = 'malak_reader_font';
+let currentBook = null;
+let currentChapterIdx = 0;
+let fontSize = parseInt(localStorage.getItem(FONT_KEY) || '19', 10);
+if (isNaN(fontSize) || fontSize < 15 || fontSize > 30) fontSize = 19;
+
+function escapeHtml(t) {
+    const d = document.createElement('div');
+    d.textContent = String(t || '');
+    return d.innerHTML;
+}
+
+function showToast(msg) {
+    const el = document.getElementById('reader-toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2200);
+}
+
+function getBookId() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('book') || 'usul-thalathah';
+}
+
+function getInitialChapterIndex(book) {
+    const params = new URLSearchParams(window.location.search);
+    const chParam = params.get('ch');
+    if (chParam !== null) {
+        const idx = parseInt(chParam, 10);
+        if (!isNaN(idx) && idx >= 0 && idx < book.chapters.length) return idx;
+    }
+    try {
+        const saved = JSON.parse(localStorage.getItem('malak_book_pos_' + book.id) || 'null');
+        if (saved && typeof saved.index === 'number' && saved.index >= 0 && saved.index < book.chapters.length) {
+            return saved.index;
+        }
+    } catch (e) {}
+    return 0;
+}
+
+function savePosition(idx) {
+    if (!currentBook) return;
+    const ch = currentBook.chapters[idx];
+    try {
+        localStorage.setItem('malak_book_pos_' + currentBook.id, JSON.stringify({
+            index: idx,
+            chapterTitle: ch.title,
+            ts: Date.now()
+        }));
+    } catch (e) {}
+}
+
+function loadBookScript(bookId) {
+    const catalog = window.MALAK_BOOKS_CATALOG;
+    const meta = catalog && catalog.books.find(b => b.id === bookId && b.ready);
+    if (!meta) {
+        document.getElementById('reader-root').innerHTML = `
+            <div class="reader-page" style="text-align:center;">
+                <h2 style="font-family:'Amiri',serif;color:var(--text-accent);margin-bottom:10px;">📚 الكتاب غير متاح حاليًا</h2>
+                <p style="color:var(--text-muted);margin-bottom:20px;">قد يكون الكتاب قيد التحقيق والإعداد أو الرابط غير صحيح.</p>
+                <a href="library.html" class="btn btn-primary">العودة إلى المكتبة</a>
+            </div>
+        `;
+        return;
+    }
+
+    window.MALAK_BOOK = null;
+    const s = document.createElement('script');
+    s.src = meta.file;
+    s.onload = () => {
+        if (!window.MALAK_BOOK || !Array.isArray(window.MALAK_BOOK.chapters)) {
+            document.getElementById('reader-root').innerHTML = '<div class="reader-page">⚠️ تعذر قراءة بيانات الكتاب.</div>';
+            return;
+        }
+        currentBook = window.MALAK_BOOK;
+        currentChapterIdx = getInitialChapterIndex(currentBook);
+        document.title = `${currentBook.title} — ملاك المعرفة`;
+        renderReaderShell();
+        renderChapter(currentChapterIdx, false);
+    };
+    s.onerror = () => {
+        document.getElementById('reader-root').innerHTML = '<div class="reader-page">⚠️ تعذر تحميل ملف الكتاب.</div>';
+    };
+    document.head.appendChild(s);
+}
+
+function renderReaderShell() {
+    document.getElementById('reader-root').innerHTML = `
+        <div class="reader-layout">
+            <aside class="reader-toc-panel" id="reader-toc-panel">
+                <button type="button" class="toc-close-mobile" id="close-toc-btn">✕ إغلاق</button>
+                <div class="toc-book-title">${escapeHtml(currentBook.title)}</div>
+                <div class="toc-book-author">✍️ ${escapeHtml(currentBook.author)}</div>
+                <input type="text" class="toc-search" id="toc-filter-input" placeholder="تصفية الفصول...">
+                <div class="toc-list" id="toc-list"></div>
+            </aside>
+            <article class="reader-page" id="reader-page" style="--reader-size:${fontSize}px;">
+                <div class="book-banner">
+                    <span class="b-cat">${escapeHtml(currentBook.categoryLabel || 'المكتبة الداخلية')}</span>
+                    <h1>${escapeHtml(currentBook.title)}</h1>
+                    <div class="b-author">✍️ ${escapeHtml(currentBook.author)}</div>
+                    ${currentBook.verification ? `<div class="b-verify">🛡️ ${escapeHtml(currentBook.verification)}</div>` : ''}
+                </div>
+                <div id="chapter-mount"></div>
+            </article>
+        </div>
+    `;
+
+    renderTOC('');
+
+    document.getElementById('toc-filter-input').addEventListener('input', (e) => {
+        renderTOC(e.target.value.trim());
+    });
+    document.getElementById('close-toc-btn').addEventListener('click', () => {
+        document.getElementById('reader-toc-panel').classList.remove('open');
+    });
+}
+
+function renderTOC(filter) {
+    const list = document.getElementById('toc-list');
+    if (!list) return;
+    list.innerHTML = currentBook.chapters.map((ch, idx) => {
+        if (filter && !ch.title.includes(filter)) return '';
+        return `
+            <button type="button" class="toc-item ${idx === currentChapterIdx ? 'active' : ''}" data-idx="${idx}">
+                ${idx + 1}. ${escapeHtml(ch.title)}
+            </button>
+        `;
+    }).join('');
+
+    list.querySelectorAll('.toc-item').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const idx = parseInt(btn.dataset.idx, 10);
+            renderChapter(idx, true);
+            document.getElementById('reader-toc-panel').classList.remove('open');
+        });
+    });
+}
+
+function renderBlock(b) {
+    if (b.type === 'h') return `<h3 class="book-h">${escapeHtml(b.text)}</h3>`;
+    if (b.type === 'p') return `<p class="book-p">${escapeHtml(b.text)}</p>`;
+    if (b.type === 'ayah') {
+        return `
+            <div class="book-ayah">
+                <div class="book-ayah-text">${escapeHtml(b.text)}</div>
+                ${b.ref ? `<div class="book-ayah-ref">— ${escapeHtml(b.ref)}</div>` : ''}
+            </div>
+        `;
+    }
+    if (b.type === 'hadith') {
+        return `
+            <div class="book-hadith">
+                <span class="book-hadith-label">🕌 حديث نبوي ${b.grade ? '(' + escapeHtml(b.grade) + ')' : ''}</span>
+                <div class="book-hadith-text">${escapeHtml(b.text)}</div>
+                ${b.ref ? `<div class="book-hadith-ref">📚 التخريج: ${escapeHtml(b.ref)}</div>` : ''}
+            </div>
+        `;
+    }
+    if (b.type === 'quote') {
+        return `
+            <div class="book-quote">
+                <div>${escapeHtml(b.text)}</div>
+                ${b.ref ? `<div class="book-quote-ref">— ${escapeHtml(b.ref)}</div>` : ''}
+            </div>
+        `;
+    }
+    if (b.type === 'note') {
+        return `
+            <div class="book-note">
+                <strong>${escapeHtml(b.title || '📌 فائدة وتحقيق')}</strong>
+                <div>${escapeHtml(b.text)}</div>
+            </div>
+        `;
+    }
+    if (b.type === 'list' && Array.isArray(b.items)) {
+        return `<ul class="book-list">${b.items.map(it => `<li>${escapeHtml(it)}</li>`).join('')}</ul>`;
+    }
+    return '';
+}
+
+function renderChapter(idx, scrollTop) {
+    currentChapterIdx = idx;
+    const ch = currentBook.chapters[idx];
+    const total = currentBook.chapters.length;
+
+    const mount = document.getElementById('chapter-mount');
+    mount.innerHTML = `
+        <div class="chapter-header">
+            <h2>${escapeHtml(ch.title)}</h2>
+            <span style="font-size:12.5px;color:var(--text-muted);">الفصل ${idx + 1} من ${total}</span>
+        </div>
+        <div class="book-body" id="book-body-text">
+            ${(ch.blocks || []).map(renderBlock).join('')}
+        </div>
+        <div class="chapter-nav">
+            <button type="button" id="prev-ch-btn" ${idx === 0 ? 'disabled' : ''}>◀ الفصل السابق</button>
+            <button type="button" id="next-ch-btn" ${idx >= total - 1 ? 'disabled' : ''}>الفصل التالي ▶</button>
+        </div>
+    `;
+
+    savePosition(idx);
+    renderTOC(document.getElementById('toc-filter-input')?.value.trim() || '');
+
+    const pct = Math.round(((idx + 1) / total) * 100);
+    document.getElementById('reader-progress').style.width = pct + '%';
+
+    const url = new URL(window.location);
+    url.searchParams.set('book', currentBook.id);
+    url.searchParams.set('ch', String(idx));
+    window.history.replaceState({}, '', url);
+
+    document.getElementById('prev-ch-btn').addEventListener('click', () => {
+        if (idx > 0) renderChapter(idx - 1, true);
+    });
+    document.getElementById('next-ch-btn').addEventListener('click', () => {
+        if (idx < total - 1) renderChapter(idx + 1, true);
+    });
+
+    if (scrollTop) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+document.getElementById('open-toc-btn').addEventListener('click', () => {
+    const panel = document.getElementById('reader-toc-panel');
+    if (panel) panel.classList.add('open');
+});
+
+document.getElementById('font-inc-btn').addEventListener('click', () => {
+    fontSize = Math.min(30, fontSize + 2);
+    localStorage.setItem(FONT_KEY, String(fontSize));
+    const page = document.getElementById('reader-page');
+    if (page) page.style.setProperty('--reader-size', fontSize + 'px');
+});
+
+document.getElementById('font-dec-btn').addEventListener('click', () => {
+    fontSize = Math.max(15, fontSize - 2);
+    localStorage.setItem(FONT_KEY, String(fontSize));
+    const page = document.getElementById('reader-page');
+    if (page) page.style.setProperty('--reader-size', fontSize + 'px');
+});
+
+document.getElementById('focus-btn').addEventListener('click', (e) => {
+    document.body.classList.toggle('focus-mode');
+    e.currentTarget.classList.toggle('active');
+});
+
+document.getElementById('copy-chapter-btn').addEventListener('click', () => {
+    if (!currentBook) return;
+    const body = document.getElementById('book-body-text');
+    if (!body) return;
+    const ch = currentBook.chapters[currentChapterIdx];
+    const text = `${currentBook.title} — ${currentBook.author}\n[${ch.title}]\n\n${body.innerText}`;
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => showToast('✓ تم نسخ الفصل مع اسم الكتاب والمؤلف'));
+    }
+});
+
+document.getElementById('toggle-search-btn').addEventListener('click', () => {
+    const box = document.getElementById('reader-search-box');
+    box.classList.toggle('show');
+    if (box.classList.contains('show')) {
+        document.getElementById('book-full-search').focus();
+    }
+});
+
+document.getElementById('book-full-search').addEventListener('input', (e) => {
+    const q = e.target.value.trim();
+    const out = document.getElementById('book-search-results');
+    if (!currentBook || q.length < 2) {
+        out.innerHTML = '';
+        return;
+    }
+
+    const hits = [];
+    currentBook.chapters.forEach((ch, idx) => {
+        (ch.blocks || []).forEach(b => {
+            const text = b.text || (Array.isArray(b.items) ? b.items.join(' • ') : '');
+            if (text.includes(q)) {
+                hits.push({ idx, title: ch.title, text });
+            }
+        });
+    });
+
+    if (hits.length === 0) {
+        out.innerHTML = '<div style="padding:10px;font-size:13px;color:var(--text-muted);">لا توجد نتائج داخل الكتاب.</div>';
+        return;
+    }
+
+    out.innerHTML = hits.slice(0, 20).map(h => `
+        <div class="search-hit" data-idx="${h.idx}">
+            <div class="search-hit-ch">📑 ${escapeHtml(h.title)}</div>
+            <div class="search-hit-txt">${escapeHtml(h.text.substring(0, 160))}${h.text.length > 160 ? '...' : ''}</div>
+        </div>
+    `).join('');
+
+    out.querySelectorAll('.search-hit').forEach(hit => {
+        hit.addEventListener('click', () => {
+            renderChapter(parseInt(hit.dataset.idx, 10), true);
+            document.getElementById('reader-search-box').classList.remove('show');
+        });
+    });
+});
+
+loadBookScript(getBookId());
+
+})();
+</script>
+</body>
+</html>
