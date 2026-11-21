@@ -1,19 +1,16 @@
 /* ============================================================
-   Service Worker — ملاك المعرفة
-   النسخة 3 — تحل مشاكل cache القديمة
-   - يحذف bot.html و ibn-qayyim.html من الكاش
-   - يضيف masael.html و library.html
-   - لا يتدخل في ملفات الصوت (everyayah / islamcan / archive)
+   Service Worker — ملاك المعرفة (v4)
+   تحديث كامل: دعم المكتبة الداخلية والقراءة بدون إنترنت
    ============================================================ */
 
-const CACHE_NAME = 'malak-almarifa-v3';
-const RUNTIME_CACHE = 'malak-runtime-v3';
+const CACHE_NAME = 'malak-almarifa-v4';
+const RUNTIME_CACHE = 'malak-runtime-v4';
 
-// الملفات التي تُخزَّن مسبقًا عند التثبيت
 const STATIC_ASSETS = [
     './',
     './index.html',
     './style.css',
+    './layout.js',
     './offline.html',
     './quran.html',
     './surah.html',
@@ -35,13 +32,17 @@ const STATIC_ASSETS = [
     './calendar.html',
     './search.html',
     './masael.html',
+    './women.html',
     './library.html',
+    './book-reader.html',
+    './data/books/catalog.js',
+    './data/books/usul-thalathah.js',
+    './data/books/qawaid-arbaa.js',
     './faq-data.js',
     './hadith-db.js',
     './manifest.json'
 ];
 
-// النطاقات الخارجية المسموح بتخزينها مؤقتًا (runtime)
 const ALLOWED_RUNTIME_HOSTS = [
     'api.alquran.cloud',
     'api.aladhan.com',
@@ -49,7 +50,6 @@ const ALLOWED_RUNTIME_HOSTS = [
     'fonts.gstatic.com'
 ];
 
-// النطاقات التي يجب ألا يتدخل فيها SW إطلاقًا (صوت)
 const BYPASS_HOSTS = [
     'everyayah.com',
     'islamcan.com',
@@ -58,90 +58,51 @@ const BYPASS_HOSTS = [
     'ia800307.us.archive.org'
 ];
 
-// ============================================================
-// التثبيت: تخزين الملفات الأساسية
-// ============================================================
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
             return Promise.all(
                 STATIC_ASSETS.map(url =>
-                    cache.add(url).catch(err => {
-                        console.log('[SW] تخطي:', url, err.message);
-                    })
+                    cache.add(url).catch(() => {})
                 )
             );
         }).then(() => self.skipWaiting())
     );
 });
 
-// ============================================================
-// التنشيط: حذف كل الكاش القديم
-// ============================================================
 self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches.keys().then((keys) => {
             return Promise.all(
                 keys.filter(k => k !== CACHE_NAME && k !== RUNTIME_CACHE)
-                    .map(k => {
-                        console.log('[SW] حذف الكاش القديم:', k);
-                        return caches.delete(k);
-                    })
+                    .map(k => caches.delete(k))
             );
         }).then(() => self.clients.claim())
-        .then(() => {
-            // إبلاغ كل التبويبات المفتوحة بإعادة التحميل
-            return self.clients.matchAll({ type: 'window' });
-        }).then((clients) => {
-            clients.forEach(client => {
-                if (client.url && 'navigate' in client) {
-                    // لا نجبر التحديث، فقط نبلّغ
-                    client.postMessage({ type: 'SW_UPDATED', version: CACHE_NAME });
-                }
-            });
-        })
     );
 });
 
-// ============================================================
-// الاعتراض: إدارة الطلبات
-// ============================================================
 self.addEventListener('fetch', (event) => {
     const request = event.request;
-
-    // تجاهل الطلبات غير GET
     if (request.method !== 'GET') return;
 
     const url = new URL(request.url);
-
-    // تجاهل مخططات غير http/https (chrome-extension, etc.)
     if (url.protocol !== 'http:' && url.protocol !== 'https:') return;
 
-    // 1) ملفات الصوت — لا يتدخل SW
     if (BYPASS_HOSTS.some(host => url.hostname.endsWith(host))) {
         return;
     }
 
-    // 2) الطلبات الداخلية (نفس النطاق)
     if (url.origin === self.location.origin) {
         event.respondWith(handleLocalRequest(request));
         return;
     }
 
-    // 3) الطلبات الخارجية المسموح بها
     if (ALLOWED_RUNTIME_HOSTS.some(host => url.hostname.endsWith(host))) {
         event.respondWith(handleRuntimeRequest(request));
-        return;
     }
-
-    // 4) باقي الطلبات: لا يتدخل SW
 });
 
-// ============================================================
-// معالج الملفات المحلية: Cache-First مع Network-Fallback
-// ============================================================
 async function handleLocalRequest(request) {
-    // HTML: Network-First (لتحصل على آخر تحديث)
     const isHTML = request.headers.get('accept')?.includes('text/html') ||
                    request.url.endsWith('.html') ||
                    request.url.endsWith('/');
@@ -158,15 +119,12 @@ async function handleLocalRequest(request) {
             const cached = await caches.match(request);
             if (cached) return cached;
             const offline = await caches.match('./offline.html');
-            if (offline) return offline;
-            return new Response('Offline', { status: 503 });
+            return offline || new Response('Offline', { status: 503 });
         }
     }
 
-    // CSS / JS / صور: Cache-First
     const cached = await caches.match(request);
     if (cached) {
-        // تحديث في الخلفية (stale-while-revalidate)
         fetch(request).then(response => {
             if (response && response.ok) {
                 caches.open(CACHE_NAME).then(cache => cache.put(request, response));
@@ -184,18 +142,13 @@ async function handleLocalRequest(request) {
         return response;
     } catch (err) {
         const offline = await caches.match('./offline.html');
-        if (offline) return offline;
-        return new Response('Not found', { status: 404 });
+        return offline || new Response('Not found', { status: 404 });
     }
 }
 
-// ============================================================
-// معالج الطلبات الخارجية: Network-First مع Cache-Fallback
-// ============================================================
 async function handleRuntimeRequest(request) {
     const cached = await caches.match(request);
     if (cached) {
-        // حدّث في الخلفية
         fetch(request).then(response => {
             if (response && response.ok) {
                 caches.open(RUNTIME_CACHE).then(cache => cache.put(request, response));
@@ -219,20 +172,11 @@ async function handleRuntimeRequest(request) {
     }
 }
 
-// ============================================================
-// استقبال رسائل من الصفحات (تحديث قسري)
-// ============================================================
 self.addEventListener('message', (event) => {
     if (event.data && event.data.type === 'SKIP_WAITING') {
         self.skipWaiting();
     }
     if (event.data && event.data.type === 'CLEAR_CACHE') {
-        caches.keys().then(keys => {
-            return Promise.all(keys.map(k => caches.delete(k)));
-        }).then(() => {
-            if (event.source && event.source.postMessage) {
-                event.source.postMessage({ type: 'CACHE_CLEARED' });
-            }
-        });
+        caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k))));
     }
 });
