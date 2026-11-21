@@ -85,7 +85,8 @@ const NAV_MENU = [
             { label: '🕌 مواقيت الصلاة', href: 'prayer.html' },
             { label: '📿 المسبحة الرقمية', href: 'tasbih.html' },
             { label: '📅 التقويم الهجري', href: 'calendar.html' },
-            { label: '🔍 البحث الشامل', href: 'search.html' }
+            { label: '🔍 البحث الشامل', href: 'search.html' },
+            { label: '✉️ تواصل واقترح إضافة', href: 'contact.html' }
         ]
     }
 ];
@@ -187,6 +188,11 @@ function buildFooterHTML() {
     return `
         <p class="footer-ayah">﴿ وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ عَلَيْهِ تَوَكَّلْتُ وَإِلَيْهِ أُنِيبُ ﴾</p>
         <p><strong>ملاك المعرفة</strong> — منصة دعوية علمية غير ربحية على هدي القرآن الكريم والسنة الصحيحة</p>
+        <p style="margin:10px 0 12px;">
+            <a href="contact.html" style="color:var(--text-accent);text-decoration:none;font-weight:700;border:1px solid var(--border-soft);padding:6px 16px;border-radius:20px;display:inline-block;background:var(--bg-panel);">
+                ✉️ تواصل مع الإدارة • اقترح إضافة أو تصحيحًا
+            </a>
+        </p>
         <p>تطوير: <strong>Emad Halaweh</strong> — مراجعة ومشاركة: <strong>Malak Kamal Abdel Azim</strong></p>
         <p>© 2026 جميع الحقوق محفوظة — صدقة جارية، نسألكم الدعاء.</p>
     `;
