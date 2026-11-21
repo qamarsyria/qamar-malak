@@ -1,16 +1,16 @@
 {
-  "name": "قمر الشام",
-  "short_name": "قمر الشام",
-  "description": "منصة إسلامية شاملة — القرآن والسنة والسيرة والأذكار ومواقيت الصلاة",
+  "name": "ملاك المعرفة",
+  "short_name": "ملاك المعرفة",
+  "description": "موسوعة إسلامية شاملة موثقة — القرآن، التفسير، السنة الصحيحة، السيرة، المكتبة الداخلية، العبادات، والمسائل الشرعية",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0a3a2c",
+  "background_color": "#072c22",
   "theme_color": "#d4af37",
   "lang": "ar",
   "dir": "rtl",
-  "author": "Emad Halawh",
+  "author": "Emad Halaweh",
   "icons": [
     {
       "src": "icon%20(1).png",
@@ -34,19 +34,24 @@
   "categories": ["education", "lifestyle", "books"],
   "shortcuts": [
     {
-      "name": "القرآن",
+      "name": "القرآن الكريم",
       "url": "./quran.html",
-      "description": "اقرأ القرآن الكريم"
+      "description": "اقرأ واستمع للقرآن الكريم"
+    },
+    {
+      "name": "المكتبة الداخلية",
+      "url": "./library.html",
+      "description": "اقرأ الكتب الشرعية داخل المنصة"
+    },
+    {
+      "name": "المسائل الشرعية",
+      "url": "./masael.html",
+      "description": "أحكام وفتاوى موثقة بالدليل"
     },
     {
       "name": "الأذكار",
       "url": "./adhkar.html",
       "description": "أذكار الصباح والمساء"
-    },
-    {
-      "name": "السنة",
-      "url": "./hadith.html",
-      "description": "أحاديث صحيحة"
     }
   ]
 }
