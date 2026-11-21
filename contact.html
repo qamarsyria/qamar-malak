@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تواصل واقترح إضافة — ملاك المعرفة</title>
+<meta name="description" content="أرسل آراءك وملاحظاتك واقتراحات الإضافات اليدوية الموثقة لإدارة منصة ملاك المعرفة.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✉️</text></svg>">
+<meta name="theme-color" content="#0b4133">
+<style>
+.contact-hero {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-strong);
+    border-radius: 20px;
+    padding: 30px 20px;
+    text-align: center;
+    margin-bottom: 26px;
+    box-shadow: var(--shadow);
+}
+.contact-hero h1 {
+    font-family: 'Amiri', serif;
+    font-size: 31px;
+    color: var(--text-accent);
+    margin-bottom: 10px;
+}
+.contact-hero p {
+    color: var(--text-muted);
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 14.5px;
+    line-height: 1.85;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+.contact-card,
+.admin-info-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: 18px;
+    padding: 24px 22px;
+    box-shadow: var(--shadow);
+}
+
+.card-heading {
+    font-family: 'Amiri', serif;
+    font-size: 23px;
+    color: var(--text-accent);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--border-soft);
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+.form-group label {
+    display: block;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text-accent);
+    margin-bottom: 6px;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--bg-input);
+    border: 1.5px solid var(--border-soft);
+    border-radius: 12px;
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 14.5px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.14);
+}
+.form-group textarea {
+    min-height: 140px;
+    resize: vertical;
+    line-height: 1.8;
+}
+.form-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 5px;
+}
+
+.form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+.form-actions .btn {
+    flex: 1;
+    min-width: 170px;
+}
+
+.status-banner {
+    display: none;
+    padding: 14px 16px;
+    border-radius: 12px;
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 1.75;
+}
+.status-banner.show { display: block; }
+.status-banner.ok {
+    background: rgba(16, 185, 129, 0.14);
+    border: 1px solid rgba(16, 185, 129, 0.45);
+    color: #34d399;
+}
+html[data-theme="light"] .status-banner.ok { color: #047857; }
+.status-banner.err {
+    background: rgba(239, 68, 68, 0.14);
+    border: 1px solid rgba(239, 68, 68, 0.45);
+    color: #f87171;
+}
+html[data-theme="light"] .status-banner.err { color: #b91c1c; }
+
+.email-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+.email-item {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-soft);
+    border-radius: 12px;
+    padding: 12px 14px;
+}
+.email-role {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+.email-address {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.email-address a {
+    color: var(--text-accent);
+    text-decoration: none;
+    font-family: monospace;
+    direction: ltr;
+    font-size: 14px;
+    font-weight: 700;
+}
+.copy-mini {
+    padding: 4px 10px;
+    border-radius: 12px;
+    border: 1px solid var(--border-soft);
+    background: transparent;
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 11.5px;
+    cursor: pointer;
+}
+.copy-mini:hover {
+    background: var(--gold);
+    color: var(--text-on-gold);
+}
+
+.rules-box {
+    background: var(--bg-panel);
+    border-right: 4px solid var(--gold);
+    border-radius: 12px;
+    padding: 14px 16px;
+}
+.rules-box h3 {
+    font-family: 'Amiri', serif;
+    font-size: 18px;
+    color: var(--text-accent);
+    margin-bottom: 8px;
+}
+.rules-box ul {
+    list-style: none;
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.85;
+}
+.rules-box li {
+    padding: 4px 18px 4px 0;
+    position: relative;
+}
+.rules-box li::before {
+    content: '◆';
+    position: absolute;
+    right: 0;
+    top: 7px;
+    color: var(--text-accent);
+    font-size: 10px;
+}
+
+.preview-box {
+    display: none;
+    margin-top: 16px;
+    padding: 14px;
+    background: var(--bg-panel);
+    border: 1px dashed var(--border-strong);
+    border-radius: 12px;
+}
+.preview-box.show { display: block; }
+.preview-box pre {
+    white-space: pre-wrap;
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--text-main);
+    line-height: 1.8;
+    margin-top: 8px;
+}
+
+@media (max-width: 860px) {
+    .contact-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+    .contact-hero h1 { font-size: 24px; }
+    .form-row-2 { grid-template-columns: 1fr; }
+    .contact-card, .admin-info-card { padding: 18px 15px; }
+}
+</style>
+</head>
+<body>
+
+<div id="app-header"></div>
+<div id="app-nav"></div>
+
+<main class="main-container">
+
+<section class="contact-hero">
+    <h1>✉️ تواصل مع الإدارة واقترح إضافة</h1>
+    <p>نرحب بآرائكم وملاحظاتكم العلمية والتقنية، كما يسعدنا استقبال اقتراحات الإضافات اليدوية (مسائل شرعية، أحاديث صحيحة، كتب موثقة، أو تصحيح مرجع) لمراجعتها وإدراجها في المنصة.</p>
+</section>
+
+<div class="contact-grid">
+    <section class="contact-card">
+        <h2 class="card-heading">📝 نموذج المراسلة والإضافة المقترحة</h2>
+
+        <form id="contact-form">
+            <div class="form-row-2">
+                <div class="form-group">
+                    <label for="sender-name">الاسم (اختياري)</label>
+                    <input type="text" id="sender-name" placeholder="اكتب اسمك الكريم">
+                </div>
+                <div class="form-group">
+                    <label for="sender-email">بريدك الإلكتروني للرد (اختياري)</label>
+                    <input type="email" id="sender-email" dir="ltr" placeholder="name@example.com">
+                </div>
+            </div>
+
+            <div class="form-row-2">
+                <div class="form-group">
+                    <label for="msg-category">نوع الرسالة *</label>
+                    <select id="msg-category" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="target-admin">جهة الاستلام *</label>
+                    <select id="target-admin" required></select>
+                </div>
+            </div>
+
+            <div class="form-group" id="ref-group">
+                <label for="msg-source">المصدر أو التخريج المعتمد (مهم للإضافات والتصحيحات)</label>
+                <input type="text" id="msg-source" placeholder="مثال: سورة البقرة آية 255، أو صحيح البخاري رقم (1)">
+                <div class="form-hint">نلتزم بنشر ما صحّ دليله من القرآن الكريم والسنة النبوية الصحيحة فقط.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="msg-title">عنوان الموضوع *</label>
+                <input type="text" id="msg-title" required placeholder="مثال: اقتراح إضافة مسألة / تصحيح مرجع في صفحة...">
+            </div>
+
+            <div class="form-group">
+                <label for="msg-body">نص الرسالة أو المحتوى المقترح *</label>
+                <textarea id="msg-body" required placeholder="اكتب رسالتك أو نص الإضافة المقترحة بالتفصيل..."></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary" id="submit-btn">✉️ إرسال الرسالة</button>
+                <button type="button" class="btn btn-outline" id="copy-msg-btn">📋 نسخ الرسالة منسّقة</button>
+            </div>
+
+            <div class="status-banner" id="status-banner"></div>
+            <div class="preview-box" id="preview-box">
+                <strong style="color:var(--text-accent);font-size:13.5px;">📄 معاينة الرسالة المنسّقة للإرسال اليدوي:</strong>
+                <pre id="preview-text"></pre>
+            </div>
+        </form>
+    </section>
+
+    <aside class="admin-info-card">
+        <h2 class="card-heading">📬 إيميلات الإدارة المعتمدة</h2>
+        <div class="email-list" id="admin-emails-list"></div>
+
+        <div class="rules-box">
+            <h3>🛡️ ضوابط استقبال الإضافات</h3>
+            <ul>
+                <li>أن يكون المحتوى موافقًا للقرآن الكريم والسنة الصحيحة.</li>
+                <li>توثيق الآيات برقم السورة والآية، والأحاديث بالمصدر والدرجة.</li>
+                <li>تجنّب الأحاديث الضعيفة والموضوعة والقصص غير المثبتة.</li>
+                <li>في حال الإبلاغ عن خطأ تقني، يُفضل ذكر اسم الصفحة ونوع الجهاز.</li>
+            </ul>
+        </div>
+    </aside>
+</div>
+
+</main>
+
+<footer id="app-footer"></footer>
+
+<script src="config.js"></script>
+<script src="layout.js"></script>
+<script>
+(function () {
+'use strict';
+
+const cfg = window.MALAK_CONFIG || {
+    siteName: 'ملاك المعرفة',
+    adminEmails: [
+        { id: 'main', label: 'الإدارة العامة', email: 'emadhlaweh@gmail.com', primary: true }
+    ],
+    contact: {
+        webhookEndpoint: '',
+        categories: [
+            { id: 'addition',   label: '📚 إضافة يدوية مقترحة (مسألة، كتاب، حديث، سيرة)' },
+            { id: 'correction', label: '🛡️ تصحيح علمي أو توثيق مرجع' },
+            { id: 'suggestion', label: '💡 اقتراح تطوير أو ميزة جديدة' },
+            { id: 'technical',  label: '⚙️ الإبلاغ عن مشكلة تقنية' },
+            { id: 'general',    label: '✉️ رسالة عامة لإدارة المنصة' }
+        ]
+    }
+};
+
+function escapeHtml(t) {
+    const d = document.createElement('div');
+    d.textContent = String(t || '');
+    return d.innerHTML;
+}
+
+const emails = Array.isArray(cfg.adminEmails) && cfg.adminEmails.length
+    ? cfg.adminEmails
+    : [{ id: 'main', label: 'الإدارة', email: 'emadhlaweh@gmail.com', primary: true }];
+
+const categories = (cfg.contact && Array.isArray(cfg.contact.categories))
+    ? cfg.contact.categories
+    : [{ id: 'general', label: '✉️ رسالة عامة' }];
+
+// تعبئة قوائم النموذج
+const catSel = document.getElementById('msg-category');
+catSel.innerHTML = categories.map(c =>
+    `<option value="${escapeHtml(c.id)}">${escapeHtml(c.label)}</option>`
+).join('');
+
+const targetSel = document.getElementById('target-admin');
+let targetOptions = emails.map(e =>
+    `<option value="${escapeHtml(e.email)}" ${e.primary ? 'selected' : ''}>${escapeHtml(e.label)} (${escapeHtml(e.email)})</option>`
+);
+if (emails.length > 1) {
+    const allEmails = emails.map(e => e.email).join(',');
+    targetOptions.push(`<option value="${escapeHtml(allEmails)}">📬 إرسال إلى جميع إيميلات الإدارة</option>`);
+}
+targetSel.innerHTML = targetOptions.join('');
+
+// عرض بطاقات إيميلات الإدارة
+const listWrap = document.getElementById('admin-emails-list');
+listWrap.innerHTML = emails.map(e => `
+    <div class="email-item">
+        <div class="email-role">${escapeHtml(e.label)} ${e.primary ? '• الرئيسي' : ''}</div>
+        <div class="email-address">
+            <a href="mailto:${escapeHtml(e.email)}">${escapeHtml(e.email)}</a>
+            <button type="button" class="copy-mini" data-copy="${escapeHtml(e.email)}">📋 نسخ</button>
+        </div>
+    </div>
+`).join('');
+
+listWrap.querySelectorAll('.copy-mini').forEach(btn => {
+    btn.addEventListener('click', () => {
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(btn.dataset.copy).then(() => {
+                const old = btn.textContent;
+                btn.textContent = '✓ نُسخ';
+                setTimeout(() => { btn.textContent = old; }, 1800);
+            });
+        }
+    });
+});
+
+// إظهار حقل المرجع عند اختيار إضافة أو تصحيح
+function toggleRefField() {
+    const val = catSel.value;
+    const show = val === 'addition' || val === 'correction';
+    document.getElementById('ref-group').style.display = show ? 'block' : 'none';
+}
+catSel.addEventListener('change', toggleRefField);
+toggleRefField();
+
+function getFormPayload() {
+    const selectedCat = categories.find(c => c.id === catSel.value);
+    return {
+        name: document.getElementById('sender-name').value.trim() || 'زائر للمنصة',
+        replyEmail: document.getElementById('sender-email').value.trim() || 'غير محدد',
+        categoryId: catSel.value,
+        categoryLabel: selectedCat ? selectedCat.label : catSel.value,
+        targetEmail: targetSel.value,
+        source: document.getElementById('msg-source').value.trim(),
+        title: document.getElementById('msg-title').value.trim(),
+        body: document.getElementById('msg-body').value.trim(),
+        pageUrl: window.location.href,
+        sentAt: new Date().toISOString()
+    };
+}
+
+function formatMessageText(p) {
+    const lines = [
+        `[${cfg.siteName}] — ${p.categoryLabel}`,
+        `الموضوع: ${p.title}`,
+        `المرسل: ${p.name}`,
+        `بريد الرد: ${p.replyEmail}`
+    ];
+    if (p.source) lines.push(`المصدر / التخريج المعتمد: ${p.source}`);
+    lines.push('------------------------------');
+    lines.push(p.body);
+    return lines.join('\n');
+}
+
+function showStatus(msg, isOk) {
+    const banner = document.getElementById('status-banner');
+    banner.textContent = msg;
+    banner.className = 'status-banner show ' + (isOk ? 'ok' : 'err');
+}
+
+function showPreview(text) {
+    document.getElementById('preview-text').textContent = text;
+    document.getElementById('preview-box').classList.add('show');
+}
+
+document.getElementById('copy-msg-btn').addEventListener('click', () => {
+    const p = getFormPayload();
+    if (!p.title || !p.body) {
+        showStatus('⚠️ يرجى كتابة عنوان الموضوع ونص الرسالة أولًا.', false);
+        return;
+    }
+    const formatted = formatMessageText(p);
+    showPreview(formatted);
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(formatted).then(() => {
+            showStatus(`✓ تم نسخ الرسالة منسّقة! يمكنك إرسالها مباشرة إلى: ${p.targetEmail}`, true);
+        }).catch(() => {
+            showStatus(`انسخ النص من المعاينة بالأسفل وأرسله إلى: ${p.targetEmail}`, true);
+        });
+    } else {
+        showStatus(`انسخ النص من المعاينة بالأسفل وأرسله إلى: ${p.targetEmail}`, true);
+    }
+});
+
+document.getElementById('contact-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const p = getFormPayload();
+    if (!p.title || !p.body) {
+        showStatus('⚠️ يرجى إكمال الحقول المطلوبة.', false);
+        return;
+    }
+
+    const formatted = formatMessageText(p);
+    showPreview(formatted);
+
+    const endpoint = cfg.contact && cfg.contact.webhookEndpoint ? cfg.contact.webhookEndpoint.trim() : '';
+
+    if (endpoint) {
+        const submitBtn = document.getElementById('submit-btn');
+        submitBtn.disabled = true;
+        submitBtn.textContent = '⏳ جارٍ الإرسال...';
+        try {
+            const res = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify(p)
+            });
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            showStatus('✅ تم إرسال رسالتك إلى إدارة المنصة بنجاح، شكرًا لمساهمتك!', true);
+            document.getElementById('contact-form').reset();
+            toggleRefField();
+        } catch (err) {
+            showStatus('⚠️ تعذر الإرسال التلقائي، سيتم فتح تطبيق البريد الإلكتروني الآن أو يمكنك نسخ الرسالة.', false);
+            window.location.href = `mailto:${encodeURIComponent(p.targetEmail)}?subject=${encodeURIComponent('[' + cfg.siteName + '] ' + p.title)}&body=${encodeURIComponent(formatted)}`;
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = '✉️ إرسال الرسالة';
+        }
+        return;
+    }
+
+    // الوضع الافتراضي الآمن (Static): فتح تطبيق البريد + عرض نسخة جاهزة للنسخ
+    const mailtoUrl = `mailto:${p.targetEmail}?subject=${encodeURIComponent('[' + cfg.siteName + '] ' + p.title)}&body=${encodeURIComponent(formatted)}`;
+    window.location.href = mailtoUrl;
+    showStatus(`✅ تم تجهيز الرسالة لتطبيق البريد لديك إلى (${p.targetEmail}). وإذا لم يفتح تطبيق البريد، استخدم زر "نسخ الرسالة منسّقة" بالأسفل.`, true);
+});
+
+})();
+</script>
+</body>
+</html>
