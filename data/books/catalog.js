@@ -47,7 +47,7 @@ window.MALAK_BOOKS_CATALOG = {
             desc: 'بيان التوحيد الخالص ودحض أبرز الشبهات التي يُتعلل بها في صرف العبادة لغير الله بالبراهين القرآنية والنبوية.',
             chaptersCount: 8,
             file: 'data/books/kashf-shubuhat.js',
-            ready: false,
+            ready: true,
             tags: ['توحيد', 'شبهات']
         },
         {
@@ -160,11 +160,11 @@ window.MALAK_BOOKS_CATALOG = {
             icon: '🤲',
             title: 'حصن المسلم من أذكار الكتاب والسنة',
             author: 'د. سعيد بن علي بن وهف القحطاني رحمه الله',
-            desc: 'أصح الأذكار والأدعية اليومية مخرّجةً من الصحيحين والسنن بضبط كامل للألفاظ.',
+            desc: 'أصح الأذكار والأدعية اليومية كاملةً غير مبتورة، مخرّجةً من الصحيحين والسنن بضبط كامل للألفاظ.',
             chaptersCount: 24,
             file: 'data/books/hisn-muslim.js',
-            ready: false,
-            tags: ['أذكار', 'حصن المسلم']
+            ready: true,
+            tags: ['أذكار', 'حصن المسلم', 'دعاء']
         },
         {
             id: 'kabair-dhahabi',
