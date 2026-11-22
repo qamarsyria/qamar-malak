@@ -175,8 +175,8 @@ window.MALAK_BOOKS_CATALOG = {
             desc: 'البديل المحقّق لكتب الوعظ غير المصفّاة: التحذير من كبائر الذنوب بالآيات والأحاديث الصحيحة الثابتة فقط.',
             chaptersCount: 25,
             file: 'data/books/kabair-dhahabi.js',
-            ready: false,
-            tags: ['كبائر', 'الذهبي']
+            ready: true,
+            tags: ['كبائر', 'الذهبي', 'توبة']
         },
         {
             id: 'wabil-sayyib',
